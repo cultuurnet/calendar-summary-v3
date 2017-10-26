@@ -1,0 +1,19 @@
+{
+    "name": "cultuurnet/calendar-summary-v3",
+    "description": "Library to convert cultuurnet dates to a readable summary",
+    "type": "library",
+    "license": "Apache-2.0",
+    "authors": [
+      {
+        "name": "Nils Destoop",
+        "email": "nils.destoop@wunderkraut.com"
+      },
+      {
+        "name": "Stijn Swaanen",
+        "email": "stijn.swaanen@publiq.be"
+      }
+    ],
+    "require": {
+        "php": "^7.0",
+    }
+}
