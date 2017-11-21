@@ -33,12 +33,12 @@ class CalendarPlainTextFormatter implements CalendarFormatterInterface
                 'xs' => new ExtraSmallTimestampsPlainTextFormatter(),
             ],
             Offer::CALENDAR_TYPE_MULTIPLE =>
-                [
-                    'lg' => new LargeTimestampsPlainTextFormatter(),
-                    'md' => new MediumTimestampsPlainTextFormatter(),
-                    'sm' => new SmallTimestampsPlainTextFormatter(),
-                    'xs' => new ExtraSmallTimestampsPlainTextFormatter(),
-                ],
+            [
+                'lg' => new LargeTimestampsPlainTextFormatter(),
+                'md' => new MediumTimestampsPlainTextFormatter(),
+                'sm' => new SmallTimestampsPlainTextFormatter(),
+                'xs' => new ExtraSmallTimestampsPlainTextFormatter(),
+            ],
             Offer::CALENDAR_TYPE_PERIODIC =>
             [
                 'lg' => new LargePeriodPlainTextFormatter(),
@@ -46,7 +46,7 @@ class CalendarPlainTextFormatter implements CalendarFormatterInterface
                 'sm' => new SmallPeriodPlainTextFormatter(),
                 'xs' => new ExtraSmallPeriodPlainTextFormatter(),
             ],
-            \CultureFeed_Cdb_Data_Calendar_Permanent::class =>
+            Offer::CALENDAR_TYPE_PERMANENT =>
             [
                 'lg' => new LargePermanentPlainTextFormatter(),
             ],

@@ -42,7 +42,7 @@ class CalendarHTMLFormatter implements CalendarFormatterInterface
                 'sm' => new SmallPeriodHTMLFormatter(),
                 'xs' => new ExtraSmallPeriodHTMLFormatter(),
             ],
-            \CultureFeed_Cdb_Data_Calendar_Permanent::class =>
+            Offer::CALENDAR_TYPE_PERMANENT =>
             [
                 'lg' => new LargePermanentHTMLFormatter(),
             ],
