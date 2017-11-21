@@ -25,14 +25,21 @@ class CalendarPlainTextFormatter implements CalendarFormatterInterface
     public function __construct()
     {
         $this->mapping = [
-            \CultureFeed_Cdb_Data_Calendar_TimestampList::class =>
+            Offer::CALENDAR_TYPE_SINGLE =>
             [
                 'lg' => new LargeTimestampsPlainTextFormatter(),
                 'md' => new MediumTimestampsPlainTextFormatter(),
                 'sm' => new SmallTimestampsPlainTextFormatter(),
                 'xs' => new ExtraSmallTimestampsPlainTextFormatter(),
             ],
-            \CultureFeed_Cdb_Data_Calendar_PeriodList::class =>
+            Offer::CALENDAR_TYPE_MULTIPLE =>
+                [
+                    'lg' => new LargeTimestampsPlainTextFormatter(),
+                    'md' => new MediumTimestampsPlainTextFormatter(),
+                    'sm' => new SmallTimestampsPlainTextFormatter(),
+                    'xs' => new ExtraSmallTimestampsPlainTextFormatter(),
+                ],
+            Offer::CALENDAR_TYPE_PERIODIC =>
             [
                 'lg' => new LargePeriodPlainTextFormatter(),
                 'md' => new MediumPeriodPlainTextFormatter(),
@@ -46,16 +53,16 @@ class CalendarPlainTextFormatter implements CalendarFormatterInterface
         ];
     }
 
-    public function format(\CultureFeed_Cdb_Data_Calendar $calendar, $format)
+    public function format(Offer $offer, $format)
     {
-        $class = get_class($calendar);
+        $calenderType = $offer->getCalendarType();
 
-        if (isset($this->mapping[$class][$format])) {
-            $formatter = $this->mapping[$class][$format];
+        if (isset($this->mapping[$calenderType][$format])) {
+            $formatter = $this->mapping[$calenderType][$format];
         } else {
-            throw new FormatterException($format . ' format not supported for ' . $class);
+            throw new FormatterException($format . ' format not supported for ' . $calenderType);
         }
 
-        return $formatter->format($calendar);
+        return $formatter->format($offer);
     }
 }
