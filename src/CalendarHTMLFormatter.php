@@ -40,7 +40,7 @@ class CalendarHTMLFormatter implements CalendarFormatterInterface
                     //'lg' => new LargePeriodHTMLFormatter(),
                     //'md' => new MediumPeriodHTMLFormatter(),
                     //'sm' => new SmallPeriodHTMLFormatter(),
-                    //'xs' => new ExtraSmallPeriodHTMLFormatter(),
+                    'xs' => new ExtraSmallPeriodicHTMLFormatter(),
                 ],
             /*
             Offer::CALENDAR_TYPE_PERMANENT =>

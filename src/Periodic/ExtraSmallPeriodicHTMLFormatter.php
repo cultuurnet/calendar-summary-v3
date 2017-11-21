@@ -1,19 +1,13 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: nicolas
- * Date: 06/03/15
- * Time: 14:18
- */
 
-namespace CultuurNet\CalendarSummary\Period;
+namespace CultuurNet\CalendarSummaryV3\Periodic;
 
-use \CultureFeed_Cdb_Data_Calendar_PeriodList;
+use CultuurNet\SearchV3\ValueObjects\Offer;
 use \DateTime;
 use \DateTimeInterface;
 use \IntlDateFormatter;
 
-class ExtraSmallPeriodHTMLFormatter implements PeriodFormatterInterface
+class ExtraSmallPeriodicHTMLFormatter implements PeriodicFormatterInterface
 {
     private $fmtDay;
 
@@ -40,9 +34,7 @@ class ExtraSmallPeriodHTMLFormatter implements PeriodFormatterInterface
         );
     }
 
-    public function format(
-        \CultureFeed_Cdb_Data_Calendar_PeriodList $periodList
-    ) {
+    public function format(Offer $periodList) {
         $period = $periodList->current();
         $startDate = $this->dateFromString($period->getDateFrom());
         $startDate->setTime(0, 0, 1);
