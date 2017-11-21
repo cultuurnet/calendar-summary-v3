@@ -23,7 +23,7 @@ class ExtraSmallPeriodicHTMLFormatterTest extends \PHPUnit_Framework_TestCase
         $offer->setEndDate('2018-01-25T21:30:00+01:00');
 
         $this->assertEquals(
-            '<span class="from meta">Vanaf</span> <span class="cf-date">20</span>/<span class="cf-month">3</span>',
+            '<span class="from meta">Vanaf</span> <span class="cf-date">25</span>/<span class="cf-month">1</span>',
             $this->formatter->format($offer)
         );
     }
