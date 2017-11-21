@@ -22,30 +22,32 @@ class CalendarHTMLFormatter implements CalendarFormatterInterface
     {
         $this->mapping = [
             Offer::CALENDAR_TYPE_SINGLE =>
-            [
-                'lg' => new LargeTimestampsHTMLFormatter(),
-                'md' => new MediumTimestampsHTMLFormatter(),
-                'sm' => new SmallTimestampsHTMLFormatter(),
-                'xs' => new ExtraSmallTimestampsHTMLFormatter(),
-            ],
+                [
+                    //'lg' => new LargeTimestampsHTMLFormatter(),
+                    //'md' => new MediumTimestampsHTMLFormatter(),
+                    //'sm' => new SmallTimestampsHTMLFormatter(),
+                    //'xs' => new ExtraSmallTimestampsHTMLFormatter(),
+                ],
             Offer::CALENDAR_TYPE_MULTIPLE =>
-            [
-                'lg' => new LargeTimestampsHTMLFormatter(),
-                'md' => new MediumTimestampsHTMLFormatter(),
-                'sm' => new SmallTimestampsHTMLFormatter(),
-                'xs' => new ExtraSmallTimestampsHTMLFormatter(),
-            ],
+                [
+                    //'lg' => new LargeTimestampsHTMLFormatter(),
+                    //'md' => new MediumTimestampsHTMLFormatter(),
+                    //'sm' => new SmallTimestampsHTMLFormatter(),
+                    //'xs' => new ExtraSmallTimestampsHTMLFormatter(),
+                ],
             Offer::CALENDAR_TYPE_PERIODIC =>
-            [
-                'lg' => new LargePeriodHTMLFormatter(),
-                'md' => new MediumPeriodHTMLFormatter(),
-                'sm' => new SmallPeriodHTMLFormatter(),
-                'xs' => new ExtraSmallPeriodHTMLFormatter(),
-            ],
-            \CultureFeed_Cdb_Data_Calendar_Permanent::class =>
-            [
-                'lg' => new LargePermanentHTMLFormatter(),
-            ],
+                [
+                    //'lg' => new LargePeriodHTMLFormatter(),
+                    //'md' => new MediumPeriodHTMLFormatter(),
+                    //'sm' => new SmallPeriodHTMLFormatter(),
+                    //'xs' => new ExtraSmallPeriodHTMLFormatter(),
+                ],
+            /*
+            Offer::CALENDAR_TYPE_PERMANENT =>
+                [
+                    //'lg' => new LargePermanentHTMLFormatter(),
+                ],
+            */
         ];
     }
 
