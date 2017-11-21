@@ -14,6 +14,23 @@
       }
     ],
     "require": {
-        "php": "^7.0"
-    }
+      "php": "^7.0",
+      "ext-intl": "*",
+      "cultuurnet/search-v3": "dev-master"
+    },
+    "autoload": {
+      "psr-4": {
+        "CultuurNet\\CalendarSummaryV3\\": ["src"]
+      }
+    },
+    "require-dev": {
+      "escapestudios/symfony2-coding-standard": "~2.0",
+      "phpunit/phpunit": "~5.7",
+      "squizlabs/php_codesniffer": "2.6.1",
+      "phing/phing": "~2.10",
+      "satooshi/php-coveralls": "~0.7",
+      "mikey179/vfsStream": "~1.6.2"
+    },
+    "minimum-stability": "dev",
+    "prefer-stable": true
 }
