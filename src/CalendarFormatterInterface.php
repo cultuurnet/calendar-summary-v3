@@ -1,14 +1,10 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: nicolas
- * Date: 06/03/15
- * Time: 10:59
- */
 
 namespace CultuurNet\CalendarSummary;
 
+use CultuurNet\SearchV3\ValueObjects\Offer;
+
 interface CalendarFormatterInterface
 {
-    public function format(\CultureFeed_Cdb_Data_Calendar $calendar, $format);
+    public function format(Offer $offer, $format);
 }
