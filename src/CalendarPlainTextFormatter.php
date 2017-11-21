@@ -4,7 +4,7 @@ namespace CultuurNet\CalendarSummaryV3;
 
 use CultuurNet\SearchV3\ValueObjects\Offer;
 
-use CultuurNet\CalendarSummary\Period\ExtraSmallPeriodPlainTextFormatter;
+use CultuurNet\CalendarSummaryV3\Periodic\ExtraSmallPeriodicPlainTextFormatter;
 use CultuurNet\CalendarSummary\Period\LargePeriodPlainTextFormatter;
 use CultuurNet\CalendarSummary\Period\MediumPeriodPlainTextFormatter;
 use CultuurNet\CalendarSummary\Period\SmallPeriodPlainTextFormatter;
@@ -40,7 +40,7 @@ class CalendarPlainTextFormatter implements CalendarFormatterInterface
                     //'lg' => new LargePeriodPlainTextFormatter(),
                     //'md' => new MediumPeriodPlainTextFormatter(),
                     //'sm' => new SmallPeriodPlainTextFormatter(),
-                    //'xs' => new ExtraSmallPeriodPlainTextFormatter(),
+                    'xs' => new ExtraSmallPeriodicPlainTextFormatter(),
                 ],
             /*
             Offer::CALENDAR_TYPE_PERMANENT =>
