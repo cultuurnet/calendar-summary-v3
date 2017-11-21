@@ -1,6 +1,6 @@
 <?php
 
-namespace CultuurNet\CalendarSummary;
+namespace CultuurNet\CalendarSummaryV3;
 
 class CalendarHTMLFormatterTest extends \PHPUnit_Framework_TestCase
 {

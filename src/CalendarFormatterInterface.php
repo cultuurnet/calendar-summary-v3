@@ -1,6 +1,6 @@
 <?php
 
-namespace CultuurNet\CalendarSummary;
+namespace CultuurNet\CalendarSummaryV3;
 
 use CultuurNet\SearchV3\ValueObjects\Offer;
 

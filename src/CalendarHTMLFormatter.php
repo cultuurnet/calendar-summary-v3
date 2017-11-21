@@ -1,10 +1,10 @@
 <?php
 
-namespace CultuurNet\CalendarSummary;
+namespace CultuurNet\CalendarSummaryV3;
 
 use CultuurNet\SearchV3\ValueObjects\Offer;
 
-use CultuurNet\CalendarSummary\Period\ExtraSmallPeriodHTMLFormatter;
+use CultuurNet\CalendarSummary\Periodic\ExtraSmallPeriodicHTMLFormatter;
 use CultuurNet\CalendarSummary\Period\LargePeriodHTMLFormatter;
 use CultuurNet\CalendarSummary\Period\MediumPeriodHTMLFormatter;
 use CultuurNet\CalendarSummary\Period\SmallPeriodHTMLFormatter;
