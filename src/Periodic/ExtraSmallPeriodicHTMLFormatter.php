@@ -34,28 +34,17 @@ class ExtraSmallPeriodicHTMLFormatter implements PeriodicFormatterInterface
         );
     }
 
-    public function format(Offer $periodList) {
-        $period = $periodList->current();
-        $startDate = $this->dateFromString($period->getDateFrom());
+    public function format(Offer $offer) {
+        $startDate = $offer->getStartDate();
         $startDate->setTime(0, 0, 1);
-
         $now = new DateTime();
 
         if ($startDate > $now) {
             return $this->formatNotStarted($startDate);
         } else {
-            $endDate = $this->dateFromString($period->getDateTo());
+            $endDate = $offer->getEndDate();
             return $this->formatStarted($endDate);
         }
-    }
-
-    /**
-     * @param string $dateString
-     * @return DateTime
-     */
-    private function dateFromString($dateString)
-    {
-        return DateTime::createFromFormat('Y-m-d', $dateString);
     }
 
     /**
