@@ -1,21 +1,14 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: nicolas
- * Date: 06/03/15
- * Time: 14:16
- */
 
 namespace CultuurNet\CalendarSummaryV3\Periodic;
 
+use CultuurNet\SearchV3\ValueObjects\Offer;
 use IntlDateFormatter;
 
 class MediumPeriodicPlainTextFormatter implements PeriodicFormatterInterface
 {
 
-    public function format(
-        \CultureFeed_Cdb_Data_Calendar_PeriodList $periodList
-    ) {
+    public function format(Offer $offer) {
         $fmt = new IntlDateFormatter(
             'nl_BE',
             IntlDateFormatter::FULL,
@@ -34,15 +27,14 @@ class MediumPeriodicPlainTextFormatter implements PeriodicFormatterInterface
             'eeee'
         );
 
-        $period = $periodList->current();
-        $dateFromString = $period->getDateFrom();
-        $dateFrom = strtotime($dateFromString);
-        $intlDateFrom =$fmt->format($dateFrom);
-        $intlDateFromDay = $fmtDay->format($dateFrom);
+        $dateFrom = $offer->getStartDate();
+        $dateFromTimestamp = $dateFrom->getTimestamp();
+        $intlDateFrom =$fmt->format($dateFromTimestamp);
+        $intlDateFromDay = $fmtDay->format($dateFromTimestamp);
 
-        $dateToString = $period->getDateTo();
-        $dateTo = strtotime($dateToString);
-        $intlDateTo = $fmt->format($dateTo);
+        $dateTo = $offer->getEndDate();
+        $dateToTimestamp = $dateTo->getTimestamp();
+        $intlDateTo = $fmt->format($dateToTimestamp);
 
         if ($intlDateFrom == $intlDateTo) {
             $output = $intlDateFromDay . ' ' . $intlDateFrom;
