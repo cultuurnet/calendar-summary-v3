@@ -34,7 +34,7 @@ class SmallPeriodicPlainTextFormatter implements PeriodicFormatterInterface
         );
     }
 
-    public function format(Offer $offer) {
+    public function format($offer) {
         $startDate = $offer->getStartDate();
         $startDate->setTime(0, 0, 1);
         $now = new DateTime();

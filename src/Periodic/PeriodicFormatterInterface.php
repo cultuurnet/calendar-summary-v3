@@ -11,5 +11,5 @@ interface PeriodicFormatterInterface
      * @param Offer $offer
      * @return string
      */
-    public function format(Offer $offer);
+    public function format($offer);
 }
