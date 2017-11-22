@@ -6,12 +6,12 @@
  * Time: 14:15
  */
 
-namespace CultuurNet\CalendarSummary\Period;
+namespace CultuurNet\CalendarSummaryV3\Periodic;
 
 use \CultureFeed_Cdb_Data_Calendar_SchemeDay as SchemeDay;
 use IntlDateFormatter;
 
-class LargePeriodPlainTextFormatter implements PeriodFormatterInterface
+class LargePeriodicPlainTextFormatter implements PeriodicFormatterInterface
 {
 
     /**

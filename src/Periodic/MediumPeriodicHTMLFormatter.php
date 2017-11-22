@@ -6,11 +6,11 @@
  * Time: 14:16
  */
 
-namespace CultuurNet\CalendarSummary\Period;
+namespace CultuurNet\CalendarSummaryV3\Periodic;
 
 use IntlDateFormatter;
 
-class MediumPeriodHTMLFormatter implements PeriodFormatterInterface
+class MediumPeriodicHTMLFormatter implements PeriodicFormatterInterface
 {
 
     public function format(

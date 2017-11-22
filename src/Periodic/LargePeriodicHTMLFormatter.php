@@ -6,12 +6,12 @@
  * Time: 14:15
  */
 
-namespace CultuurNet\CalendarSummary\Period;
+namespace CultuurNet\CalendarSummaryV3\Periodic;
 
 use \CultureFeed_Cdb_Data_Calendar_SchemeDay as SchemeDay;
 use IntlDateFormatter;
 
-class LargePeriodHTMLFormatter implements PeriodFormatterInterface
+class LargePeriodicHTMLFormatter implements PeriodicFormatterInterface
 {
 
     /**
@@ -38,7 +38,7 @@ class LargePeriodHTMLFormatter implements PeriodFormatterInterface
     );
 
     public function format(
-        \CultureFeed_Cdb_Data_Calendar_PeriodList $periodList
+        \CultureFeed_Cdb_Data_Calendar_PeriodicList $PeriodicList
     ) {
         $period = $periodList->current();
         $output = $this->generateDates($period->getDateFrom(), $period->getDateTo());
