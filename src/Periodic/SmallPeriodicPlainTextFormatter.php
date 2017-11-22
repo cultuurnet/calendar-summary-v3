@@ -1,19 +1,13 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: nicolas
- * Date: 06/03/15
- * Time: 14:17
- */
 
-namespace CultuurNet\CalendarSummary\Period;
+namespace CultuurNet\CalendarSummaryV3\Periodic;
 
-use \CultureFeed_Cdb_Data_Calendar_PeriodList;
+use CultuurNet\SearchV3\ValueObjects\Offer;
 use \DateTime;
 use \DateTimeInterface;
 use \IntlDateFormatter;
 
-class SmallPeriodHTMLFormatter implements PeriodFormatterInterface
+class SmallPeriodicPlainTextFormatter implements PeriodicFormatterInterface
 {
     private $fmtDay;
 
@@ -40,30 +34,17 @@ class SmallPeriodHTMLFormatter implements PeriodFormatterInterface
         );
     }
 
-    public function format(
-        \CultureFeed_Cdb_Data_Calendar_PeriodList $periodList
-    ) {
-        $period = $periodList->current();
-        $startDate = $this->dateFromString($period->getDateFrom());
+    public function format(Offer $offer) {
+        $startDate = $offer->getStartDate();
         $startDate->setTime(0, 0, 1);
-
         $now = new DateTime();
 
         if ($startDate > $now) {
             return $this->formatNotStarted($startDate);
         } else {
-            $endDate = $this->dateFromString($period->getDateTo());
+            $endDate = $offer->getEndDate();
             return $this->formatStarted($endDate);
         }
-    }
-
-    /**
-     * @param string $dateString
-     * @return DateTime
-     */
-    private function dateFromString($dateString)
-    {
-        return DateTime::createFromFormat('Y-m-d', $dateString);
     }
 
     /**
@@ -72,9 +53,7 @@ class SmallPeriodHTMLFormatter implements PeriodFormatterInterface
      */
     private function formatStarted(DateTimeInterface $endDate)
     {
-        return
-            '<span class="to meta">Tot</span> ' .
-            $this->formatDate($endDate);
+        return 'Tot ' . $this->formatDate($endDate);
     }
 
     /**
@@ -83,9 +62,7 @@ class SmallPeriodHTMLFormatter implements PeriodFormatterInterface
      */
     private function formatNotStarted(DateTimeInterface $startDate)
     {
-        return
-            '<span class="from meta">Vanaf</span> ' .
-            $this->formatDate($startDate);
+        return 'Vanaf ' . $this->formatDate($startDate);
     }
 
     /**
@@ -98,9 +75,7 @@ class SmallPeriodHTMLFormatter implements PeriodFormatterInterface
         $dateFromMonth = $this->fmtMonth->format($date);
         $dateFromMonth = rtrim($dateFromMonth, ".");
 
-        $output =
-            '<span class="cf-date">' . $dateFromDay . '</span> ' .
-            '<span class="cf-month">' . strtolower($dateFromMonth) . '</span>';
+        $output = $dateFromDay . ' ' . strtolower($dateFromMonth);
 
         return $output;
     }
