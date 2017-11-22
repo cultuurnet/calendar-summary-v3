@@ -4,10 +4,10 @@ namespace CultuurNet\CalendarSummaryV3;
 
 use CultuurNet\SearchV3\ValueObjects\Offer;
 
-use CultuurNet\CalendarSummary\Periodic\ExtraSmallPeriodicHTMLFormatter;
-use CultuurNet\CalendarSummary\Period\LargePeriodHTMLFormatter;
-use CultuurNet\CalendarSummary\Period\MediumPeriodHTMLFormatter;
-use CultuurNet\CalendarSummary\Period\SmallPeriodHTMLFormatter;
+use CultuurNet\CalendarSummaryV3\Periodic\ExtraSmallPeriodicHTMLFormatter;
+use CultuurNet\CalendarSummaryV3\Periodic\LargePeriodicHTMLFormatter;
+use CultuurNet\CalendarSummaryV3\Periodic\MediumPeriodicHTMLFormatter;
+use CultuurNet\CalendarSummaryV3\Periodic\SmallPeriodicHTMLFormatter;
 use CultuurNet\CalendarSummary\Permanent\LargePermanentHTMLFormatter;
 use CultuurNet\CalendarSummary\Timestamps\ExtraSmallTimestampsHTMLFormatter;
 use CultuurNet\CalendarSummary\Timestamps\LargeTimestampsHTMLFormatter;
@@ -38,8 +38,8 @@ class CalendarHTMLFormatter implements CalendarFormatterInterface
             Offer::CALENDAR_TYPE_PERIODIC =>
                 [
                     //'lg' => new LargePeriodHTMLFormatter(),
-                    //'md' => new MediumPeriodHTMLFormatter(),
-                    'sm' => new SmallPeriodHTMLFormatter(),
+                    'md' => new MediumPeriodicHTMLFormatter(),
+                    'sm' => new SmallPeriodicHTMLFormatter(),
                     'xs' => new ExtraSmallPeriodicHTMLFormatter(),
                 ],
             /*
