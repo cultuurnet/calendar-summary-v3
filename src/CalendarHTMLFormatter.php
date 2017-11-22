@@ -39,7 +39,7 @@ class CalendarHTMLFormatter implements CalendarFormatterInterface
                 [
                     //'lg' => new LargePeriodHTMLFormatter(),
                     //'md' => new MediumPeriodHTMLFormatter(),
-                    //'sm' => new SmallPeriodHTMLFormatter(),
+                    'sm' => new SmallPeriodHTMLFormatter(),
                     'xs' => new ExtraSmallPeriodicHTMLFormatter(),
                 ],
             /*
