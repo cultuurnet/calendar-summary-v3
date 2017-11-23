@@ -2,7 +2,6 @@
 
 namespace CultuurNet\CalendarSummaryV3\Periodic;
 
-use CultuurNet\SearchV3\ValueObjects\Place;
 use DateTime;
 use IntlDateFormatter;
 
@@ -10,16 +9,16 @@ class LargePeriodicPlainTextFormatter implements PeriodicFormatterInterface
 {
 
     /**
-     * Translate the day in short Dutch.
+     * Translate the day to short Dutch format.
      */
     protected $mapping_days = array(
-        'monday' => 'Ma',
-        'tuesday' => 'Di',
-        'wednesday' => 'Wo',
-        'thursday' => 'Do',
-        'friday' => 'Vr',
-        'saturday' => 'Za',
-        'sunday' => 'Zo',
+        'monday' => 'ma',
+        'tuesday' => 'di',
+        'wednesday' => 'wo',
+        'thursday' => 'do',
+        'friday' => 'vr',
+        'saturday' => 'za',
+        'sunday' => 'zo',
     );
 
 
@@ -27,55 +26,19 @@ class LargePeriodicPlainTextFormatter implements PeriodicFormatterInterface
         $output = $this->generateDates($place->getStartDate(), $place->getEndDate());
 
         if ($place->getOpeningHours()) {
-            $output .= PHP_EOL . $this->generateWeekscheme($place->getOpeningHours());
+            $output .= PHP_EOL . $this->generateWeekScheme($place->getOpeningHours());
         }
 
         return $output;
     }
 
-    protected function getDutchDay($day)
-    {
-        return $this->mapping_days[$day];
-    }
-
     protected function getFormattedTime($time)
     {
-        $formatted_time = substr($time, 0, -3);
-        $formatted_short_time = ltrim($formatted_time, '0');
+        $formatted_short_time = ltrim($time, '0');
         if ($formatted_short_time == ':00') {
             $formatted_short_time = '0:00';
         }
         return $formatted_short_time;
-    }
-
-    protected function getEarliestTime($times)
-    {
-        $start_time = null;
-        foreach ($times as $time) {
-            if ($start_time==null || $start_time > $time->getOpenFrom()) {
-                $start_time = $time->getOpenFrom();
-            }
-        }
-        if (is_null($start_time)) {
-            return '';
-        } else {
-            return ' ' . $this->getFormattedTime($start_time);
-        }
-    }
-
-    protected function getLatestTime($times)
-    {
-        $end_time = null;
-        foreach ($times as $time) {
-            if ($end_time==null || $end_time < $time->getOpenTill()) {
-                $end_time = $time->getOpenTill();
-            }
-        }
-        if (is_null($end_time)) {
-            return '';
-        } else {
-            return '-' . $this->getFormattedTime($end_time);
-        }
     }
 
     protected function generateDates(DateTime $dateFrom, DateTime $dateTo)
@@ -99,54 +62,38 @@ class LargePeriodicPlainTextFormatter implements PeriodicFormatterInterface
         return $output_dates;
     }
 
-    protected function generateWeekscheme($weekscheme)
+    protected function generateWeekScheme($openingHoursData)
     {
-        $output_week = '';
+        $output_week = '(';
 
-
-
-        /*
-        $keys = array_keys($weekscheme->getDays());
-
-        for ($i = 0; $i <= 6; $i++) {
-            $one_day = $weekscheme->getDays()[$keys[$i]];
-            if ($i == 0) {
-                $output_week .= '(';
-            }
-            if (!is_null($one_day)) {
-                if ($one_day->getOpenType() == SchemeDay::SCHEMEDAY_OPEN_TYPE_OPEN) {
-                    $output_week .= strtolower($this->getDutchDay($keys[$i])) . ' ';
-                    $count = 1;
-                    foreach ($one_day->getOpeningTimes() as $opening_time) {
-                        $openingtimes = $one_day->getOpeningTimes();
-                        $count_openingtimes = count($openingtimes);
-                        $output_week .= 'van ' . $this->getFormattedTime($opening_time->getOpenFrom());
-                        if (!is_null($opening_time->getOpenTill())) {
-                            $output_week .= ' tot ' . $this->getFormattedTime($opening_time->getOpenTill());
-                        }
-                        if ($i == 6) {
-                            $output_week .= ')' . PHP_EOL;
-                        } else {
-                            if ($count == $count_openingtimes) {
-                                $output_week .= ',' . PHP_EOL;
-                            } else {
-                                $output_week .= PHP_EOL;
-                            }
-                        }
-                        $count++;
-                    }
+        // Create an array with formatted days.
+        $formattedDays = [];
+        foreach ($openingHoursData as $openingHours) {
+            foreach ($openingHours->getDayOfWeek() as $dayOfWeek) {
+                if (!isset($formattedDays[$dayOfWeek])) {
+                    $formattedDays[$dayOfWeek] = $this->mapping_days[$dayOfWeek] . ' van ' . $this->getFormattedTime($openingHours->getOpens()) . ' tot ' . $this->getFormattedTime($openingHours->getCloses()) . PHP_EOL;
+                }
+                else {
+                    $formattedDays[$dayOfWeek] .= 'van ' . $this->getFormattedTime($openingHours->getOpens()) . ' tot ' . $this->getFormattedTime($openingHours->getCloses()) . ',' . PHP_EOL;
                 }
             }
-            else {
-                $output_week .= strtolower($this->getDutchDay($keys[$i])) . ' ';
-                if ($i == 6) {
-                    $output_week .= ' gesloten)';
-                } else {
-                    $output_week .= ' gesloten,' . PHP_EOL;
-                }
-            }
-        }*/
+        }
 
+        // Create an array with formatted closed days.
+        $closedDays = [];
+        foreach (array_keys($this->mapping_days) as $day) {
+            $closedDays[$day] = $this->mapping_days[$day] . '  gesloten,' . PHP_EOL;
+        }
+
+        // Merge the formatted days with the closed days array to fill in missing days and sort using the days mapping.
+        $formattedDays = array_replace($this->mapping_days, $formattedDays + $closedDays);
+
+        // Render the rest of the week scheme output.
+        foreach ($formattedDays as $formattedDay) {
+            $output_week .= $formattedDay;
+        }
+        $output_week = rtrim($output_week, ',' . PHP_EOL);
+        $output_week .= ')';
         return $output_week;
     }
 }
