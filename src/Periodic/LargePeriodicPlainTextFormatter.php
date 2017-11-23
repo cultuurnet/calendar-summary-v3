@@ -1,14 +1,9 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: jonas
- * Date: 06/03/15
- * Time: 14:15
- */
 
 namespace CultuurNet\CalendarSummaryV3\Periodic;
 
-use \CultureFeed_Cdb_Data_Calendar_SchemeDay as SchemeDay;
+use CultuurNet\SearchV3\ValueObjects\Place;
+use DateTime;
 use IntlDateFormatter;
 
 class LargePeriodicPlainTextFormatter implements PeriodicFormatterInterface
@@ -28,13 +23,11 @@ class LargePeriodicPlainTextFormatter implements PeriodicFormatterInterface
     );
 
 
-    public function format(
-        \CultureFeed_Cdb_Data_Calendar_PeriodList $periodList
-    ) {
-        $period = $periodList->current();
-        $output = $this->generateDates($period->getDateFrom(), $period->getDateTo());
-        if (!is_null($period->getWeekScheme())) {
-            $output .= PHP_EOL . $this->generateWeekscheme($period->getWeekScheme());
+    public function format($place) {
+        $output = $this->generateDates($place->getStartDate(), $place->getEndDate());
+
+        if ($place->getOpeningHours()) {
+            $output .= PHP_EOL . $this->generateWeekscheme($place->getOpeningHours());
         }
 
         return $output;
@@ -85,7 +78,7 @@ class LargePeriodicPlainTextFormatter implements PeriodicFormatterInterface
         }
     }
 
-    protected function generateDates($date_from, $date_to)
+    protected function generateDates(DateTime $dateFrom, DateTime $dateTo)
     {
         $fmt = new IntlDateFormatter(
             'nl_BE',
@@ -95,13 +88,12 @@ class LargePeriodicPlainTextFormatter implements PeriodicFormatterInterface
             IntlDateFormatter::GREGORIAN,
             'd MMMM yyyy'
         );
-        $dateFromString = $date_from;
-        $dateFrom = strtotime($dateFromString);
-        $intlDateFrom =$fmt->format($dateFrom);
 
-        $dateToString =$date_to;
-        $dateTo = strtotime($dateToString);
-        $intlDateTo = $fmt->format($dateTo);
+        $dateFromTimestamp = $dateFrom->getTimestamp();
+        $intlDateFrom =$fmt->format($dateFromTimestamp);
+
+        $dateToTimestamp = $dateTo->getTimestamp();
+        $intlDateTo = $fmt->format($dateToTimestamp);
 
         $output_dates =  'Van ' . $intlDateFrom . ' tot ' . $intlDateTo;
         return $output_dates;
@@ -111,6 +103,9 @@ class LargePeriodicPlainTextFormatter implements PeriodicFormatterInterface
     {
         $output_week = '';
 
+
+
+        /*
         $keys = array_keys($weekscheme->getDays());
 
         for ($i = 0; $i <= 6; $i++) {
@@ -141,14 +136,8 @@ class LargePeriodicPlainTextFormatter implements PeriodicFormatterInterface
                         $count++;
                     }
                 }
-            } elseif (!is_null($one_day) && $one_day->getOpenType()==SchemeDay::SCHEMEDAY_OPEN_TYPE_BY_APPOINTMENT) {
-                $output_week .= strtolower($this->getDutchDay($keys[$i])) . ' ';
-                if ($i == 6) {
-                    $output_week .= ' op afspraak)';
-                } else {
-                    $output_week .= ' op afspraak,' . PHP_EOL;
-                }
-            } else {
+            }
+            else {
                 $output_week .= strtolower($this->getDutchDay($keys[$i])) . ' ';
                 if ($i == 6) {
                     $output_week .= ' gesloten)';
@@ -156,7 +145,7 @@ class LargePeriodicPlainTextFormatter implements PeriodicFormatterInterface
                     $output_week .= ' gesloten,' . PHP_EOL;
                 }
             }
-        }
+        }*/
 
         return $output_week;
     }

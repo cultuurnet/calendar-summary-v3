@@ -1,14 +1,9 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: nicolas
- * Date: 06/03/15
- * Time: 14:15
- */
 
 namespace CultuurNet\CalendarSummaryV3\Periodic;
 
-use \CultureFeed_Cdb_Data_Calendar_SchemeDay as SchemeDay;
+use CultuurNet\SearchV3\ValueObjects\Place;
+use DateTime;
 use IntlDateFormatter;
 
 class LargePeriodicHTMLFormatter implements PeriodicFormatterInterface
@@ -37,11 +32,9 @@ class LargePeriodicHTMLFormatter implements PeriodicFormatterInterface
         'sunday' => 'Su',
     );
 
-    public function format(
-        \CultureFeed_Cdb_Data_Calendar_PeriodicList $PeriodicList
-    ) {
-        $period = $periodList->current();
-        $output = $this->generateDates($period->getDateFrom(), $period->getDateTo());
+    public function format($place) {
+        $output = $this->generateDates($place->getStartDate(), $place->getEndDate());
+
         if (!is_null($period->getWeekScheme())) {
             $output .= $this->generateWeekscheme($period->getWeekScheme());
         }
@@ -57,8 +50,6 @@ class LargePeriodicHTMLFormatter implements PeriodicFormatterInterface
 
     protected function getFormattedTime($time)
     {
-       // var_dump($time);
-
         $formatted_time = substr($time, 0, -3);
         $formatted_short_time = ltrim($formatted_time, '0');
         if ($formatted_short_time == ':00') {
@@ -97,7 +88,7 @@ class LargePeriodicHTMLFormatter implements PeriodicFormatterInterface
         }
     }
 
-    protected function generateDates($date_from, $date_to)
+    protected function generateDates(DateTime $dateFrom, DateTime $dateTo)
     {
         $fmt = new IntlDateFormatter(
             'nl_BE',
@@ -107,13 +98,12 @@ class LargePeriodicHTMLFormatter implements PeriodicFormatterInterface
             IntlDateFormatter::GREGORIAN,
             'd MMMM yyyy'
         );
-        $dateFromString = $date_from;
-        $dateFrom = strtotime($dateFromString);
-        $intlDateFrom =$fmt->format($dateFrom);
 
-        $dateToString =$date_to;
-        $dateTo = strtotime($dateToString);
-        $intlDateTo = $fmt->format($dateTo);
+        $dateFromTimestamp = $dateFrom->getTimestamp();
+        $intlDateFrom =$fmt->format($dateFromTimestamp);
+
+        $dateToTimestamp = $dateTo->getTimestamp();
+        $intlDateTo = $fmt->format($dateToTimestamp);
 
         $output_dates = '<p class="cf-period">';
         $output_dates .= '<time itemprop="startDate" datetime="' . date("Y-m-d", $dateFrom) . '">';
