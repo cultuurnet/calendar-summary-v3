@@ -2,7 +2,6 @@
 
 namespace CultuurNet\CalendarSummaryV3\Periodic;
 
-use CultuurNet\SearchV3\ValueObjects\Place;
 use DateTime;
 use IntlDateFormatter;
 
@@ -10,7 +9,7 @@ class LargePeriodicHTMLFormatter implements PeriodicFormatterInterface
 {
 
     /**
-     * Translate the day in Dutch.
+     * Translate the day to Dutch.
      */
     protected $mapping_days = array(
         'monday' => 'maandag',
@@ -22,6 +21,9 @@ class LargePeriodicHTMLFormatter implements PeriodicFormatterInterface
         'sunday' => 'zondag',
     );
 
+    /**
+     * Translate the day to short Dutch format.
+     */
     protected $mapping_short_days = array(
         'monday' => 'Mo',
         'tuesday' => 'Tu',
@@ -35,57 +37,26 @@ class LargePeriodicHTMLFormatter implements PeriodicFormatterInterface
     public function format($place) {
         $output = $this->generateDates($place->getStartDate(), $place->getEndDate());
 
-        if (!is_null($period->getWeekScheme())) {
-            $output .= $this->generateWeekscheme($period->getWeekScheme());
+        if ($place->getOpeningHours()) {
+            $output .= $this->generateWeekScheme($place->getOpeningHours());
         }
 
         return $this->formatSummary($output);
     }
 
-
-    protected function getDutchDay($day)
+    protected function formatSummary($calsum)
     {
-        return $this->mapping_days[$day];
+        $calsum = str_replace('><', '> <', $calsum);
+        return str_replace('  ', ' ', $calsum);
     }
 
     protected function getFormattedTime($time)
     {
-        $formatted_time = substr($time, 0, -3);
-        $formatted_short_time = ltrim($formatted_time, '0');
+        $formatted_short_time = ltrim($time, '0');
         if ($formatted_short_time == ':00') {
             $formatted_short_time = '0:00';
         }
         return $formatted_short_time;
-    }
-
-    protected function getEarliestTime($times)
-    {
-        $start_time = null;
-        foreach ($times as $time) {
-            if ($start_time==null || $start_time > $time->getOpenFrom()) {
-                $start_time = $time->getOpenFrom();
-            }
-        }
-        if (is_null($start_time)) {
-            return '';
-        } else {
-            return ' ' . $this->getFormattedTime($start_time);
-        }
-    }
-
-    protected function getLatestTime($times)
-    {
-        $end_time = null;
-        foreach ($times as $time) {
-            if ($end_time==null || $end_time < $time->getOpenTill()) {
-                $end_time = $time->getOpenTill();
-            }
-        }
-        if (is_null($end_time)) {
-            return '';
-        } else {
-            return '-' . $this->getFormattedTime($end_time);
-        }
     }
 
     protected function generateDates(DateTime $dateFrom, DateTime $dateTo)
@@ -106,111 +77,59 @@ class LargePeriodicHTMLFormatter implements PeriodicFormatterInterface
         $intlDateTo = $fmt->format($dateToTimestamp);
 
         $output_dates = '<p class="cf-period">';
-        $output_dates .= '<time itemprop="startDate" datetime="' . date("Y-m-d", $dateFrom) . '">';
+        $output_dates .= '<time itemprop="startDate" datetime="' . date("Y-m-d", $dateFromTimestamp) . '">';
         $output_dates .= '<span class="cf-date">' . $intlDateFrom . '</span> </time>';
         $output_dates .= '<span class="cf-to cf-meta">tot</span>';
-        $output_dates .= '<time itemprop="endDate" datetime="' . date("Y-m-d", $dateTo) . '">';
+        $output_dates .= '<time itemprop="endDate" datetime="' . date("Y-m-d", $dateToTimestamp) . '">';
         $output_dates .= '<span class="cf-date">' . $intlDateTo . '</span> </time>';
         $output_dates .= '</p>';
         return $output_dates;
     }
 
-    protected function formatSummary($calsum)
-    {
-        $calsum = str_replace('><', '> <', $calsum);
-        return str_replace('  ', ' ', $calsum);
+    protected function generateFormattedTimespan($daysOfWeek, $long = false) {
+        if ($long) {
+            return (count($daysOfWeek) > 1 ? ucfirst($this->mapping_days[$daysOfWeek[0]]) . ' - ' . $this->mapping_days[$daysOfWeek[count($daysOfWeek)-1]] : ucfirst($this->mapping_days[$daysOfWeek[0]]));
+        }
+        else {
+            return (count($daysOfWeek) > 1 ? $this->mapping_short_days[$daysOfWeek[0]] . '-' . $this->mapping_short_days[$daysOfWeek[count($daysOfWeek)-1]] : $this->mapping_short_days[$daysOfWeek[0]]);
+        }
     }
 
-    protected function generateWeekscheme($weekscheme)
+    protected function generateWeekscheme($openingHoursData)
     {
         $output_week = '<p class="cf-openinghours">Open op:</p>';
         $output_week .= '<ul class="list-unstyled">';
 
-        $keys = array_keys($weekscheme->getDays());
+        // Create an array with formatted timespans.
+        $formattedTimespans = [];
 
-        for ($i = 0; $i <= 6; $i++) {
-            $one_day = $weekscheme->getDays()[$keys[$i]];
-            if (!is_null($one_day) && $one_day->getOpenType()==SchemeDay::SCHEMEDAY_OPEN_TYPE_OPEN) {
-                $previous=null;
-                if ($one_day->getDayName()!=SchemeDay::MONDAY) {
-                    $previous = $weekscheme->getDays()[$keys[$i - 1]];
-                }
-                if (!is_null($previous) &&
-                    $previous->getOpenType()==$one_day->getOpenType() &&
-                    $previous->getOpeningTimes()==$one_day->getOpeningTimes()) {
-                    $one_day_dutch = $this->getDutchDay($one_day->getDayName());
-                    $previous_dutch = $this->getDutchDay($previous->getDayName());
-                    $one_day_short= $this->mapping_short_days[$one_day->getDayName()];
-                    $previous_short=$this->mapping_short_days[$previous->getDayName()];
+        foreach ($openingHoursData as $openingHours) {
+            $daysOfWeek = $openingHours->getDayOfWeek();
+            $daySpanShort = $this->generateFormattedTimespan($daysOfWeek);
+            $daySpanLong = $this->generateFormattedTimespan($daysOfWeek, true);
+            $opens = $this->getFormattedTime($openingHours->getOpens());
+            $closes = $this->getFormattedTime($openingHours->getCloses());
 
-                    if (strpos($output_week, '- ' . $previous_dutch . '</span>' != false)) {
-                        $output_week = str_replace(
-                            '- ' . $previous_dutch . '</span>',
-                            '- ' . $one_day_dutch . '</span>',
-                            $output_week
-                        );
-                        $output_week = str_replace(
-                            '-' . $previous_short . ' ',
-                            '-' . $one_day_short . '</span>',
-                            $output_week
-                        );
-                    } else {
-                        $output_week = str_replace(
-                            ucfirst($previous_dutch) . '</span>',
-                            ucfirst($previous_dutch) . ' - ' .$one_day_dutch . '</span>',
-                            $output_week
-                        );
-                        $output_week = str_replace(
-                            'datetime="' . $previous_short . ' ',
-                            'datetime="' . $previous_short . '-' . $one_day_short . ' ',
-                            $output_week
-                        );
-                        $output_week = str_replace(
-                            '- ' . $previous_dutch . '</span>',
-                            '- ' . $one_day_dutch . '</span>',
-                            $output_week
-                        );
-                        $output_week = str_replace(
-                            '-' . $previous_short . ' ',
-                            '-' . $one_day_short . ' ',
-                            $output_week
-                        );
-                    }
-                } else {
-                    $one_day_dutch = ucfirst($this->getDutchDay($one_day->getDayName()));
-                    //$output_week .= '<li>';
-                    $output_week .= '<meta itemprop="openingHours" datetime="'
-                        . $this->mapping_short_days[$one_day->getDayName()]
-                        . $this->getEarliestTime($one_day->getOpeningTimes())
-                        . $this->getLatestTime($one_day->getOpeningTimes()) . '"></meta>';
-                    $output_week .= '<li itemprop="openingHoursSpecification">';
-                    $output_week .= '<span class="cf-days">' . $one_day_dutch . '</span>';
-                    if (!is_null($one_day->getOpeningTimes())) {
-                        foreach ($one_day->getOpeningTimes() as $opening_time) {
-                            $output_week .= '<span itemprop="opens" content="'
-                                . $this->getFormattedTime($opening_time->getOpenFrom())
-                                . '" class="cf-from cf-meta">van</span>';
-                            $output_week .= '<span class="cf-time">';
-                            $output_week .= $this->getFormattedTime($opening_time->getOpenFrom());
-                            $output_week .= '</span> ';
-                            if (!is_null($opening_time->getOpenTill())) {
-                                $output_week .= '<span itemprop="closes" content="';
-                                $output_week .= $this->getFormattedTime($opening_time->getOpenTill());
-                                $output_week .= '" class="cf-to cf-meta">tot</span>';
-                                $output_week .= '<span class="cf-time">';
-                                $output_week .= $this->getFormattedTime($opening_time->getOpenTill());
-                                $output_week .= '</span> ';
-                            }
-                        }
-                    }
-                    //$output_week .= '</meta>';
-                    $output_week .= '</li>';
-                    //$output_week .= '</li>';
-                }
+            // Determine whether to add a new timespan with included meta tag,
+            // or to add extra opening times to an existing timespan.
+            if (!isset($formattedTimespans[$daySpanShort])) {
+                $formattedTimespans[$daySpanShort] = <<<EOT
+<meta itemprop="openingHours" datetime="$daySpanShort $opens-$closes"> </meta> <li itemprop="openingHoursSpecification"> <span class="cf-days">$daySpanLong</span> <span itemprop="opens" content="$opens" class="cf-from cf-meta">van</span> <span class="cf-time">$opens</span> <span itemprop="closes" content="$closes" class="cf-to cf-meta">tot</span> <span class="cf-time">$closes</span> 
+EOT;
+            }
+            else {
+                $formattedTimespans[$daySpanShort] .= <<<EOT
+<span itemprop="opens" content="$opens" class="cf-from cf-meta">van</span> 
+<span class="cf-time">$opens</span> <span itemprop="closes" content="$closes" class="cf-to cf-meta">tot</span> 
+<span class="cf-time">$closes</span> 
+EOT;
             }
         }
-        $output_week .= '</ul>';
 
-        return $output_week;
+        // Render the rest of the week scheme output.
+        foreach ($formattedTimespans as $formattedTimespan) {
+            $output_week .= $formattedTimespan . '</li>';
+        }
+        return $output_week . '</ul>';
     }
 }

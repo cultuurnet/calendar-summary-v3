@@ -93,7 +93,6 @@ class LargePeriodicPlainTextFormatter implements PeriodicFormatterInterface
             $output_week .= $formattedDay;
         }
         $output_week = rtrim($output_week, ',' . PHP_EOL);
-        $output_week .= ')';
-        return $output_week;
+        return $output_week . ')';
     }
 }
