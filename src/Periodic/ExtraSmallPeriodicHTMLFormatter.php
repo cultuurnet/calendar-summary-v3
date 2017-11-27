@@ -7,7 +7,7 @@ use \DateTime;
 use \DateTimeInterface;
 use \IntlDateFormatter;
 
-class ExtraSmallPeriodicHTMLFormatter implements PeriodicFormatterInterface
+class ExtraSmallPeriodicHTMLFormatter
 {
     private $fmtDay;
 
