@@ -5,9 +5,9 @@ namespace CultuurNet\CalendarSummaryV3;
 use CultuurNet\SearchV3\ValueObjects\Offer;
 
 use CultuurNet\CalendarSummaryV3\Periodic\ExtraSmallPeriodicPlainTextFormatter;
-use CultuurNet\CalendarSummary\Period\LargePeriodPlainTextFormatter;
-use CultuurNet\CalendarSummary\Period\MediumPeriodPlainTextFormatter;
-use CultuurNet\CalendarSummary\Period\SmallPeriodPlainTextFormatter;
+use CultuurNet\CalendarSummaryV3\Periodic\LargePeriodicPlainTextFormatter;
+use CultuurNet\CalendarSummaryV3\Periodic\MediumPeriodicPlainTextFormatter;
+use CultuurNet\CalendarSummaryV3\Periodic\SmallPeriodicPlainTextFormatter;
 use CultuurNet\CalendarSummary\Permanent\LargePermanentPlainTextFormatter;
 use CultuurNet\CalendarSummary\Timestamps\ExtraSmallTimestampsPlainTextFormatter;
 use CultuurNet\CalendarSummary\Timestamps\LargeTimestampsPlainTextFormatter;
@@ -25,7 +25,7 @@ class CalendarPlainTextFormatter implements CalendarFormatterInterface
                 [
                     //'lg' => new LargeTimestampsPlainTextFormatter(),
                     //'md' => new MediumTimestampsPlainTextFormatter(),
-                    //'sm' => new SmallTimestampsPlainTextFormatter(),
+                    //'sm' => new SmallTimestampsPlainTextForatter(),
                     //'xs' => new ExtraSmallTimestampsPlainTextFormatter(),
                 ],
             Offer::CALENDAR_TYPE_MULTIPLE =>
@@ -37,9 +37,9 @@ class CalendarPlainTextFormatter implements CalendarFormatterInterface
                 ],
             Offer::CALENDAR_TYPE_PERIODIC =>
                 [
-                    //'lg' => new LargePeriodPlainTextFormatter(),
-                    //'md' => new MediumPeriodPlainTextFormatter(),
-                    //'sm' => new SmallPeriodPlainTextFormatter(),
+                    'lg' => new LargePeriodicPlainTextFormatter(),
+                    'md' => new MediumPeriodicPlainTextFormatter(),
+                    'sm' => new SmallPeriodicPlainTextFormatter(),
                     'xs' => new ExtraSmallPeriodicPlainTextFormatter(),
                 ],
             /*

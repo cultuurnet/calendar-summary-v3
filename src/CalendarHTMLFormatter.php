@@ -37,7 +37,7 @@ class CalendarHTMLFormatter implements CalendarFormatterInterface
                 ],
             Offer::CALENDAR_TYPE_PERIODIC =>
                 [
-                    //'lg' => new LargePeriodHTMLFormatter(),
+                    'lg' => new LargePeriodicHTMLFormatter(),
                     'md' => new MediumPeriodicHTMLFormatter(),
                     'sm' => new SmallPeriodicHTMLFormatter(),
                     'xs' => new ExtraSmallPeriodicHTMLFormatter(),
