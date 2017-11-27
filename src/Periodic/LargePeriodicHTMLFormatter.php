@@ -5,13 +5,17 @@ namespace CultuurNet\CalendarSummaryV3\Periodic;
 use DateTime;
 use IntlDateFormatter;
 
+/**
+ * Provide a large HTML formatter for periodic calendar type.
+ * @package CultuurNet\CalendarSummaryV3\Periodic
+ */
 class LargePeriodicHTMLFormatter implements PeriodicFormatterInterface
 {
 
     /**
      * Translate the day to Dutch.
      */
-    protected $mapping_days = array(
+    protected $mappingDays = array(
         'monday' => 'maandag',
         'tuesday' => 'dinsdag',
         'wednesday' => 'woensdag',
@@ -34,6 +38,12 @@ class LargePeriodicHTMLFormatter implements PeriodicFormatterInterface
         'sunday' => 'Su',
     );
 
+    /**
+     * Return formatted period string.
+     *
+     * @param \CultuurNet\SearchV3\ValueObjects\Offer|\CultuurNet\SearchV3\ValueObjects\Place $place
+     * @return mixed
+     */
     public function format($place)
     {
         $output = $this->generateDates($place->getStartDate(), $place->getEndDate());
@@ -45,21 +55,36 @@ class LargePeriodicHTMLFormatter implements PeriodicFormatterInterface
         return $this->formatSummary($output);
     }
 
+    /**
+     * @param $calsum
+     * @return mixed
+     */
     protected function formatSummary($calsum)
     {
         $calsum = str_replace('><', '> <', $calsum);
         return str_replace('  ', ' ', $calsum);
     }
 
+    /**
+     * @param $time
+     * @return string
+     */
     protected function getFormattedTime($time)
     {
-        $formatted_short_time = ltrim($time, '0');
-        if ($formatted_short_time == ':00') {
-            $formatted_short_time = '0:00';
+        $formattedShortTime = ltrim($time, '0');
+        if ($formattedShortTime == ':00') {
+            $formattedShortTime = '0:00';
         }
-        return $formatted_short_time;
+        return $formattedShortTime;
     }
 
+    /**
+     * Retrieve the earliest time for the specified daysOfWeek.
+     *
+     * @param $openingHoursData
+     * @param $daysOfWeek
+     * @return string
+     */
     protected function getEarliestTime($openingHoursData, $daysOfWeek)
     {
         $earliest = '';
@@ -75,6 +100,13 @@ class LargePeriodicHTMLFormatter implements PeriodicFormatterInterface
         return $earliest;
     }
 
+    /**
+     * Retrieve the latest time for the specified daysOfWeek.
+     *
+     * @param $openingHoursData
+     * @param $daysOfWeek
+     * @return string
+     */
     protected function getLatestTime($openingHoursData, $daysOfWeek)
     {
         $latest = '';
@@ -89,8 +121,12 @@ class LargePeriodicHTMLFormatter implements PeriodicFormatterInterface
         }
         return $latest;
     }
-
-
+    
+    /**
+     * @param DateTime $dateFrom
+     * @param DateTime $dateTo
+     * @return string
+     */
     protected function generateDates(DateTime $dateFrom, DateTime $dateTo)
     {
         $fmt = new IntlDateFormatter(
@@ -108,25 +144,30 @@ class LargePeriodicHTMLFormatter implements PeriodicFormatterInterface
         $dateToTimestamp = $dateTo->getTimestamp();
         $intlDateTo = $fmt->format($dateToTimestamp);
 
-        $output_dates = '<p class="cf-period">';
-        $output_dates .= '<time itemprop="startDate" datetime="' . date("Y-m-d", $dateFromTimestamp) . '">';
-        $output_dates .= '<span class="cf-date">' . $intlDateFrom . '</span> </time>';
-        $output_dates .= '<span class="cf-to cf-meta">tot</span>';
-        $output_dates .= '<time itemprop="endDate" datetime="' . date("Y-m-d", $dateToTimestamp) . '">';
-        $output_dates .= '<span class="cf-date">' . $intlDateTo . '</span> </time>';
-        $output_dates .= '</p>';
-        return $output_dates;
+        $outputDates = '<p class="cf-period">';
+        $outputDates .= '<time itemprop="startDate" datetime="' . date("Y-m-d", $dateFromTimestamp) . '">';
+        $outputDates .= '<span class="cf-date">' . $intlDateFrom . '</span> </time>';
+        $outputDates .= '<span class="cf-to cf-meta">tot</span>';
+        $outputDates .= '<time itemprop="endDate" datetime="' . date("Y-m-d", $dateToTimestamp) . '">';
+        $outputDates .= '<span class="cf-date">' . $intlDateTo . '</span> </time>';
+        $outputDates .= '</p>';
+        return $outputDates;
     }
 
+    /**
+     * @param $daysOfWeek
+     * @param bool $long
+     * @return string
+     */
     protected function generateFormattedTimespan($daysOfWeek, $long = false)
     {
         if ($long) {
             if (count($daysOfWeek) > 1) {
-                return ucfirst($this->mapping_days[$daysOfWeek[0]])
+                return ucfirst($this->mappingDays[$daysOfWeek[0]])
                     . ' - '
-                    . $this->mapping_days[$daysOfWeek[count($daysOfWeek)-1]];
+                    . $this->mappingDays[$daysOfWeek[count($daysOfWeek)-1]];
             } else {
-                return ucfirst($this->mapping_days[$daysOfWeek[0]]);
+                return ucfirst($this->mappingDays[$daysOfWeek[0]]);
             }
         } else {
             if (count($daysOfWeek) > 1) {
@@ -139,10 +180,14 @@ class LargePeriodicHTMLFormatter implements PeriodicFormatterInterface
         }
     }
 
-    protected function generateWeekscheme($openingHoursData)
+    /**
+     * @param $openingHoursData
+     * @return string
+     */
+    protected function generateWeekScheme($openingHoursData)
     {
-        $output_week = '<p class="cf-openinghours">Open op:</p>';
-        $output_week .= '<ul class="list-unstyled">';
+        $outputWeek = '<p class="cf-openinghours">Open op:</p>';
+        $outputWeek .= '<ul class="list-unstyled">';
 
         // Create an array with formatted timespans.
         $formattedTimespans = [];
@@ -179,8 +224,8 @@ class LargePeriodicHTMLFormatter implements PeriodicFormatterInterface
 
         // Render the rest of the week scheme output.
         foreach ($formattedTimespans as $formattedTimespan) {
-            $output_week .= $formattedTimespan . '</li>';
+            $outputWeek .= $formattedTimespan . '</li>';
         }
-        return $output_week . '</ul>';
+        return $outputWeek . '</ul>';
     }
 }

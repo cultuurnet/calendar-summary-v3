@@ -2,17 +2,29 @@
 
 namespace CultuurNet\CalendarSummaryV3\Periodic;
 
-use CultuurNet\SearchV3\ValueObjects\Offer;
 use \DateTime;
 use \DateTimeInterface;
 use \IntlDateFormatter;
 
+/**
+ * Provide a small plain text formatter for periodic calendar type.
+ * @package CultuurNet\CalendarSummaryV3\Periodic
+ */
 class SmallPeriodicPlainTextFormatter implements PeriodicFormatterInterface
 {
+    /**
+     * @var IntlDateFormatter
+     */
     private $fmtDay;
 
+    /**
+     * @var IntlDateFormatter
+     */
     private $fmtMonth;
 
+    /**
+     * SmallPeriodicPlainTextFormatter constructor.
+     */
     public function __construct()
     {
         $this->fmtDay = new IntlDateFormatter(
@@ -34,6 +46,12 @@ class SmallPeriodicPlainTextFormatter implements PeriodicFormatterInterface
         );
     }
 
+    /**
+     * Return formatted period string.
+     *
+     * @param \CultuurNet\SearchV3\ValueObjects\Offer|\CultuurNet\SearchV3\ValueObjects\Place $offer
+     * @return string
+     */
     public function format($offer)
     {
         $startDate = $offer->getStartDate();

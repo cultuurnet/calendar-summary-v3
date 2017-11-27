@@ -5,13 +5,17 @@ namespace CultuurNet\CalendarSummaryV3\Periodic;
 use DateTime;
 use IntlDateFormatter;
 
+/**
+ * Provide a large plain text formatter for periodic calendar type.
+ * @package CultuurNet\CalendarSummaryV3\Periodic
+ */
 class LargePeriodicPlainTextFormatter implements PeriodicFormatterInterface
 {
 
     /**
      * Translate the day to short Dutch format.
      */
-    protected $mapping_days = array(
+    protected $mappingDays = array(
         'monday' => 'ma',
         'tuesday' => 'di',
         'wednesday' => 'wo',
@@ -21,7 +25,12 @@ class LargePeriodicPlainTextFormatter implements PeriodicFormatterInterface
         'sunday' => 'zo',
     );
 
-
+    /**
+     * Return formatted period string.
+     *
+     * @param \CultuurNet\SearchV3\ValueObjects\Offer|\CultuurNet\SearchV3\ValueObjects\Place $place
+     * @return string
+     */
     public function format($place)
     {
         $output = $this->generateDates($place->getStartDate(), $place->getEndDate());
@@ -33,15 +42,24 @@ class LargePeriodicPlainTextFormatter implements PeriodicFormatterInterface
         return $output;
     }
 
+    /**
+     * @param $time
+     * @return string
+     */
     protected function getFormattedTime($time)
     {
-        $formatted_short_time = ltrim($time, '0');
-        if ($formatted_short_time == ':00') {
-            $formatted_short_time = '0:00';
+        $formattedShortTime = ltrim($time, '0');
+        if ($formattedShortTime == ':00') {
+            $formattedShortTime = '0:00';
         }
-        return $formatted_short_time;
+        return $formattedShortTime;
     }
 
+    /**
+     * @param DateTime $dateFrom
+     * @param DateTime $dateTo
+     * @return string
+     */
     protected function generateDates(DateTime $dateFrom, DateTime $dateTo)
     {
         $fmt = new IntlDateFormatter(
@@ -63,16 +81,20 @@ class LargePeriodicPlainTextFormatter implements PeriodicFormatterInterface
         return $output_dates;
     }
 
+    /**
+     * @param $openingHoursData
+     * @return string
+     */
     protected function generateWeekScheme($openingHoursData)
     {
-        $output_week = '(';
+        $outputWeek = '(';
 
         // Create an array with formatted days.
         $formattedDays = [];
         foreach ($openingHoursData as $openingHours) {
             foreach ($openingHours->getDayOfWeek() as $dayOfWeek) {
                 if (!isset($formattedDays[$dayOfWeek])) {
-                    $formattedDays[$dayOfWeek] = $this->mapping_days[$dayOfWeek]
+                    $formattedDays[$dayOfWeek] = $this->mappingDays[$dayOfWeek]
                         . ' van '
                         . $this->getFormattedTime($openingHours->getOpens())
                         . ' tot ' . $this->getFormattedTime($openingHours->getCloses())
@@ -86,21 +108,19 @@ class LargePeriodicPlainTextFormatter implements PeriodicFormatterInterface
                 }
             }
         }
-
         // Create an array with formatted closed days.
         $closedDays = [];
-        foreach (array_keys($this->mapping_days) as $day) {
-            $closedDays[$day] = $this->mapping_days[$day] . '  gesloten,' . PHP_EOL;
+        foreach (array_keys($this->mappingDays) as $day) {
+            $closedDays[$day] = $this->mappingDays[$day] . '  gesloten,' . PHP_EOL;
         }
-
         // Merge the formatted days with the closed days array to fill in missing days and sort using the days mapping.
-        $formattedDays = array_replace($this->mapping_days, $formattedDays + $closedDays);
+        $formattedDays = array_replace($this->mappingDays, $formattedDays + $closedDays);
 
         // Render the rest of the week scheme output.
         foreach ($formattedDays as $formattedDay) {
-            $output_week .= $formattedDay;
+            $outputWeek .= $formattedDay;
         }
-        $output_week = rtrim($output_week, ',' . PHP_EOL);
-        return $output_week . ')';
+        $outputWeek = rtrim($outputWeek, ',' . PHP_EOL);
+        return $outputWeek . ')';
     }
 }
