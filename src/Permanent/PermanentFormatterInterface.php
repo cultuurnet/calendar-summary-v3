@@ -2,14 +2,14 @@
 
 namespace CultuurNet\CalendarSummaryV3\Permanent;
 
-use CultuurNet\SearchV3\ValueObjects\Offer;
+use CultuurNet\SearchV3\ValueObjects\Place;
 
 interface PermanentFormatterInterface
 {
 
     /**
-     * @param Offer $offer
+     * @param Place $place
      * @return string
      */
-    public function format(Offer $offer);
+    public function format(Place $place);
 }

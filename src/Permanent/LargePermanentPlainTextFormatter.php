@@ -2,7 +2,7 @@
 
 namespace CultuurNet\CalendarSummaryV3\Permanent;
 
-use CultuurNet\SearchV3\ValueObjects\Offer;
+use CultuurNet\SearchV3\ValueObjects\Place;
 
 class LargePermanentPlainTextFormatter implements PermanentFormatterInterface
 {
@@ -20,10 +20,10 @@ class LargePermanentPlainTextFormatter implements PermanentFormatterInterface
     );
 
 
-    public function format(Offer $offer) {
+    public function format(Place $place) {
         $output = '';
-        if (!is_null($offer->getWeekScheme())) {
-            $output .= $this->generateWeekscheme($offer->getWeekScheme());
+        if (!is_null($place->getWeekScheme())) {
+            $output .= $this->generateWeekscheme($place->getWeekScheme());
         }
 
         return $output;

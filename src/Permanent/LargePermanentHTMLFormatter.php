@@ -2,7 +2,7 @@
 
 namespace CultuurNet\CalendarSummaryV3\Permanent;
 
-use CultuurNet\SearchV3\ValueObjects\Offer;
+use CultuurNet\SearchV3\ValueObjects\Place;
 
 class LargePermanentHTMLFormatter implements PermanentFormatterInterface
 {
@@ -29,10 +29,10 @@ class LargePermanentHTMLFormatter implements PermanentFormatterInterface
         'sunday' => 'Su',
     );
 
-    public function format(Offer $offer) {
+    public function format(Place $place) {
         $output = '';
-        if (!is_null($offer->getWeekScheme())) {
-            $output .= $this->generateWeekscheme($offer->getWeekScheme());
+        if (!is_null($place->getWeekScheme())) {
+            $output .= $this->generateWeekscheme($place->getWeekScheme());
         }
 
         return $this->formatSummary($output);
