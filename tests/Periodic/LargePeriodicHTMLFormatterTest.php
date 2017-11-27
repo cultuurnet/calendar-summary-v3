@@ -120,7 +120,6 @@ class LargePeriodicHTMLFormatterTest extends \PHPUnit_Framework_TestCase
         );
     }
 
-    /*
     public function testFormatAPeriodWithComplexTimeBlocks()
     {
         $place = new Place();
@@ -157,18 +156,46 @@ class LargePeriodicHTMLFormatterTest extends \PHPUnit_Framework_TestCase
         $place->setOpeningHours($openingHoursData);
 
         $this->assertEquals(
-            'Van 25 november 2025 tot 30 november 2030'. PHP_EOL
-            . '(ma van 9:30 tot 13:45'. PHP_EOL . 'van 17:00 tot 20:00,' . PHP_EOL
-            . 'di van 9:30 tot 13:45'. PHP_EOL . 'van 18:00 tot 20:00,'. PHP_EOL . 'van 21:00 tot 23:00,'. PHP_EOL
-            . 'wo  gesloten,' . PHP_EOL
-            . 'do  gesloten,' . PHP_EOL
-            . 'vr van 10:00 tot 15:00'. PHP_EOL
-            . 'za van 10:00 tot 15:00' . PHP_EOL
-            . 'zo  gesloten)',
+            '<p class="cf-period"> <time itemprop="startDate" datetime="2025-11-25"> '
+            . '<span class="cf-date">25 november 2025</span> </time> <span class="cf-to cf-meta">tot</span> '
+            . '<time itemprop="endDate" datetime="2030-11-30"> <span class="cf-date">30 november 2030</span> </time> '
+            . '</p> <p class="cf-openinghours">Open op:</p> <ul class="list-unstyled"> '
+            . '<meta itemprop="openingHours" datetime="Mo-Tu 9:30-13:45"> </meta> '
+            . '<li itemprop="openingHoursSpecification"> <span class="cf-days">Maandag - dinsdag</span> '
+            . '<span itemprop="opens" content="9:30" class="cf-from cf-meta">van</span> '
+            . '<span class="cf-time">9:30</span> '
+            . '<span itemprop="closes" content="13:45" class="cf-to cf-meta">tot</span> '
+            . '<span class="cf-time">13:45</span> '
+            . '</li> '
+            . '<meta itemprop="openingHours" datetime="Mo 17:00-20:00"> </meta> '
+            . '<li itemprop="openingHoursSpecification"> <span class="cf-days">Maandag</span> '
+            . '<span itemprop="opens" content="17:00" class="cf-from cf-meta">van</span> '
+            . '<span class="cf-time">17:00</span> '
+            . '<span itemprop="closes" content="20:00" class="cf-to cf-meta">tot</span> '
+            . '<span class="cf-time">20:00</span> '
+            . '</li> '
+            . '<meta itemprop="openingHours" datetime="Tu 18:00-23:00"> </meta> '
+            . '<li itemprop="openingHoursSpecification"> <span class="cf-days">Dinsdag</span> '
+            . '<span itemprop="opens" content="18:00" class="cf-from cf-meta">van</span> '
+            . '<span class="cf-time">18:00</span> '
+            . '<span itemprop="closes" content="20:00" class="cf-to cf-meta">tot</span> '
+            . '<span class="cf-time">20:00</span> '
+            . '<span itemprop="opens" content="21:00" class="cf-from cf-meta">van</span> '
+            . '<span class="cf-time">21:00</span> '
+            . '<span itemprop="closes" content="23:00" class="cf-to cf-meta">tot</span> '
+            . '<span class="cf-time">23:00</span> '
+            . '</li> '
+            . '<meta itemprop="openingHours" datetime="Fr-Sa 10:00-15:00"> </meta> '
+            . '<li itemprop="openingHoursSpecification"> <span class="cf-days">Vrijdag - zaterdag</span> '
+            . '<span itemprop="opens" content="10:00" class="cf-from cf-meta">van</span> '
+            . '<span class="cf-time">10:00</span> '
+            . '<span itemprop="closes" content="15:00" class="cf-to cf-meta">tot</span> '
+            . '<span class="cf-time">15:00</span> '
+            . '</li> </ul>',
             $this->formatter->format($place)
         );
     }
-*/
+
     public function testFormatAPeriodWithoutTimeBlocks()
     {
         $place = new Place();
