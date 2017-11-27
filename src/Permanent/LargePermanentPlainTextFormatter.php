@@ -1,14 +1,8 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: jonas
- * Date: 06/03/15
- * Time: 14:38
- */
 
-namespace CultuurNet\CalendarSummary\Permanent;
+namespace CultuurNet\CalendarSummaryV3\Permanent;
 
-use \CultureFeed_Cdb_Data_Calendar_SchemeDay as SchemeDay;
+use CultuurNet\SearchV3\ValueObjects\Offer;
 
 class LargePermanentPlainTextFormatter implements PermanentFormatterInterface
 {
@@ -26,12 +20,10 @@ class LargePermanentPlainTextFormatter implements PermanentFormatterInterface
     );
 
 
-    public function format(
-        \CultureFeed_Cdb_Data_Calendar_Permanent $permanent
-    ) {
+    public function format(Offer $offer) {
         $output = '';
-        if (!is_null($permanent->getWeekScheme())) {
-            $output .= $this->generateWeekscheme($permanent->getWeekScheme());
+        if (!is_null($offer->getWeekScheme())) {
+            $output .= $this->generateWeekscheme($offer->getWeekScheme());
         }
 
         return $output;
