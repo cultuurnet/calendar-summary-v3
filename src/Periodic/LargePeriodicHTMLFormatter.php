@@ -2,6 +2,7 @@
 
 namespace CultuurNet\CalendarSummaryV3\Periodic;
 
+use CultuurNet\SearchV3\ValueObjects\OpeningHours;
 use DateTime;
 use IntlDateFormatter;
 
@@ -59,6 +60,43 @@ class LargePeriodicHTMLFormatter implements PeriodicFormatterInterface
         return $formatted_short_time;
     }
 
+    protected function getEarliestTime($openingHoursData, $daysOfWeek)
+    {
+        $earliest = '';
+        foreach ($openingHoursData as $openingHours) {
+            if ($daysOfWeek === $openingHours->getDayOfWeek()) {
+                if (!empty($earliest)) {
+                    if ($earliest > $openingHours->getOpens()) {
+                        $earliest = $openingHours->getOpens();
+                    }
+                }
+                else {
+                    $earliest = $openingHours->getOpens();
+                }
+            };
+        }
+        return $earliest;
+    }
+
+    protected function getLatestTime($openingHoursData, $daysOfWeek)
+    {
+        $latest = '';
+        foreach ($openingHoursData as $openingHours) {
+            if ($daysOfWeek === $openingHours->getDayOfWeek()) {
+                if (!empty($latest)) {
+                    if ($openingHours->getCloses() > $latest) {
+                        $latest = $openingHours->getCloses();
+                    }
+                }
+                else {
+                    $latest = $openingHours->getCloses();
+                }
+            };
+        }
+        return $latest;
+    }
+
+
     protected function generateDates(DateTime $dateFrom, DateTime $dateTo)
     {
         $fmt = new IntlDateFormatter(
@@ -107,6 +145,8 @@ class LargePeriodicHTMLFormatter implements PeriodicFormatterInterface
             $daysOfWeek = $openingHours->getDayOfWeek();
             $daySpanShort = $this->generateFormattedTimespan($daysOfWeek);
             $daySpanLong = $this->generateFormattedTimespan($daysOfWeek, true);
+            $firstOpens = $this->getFormattedTime($this->getEarliestTime($openingHoursData, $daysOfWeek));
+            $lastCloses = $this->getFormattedTime($this->getLatestTime($openingHoursData, $daysOfWeek));
             $opens = $this->getFormattedTime($openingHours->getOpens());
             $closes = $this->getFormattedTime($openingHours->getCloses());
 
@@ -114,14 +154,12 @@ class LargePeriodicHTMLFormatter implements PeriodicFormatterInterface
             // or to add extra opening times to an existing timespan.
             if (!isset($formattedTimespans[$daySpanShort])) {
                 $formattedTimespans[$daySpanShort] = <<<EOT
-<meta itemprop="openingHours" datetime="$daySpanShort $opens-$closes"> </meta> <li itemprop="openingHoursSpecification"> <span class="cf-days">$daySpanLong</span> <span itemprop="opens" content="$opens" class="cf-from cf-meta">van</span> <span class="cf-time">$opens</span> <span itemprop="closes" content="$closes" class="cf-to cf-meta">tot</span> <span class="cf-time">$closes</span> 
+<meta itemprop="openingHours" datetime="$daySpanShort $firstOpens-$lastCloses"> </meta> <li itemprop="openingHoursSpecification"> <span class="cf-days">$daySpanLong</span> <span itemprop="opens" content="$opens" class="cf-from cf-meta">van</span> <span class="cf-time">$opens</span> <span itemprop="closes" content="$closes" class="cf-to cf-meta">tot</span> <span class="cf-time">$closes</span> 
 EOT;
             }
             else {
                 $formattedTimespans[$daySpanShort] .= <<<EOT
-<span itemprop="opens" content="$opens" class="cf-from cf-meta">van</span> 
-<span class="cf-time">$opens</span> <span itemprop="closes" content="$closes" class="cf-to cf-meta">tot</span> 
-<span class="cf-time">$closes</span> 
+<span itemprop="opens" content="$opens" class="cf-from cf-meta">van</span> <span class="cf-time">$opens</span> <span itemprop="closes" content="$closes" class="cf-to cf-meta">tot</span> <span class="cf-time">$closes</span> 
 EOT;
             }
         }
