@@ -21,7 +21,7 @@ class LargePermanentPlainTextFormatter implements PermanentFormatterInterface
 
     public function format(Place $place) {
         $output = '';
-        if (!is_null($place->getOpeningHours())) {
+        if ($place->getOpeningHours()) {
             $output .= $this->generateWeekScheme($place->getOpeningHours());
         }
         return $output;
