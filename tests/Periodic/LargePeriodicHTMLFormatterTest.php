@@ -215,5 +215,4 @@ class LargePeriodicHTMLFormatterTest extends \PHPUnit_Framework_TestCase
             $this->formatter->format($place)
         );
     }
-
 }

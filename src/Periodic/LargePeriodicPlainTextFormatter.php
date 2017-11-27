@@ -22,7 +22,8 @@ class LargePeriodicPlainTextFormatter implements PeriodicFormatterInterface
     );
 
 
-    public function format($place) {
+    public function format($place)
+    {
         $output = $this->generateDates($place->getStartDate(), $place->getEndDate());
 
         if ($place->getOpeningHours()) {
@@ -71,10 +72,17 @@ class LargePeriodicPlainTextFormatter implements PeriodicFormatterInterface
         foreach ($openingHoursData as $openingHours) {
             foreach ($openingHours->getDayOfWeek() as $dayOfWeek) {
                 if (!isset($formattedDays[$dayOfWeek])) {
-                    $formattedDays[$dayOfWeek] = $this->mapping_days[$dayOfWeek] . ' van ' . $this->getFormattedTime($openingHours->getOpens()) . ' tot ' . $this->getFormattedTime($openingHours->getCloses()) . PHP_EOL;
-                }
-                else {
-                    $formattedDays[$dayOfWeek] .= 'van ' . $this->getFormattedTime($openingHours->getOpens()) . ' tot ' . $this->getFormattedTime($openingHours->getCloses()) . ',' . PHP_EOL;
+                    $formattedDays[$dayOfWeek] = $this->mapping_days[$dayOfWeek]
+                        . ' van '
+                        . $this->getFormattedTime($openingHours->getOpens())
+                        . ' tot ' . $this->getFormattedTime($openingHours->getCloses())
+                        . PHP_EOL;
+                } else {
+                    $formattedDays[$dayOfWeek] .= 'van '
+                        . $this->getFormattedTime($openingHours->getOpens())
+                        . ' tot ' . $this->getFormattedTime($openingHours->getCloses())
+                        . ','
+                        . PHP_EOL;
                 }
             }
         }

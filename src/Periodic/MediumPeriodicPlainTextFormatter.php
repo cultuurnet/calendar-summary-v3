@@ -8,7 +8,8 @@ use IntlDateFormatter;
 class MediumPeriodicPlainTextFormatter implements PeriodicFormatterInterface
 {
 
-    public function format($offer) {
+    public function format($offer)
+    {
         $fmt = new IntlDateFormatter(
             'nl_BE',
             IntlDateFormatter::FULL,

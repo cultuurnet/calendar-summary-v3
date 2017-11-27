@@ -40,7 +40,6 @@ class ExtraSmallPeriodicPlainTextFormatterTest extends \PHPUnit_Framework_TestCa
         );
     }
 
-
     public function testFormatAPeriodDayWithoutLeadingZero()
     {
         $offer = new Event();

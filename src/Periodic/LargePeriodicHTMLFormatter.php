@@ -34,7 +34,8 @@ class LargePeriodicHTMLFormatter implements PeriodicFormatterInterface
         'sunday' => 'Su',
     );
 
-    public function format($place) {
+    public function format($place)
+    {
         $output = $this->generateDates($place->getStartDate(), $place->getEndDate());
 
         if ($place->getOpeningHours()) {
@@ -66,8 +67,7 @@ class LargePeriodicHTMLFormatter implements PeriodicFormatterInterface
             if ($daysOfWeek === $openingHours->getDayOfWeek()) {
                 if (!empty($earliest)) {
                     $earliest = ($openingHours->getOpens() < $earliest ? $openingHours->getOpens() : $earliest);
-                }
-                else {
+                } else {
                     $earliest = $openingHours->getOpens();
                 }
             };
@@ -82,8 +82,7 @@ class LargePeriodicHTMLFormatter implements PeriodicFormatterInterface
             if ($daysOfWeek === $openingHours->getDayOfWeek()) {
                 if (!empty($latest)) {
                     $latest = ($openingHours->getCloses() > $latest ? $openingHours->getCloses() : $latest);
-                }
-                else {
+                } else {
                     $latest = $openingHours->getCloses();
                 }
             };
@@ -119,12 +118,24 @@ class LargePeriodicHTMLFormatter implements PeriodicFormatterInterface
         return $output_dates;
     }
 
-    protected function generateFormattedTimespan($daysOfWeek, $long = false) {
+    protected function generateFormattedTimespan($daysOfWeek, $long = false)
+    {
         if ($long) {
-            return (count($daysOfWeek) > 1 ? ucfirst($this->mapping_days[$daysOfWeek[0]]) . ' - ' . $this->mapping_days[$daysOfWeek[count($daysOfWeek)-1]] : ucfirst($this->mapping_days[$daysOfWeek[0]]));
-        }
-        else {
-            return (count($daysOfWeek) > 1 ? $this->mapping_short_days[$daysOfWeek[0]] . '-' . $this->mapping_short_days[$daysOfWeek[count($daysOfWeek)-1]] : $this->mapping_short_days[$daysOfWeek[0]]);
+            if (count($daysOfWeek) > 1) {
+                return ucfirst($this->mapping_days[$daysOfWeek[0]])
+                    . ' - '
+                    . $this->mapping_days[$daysOfWeek[count($daysOfWeek)-1]];
+            } else {
+                return ucfirst($this->mapping_days[$daysOfWeek[0]]);
+            }
+        } else {
+            if (count($daysOfWeek) > 1) {
+                return ucfirst($this->mapping_short_days[$daysOfWeek[0]])
+                    . '-'
+                    . $this->mapping_short_days[$daysOfWeek[count($daysOfWeek)-1]];
+            } else {
+                return ucfirst($this->mapping_short_days[$daysOfWeek[0]]);
+            }
         }
     }
 
@@ -148,14 +159,21 @@ class LargePeriodicHTMLFormatter implements PeriodicFormatterInterface
             // Determine whether to add a new timespan with included meta tag,
             // or to add extra opening times to an existing timespan.
             if (!isset($formattedTimespans[$daySpanShort])) {
-                $formattedTimespans[$daySpanShort] = <<<EOT
-<meta itemprop="openingHours" datetime="$daySpanShort $firstOpens-$lastCloses"> </meta> <li itemprop="openingHoursSpecification"> <span class="cf-days">$daySpanLong</span> <span itemprop="opens" content="$opens" class="cf-from cf-meta">van</span> <span class="cf-time">$opens</span> <span itemprop="closes" content="$closes" class="cf-to cf-meta">tot</span> <span class="cf-time">$closes</span> 
-EOT;
-            }
-            else {
-                $formattedTimespans[$daySpanShort] .= <<<EOT
-<span itemprop="opens" content="$opens" class="cf-from cf-meta">van</span> <span class="cf-time">$opens</span> <span itemprop="closes" content="$closes" class="cf-to cf-meta">tot</span> <span class="cf-time">$closes</span> 
-EOT;
+                $formattedTimespans[$daySpanShort] =
+                    "<meta itemprop=\"openingHours\" datetime=\"$daySpanShort $firstOpens-$lastCloses\"> "
+                    . "</meta> "
+                    . "<li itemprop=\"openingHoursSpecification\"> "
+                    . "<span class=\"cf-days\">$daySpanLong</span> "
+                    . "<span itemprop=\"opens\" content=\"$opens\" class=\"cf-from cf-meta\">van</span> "
+                    . "<span class=\"cf-time\">$opens</span> "
+                    . "<span itemprop=\"closes\" content=\"$closes\" class=\"cf-to cf-meta\">tot</span> "
+                    . "<span class=\"cf-time\">$closes</span>";
+            } else {
+                $formattedTimespans[$daySpanShort] .=
+                    "<span itemprop=\"opens\" content=\"$opens\" class=\"cf-from cf-meta\">van</span> "
+                    . "<span class=\"cf-time\">$opens</span> "
+                    . "<span itemprop=\"closes\" content=\"$closes\" class=\"cf-to cf-meta\">tot</span> "
+                    . "<span class=\"cf-time\">$closes</span>";
             }
         }
 
