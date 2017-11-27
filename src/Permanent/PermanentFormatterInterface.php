@@ -1,19 +1,15 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: nicolas
- * Date: 06/03/15
- * Time: 13:52
- */
 
-namespace CultuurNet\CalendarSummary\Permanent;
+namespace CultuurNet\CalendarSummaryV3\Permanent;
+
+use CultuurNet\SearchV3\ValueObjects\Offer;
 
 interface PermanentFormatterInterface
 {
 
     /**
-     * @param \CultureFeed_Cdb_Data_Calendar_Permanent $permanent
+     * @param Offer $offer
      * @return string
      */
-    public function format(\CultureFeed_Cdb_Data_Calendar_Permanent $permanent);
+    public function format(Offer $offer);
 }

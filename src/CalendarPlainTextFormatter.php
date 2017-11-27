@@ -8,7 +8,7 @@ use CultuurNet\CalendarSummaryV3\Periodic\ExtraSmallPeriodicPlainTextFormatter;
 use CultuurNet\CalendarSummary\Period\LargePeriodPlainTextFormatter;
 use CultuurNet\CalendarSummary\Period\MediumPeriodPlainTextFormatter;
 use CultuurNet\CalendarSummary\Period\SmallPeriodPlainTextFormatter;
-use CultuurNet\CalendarSummary\Permanent\LargePermanentPlainTextFormatter;
+use CultuurNet\CalendarSummaryV3\Permanent\LargePermanentPlainTextFormatter;
 use CultuurNet\CalendarSummary\Timestamps\ExtraSmallTimestampsPlainTextFormatter;
 use CultuurNet\CalendarSummary\Timestamps\LargeTimestampsPlainTextFormatter;
 use CultuurNet\CalendarSummary\Timestamps\MediumTimestampsPlainTextFormatter;
@@ -42,12 +42,10 @@ class CalendarPlainTextFormatter implements CalendarFormatterInterface
                     //'sm' => new SmallPeriodPlainTextFormatter(),
                     'xs' => new ExtraSmallPeriodicPlainTextFormatter(),
                 ],
-            /*
             Offer::CALENDAR_TYPE_PERMANENT =>
                 [
-                    //'lg' => new LargePermanentHTMLFormatter(),
+                    'lg' => new LargePermanentPlainTextFormatter(),
                 ],
-            */
         ];
     }
 
