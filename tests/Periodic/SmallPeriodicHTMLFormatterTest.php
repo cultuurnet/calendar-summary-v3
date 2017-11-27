@@ -4,6 +4,10 @@ namespace CultuurNet\CalendarSummaryV3\Periodic;
 
 use CultuurNet\SearchV3\ValueObjects\Event;
 
+/**
+ * Provide unit tests for small HTML periodic formatter.
+ * @package CultuurNet\CalendarSummaryV3\Periodic
+ */
 class SmallPeriodicHTMLFormatterTest extends \PHPUnit_Framework_TestCase
 {
     /**

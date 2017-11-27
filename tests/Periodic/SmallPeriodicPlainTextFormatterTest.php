@@ -4,6 +4,10 @@ namespace CultuurNet\CalendarSummaryV3\Periodic;
 
 use CultuurNet\SearchV3\ValueObjects\Event;
 
+/**
+ * Provide unit tests for small plain text periodic formatter.
+ * @package CultuurNet\CalendarSummaryV3\Periodic
+ */
 class SmallPeriodicPlainTextFormatterTest extends \PHPUnit_Framework_TestCase
 {
     /**
@@ -39,7 +43,6 @@ class SmallPeriodicPlainTextFormatterTest extends \PHPUnit_Framework_TestCase
             $this->formatter->format($offer)
         );
     }
-
 
     public function testFormatAPeriodDayWithoutLeadingZero()
     {

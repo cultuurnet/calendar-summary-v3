@@ -5,6 +5,10 @@ namespace CultuurNet\CalendarSummaryV3\Periodic;
 use CultuurNet\SearchV3\ValueObjects\OpeningHours;
 use CultuurNet\SearchV3\ValueObjects\Place;
 
+/**
+ * Provide unit tests for large plain text periodic formatter.
+ * @package CultuurNet\CalendarSummaryV3\Periodic
+ */
 class LargePeriodicPlainTextFormatterTest extends \PHPUnit_Framework_TestCase
 {
     /**
