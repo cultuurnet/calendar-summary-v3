@@ -2,7 +2,6 @@
 
 namespace CultuurNet\CalendarSummaryV3\Periodic;
 
-use CultuurNet\SearchV3\ValueObjects\OpeningHours;
 use DateTime;
 use IntlDateFormatter;
 
@@ -66,9 +65,7 @@ class LargePeriodicHTMLFormatter implements PeriodicFormatterInterface
         foreach ($openingHoursData as $openingHours) {
             if ($daysOfWeek === $openingHours->getDayOfWeek()) {
                 if (!empty($earliest)) {
-                    if ($earliest > $openingHours->getOpens()) {
-                        $earliest = $openingHours->getOpens();
-                    }
+                    $earliest = ($openingHours->getOpens() < $earliest ? $openingHours->getOpens() : $earliest);
                 }
                 else {
                     $earliest = $openingHours->getOpens();
@@ -84,9 +81,7 @@ class LargePeriodicHTMLFormatter implements PeriodicFormatterInterface
         foreach ($openingHoursData as $openingHours) {
             if ($daysOfWeek === $openingHours->getDayOfWeek()) {
                 if (!empty($latest)) {
-                    if ($openingHours->getCloses() > $latest) {
-                        $latest = $openingHours->getCloses();
-                    }
+                    $latest = ($openingHours->getCloses() > $latest ? $openingHours->getCloses() : $latest);
                 }
                 else {
                     $latest = $openingHours->getCloses();
