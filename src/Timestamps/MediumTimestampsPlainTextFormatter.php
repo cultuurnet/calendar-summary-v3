@@ -6,7 +6,7 @@
  * Time: 17:14
  */
 
-namespace CultuurNet\CalendarSummary\Timestamps;
+namespace CultuurNet\CalendarSummaryV3\Timestamps;
 
 use IntlDateFormatter;
 

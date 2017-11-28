@@ -1,6 +1,6 @@
 <?php
 
-namespace CultuurNet\CalendarSummary\Timestamps;
+namespace CultuurNet\CalendarSummaryV3\Timestamps;
 
 trait ShowFrom
 {

@@ -4,16 +4,6 @@ namespace CultuurNet\CalendarSummaryV3;
 
 use CultuurNet\SearchV3\ValueObjects\Offer;
 
-use CultuurNet\CalendarSummaryV3\Periodic\ExtraSmallPeriodicPlainTextFormatter;
-use CultuurNet\CalendarSummary\Period\LargePeriodPlainTextFormatter;
-use CultuurNet\CalendarSummary\Period\MediumPeriodPlainTextFormatter;
-use CultuurNet\CalendarSummary\Period\SmallPeriodPlainTextFormatter;
-use CultuurNet\CalendarSummary\Permanent\LargePermanentPlainTextFormatter;
-use CultuurNet\CalendarSummary\Timestamps\ExtraSmallTimestampsPlainTextFormatter;
-use CultuurNet\CalendarSummary\Timestamps\LargeTimestampsPlainTextFormatter;
-use CultuurNet\CalendarSummary\Timestamps\MediumTimestampsPlainTextFormatter;
-use CultuurNet\CalendarSummary\Timestamps\SmallTimestampsPlainTextFormatter;
-
 class CalendarPlainTextFormatter implements CalendarFormatterInterface
 {
     protected $mapping = array();

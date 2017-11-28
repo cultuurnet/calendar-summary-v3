@@ -2,17 +2,8 @@
 
 namespace CultuurNet\CalendarSummaryV3;
 
+use CultuurNet\CalendarSummaryV3\Single\ExtraSmallSingleHTMLFormatter;
 use CultuurNet\SearchV3\ValueObjects\Offer;
-
-use CultuurNet\CalendarSummary\Periodic\ExtraSmallPeriodicHTMLFormatter;
-use CultuurNet\CalendarSummary\Period\LargePeriodHTMLFormatter;
-use CultuurNet\CalendarSummary\Period\MediumPeriodHTMLFormatter;
-use CultuurNet\CalendarSummary\Period\SmallPeriodHTMLFormatter;
-use CultuurNet\CalendarSummary\Permanent\LargePermanentHTMLFormatter;
-use CultuurNet\CalendarSummary\Timestamps\ExtraSmallTimestampsHTMLFormatter;
-use CultuurNet\CalendarSummary\Timestamps\LargeTimestampsHTMLFormatter;
-use CultuurNet\CalendarSummary\Timestamps\MediumTimestampsHTMLFormatter;
-use CultuurNet\CalendarSummary\Timestamps\SmallTimestampsHTMLFormatter;
 
 class CalendarHTMLFormatter implements CalendarFormatterInterface
 {
@@ -26,7 +17,7 @@ class CalendarHTMLFormatter implements CalendarFormatterInterface
                     //'lg' => new LargeTimestampsHTMLFormatter(),
                     //'md' => new MediumTimestampsHTMLFormatter(),
                     //'sm' => new SmallTimestampsHTMLFormatter(),
-                    //'xs' => new ExtraSmallTimestampsHTMLFormatter(),
+                    'xs' => new ExtraSmallSingleHTMLFormatter()
                 ],
             Offer::CALENDAR_TYPE_MULTIPLE =>
                 [
@@ -40,7 +31,7 @@ class CalendarHTMLFormatter implements CalendarFormatterInterface
                     //'lg' => new LargePeriodHTMLFormatter(),
                     //'md' => new MediumPeriodHTMLFormatter(),
                     //'sm' => new SmallPeriodHTMLFormatter(),
-                    'xs' => new ExtraSmallPeriodicHTMLFormatter(),
+                    //'xs' => new ExtraSmallPeriodicHTMLFormatter(),
                 ],
             /*
             Offer::CALENDAR_TYPE_PERMANENT =>

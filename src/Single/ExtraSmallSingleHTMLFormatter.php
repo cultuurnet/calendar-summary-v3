@@ -3,7 +3,6 @@
 namespace CultuurNet\CalendarSummaryV3\Single;
 
 use CultuurNet\SearchV3\ValueObjects\Event;
-use CultuurNet\CalendarSummaryV3\FormatterException;
 use IntlDateFormatter;
 
 class ExtraSmallSingleHTMLFormatter implements SingleFormatterInterface
@@ -32,43 +31,23 @@ class ExtraSmallSingleHTMLFormatter implements SingleFormatterInterface
             'MMM'
         );
     }
-
+    /**
+    * Return xs formatted single date string.
+    *
+    * @param \CultuurNet\SearchV3\ValueObjects\Event $event
+    * @return string
+    */
     public function format(Event $event)
     {
-        $subEvents = $event->getSubEvents();
+        $dateFrom = $event->getStartDate();
 
-        foreach ($subEvents as $key => $subEvent) {
-            $dateFrom = new \DateTime($subEvent->startDate);
+        $dateFromDay = $this->fmtDay->format($dateFrom);
+        $dateFromMonth = $this->fmtMonth->format($dateFrom);
 
-            $dateFromDay = $this->fmtDay->format($dateFrom);
-            $dateFromMonth = $this->fmtMonth->format($dateFrom);
+        $output = '<span class="cf-date">' . $dateFromDay . '</span>';
+        $output .= ' ';
+        $output .= '<span class="cf-month">' . $dateFromMonth . '</span>';
 
-            $output = '<span class="cf-date">' . $dateFromDay . '</span>';
-            $output .= ' ';
-            $output .= '<span class="cf-month">' . $dateFromMonth . '</span>';
-
-            return $output;
-        }
-
-        // TODO: Clear out what to do with single types.
-        /*$timestamps_count = iterator_count($timestampList);
-        $timestampList->rewind();
-
-        if ($timestamps_count == 1) {
-            $timestamp = $timestampList->current();
-            $dateFrom = $timestamp->getDate();
-
-            $dateFromDay = $this->fmtDay->format(strtotime($dateFrom));
-            $dateFromMonth = $this->fmtMonth->format(strtotime($dateFrom));
-            $dateFromMonth = rtrim($dateFromMonth, ".");
-
-            $output = '<span class="cf-date">' . $dateFromDay . '</span>';
-            $output .= ' ';
-            $output .= '<span class="cf-month">' . $dateFromMonth . '</span>';
-
-            return $output;
-        } else {
-            throw new FormatterException('xs format not supported for multiple timestamps.');
-        }*/
+        return $output;
     }
 }

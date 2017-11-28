@@ -6,7 +6,7 @@
  * Time: 17:42
  */
 
-namespace CultuurNet\CalendarSummary\Timestamps;
+namespace CultuurNet\CalendarSummaryV3\Timestamps;
 
 use CultureFeed_Cdb_Data_Calendar_Timestamp;
 use CultureFeed_Cdb_Data_Calendar_TimestampList;

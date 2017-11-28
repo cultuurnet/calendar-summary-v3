@@ -6,7 +6,7 @@
  * Time: 10:54
  */
 
-namespace CultuurNet\CalendarSummary\Timestamps;
+namespace CultuurNet\CalendarSummaryV3\Timestamps;
 
 interface TimestampsFormatterInterface
 {
