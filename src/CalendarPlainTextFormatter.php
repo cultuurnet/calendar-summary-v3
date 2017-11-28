@@ -2,6 +2,7 @@
 
 namespace CultuurNet\CalendarSummaryV3;
 
+use CultuurNet\CalendarSummaryV3\Single\ExtraSmallSinglePlainTextFormatter;
 use CultuurNet\SearchV3\ValueObjects\Offer;
 
 class CalendarPlainTextFormatter implements CalendarFormatterInterface
@@ -16,7 +17,7 @@ class CalendarPlainTextFormatter implements CalendarFormatterInterface
                     //'lg' => new LargeTimestampsPlainTextFormatter(),
                     //'md' => new MediumTimestampsPlainTextFormatter(),
                     //'sm' => new SmallTimestampsPlainTextFormatter(),
-                    //'xs' => new ExtraSmallTimestampsPlainTextFormatter(),
+                    'xs' => new ExtraSmallSinglePlainTextFormatter()
                 ],
             Offer::CALENDAR_TYPE_MULTIPLE =>
                 [
@@ -30,7 +31,7 @@ class CalendarPlainTextFormatter implements CalendarFormatterInterface
                     //'lg' => new LargePeriodPlainTextFormatter(),
                     //'md' => new MediumPeriodPlainTextFormatter(),
                     //'sm' => new SmallPeriodPlainTextFormatter(),
-                    'xs' => new ExtraSmallPeriodicPlainTextFormatter(),
+                    //'xs' => new ExtraSmallPeriodicPlainTextFormatter(),
                 ],
             /*
             Offer::CALENDAR_TYPE_PERMANENT =>
