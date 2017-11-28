@@ -7,7 +7,7 @@ use \DateTime;
 use \DateTimeInterface;
 use \IntlDateFormatter;
 
-class ExtraSmallPeriodicHTMLFormatter implements PeriodicFormatterInterface
+class ExtraSmallPeriodicPlainTextFormatter implements PeriodicFormatterInterface
 {
     private $fmtDay;
 
@@ -53,9 +53,7 @@ class ExtraSmallPeriodicHTMLFormatter implements PeriodicFormatterInterface
      */
     private function formatStarted(DateTimeInterface $endDate)
     {
-        return
-            '<span class="to meta">Tot</span> ' .
-            $this->formatDate($endDate);
+        return 'Tot ' . $this->formatDate($endDate);
     }
 
     /**
@@ -64,9 +62,7 @@ class ExtraSmallPeriodicHTMLFormatter implements PeriodicFormatterInterface
      */
     private function formatNotStarted(DateTimeInterface $startDate)
     {
-        return
-            '<span class="from meta">Vanaf</span> ' .
-            $this->formatDate($startDate);
+        return 'Vanaf ' . $this->formatDate($startDate);
     }
 
     /**
@@ -78,9 +74,7 @@ class ExtraSmallPeriodicHTMLFormatter implements PeriodicFormatterInterface
         $dateFromDay = $this->fmtDay->format($date);
         $dateFromMonth = $this->fmtMonth->format($date);
 
-        $output =
-            '<span class="cf-date">' . $dateFromDay . '</span>/' .
-            '<span class="cf-month">' . $dateFromMonth . '</span>';
+        $output = $dateFromDay . '/' . $dateFromMonth;
 
         return $output;
     }
