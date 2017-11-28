@@ -42,7 +42,7 @@ class ExtraSmallSingleHTMLFormatter implements SingleFormatterInterface
         $dateFrom = $event->getStartDate();
 
         $dateFromDay = $this->fmtDay->format($dateFrom);
-        $dateFromMonth = $this->fmtMonth->format($dateFrom);
+        $dateFromMonth = rtrim($this->fmtMonth->format($dateFrom), '.');
 
         $output = '<span class="cf-date">' . $dateFromDay . '</span>';
         $output .= ' ';
