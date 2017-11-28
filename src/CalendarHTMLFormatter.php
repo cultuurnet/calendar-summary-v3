@@ -2,6 +2,7 @@
 
 namespace CultuurNet\CalendarSummaryV3;
 
+use CultuurNet\CalendarSummaryV3\Single\MediumSingleHTMLFormatter;
 use CultuurNet\CalendarSummaryV3\Single\SmallSingleHTMLFormatter;
 use CultuurNet\SearchV3\ValueObjects\Offer;
 
@@ -15,7 +16,7 @@ class CalendarHTMLFormatter implements CalendarFormatterInterface
             Offer::CALENDAR_TYPE_SINGLE =>
                 [
                     //'lg' => new LargeTimestampsHTMLFormatter(),
-                    //'md' => new MediumTimestampsHTMLFormatter(),
+                    'md' => new MediumSingleHTMLFormatter(),
                     'sm' => new SmallSingleHTMLFormatter(),
                     'xs' => new SmallSingleHTMLFormatter()
                 ],
