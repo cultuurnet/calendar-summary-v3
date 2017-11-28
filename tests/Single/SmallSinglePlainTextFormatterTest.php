@@ -2,41 +2,41 @@
 
 namespace CultuurNet\CalendarSummaryV3\Tests\Single;
 
-use CultuurNet\CalendarSummaryV3\Single\ExtraSmallSingleHTMLFormatter;
+use CultuurNet\CalendarSummaryV3\Single\SmallSinglePlainTextFormatter;
 use CultuurNet\SearchV3\ValueObjects\Event;
 
-class ExtraSmallSingleHTMLFormatterTest extends \PHPUnit_Framework_TestCase
+class SmallSinglePlainTextFormatterTest extends \PHPUnit_Framework_TestCase
 {
     /**
-     * @var ExtraSmallSingleHTMLFormatter
+     * @var SmallSingleHTMLFormatter
      */
     protected $formatter;
 
     public function setUp()
     {
-        $this->formatter = new ExtraSmallSingleHTMLFormatter();
+        $this->formatter = new SmallSinglePlainTextFormatter();
     }
 
-    public function testFormatHTMLSingleDateXs()
+    public function testFormatPlainTextSingleDateXs()
     {
         $event = new Event();
         $event->setStartDate(new \DateTime('2018-01-25T20:00:00+01:00'));
         $event->setEndDate(new \DateTime('2018-01-25T21:30:00+01:00'));
 
         $this->assertEquals(
-            '<span class="cf-date">25</span> <span class="cf-month">jan</span>',
+            '25 jan',
             $this->formatter->format($event)
         );
     }
 
-    public function testFormatHTMLSingleDateXsWithLeadingZero()
+    public function testFormatPlainTextSingleDateXsWithLeadingZero()
     {
         $event = new Event();
         $event->setStartDate(new \DateTime('2018-01-08T20:00:00+01:00'));
         $event->setEndDate(new \DateTime('2018-01-08T21:30:00+01:00'));
 
         $this->assertEquals(
-            '<span class="cf-date">8</span> <span class="cf-month">jan</span>',
+            '8 jan',
             $this->formatter->format($event)
         );
     }

@@ -14,7 +14,7 @@ interface SingleFormatterInterface
 {
 
     /**
-     * @param Event $offer
+     * @param \CultuurNet\SearchV3\ValueObjects\Event $event
      * @return string
      */
     public function format(Event $event);

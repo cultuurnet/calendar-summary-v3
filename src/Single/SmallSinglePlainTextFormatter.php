@@ -5,7 +5,7 @@ namespace CultuurNet\CalendarSummaryV3\Single;
 use CultuurNet\SearchV3\ValueObjects\Event;
 use IntlDateFormatter;
 
-class ExtraSmallSinglePlainTextFormatter implements SingleFormatterInterface
+class SmallSinglePlainTextFormatter implements SingleFormatterInterface
 {
     private $fmtDay;
 

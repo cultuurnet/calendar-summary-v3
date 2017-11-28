@@ -5,7 +5,7 @@ namespace CultuurNet\CalendarSummaryV3\Single;
 use CultuurNet\SearchV3\ValueObjects\Event;
 use IntlDateFormatter;
 
-class ExtraSmallSingleHTMLFormatter implements SingleFormatterInterface
+class SmallSingleHTMLFormatter implements SingleFormatterInterface
 {
     private $fmtDay;
 
@@ -31,6 +31,7 @@ class ExtraSmallSingleHTMLFormatter implements SingleFormatterInterface
             'MMM'
         );
     }
+
     /**
     * Return xs formatted single date string.
     *
