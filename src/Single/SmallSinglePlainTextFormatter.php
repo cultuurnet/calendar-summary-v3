@@ -32,7 +32,7 @@ class SmallSinglePlainTextFormatter implements SingleFormatterInterface
         );
     }
     /**
-    * Return xs formatted single date string.
+    * Return xs or sm formatted single date string.
     *
     * @param \CultuurNet\SearchV3\ValueObjects\Event $event
     * @return string

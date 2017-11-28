@@ -8,7 +8,7 @@ use CultuurNet\SearchV3\ValueObjects\Event;
 class MediumSinglePlainTextFormatterTest extends \PHPUnit_Framework_TestCase
 {
     /**
-     * @var MediumSingleHTMLFormatter
+     * @var MediumSinglePlainTextFormatter
      */
     protected $formatter;
 
@@ -17,7 +17,7 @@ class MediumSinglePlainTextFormatterTest extends \PHPUnit_Framework_TestCase
         $this->formatter = new MediumSinglePlainTextFormatter();
     }
 
-    public function testFormatHTMLSingleDateXs()
+    public function testFormatHTMLSingleDateMedium()
     {
         $event = new Event();
         $event->setStartDate(new \DateTime('2018-01-25T20:00:00+01:00'));
@@ -29,7 +29,7 @@ class MediumSinglePlainTextFormatterTest extends \PHPUnit_Framework_TestCase
         );
     }
 
-    public function testFormatHTMLSingleDateXsWithLeadingZero()
+    public function testFormatHTMLSingleDateMediumWithLeadingZero()
     {
         $event = new Event();
         $event->setStartDate(new \DateTime('2018-01-08T20:00:00+01:00'));

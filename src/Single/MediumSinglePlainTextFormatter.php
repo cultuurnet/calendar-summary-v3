@@ -33,7 +33,7 @@ class MediumSinglePlainTextFormatter implements SingleFormatterInterface
     }
 
     /**
-    * Return xs formatted single date string.
+    * Return medium formatted single date string.
     *
     * @param \CultuurNet\SearchV3\ValueObjects\Event $event
     * @return string
