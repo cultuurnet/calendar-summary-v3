@@ -4,6 +4,10 @@ namespace CultuurNet\CalendarSummaryV3\Permanent;
 
 use CultuurNet\SearchV3\ValueObjects\Place;
 
+/**
+ * Provide a large HTML formatter for permanent calendar type.
+ * @package CultuurNet\CalendarSummaryV3\Permanent
+ */
 class LargePermanentHTMLFormatter implements PermanentFormatterInterface
 {
     /**
@@ -32,6 +36,12 @@ class LargePermanentHTMLFormatter implements PermanentFormatterInterface
         'sunday' => 'Su',
     );
 
+    /**
+     * Return formatted permanent string.
+     *
+     * @param Place $place
+     * @return string
+     */
     public function format(Place $place) {
         $output = '';
         if ($place->getOpeningHours()) {
@@ -41,6 +51,10 @@ class LargePermanentHTMLFormatter implements PermanentFormatterInterface
         return $this->formatSummary($output);
     }
 
+    /**
+     * @param $time
+     * @return string
+     */
     protected function getFormattedTime($time)
     {
         $formattedShortTime = ltrim($time, '0');
@@ -50,6 +64,10 @@ class LargePermanentHTMLFormatter implements PermanentFormatterInterface
         return $formattedShortTime;
     }
 
+    /**
+     * @param $calsum
+     * @return mixed
+     */
     protected function formatSummary($calsum)
     {
         $calsum = str_replace('><', '> <', $calsum);
@@ -125,6 +143,10 @@ class LargePermanentHTMLFormatter implements PermanentFormatterInterface
         }
     }
 
+    /**
+     * @param $openingHoursData
+     * @return string
+     */
     protected function generateWeekScheme($openingHoursData)
     {
         $outputWeek = '<ul class="list-unstyled">';

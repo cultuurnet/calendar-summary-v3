@@ -4,6 +4,10 @@ namespace CultuurNet\CalendarSummaryV3\Permanent;
 
 use CultuurNet\SearchV3\ValueObjects\Place;
 
+/**
+ * Provide a large plain text formatter for permanent calendar type.
+ * @package CultuurNet\CalendarSummaryV3\Permanent
+ */
 class LargePermanentPlainTextFormatter implements PermanentFormatterInterface
 {
     /**
@@ -19,6 +23,12 @@ class LargePermanentPlainTextFormatter implements PermanentFormatterInterface
         'sunday' => 'Zo',
     );
 
+    /**
+     * Return formatted permanent string.
+     *
+     * @param Place $place
+     * @return string
+     */
     public function format(Place $place) {
         $output = '';
         if ($place->getOpeningHours()) {
@@ -27,6 +37,10 @@ class LargePermanentPlainTextFormatter implements PermanentFormatterInterface
         return $output;
     }
 
+    /**
+     * @param $time
+     * @return string
+     */
     protected function getFormattedTime($time)
     {
         $formattedShortTime = ltrim($time, '0');
@@ -36,6 +50,10 @@ class LargePermanentPlainTextFormatter implements PermanentFormatterInterface
         return $formattedShortTime;
     }
 
+    /**
+     * @param $openingHoursData
+     * @return string
+     */
     protected function generateWeekScheme($openingHoursData)
     {
         $outputWeek = '';
