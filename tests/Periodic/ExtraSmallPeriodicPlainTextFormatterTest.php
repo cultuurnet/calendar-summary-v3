@@ -4,16 +4,16 @@ namespace CultuurNet\CalendarSummaryV3\Periodic;
 
 use CultuurNet\SearchV3\ValueObjects\Event;
 
-class ExtraSmallPeriodicHTMLFormatterTest extends \PHPUnit_Framework_TestCase
+class ExtraSmallPeriodicPlainTextFormatterTest extends \PHPUnit_Framework_TestCase
 {
     /**
-     * @var ExtraSmallPeriodicHTMLFormatter
+     * @var ExtraSmallPeriodicPlainTextFormatter
      */
     protected $formatter;
 
     public function setUp()
     {
-        $this->formatter = new ExtraSmallPeriodicHTMLFormatter();
+        $this->formatter = new ExtraSmallPeriodicPlainTextFormatter();
     }
 
     public function testFormatAPeriodWithoutLeadingZeroes()
@@ -23,7 +23,7 @@ class ExtraSmallPeriodicHTMLFormatterTest extends \PHPUnit_Framework_TestCase
         $offer->setEndDate(new \DateTime('30-11-2030'));
 
         $this->assertEquals(
-            '<span class="from meta">Vanaf</span> <span class="cf-date">25</span>/<span class="cf-month">11</span>',
+            'Vanaf 25/11',
             $this->formatter->format($offer)
         );
     }
@@ -35,7 +35,7 @@ class ExtraSmallPeriodicHTMLFormatterTest extends \PHPUnit_Framework_TestCase
         $offer->setEndDate(new \DateTime('08-03-2030'));
 
         $this->assertEquals(
-            '<span class="from meta">Vanaf</span> <span class="cf-date">4</span>/<span class="cf-month">3</span>',
+            'Vanaf 4/3',
             $this->formatter->format($offer)
         );
     }
@@ -48,7 +48,7 @@ class ExtraSmallPeriodicHTMLFormatterTest extends \PHPUnit_Framework_TestCase
         $offer->setEndDate(new \DateTime('30-03-2030'));
 
         $this->assertEquals(
-            '<span class="from meta">Vanaf</span> <span class="cf-date">25</span>/<span class="cf-month">3</span>',
+            'Vanaf 25/3',
             $this->formatter->format($offer)
         );
     }
@@ -60,7 +60,7 @@ class ExtraSmallPeriodicHTMLFormatterTest extends \PHPUnit_Framework_TestCase
         $offer->setEndDate(new \DateTime('08-10-2030'));
 
         $this->assertEquals(
-            '<span class="from meta">Vanaf</span> <span class="cf-date">4</span>/<span class="cf-month">10</span>',
+            'Vanaf 4/10',
             $this->formatter->format($offer)
         );
     }
@@ -72,7 +72,7 @@ class ExtraSmallPeriodicHTMLFormatterTest extends \PHPUnit_Framework_TestCase
         $offer->setEndDate(new \DateTime('18-03-2030'));
 
         $this->assertEquals(
-            '<span class="to meta">Tot</span> <span class="cf-date">18</span>/<span class="cf-month">3</span>',
+            'Tot 18/3',
             $this->formatter->format($offer)
         );
     }
