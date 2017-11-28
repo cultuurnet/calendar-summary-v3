@@ -28,7 +28,7 @@ class LargePeriodicHTMLFormatter implements PeriodicFormatterInterface
     /**
      * Translate the day to short Dutch format.
      */
-    protected $mapping_short_days = array(
+    protected $mappingShortDays = array(
         'monday' => 'Mo',
         'tuesday' => 'Tu',
         'wednesday' => 'We',
@@ -168,11 +168,11 @@ class LargePeriodicHTMLFormatter implements PeriodicFormatterInterface
             }
         } else {
             if (count($daysOfWeek) > 1) {
-                return ucfirst($this->mapping_short_days[$daysOfWeek[0]])
+                return ucfirst($this->mappingShortDays[$daysOfWeek[0]])
                     . '-'
-                    . $this->mapping_short_days[$daysOfWeek[count($daysOfWeek)-1]];
+                    . $this->mappingShortDays[$daysOfWeek[count($daysOfWeek)-1]];
             } else {
-                return ucfirst($this->mapping_short_days[$daysOfWeek[0]]);
+                return ucfirst($this->mappingShortDays[$daysOfWeek[0]]);
             }
         }
     }
