@@ -38,13 +38,11 @@ class MediumPeriodicPlainTextFormatter implements PeriodicFormatterInterface
         );
 
         $dateFrom = $offer->getStartDate();
-        $dateFromTimestamp = $dateFrom->getTimestamp();
-        $intlDateFrom =$fmt->format($dateFromTimestamp);
-        $intlDateFromDay = $fmtDay->format($dateFromTimestamp);
+        $intlDateFrom =$fmt->format($dateFrom);
+        $intlDateFromDay = $fmtDay->format($dateFrom);
 
         $dateTo = $offer->getEndDate();
-        $dateToTimestamp = $dateTo->getTimestamp();
-        $intlDateTo = $fmt->format($dateToTimestamp);
+        $intlDateTo = $fmt->format($dateTo);
 
         if ($intlDateFrom == $intlDateTo) {
             $output = $intlDateFromDay . ' ' . $intlDateFrom;

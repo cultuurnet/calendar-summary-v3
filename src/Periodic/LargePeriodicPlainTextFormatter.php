@@ -71,11 +71,8 @@ class LargePeriodicPlainTextFormatter implements PeriodicFormatterInterface
             'd MMMM yyyy'
         );
 
-        $dateFromTimestamp = $dateFrom->getTimestamp();
-        $intlDateFrom =$fmt->format($dateFromTimestamp);
-
-        $dateToTimestamp = $dateTo->getTimestamp();
-        $intlDateTo = $fmt->format($dateToTimestamp);
+        $intlDateFrom =$fmt->format($dateFrom);
+        $intlDateTo = $fmt->format($dateTo);
 
         $output_dates =  'Van ' . $intlDateFrom . ' tot ' . $intlDateTo;
         return $output_dates;

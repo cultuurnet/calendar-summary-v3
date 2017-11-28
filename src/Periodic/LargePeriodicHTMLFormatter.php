@@ -138,17 +138,14 @@ class LargePeriodicHTMLFormatter implements PeriodicFormatterInterface
             'd MMMM yyyy'
         );
 
-        $dateFromTimestamp = $dateFrom->getTimestamp();
-        $intlDateFrom =$fmt->format($dateFromTimestamp);
-
-        $dateToTimestamp = $dateTo->getTimestamp();
-        $intlDateTo = $fmt->format($dateToTimestamp);
+        $intlDateFrom =$fmt->format($dateFrom);
+        $intlDateTo = $fmt->format($dateTo);
 
         $outputDates = '<p class="cf-period">';
-        $outputDates .= '<time itemprop="startDate" datetime="' . date("Y-m-d", $dateFromTimestamp) . '">';
+        $outputDates .= '<time itemprop="startDate" datetime="' . $dateFrom->format("Y-m-d") . '">';
         $outputDates .= '<span class="cf-date">' . $intlDateFrom . '</span> </time>';
         $outputDates .= '<span class="cf-to cf-meta">tot</span>';
-        $outputDates .= '<time itemprop="endDate" datetime="' . date("Y-m-d", $dateToTimestamp) . '">';
+        $outputDates .= '<time itemprop="endDate" datetime="' . $dateTo->format("Y-m-d") . '">';
         $outputDates .= '<span class="cf-date">' . $intlDateTo . '</span> </time>';
         $outputDates .= '</p>';
         return $outputDates;
