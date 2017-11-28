@@ -42,7 +42,8 @@ class LargePermanentHTMLFormatter implements PermanentFormatterInterface
      * @param Place $place
      * @return string
      */
-    public function format(Place $place) {
+    public function format(Place $place)
+    {
         $output = '';
         if ($place->getOpeningHours()) {
             $output .= $this->generateWeekScheme($place->getOpeningHours());
