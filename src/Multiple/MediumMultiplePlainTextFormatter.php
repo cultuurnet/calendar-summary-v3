@@ -9,7 +9,7 @@ class MediumMultiplePlainTextFormatter implements MultipleFormatterInterface
 {
 
     /**
-    * Return medium formatted single date string.
+    * Return medium formatted multiple date string.
     *
     * @param \CultuurNet\SearchV3\ValueObjects\Event $event
     * @return string

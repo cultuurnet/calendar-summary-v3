@@ -3,13 +3,13 @@
 namespace CultuurNet\CalendarSummaryV3\Multiple;
 
 use CultuurNet\SearchV3\ValueObjects\Event;
-use CultuurNet\CalendarSummaryV3\Single\MediumSingleHTMLFormatter;
+use CultuurNet\CalendarSummaryV3\Single\LargeSingleHTMLFormatter;
 
-class MediumMultipleHTMLFormatter implements MultipleFormatterInterface
+class LargeMultipleHTMLFormatter implements MultipleFormatterInterface
 {
 
     /**
-    * Return medium formatted multiple date string.
+    * Return large formatted multiple date string.
     *
     * @param \CultuurNet\SearchV3\ValueObjects\Event $event
     * @return string
@@ -20,7 +20,7 @@ class MediumMultipleHTMLFormatter implements MultipleFormatterInterface
         $output = '';
 
         foreach ($subEvents as $subEvent) {
-            $formatter = new MediumSingleHTMLFormatter();
+            $formatter = new LargeSingleHTMLFormatter();
 
             $event = new Event();
             $event->setStartDate(new \DateTime($subEvent['startDate']));
