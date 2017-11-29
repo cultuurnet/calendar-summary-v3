@@ -3,34 +3,9 @@
 namespace CultuurNet\CalendarSummaryV3\Single;
 
 use CultuurNet\SearchV3\ValueObjects\Event;
-use IntlDateFormatter;
 
-class MediumSinglePlainTextFormatter implements SingleFormatterInterface
+class MediumSinglePlainTextFormatter extends MediumSingleFormatter implements SingleFormatterInterface
 {
-    private $fmt;
-
-    private $fmtDay;
-
-    public function __construct()
-    {
-        $this->fmt = new IntlDateFormatter(
-            'nl_BE',
-            IntlDateFormatter::FULL,
-            IntlDateFormatter::FULL,
-            date_default_timezone_get(),
-            IntlDateFormatter::GREGORIAN,
-            'd MMMM yyyy'
-        );
-
-        $this->fmtDay = new IntlDateFormatter(
-            'nl_BE',
-            IntlDateFormatter::FULL,
-            IntlDateFormatter::FULL,
-            date_default_timezone_get(),
-            IntlDateFormatter::GREGORIAN,
-            'eeee'
-        );
-    }
 
     /**
     * Return medium formatted single date string.
@@ -40,11 +15,37 @@ class MediumSinglePlainTextFormatter implements SingleFormatterInterface
     */
     public function format(Event $event)
     {
-        $date = $event->getStartDate();
-        $intlDate = $this->fmt->format($date);
-        $intlDateDay = $this->fmtDay->format($date);
+        $dateFrom = $event->getStartDate();
+        $dateEnd = $event->getEndDate();
 
-        $output = $intlDateDay . ' ' . $intlDate;
+        if ($dateFrom->format('Y-m-d') == $dateEnd->format('Y-m-d')) {
+            $output = $this->formatSameDay($dateFrom);
+        } else {
+            $output = $this->formatMoreDays($dateFrom, $dateEnd);
+        }
+
+        return $output;
+    }
+
+    protected function formatSameDay($dateFrom)
+    {
+        $intlDateFrom = $this->fmt->format($dateFrom);
+        $intlDateDayFrom = $this->fmtDay->format($dateFrom);
+
+        $output = $intlDateDayFrom . ' ' . $intlDateFrom;
+
+        return $output;
+    }
+
+    protected function formatMoreDays($dateFrom, $dateEnd)
+    {
+        $intlDateFrom = $this->fmt->format($dateFrom);
+        $intlDateDayFrom = $this->fmtDay->format($dateFrom);
+
+        $intlDateEnd = $this->fmt->format($dateEnd);
+        $intlDateDayEnd = $this->fmtDay->format($dateEnd);
+
+        $output = 'Van ' . $intlDateDayFrom . ' ' . $intlDateFrom . ' tot ' . $intlDateDayEnd . ' ' . $intlDateEnd;
 
         return $output;
     }

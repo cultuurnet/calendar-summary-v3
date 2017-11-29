@@ -4,30 +4,30 @@ namespace CultuurNet\CalendarSummaryV3\Single;
 
 use IntlDateFormatter;
 
-abstract class SmallSingleFormatter
+abstract class MediumSingleFormatter
 {
-    protected $fmtDay;
+    protected $fmt;
 
-    protected $fmtMonth;
+    protected $fmtDay;
 
     public function __construct()
     {
+        $this->fmt = new IntlDateFormatter(
+            'nl_BE',
+            IntlDateFormatter::FULL,
+            IntlDateFormatter::FULL,
+            date_default_timezone_get(),
+            IntlDateFormatter::GREGORIAN,
+            'd MMMM yyyy'
+        );
+
         $this->fmtDay = new IntlDateFormatter(
             'nl_BE',
             IntlDateFormatter::FULL,
             IntlDateFormatter::FULL,
             date_default_timezone_get(),
             IntlDateFormatter::GREGORIAN,
-            'd'
-        );
-
-        $this->fmtMonth = new IntlDateFormatter(
-            'nl_BE',
-            IntlDateFormatter::FULL,
-            IntlDateFormatter::FULL,
-            date_default_timezone_get(),
-            IntlDateFormatter::GREGORIAN,
-            'MMM'
+            'eeee'
         );
     }
 }

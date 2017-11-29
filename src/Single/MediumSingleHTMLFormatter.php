@@ -3,34 +3,9 @@
 namespace CultuurNet\CalendarSummaryV3\Single;
 
 use CultuurNet\SearchV3\ValueObjects\Event;
-use IntlDateFormatter;
 
-class MediumSingleHTMLFormatter implements SingleFormatterInterface
+class MediumSingleHTMLFormatter extends MediumSingleFormatter implements SingleFormatterInterface
 {
-    private $fmt;
-
-    private $fmtDay;
-
-    public function __construct()
-    {
-        $this->fmt = new IntlDateFormatter(
-            'nl_BE',
-            IntlDateFormatter::FULL,
-            IntlDateFormatter::FULL,
-            date_default_timezone_get(),
-            IntlDateFormatter::GREGORIAN,
-            'd MMMM yyyy'
-        );
-
-        $this->fmtDay = new IntlDateFormatter(
-            'nl_BE',
-            IntlDateFormatter::FULL,
-            IntlDateFormatter::FULL,
-            date_default_timezone_get(),
-            IntlDateFormatter::GREGORIAN,
-            'eeee'
-        );
-    }
 
     /**
     * Return medium formatted single date string.
@@ -40,14 +15,49 @@ class MediumSingleHTMLFormatter implements SingleFormatterInterface
     */
     public function format(Event $event)
     {
-        $date = $event->getStartDate();
-        $intlDate = $this->fmt->format($date);
-        $intlDateDay = $this->fmtDay->format($date);
+        $dateFrom = $event->getStartDate();
+        $dateEnd = $event->getEndDate();
 
+        if ($dateFrom->format('Y-m-d') == $dateEnd->format('Y-m-d')) {
+            $output = $this->formatSameDay($dateFrom);
+        } else {
+            $output = $this->formatMoreDays($dateFrom, $dateEnd);
+        }
 
-        $output = '<span class="cf-weekday cf-meta">' . $intlDateDay . '</span>';
+        return $output;
+    }
+
+    public function formatSameDay($dateFrom)
+    {
+        $intlDateFrom = $this->fmt->format($dateFrom);
+        $intlDateDayFrom = $this->fmtDay->format($dateFrom);
+
+        $output = '<span class="cf-weekday cf-meta">' . $intlDateDayFrom . '</span>';
         $output .= ' ';
-        $output .= '<span class="cf-date">' . $intlDate . '</span>';
+        $output .= '<span class="cf-date">' . $intlDateFrom . '</span>';
+
+        return $output;
+    }
+
+    protected function formatMoreDays($dateFrom, $dateEnd)
+    {
+        $intlDateFrom = $this->fmt->format($dateFrom);
+        $intlDateDayFrom = $this->fmtDay->format($dateFrom);
+
+        $intlDateEnd = $this->fmt->format($dateEnd);
+        $intlDateDayEnd = $this->fmtDay->format($dateEnd);
+
+        $output = '<span class="cf-from cf-meta">Van</span>';
+        $output .= ' ';
+        $output .= '<span class="cf-weekday cf-meta">' . $intlDateDayFrom . '</span>';
+        $output .= ' ';
+        $output .= '<span class="cf-date">' . $intlDateFrom . '</span>';
+        $output .= ' ';
+        $output .= '<span class="cf-to cf-meta">tot</span>';
+        $output .= ' ';
+        $output .= '<span class="cf-weekday cf-meta">' . $intlDateDayEnd . '</span>';
+        $output .= ' ';
+        $output .= '<span class="cf-date">' . $intlDateEnd . '</span>';
 
         return $output;
     }

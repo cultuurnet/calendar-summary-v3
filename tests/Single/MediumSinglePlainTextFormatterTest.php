@@ -17,7 +17,7 @@ class MediumSinglePlainTextFormatterTest extends \PHPUnit_Framework_TestCase
         $this->formatter = new MediumSinglePlainTextFormatter();
     }
 
-    public function testFormatHTMLSingleDateMedium()
+    public function testFormatHTMLSingleDateMediumOneDay()
     {
         $event = new Event();
         $event->setStartDate(new \DateTime('2018-01-25T20:00:00+01:00'));
@@ -29,7 +29,7 @@ class MediumSinglePlainTextFormatterTest extends \PHPUnit_Framework_TestCase
         );
     }
 
-    public function testFormatHTMLSingleDateMediumWithLeadingZero()
+    public function testFormatHTMLSingleDateMediumWithLeadingZeroOneDay()
     {
         $event = new Event();
         $event->setStartDate(new \DateTime('2018-01-08T20:00:00+01:00'));
@@ -37,6 +37,30 @@ class MediumSinglePlainTextFormatterTest extends \PHPUnit_Framework_TestCase
 
         $this->assertEquals(
             'maandag 8 januari 2018',
+            $this->formatter->format($event)
+        );
+    }
+
+    public function testFormatHTMLSingleDateMediumMoreDays()
+    {
+        $event = new Event();
+        $event->setStartDate(new \DateTime('2018-01-25T20:00:00+01:00'));
+        $event->setEndDate(new \DateTime('2018-01-27T21:30:00+01:00'));
+
+        $this->assertEquals(
+            'Van donderdag 25 januari 2018 tot zaterdag 27 januari 2018',
+            $this->formatter->format($event)
+        );
+    }
+
+    public function testFormatHTMLSingleDateMediumWithLeadingZeroMoreDays()
+    {
+        $event = new Event();
+        $event->setStartDate(new \DateTime('2018-01-06T20:00:00+01:00'));
+        $event->setEndDate(new \DateTime('2018-01-08T21:30:00+01:00'));
+
+        $this->assertEquals(
+            'Van zaterdag 6 januari 2018 tot maandag 8 januari 2018',
             $this->formatter->format($event)
         );
     }
