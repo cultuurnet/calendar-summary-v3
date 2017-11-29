@@ -27,7 +27,7 @@ class MediumSingleHTMLFormatter extends MediumSingleFormatter implements SingleF
         return $output;
     }
 
-    public function formatSameDay($dateFrom)
+    protected function formatSameDay($dateFrom)
     {
         $intlDateFrom = $this->fmt->format($dateFrom);
         $intlDateDayFrom = $this->fmtDay->format($dateFrom);

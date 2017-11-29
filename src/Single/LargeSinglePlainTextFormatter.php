@@ -5,43 +5,8 @@ namespace CultuurNet\CalendarSummaryV3\Single;
 use CultuurNet\SearchV3\ValueObjects\Event;
 use IntlDateFormatter;
 
-class LargeSinglePlainTextFormatter implements SingleFormatterInterface
+class LargeSinglePlainTextFormatter extends LargeSingleFormatter implements SingleFormatterInterface
 {
-    private $fmt;
-
-    private $fmtWeekDayLong;
-
-    private $fmtTime;
-
-    public function __construct()
-    {
-        $this->fmt = new IntlDateFormatter(
-            'nl_BE',
-            IntlDateFormatter::FULL,
-            IntlDateFormatter::FULL,
-            date_default_timezone_get(),
-            IntlDateFormatter::GREGORIAN,
-            'd MMMM yyyy'
-        );
-
-        $this->fmtWeekDayLong = new IntlDateFormatter(
-            'nl_BE',
-            IntlDateFormatter::FULL,
-            IntlDateFormatter::FULL,
-            date_default_timezone_get(),
-            IntlDateFormatter::GREGORIAN,
-            'EEEE'
-        );
-
-        $this->fmtTime = new IntlDateFormatter(
-            'nl_BE',
-            IntlDateFormatter::FULL,
-            IntlDateFormatter::FULL,
-            date_default_timezone_get(),
-            IntlDateFormatter::GREGORIAN,
-            'HH:mm'
-        );
-    }
 
     /**
     * Return large formatted single date string.
@@ -51,6 +16,17 @@ class LargeSinglePlainTextFormatter implements SingleFormatterInterface
     */
     public function format(Event $event)
     {
+        $dateFrom = $event->getStartDate();
+        $dateEnd = $event->getEndDate();
+
+        if ($dateFrom->format('Y-m-d') == $dateEnd->format('Y-m-d')) {
+            $output = $this->formatSameDay($dateFrom, $dateEnd);
+        } else {
+            $output = $this->formatMoreDays($dateFrom, $dateEnd);
+        }
+
+        return $output;
+
         $startDate = $event->getStartDate();
         $intlDate = $this->fmt->format($startDate);
         $intlWeekDay = $this->fmtWeekDayLong->format($startDate);
@@ -63,6 +39,40 @@ class LargeSinglePlainTextFormatter implements SingleFormatterInterface
         $output .= 'van ';
         $output .= $intlStartTime;
         $output .= ' tot ' . $intlEndTime;
+
+        return $output;
+    }
+
+    protected function formatSameDay($dateFrom, $dateEnd)
+    {
+        $intlDateFrom = $this->fmt->format($dateFrom);
+        $intlWeekDayFrom = $this->fmtWeekDayLong->format($dateFrom);
+        $intlStartTimeFrom = $this->fmtTime->format($dateFrom);
+
+        $intlEndTimeEnd = $this->fmtTime->format($dateEnd);
+
+        $output = $intlWeekDayFrom . ' ' . $intlDateFrom . PHP_EOL;
+        $output .= 'van ';
+        $output .= $intlStartTimeFrom;
+        $output .= ' tot ' . $intlEndTimeEnd;
+
+        return $output;
+    }
+
+    protected function formatMoreDays($dateFrom, $dateEnd)
+    {
+        $intlDateFrom = $this->fmt->format($dateFrom);
+        $intlWeekDayFrom = $this->fmtWeekDayLong->format($dateFrom);
+        $intlStartTimeFrom = $this->fmtTime->format($dateFrom);
+
+        $intlDateEnd = $this->fmt->format($dateEnd);
+        $intlWeekDayEnd = $this->fmtWeekDayLong->format($dateEnd);
+        $intlEndTimeEnd = $this->fmtTime->format($dateEnd);
+
+        $output = 'Van ';
+        $output .= $intlWeekDayFrom . ' ' . $intlDateFrom . ' ' . $intlStartTimeFrom . PHP_EOL;
+        $output .= 'tot ';
+        $output .= $intlWeekDayEnd . ' ' . $intlDateEnd . ' ' . $intlEndTimeEnd;
 
         return $output;
     }

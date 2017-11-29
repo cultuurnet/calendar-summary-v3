@@ -5,43 +5,8 @@ namespace CultuurNet\CalendarSummaryV3\Single;
 use CultuurNet\SearchV3\ValueObjects\Event;
 use IntlDateFormatter;
 
-class LargeSingleHTMLFormatter implements SingleFormatterInterface
+class LargeSingleHTMLFormatter extends LargeSingleFormatter implements SingleFormatterInterface
 {
-    private $fmt;
-
-    private $fmtWeekDayLong;
-
-    private $fmtTime;
-
-    public function __construct()
-    {
-        $this->fmt = new IntlDateFormatter(
-            'nl_BE',
-            IntlDateFormatter::FULL,
-            IntlDateFormatter::FULL,
-            date_default_timezone_get(),
-            IntlDateFormatter::GREGORIAN,
-            'd MMMM yyyy'
-        );
-
-        $this->fmtWeekDayLong = new IntlDateFormatter(
-            'nl_BE',
-            IntlDateFormatter::FULL,
-            IntlDateFormatter::FULL,
-            date_default_timezone_get(),
-            IntlDateFormatter::GREGORIAN,
-            'EEEE'
-        );
-
-        $this->fmtTime = new IntlDateFormatter(
-            'nl_BE',
-            IntlDateFormatter::FULL,
-            IntlDateFormatter::FULL,
-            date_default_timezone_get(),
-            IntlDateFormatter::GREGORIAN,
-            'HH:mm'
-        );
-    }
 
     /**
     * Return large formatted single date string.
@@ -51,28 +16,73 @@ class LargeSingleHTMLFormatter implements SingleFormatterInterface
     */
     public function format(Event $event)
     {
-        $startDate = $event->getStartDate();
-        $intlDate = $this->fmt->format($startDate);
-        $intlWeekDay = $this->fmtWeekDayLong->format($startDate);
-        $intlStartTime = $this->fmtTime->format($startDate);
+        $dateFrom = $event->getStartDate();
+        $dateEnd = $event->getEndDate();
 
-        $endDate = $event->getEndDate();
-        $intlEndTime = $this->fmtTime->format($endDate);
+        if ($dateFrom->format('Y-m-d') == $dateEnd->format('Y-m-d')) {
+            $output = $this->formatSameDay($dateFrom, $dateEnd);
+        } else {
+            $output = $this->formatMoreDays($dateFrom, $dateEnd);
+        }
 
-        $output = '<time itemprop="startDate" datetime="' . $startDate->format(\DateTime::ATOM) . '">';
-        $output .= '<span class="cf-weekday cf-meta">' . $intlWeekDay . '</span>';
+        return $output;
+    }
+
+    protected function formatSameDay($dateFrom, $dateEnd)
+    {
+        $intlDateFrom = $this->fmt->format($dateFrom);
+        $intlWeekDayFrom = $this->fmtWeekDayLong->format($dateFrom);
+        $intlStartTimeFrom = $this->fmtTime->format($dateFrom);
+
+        $intlEndTimeEnd = $this->fmtTime->format($dateEnd);
+
+        $output = '<time itemprop="startDate" datetime="' . $dateFrom->format(\DateTime::ATOM) . '">';
+        $output .= '<span class="cf-weekday cf-meta">' . $intlWeekDayFrom . '</span>';
         $output .= ' ';
-        $output .= '<span class="cf-date">' . $intlDate . '</span>';
+        $output .= '<span class="cf-date">' . $intlDateFrom . '</span>';
         $output .= ' ';
         $output .= '<span class="cf-from cf-meta">van</span>';
         $output .= ' ';
-        $output .= '<span class="cf-time">' . $intlStartTime . '</span>';
+        $output .= '<span class="cf-time">' . $intlStartTimeFrom . '</span>';
         $output .= '</time>';
         $output .= ' ';
         $output .= '<span class="cf-to cf-meta">tot</span>';
         $output .= ' ';
-        $output .= '<time itemprop="endDate" datetime="' . $endDate->format(\DateTime::ATOM) . '">';
-        $output .= '<span class="cf-time">' . $intlEndTime . '</span>';
+        $output .= '<time itemprop="endDate" datetime="' . $dateEnd->format(\DateTime::ATOM) . '">';
+        $output .= '<span class="cf-time">' . $intlEndTimeEnd . '</span>';
+        $output .= '</time>';
+
+        return $output;
+    }
+
+    protected function formatMoreDays($dateFrom, $dateEnd)
+    {
+        $intlDateFrom = $this->fmt->format($dateFrom);
+        $intlWeekDayFrom = $this->fmtWeekDayLong->format($dateFrom);
+        $intlStartTimeFrom = $this->fmtTime->format($dateFrom);
+
+        $intlDateEnd = $this->fmt->format($dateEnd);
+        $intlWeekDayEnd = $this->fmtWeekDayLong->format($dateEnd);
+        $intlEndTimeEnd = $this->fmtTime->format($dateEnd);
+
+        $output = '<time itemprop="startDate" datetime="' . $dateFrom->format(\DateTime::ATOM) . '">';
+        $output .= '<span class="cf-from cf-meta">Van</span>';
+        $output .= ' ';
+        $output .= '<span class="cf-weekday cf-meta">' . $intlWeekDayFrom . '</span>';
+        $output .= ' ';
+        $output .= '<span class="cf-date">' . $intlDateFrom . '</span>';
+        $output .= ' ';
+        $output .= '<span class="cf-time">' . $intlStartTimeFrom . '</span>';
+        $output .= '</time>';
+        $output .= ' ';
+        $output .= '<span class="cf-to cf-meta">tot</span>';
+        $output .= ' ';
+        $output .= '<time itemprop="endDate" datetime="' . $dateEnd->format(\DateTime::ATOM) . '">';
+        $output .= '<span class="cf-weekday cf-meta">' . $intlWeekDayEnd . '</span>';
+        $output .= ' ';
+        $output .= '<span class="cf-date">' . $intlDateEnd . '</span>';
+        $output .= ' ';
+        $output .= '<span class="cf-time">' . $intlEndTimeEnd . '</span>';
         $output .= '</time>';
 
         return $output;
