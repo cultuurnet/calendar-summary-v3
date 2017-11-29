@@ -26,21 +26,6 @@ class LargeSinglePlainTextFormatter extends LargeSingleFormatter implements Sing
         }
 
         return $output;
-
-        $startDate = $event->getStartDate();
-        $intlDate = $this->fmt->format($startDate);
-        $intlWeekDay = $this->fmtWeekDayLong->format($startDate);
-        $intlStartTime = $this->fmtTime->format($startDate);
-
-        $endDate = $event->getEndDate();
-        $intlEndTime = $this->fmtTime->format($endDate);
-
-        $output = $intlWeekDay . ' ' . $intlDate . PHP_EOL;
-        $output .= 'van ';
-        $output .= $intlStartTime;
-        $output .= ' tot ' . $intlEndTime;
-
-        return $output;
     }
 
     protected function formatSameDay($dateFrom, $dateEnd)
@@ -51,7 +36,7 @@ class LargeSinglePlainTextFormatter extends LargeSingleFormatter implements Sing
 
         $intlEndTimeEnd = $this->fmtTime->format($dateEnd);
 
-        $output = $intlWeekDayFrom . ' ' . $intlDateFrom . PHP_EOL;
+        $output = $intlWeekDayFrom . ' ' . $intlDateFrom;
         $output .= 'van ';
         $output .= $intlStartTimeFrom;
         $output .= ' tot ' . $intlEndTimeEnd;
@@ -70,8 +55,8 @@ class LargeSinglePlainTextFormatter extends LargeSingleFormatter implements Sing
         $intlEndTimeEnd = $this->fmtTime->format($dateEnd);
 
         $output = 'Van ';
-        $output .= $intlWeekDayFrom . ' ' . $intlDateFrom . ' ' . $intlStartTimeFrom . PHP_EOL;
-        $output .= 'tot ';
+        $output .= $intlWeekDayFrom . ' ' . $intlDateFrom . ' ' . $intlStartTimeFrom;
+        $output .= ' tot ';
         $output .= $intlWeekDayEnd . ' ' . $intlDateEnd . ' ' . $intlEndTimeEnd;
 
         return $output;
