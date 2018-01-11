@@ -2,17 +2,10 @@
 
 namespace CultuurNet\CalendarSummaryV3;
 
+use CultuurNet\CalendarSummaryV3\Single\LargeSinglePlainTextFormatter;
+use CultuurNet\CalendarSummaryV3\Single\MediumSinglePlainTextFormatter;
+use CultuurNet\CalendarSummaryV3\Single\SmallSinglePlainTextFormatter;
 use CultuurNet\SearchV3\ValueObjects\Offer;
-
-use CultuurNet\CalendarSummaryV3\Periodic\ExtraSmallPeriodicPlainTextFormatter;
-use CultuurNet\CalendarSummary\Period\LargePeriodPlainTextFormatter;
-use CultuurNet\CalendarSummary\Period\MediumPeriodPlainTextFormatter;
-use CultuurNet\CalendarSummary\Period\SmallPeriodPlainTextFormatter;
-use CultuurNet\CalendarSummary\Permanent\LargePermanentPlainTextFormatter;
-use CultuurNet\CalendarSummary\Timestamps\ExtraSmallTimestampsPlainTextFormatter;
-use CultuurNet\CalendarSummary\Timestamps\LargeTimestampsPlainTextFormatter;
-use CultuurNet\CalendarSummary\Timestamps\MediumTimestampsPlainTextFormatter;
-use CultuurNet\CalendarSummary\Timestamps\SmallTimestampsPlainTextFormatter;
 
 class CalendarPlainTextFormatter implements CalendarFormatterInterface
 {
@@ -23,10 +16,10 @@ class CalendarPlainTextFormatter implements CalendarFormatterInterface
         $this->mapping = [
             Offer::CALENDAR_TYPE_SINGLE =>
                 [
-                    //'lg' => new LargeTimestampsPlainTextFormatter(),
-                    //'md' => new MediumTimestampsPlainTextFormatter(),
-                    //'sm' => new SmallTimestampsPlainTextFormatter(),
-                    //'xs' => new ExtraSmallTimestampsPlainTextFormatter(),
+                    'lg' => new LargeSinglePlainTextFormatter(),
+                    'md' => new MediumSinglePlainTextFormatter(),
+                    'sm' => new SmallSinglePlainTextFormatter(),
+                    'xs' => new SmallSinglePlainTextFormatter()
                 ],
             Offer::CALENDAR_TYPE_MULTIPLE =>
                 [
@@ -40,7 +33,7 @@ class CalendarPlainTextFormatter implements CalendarFormatterInterface
                     //'lg' => new LargePeriodPlainTextFormatter(),
                     //'md' => new MediumPeriodPlainTextFormatter(),
                     //'sm' => new SmallPeriodPlainTextFormatter(),
-                    'xs' => new ExtraSmallPeriodicPlainTextFormatter(),
+                    //'xs' => new ExtraSmallPeriodicPlainTextFormatter(),
                 ],
             /*
             Offer::CALENDAR_TYPE_PERMANENT =>
