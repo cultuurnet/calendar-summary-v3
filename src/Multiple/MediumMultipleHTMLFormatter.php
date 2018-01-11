@@ -5,15 +5,15 @@ namespace CultuurNet\CalendarSummaryV3\Multiple;
 use CultuurNet\SearchV3\ValueObjects\Event;
 use CultuurNet\CalendarSummaryV3\Single\MediumSingleHTMLFormatter;
 
+/**
+ * Formatter to format multiple events as html in medium format.
+ */
 class MediumMultipleHTMLFormatter implements MultipleFormatterInterface
 {
 
     /**
-    * Return medium formatted multiple date string.
-    *
-    * @param \CultuurNet\SearchV3\ValueObjects\Event $event
-    * @return string
-    */
+     * {@inheritdoc}
+     */
     public function format(Event $event)
     {
         $subEvents = $event->getSubEvents();

@@ -8,14 +8,16 @@
 
 namespace CultuurNet\CalendarSummaryV3\Single;
 
-use CultuurNet\SearchV3\ValueObjects\Event;
+use CultuurNet\SearchV3\ValueObjects\Offer;
 
 interface SingleFormatterInterface
 {
 
     /**
-     * @param \CultuurNet\SearchV3\ValueObjects\Event $event
+     * Format the given offer.
+     *
+     * @param \CultuurNet\SearchV3\ValueObjects\Offer $offer
      * @return string
      */
-    public function format(Event $event);
+    public function format(Offer $offer);
 }

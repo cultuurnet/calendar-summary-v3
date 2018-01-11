@@ -8,6 +8,8 @@ interface MultipleFormatterInterface
 {
 
     /**
+     * Format the event with multiple info.
+     *
      * @param \CultuurNet\SearchV3\ValueObjects\Event $event
      * @return string
      */

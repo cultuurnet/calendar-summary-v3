@@ -5,14 +5,14 @@ namespace CultuurNet\CalendarSummaryV3\Multiple;
 use CultuurNet\SearchV3\ValueObjects\Event;
 use CultuurNet\CalendarSummaryV3\Single\LargeSingleHTMLFormatter;
 
+/**
+ * Formatter to format multiple events as html in large format.
+ */
 class LargeMultipleHTMLFormatter implements MultipleFormatterInterface
 {
 
     /**
-    * Return large formatted multiple date string.
-    *
-    * @param \CultuurNet\SearchV3\ValueObjects\Event $event
-    * @return string
+    * {@inheritdoc}
     */
     public function format(Event $event)
     {

@@ -2,22 +2,21 @@
 
 namespace CultuurNet\CalendarSummaryV3\Single;
 
-use CultuurNet\SearchV3\ValueObjects\Event;
-use IntlDateFormatter;
+use CultuurNet\SearchV3\ValueObjects\Offer;
 
+/**
+ * Provides a formatter for formatting single events in large html format.
+ */
 class LargeSingleHTMLFormatter extends LargeSingleFormatter implements SingleFormatterInterface
 {
 
     /**
-    * Return large formatted single date string.
-    *
-    * @param \CultuurNet\SearchV3\ValueObjects\Event $event
-    * @return string
+    * {@inheritdoc}
     */
-    public function format(Event $event)
+    public function format(Offer $offer)
     {
-        $dateFrom = $event->getStartDate();
-        $dateEnd = $event->getEndDate();
+        $dateFrom = $offer->getStartDate();
+        $dateEnd = $offer->getEndDate();
 
         if ($dateFrom->format('Y-m-d') == $dateEnd->format('Y-m-d')) {
             $output = $this->formatSameDay($dateFrom, $dateEnd);

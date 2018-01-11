@@ -2,6 +2,7 @@
 
 namespace CultuurNet\CalendarSummaryV3\Permanent;
 
+use CultuurNet\SearchV3\ValueObjects\Offer;
 use CultuurNet\SearchV3\ValueObjects\Place;
 
 /**
@@ -37,16 +38,13 @@ class LargePermanentHTMLFormatter implements PermanentFormatterInterface
     );
 
     /**
-     * Return formatted permanent string.
-     *
-     * @param Place $place
-     * @return string
+     * {@inheritdoc}
      */
-    public function format(Place $place)
+    public function format(Offer $offer)
     {
         $output = '';
-        if ($place->getOpeningHours()) {
-            $output .= $this->generateWeekScheme($place->getOpeningHours());
+        if ($offer->getOpeningHours()) {
+            $output .= $this->generateWeekScheme($offer->getOpeningHours());
         }
 
         return $this->formatSummary($output);

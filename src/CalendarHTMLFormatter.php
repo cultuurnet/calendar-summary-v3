@@ -6,6 +6,7 @@ use CultuurNet\CalendarSummaryV3\Multiple\MediumMultipleHTMLFormatter;
 use CultuurNet\CalendarSummaryV3\Single\LargeSingleHTMLFormatter;
 use CultuurNet\CalendarSummaryV3\Single\MediumSingleHTMLFormatter;
 use CultuurNet\CalendarSummaryV3\Single\SmallSingleHTMLFormatter;
+use CultuurNet\SearchV3\ValueObjects\Event;
 use CultuurNet\SearchV3\ValueObjects\Offer;
 use CultuurNet\CalendarSummaryV3\Permanent\LargePermanentHTMLFormatter;
 use CultuurNet\CalendarSummaryV3\Periodic\ExtraSmallPeriodicHTMLFormatter;

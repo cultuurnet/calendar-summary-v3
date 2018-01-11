@@ -2,21 +2,21 @@
 
 namespace CultuurNet\CalendarSummaryV3\Single;
 
-use CultuurNet\SearchV3\ValueObjects\Event;
+use CultuurNet\SearchV3\ValueObjects\Offer;
 
+/**
+ * Provides a formatter for formatting single events in medium plain text format.
+ */
 class MediumSinglePlainTextFormatter extends MediumSingleFormatter implements SingleFormatterInterface
 {
 
     /**
-    * Return medium formatted single date string.
-    *
-    * @param \CultuurNet\SearchV3\ValueObjects\Event $event
-    * @return string
-    */
-    public function format(Event $event)
+     * {@inheritdoc}
+     */
+    public function format(Offer $offer)
     {
-        $dateFrom = $event->getStartDate();
-        $dateEnd = $event->getEndDate();
+        $dateFrom = $offer->getStartDate();
+        $dateEnd = $offer->getEndDate();
 
         if ($dateFrom->format('Y-m-d') == $dateEnd->format('Y-m-d')) {
             $output = $this->formatSameDay($dateFrom);
