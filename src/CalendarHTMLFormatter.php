@@ -7,6 +7,7 @@ use CultuurNet\CalendarSummaryV3\Single\LargeSingleHTMLFormatter;
 use CultuurNet\CalendarSummaryV3\Single\MediumSingleHTMLFormatter;
 use CultuurNet\CalendarSummaryV3\Single\SmallSingleHTMLFormatter;
 use CultuurNet\SearchV3\ValueObjects\Offer;
+use CultuurNet\CalendarSummaryV3\Permanent\LargePermanentHTMLFormatter;
 
 /**
  * Provides a formatter for calendar info of offers.
@@ -37,21 +38,16 @@ class CalendarHTMLFormatter implements CalendarFormatterInterface
                     //'sm' => new SmallPeriodHTMLFormatter(),
                     //'xs' => new ExtraSmallPeriodicHTMLFormatter(),
                 ],
-            /*
             Offer::CALENDAR_TYPE_PERMANENT =>
                 [
-                    //'lg' => new LargePermanentHTMLFormatter(),
+                    'lg' => new LargePermanentHTMLFormatter(),
                 ],
-            */
         ];
     }
 
     /**
-     * Format the given offer in the given format.
+     * {@inheritdoc}
      *
-     * @param Offer $offer
-     * @param $format
-     * @return mixed
      * @throws FormatterException
      */
     public function format(Offer $offer, $format)
