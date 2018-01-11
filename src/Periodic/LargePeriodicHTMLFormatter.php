@@ -2,6 +2,7 @@
 
 namespace CultuurNet\CalendarSummaryV3\Periodic;
 
+use CultuurNet\SearchV3\ValueObjects\Offer;
 use DateTime;
 use IntlDateFormatter;
 
@@ -39,17 +40,14 @@ class LargePeriodicHTMLFormatter implements PeriodicFormatterInterface
     );
 
     /**
-     * Return formatted period string.
-     *
-     * @param \CultuurNet\SearchV3\ValueObjects\Offer|\CultuurNet\SearchV3\ValueObjects\Place $place
-     * @return mixed
+     * {@inheritdoc}
      */
-    public function format($place)
+    public function format(Offer $offer)
     {
-        $output = $this->generateDates($place->getStartDate(), $place->getEndDate());
+        $output = $this->generateDates($offer->getStartDate(), $offer->getEndDate());
 
-        if ($place->getOpeningHours()) {
-            $output .= $this->generateWeekScheme($place->getOpeningHours());
+        if ($offer->getOpeningHours()) {
+            $output .= $this->generateWeekScheme($offer->getOpeningHours());
         }
 
         return $this->formatSummary($output);
@@ -89,7 +87,7 @@ class LargePeriodicHTMLFormatter implements PeriodicFormatterInterface
     {
         $earliest = '';
         foreach ($openingHoursData as $openingHours) {
-            if ($daysOfWeek === $openingHours->getDayOfWeek()) {
+            if ($daysOfWeek === $openingHours->getDaysOfWeek()) {
                 if (!empty($earliest)) {
                     $earliest = ($openingHours->getOpens() < $earliest ? $openingHours->getOpens() : $earliest);
                 } else {
@@ -111,7 +109,7 @@ class LargePeriodicHTMLFormatter implements PeriodicFormatterInterface
     {
         $latest = '';
         foreach ($openingHoursData as $openingHours) {
-            if ($daysOfWeek === $openingHours->getDayOfWeek()) {
+            if ($daysOfWeek === $openingHours->getDaysOfWeek()) {
                 if (!empty($latest)) {
                     $latest = ($openingHours->getCloses() > $latest ? $openingHours->getCloses() : $latest);
                 } else {
@@ -190,7 +188,7 @@ class LargePeriodicHTMLFormatter implements PeriodicFormatterInterface
         $formattedTimespans = [];
 
         foreach ($openingHoursData as $openingHours) {
-            $daysOfWeek = $openingHours->getDayOfWeek();
+            $daysOfWeek = $openingHours->getDaysOfWeek();
             $daySpanShort = $this->generateFormattedTimespan($daysOfWeek);
             $daySpanLong = $this->generateFormattedTimespan($daysOfWeek, true);
             $firstOpens = $this->getFormattedTime($this->getEarliestTime($openingHoursData, $daysOfWeek));

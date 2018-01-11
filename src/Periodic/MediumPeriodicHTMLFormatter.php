@@ -2,6 +2,7 @@
 
 namespace CultuurNet\CalendarSummaryV3\Periodic;
 
+use CultuurNet\SearchV3\ValueObjects\Offer;
 use IntlDateFormatter;
 
 /**
@@ -12,12 +13,9 @@ class MediumPeriodicHTMLFormatter implements PeriodicFormatterInterface
 {
 
     /**
-     * Return formatted period string.
-     *
-     * @param \CultuurNet\SearchV3\ValueObjects\Offer|\CultuurNet\SearchV3\ValueObjects\Place $offer
-     * @return string
+     * {@inheritdoc}
      */
-    public function format($offer)
+    public function format(Offer $offer)
     {
         $fmt = new IntlDateFormatter(
             'nl_BE',

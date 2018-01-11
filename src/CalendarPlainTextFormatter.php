@@ -2,17 +2,15 @@
 
 namespace CultuurNet\CalendarSummaryV3;
 
+use CultuurNet\CalendarSummaryV3\Single\LargeSinglePlainTextFormatter;
+use CultuurNet\CalendarSummaryV3\Single\MediumSinglePlainTextFormatter;
+use CultuurNet\CalendarSummaryV3\Single\SmallSinglePlainTextFormatter;
 use CultuurNet\SearchV3\ValueObjects\Offer;
-
 use CultuurNet\CalendarSummaryV3\Periodic\ExtraSmallPeriodicPlainTextFormatter;
 use CultuurNet\CalendarSummaryV3\Periodic\LargePeriodicPlainTextFormatter;
 use CultuurNet\CalendarSummaryV3\Periodic\MediumPeriodicPlainTextFormatter;
 use CultuurNet\CalendarSummaryV3\Periodic\SmallPeriodicPlainTextFormatter;
-use CultuurNet\CalendarSummary\Permanent\LargePermanentPlainTextFormatter;
-use CultuurNet\CalendarSummary\Timestamps\ExtraSmallTimestampsPlainTextFormatter;
-use CultuurNet\CalendarSummary\Timestamps\LargeTimestampsPlainTextFormatter;
-use CultuurNet\CalendarSummary\Timestamps\MediumTimestampsPlainTextFormatter;
-use CultuurNet\CalendarSummary\Timestamps\SmallTimestampsPlainTextFormatter;
+use CultuurNet\CalendarSummaryV3\Permanent\LargePermanentPlainTextFormatter;
 
 class CalendarPlainTextFormatter implements CalendarFormatterInterface
 {
@@ -23,10 +21,10 @@ class CalendarPlainTextFormatter implements CalendarFormatterInterface
         $this->mapping = [
             Offer::CALENDAR_TYPE_SINGLE =>
                 [
-                    //'lg' => new LargeTimestampsPlainTextFormatter(),
-                    //'md' => new MediumTimestampsPlainTextFormatter(),
-                    //'sm' => new SmallTimestampsPlainTextForatter(),
-                    //'xs' => new ExtraSmallTimestampsPlainTextFormatter(),
+                    'lg' => new LargeSinglePlainTextFormatter(),
+                    'md' => new MediumSinglePlainTextFormatter(),
+                    'sm' => new SmallSinglePlainTextFormatter(),
+                    'xs' => new SmallSinglePlainTextFormatter()
                 ],
             Offer::CALENDAR_TYPE_MULTIPLE =>
                 [
@@ -42,12 +40,10 @@ class CalendarPlainTextFormatter implements CalendarFormatterInterface
                     'sm' => new SmallPeriodicPlainTextFormatter(),
                     'xs' => new ExtraSmallPeriodicPlainTextFormatter(),
                 ],
-            /*
             Offer::CALENDAR_TYPE_PERMANENT =>
                 [
-                    //'lg' => new LargePermanentHTMLFormatter(),
+                    'lg' => new LargePermanentPlainTextFormatter(),
                 ],
-            */
         ];
     }
 

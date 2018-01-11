@@ -2,18 +2,20 @@
 
 namespace CultuurNet\CalendarSummaryV3;
 
+use CultuurNet\CalendarSummaryV3\Multiple\MediumMultipleHTMLFormatter;
+use CultuurNet\CalendarSummaryV3\Single\LargeSingleHTMLFormatter;
+use CultuurNet\CalendarSummaryV3\Single\MediumSingleHTMLFormatter;
+use CultuurNet\CalendarSummaryV3\Single\SmallSingleHTMLFormatter;
 use CultuurNet\SearchV3\ValueObjects\Offer;
-
+use CultuurNet\CalendarSummaryV3\Permanent\LargePermanentHTMLFormatter;
 use CultuurNet\CalendarSummaryV3\Periodic\ExtraSmallPeriodicHTMLFormatter;
 use CultuurNet\CalendarSummaryV3\Periodic\LargePeriodicHTMLFormatter;
 use CultuurNet\CalendarSummaryV3\Periodic\MediumPeriodicHTMLFormatter;
 use CultuurNet\CalendarSummaryV3\Periodic\SmallPeriodicHTMLFormatter;
-use CultuurNet\CalendarSummary\Permanent\LargePermanentHTMLFormatter;
-use CultuurNet\CalendarSummary\Timestamps\ExtraSmallTimestampsHTMLFormatter;
-use CultuurNet\CalendarSummary\Timestamps\LargeTimestampsHTMLFormatter;
-use CultuurNet\CalendarSummary\Timestamps\MediumTimestampsHTMLFormatter;
-use CultuurNet\CalendarSummary\Timestamps\SmallTimestampsHTMLFormatter;
 
+/**
+ * Provides a formatter for calendar info of offers.
+ */
 class CalendarHTMLFormatter implements CalendarFormatterInterface
 {
     protected $mapping = array();
@@ -23,17 +25,15 @@ class CalendarHTMLFormatter implements CalendarFormatterInterface
         $this->mapping = [
             Offer::CALENDAR_TYPE_SINGLE =>
                 [
-                    //'lg' => new LargeTimestampsHTMLFormatter(),
-                    //'md' => new MediumTimestampsHTMLFormatter(),
-                    //'sm' => new SmallTimestampsHTMLFormatter(),
-                    //'xs' => new ExtraSmallTimestampsHTMLFormatter(),
+                    'lg' => new LargeSingleHTMLFormatter(),
+                    'md' => new MediumSingleHTMLFormatter(),
+                    'sm' => new SmallSingleHTMLFormatter(),
+                    'xs' => new SmallSingleHTMLFormatter()
                 ],
             Offer::CALENDAR_TYPE_MULTIPLE =>
                 [
                     //'lg' => new LargeTimestampsHTMLFormatter(),
-                    //'md' => new MediumTimestampsHTMLFormatter(),
-                    //'sm' => new SmallTimestampsHTMLFormatter(),
-                    //'xs' => new ExtraSmallTimestampsHTMLFormatter(),
+                    'md' => new MediumMultipleHTMLFormatter(),
                 ],
             Offer::CALENDAR_TYPE_PERIODIC =>
                 [
@@ -42,15 +42,18 @@ class CalendarHTMLFormatter implements CalendarFormatterInterface
                     'sm' => new SmallPeriodicHTMLFormatter(),
                     'xs' => new ExtraSmallPeriodicHTMLFormatter(),
                 ],
-            /*
             Offer::CALENDAR_TYPE_PERMANENT =>
                 [
-                    //'lg' => new LargePermanentHTMLFormatter(),
+                    'lg' => new LargePermanentHTMLFormatter(),
                 ],
-            */
         ];
     }
 
+    /**
+     * {@inheritdoc}
+     *
+     * @throws FormatterException
+     */
     public function format(Offer $offer, $format)
     {
         $calenderType = $offer->getCalendarType();

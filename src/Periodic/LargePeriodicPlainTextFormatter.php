@@ -2,6 +2,7 @@
 
 namespace CultuurNet\CalendarSummaryV3\Periodic;
 
+use CultuurNet\SearchV3\ValueObjects\Offer;
 use DateTime;
 use IntlDateFormatter;
 
@@ -26,17 +27,14 @@ class LargePeriodicPlainTextFormatter implements PeriodicFormatterInterface
     );
 
     /**
-     * Return formatted period string.
-     *
-     * @param \CultuurNet\SearchV3\ValueObjects\Offer|\CultuurNet\SearchV3\ValueObjects\Place $place
-     * @return string
+     * {@inheritdoc}
      */
-    public function format($place)
+    public function format(Offer $offer)
     {
-        $output = $this->generateDates($place->getStartDate(), $place->getEndDate());
+        $output = $this->generateDates($offer->getStartDate(), $offer->getEndDate());
 
-        if ($place->getOpeningHours()) {
-            $output .= PHP_EOL . $this->generateWeekScheme($place->getOpeningHours());
+        if ($offer->getOpeningHours()) {
+            $output .= PHP_EOL . $this->generateWeekScheme($offer->getOpeningHours());
         }
 
         return $output;
@@ -89,7 +87,7 @@ class LargePeriodicPlainTextFormatter implements PeriodicFormatterInterface
         // Create an array with formatted days.
         $formattedDays = [];
         foreach ($openingHoursData as $openingHours) {
-            foreach ($openingHours->getDayOfWeek() as $dayOfWeek) {
+            foreach ($openingHours->getDaysOfWeek() as $dayOfWeek) {
                 if (!isset($formattedDays[$dayOfWeek])) {
                     $formattedDays[$dayOfWeek] = $this->mappingDays[$dayOfWeek]
                         . ' van '

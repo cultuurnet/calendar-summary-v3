@@ -1,21 +1,19 @@
 <?php
+
+namespace CultuurNet\CalendarSummaryV3\Permanent;
+
+use CultuurNet\SearchV3\ValueObjects\Place;
+
 /**
- * Created by PhpStorm.
- * User: jonas
- * Date: 06/03/15
- * Time: 14:38
+ * Provide a large plain text formatter for permanent calendar type.
+ * @package CultuurNet\CalendarSummaryV3\Permanent
  */
-
-namespace CultuurNet\CalendarSummary\Permanent;
-
-use \CultureFeed_Cdb_Data_Calendar_SchemeDay as SchemeDay;
-
 class LargePermanentPlainTextFormatter implements PermanentFormatterInterface
 {
     /**
      * Translate the day in short Dutch.
      */
-    protected $mapping_days = array(
+    protected $mappingDays = array(
         'monday' => 'Ma',
         'tuesday' => 'Di',
         'wednesday' => 'Wo',
@@ -25,91 +23,70 @@ class LargePermanentPlainTextFormatter implements PermanentFormatterInterface
         'sunday' => 'Zo',
     );
 
-
-    public function format(
-        \CultureFeed_Cdb_Data_Calendar_Permanent $permanent
-    ) {
+    /**
+     * Return formatted permanent string.
+     *
+     * @param Place $place
+     * @return string
+     */
+    public function format(Place $place)
+    {
         $output = '';
-        if (!is_null($permanent->getWeekScheme())) {
-            $output .= $this->generateWeekscheme($permanent->getWeekScheme());
+        if ($place->getOpeningHours()) {
+            $output .= $this->generateWeekScheme($place->getOpeningHours());
         }
-
         return $output;
     }
 
-    protected function getDutchDay($day)
-    {
-        return $this->mapping_days[$day];
-    }
-
+    /**
+     * @param $time
+     * @return string
+     */
     protected function getFormattedTime($time)
     {
-        $formatted_time = substr($time, 0, -3);
-        $formatted_short_time = ltrim($formatted_time, '0');
-        if ($formatted_short_time == ':00') {
-            $formatted_short_time = '0:00';
+        $formattedShortTime = ltrim($time, '0');
+        if ($formattedShortTime == ':00') {
+            $formattedShortTime = '0:00';
         }
-        return $formatted_short_time;
+        return $formattedShortTime;
     }
 
-    protected function getEarliestTime($times)
+    /**
+     * @param $openingHoursData
+     * @return string
+     */
+    protected function generateWeekScheme($openingHoursData)
     {
-        $start_time = null;
-        foreach ($times as $time) {
-            if ($start_time==null || $start_time > $time->getOpenFrom()) {
-                $start_time = $time->getOpenFrom();
-            }
-        }
-        if (is_null($start_time)) {
-            return '';
-        } else {
-            return ' ' . $this->getFormattedTime($start_time);
-        }
-    }
-
-    protected function getLatestTime($times)
-    {
-        $end_time = null;
-        foreach ($times as $time) {
-            if ($end_time==null || $end_time < $time->getOpenTill()) {
-                $end_time = $time->getOpenTill();
-            }
-        }
-        if (is_null($end_time)) {
-            return '';
-        } else {
-            return '-' . $this->getFormattedTime($end_time);
-        }
-    }
-
-    protected function generateWeekscheme($weekscheme)
-    {
-        $output_week = '';
-
-        $keys = array_keys($weekscheme->getDays());
-
-        for ($i = 0; $i <= 6; $i++) {
-            $one_day = $weekscheme->getDays()[$keys[$i]];
-            if (!is_null($one_day)) {
-                if ($one_day->getOpenType()==SchemeDay::SCHEMEDAY_OPEN_TYPE_OPEN) {
-                    $output_week .= $this->getDutchDay($keys[$i]) . ' ';
-                    foreach ($one_day->getOpeningTimes() as $opening_time) {
-                        $output_week .= 'Van ' . $this->getFormattedTime($opening_time->getOpenFrom());
-                        if (!is_null($opening_time->getOpenTill())) {
-                            $output_week .= ' tot ' . $this->getFormattedTime($opening_time->getOpenTill());
-                        }
-                        $output_week .= PHP_EOL;
-                    }
+        $outputWeek = '';
+        // Create an array with formatted days.
+        $formattedDays = [];
+        foreach ($openingHoursData as $openingHours) {
+            foreach ($openingHours->getDaysOfWeek() as $dayOfWeek) {
+                if (!isset($formattedDays[$dayOfWeek])) {
+                    $formattedDays[$dayOfWeek] = $this->mappingDays[$dayOfWeek]
+                        . ' Van '
+                        . $this->getFormattedTime($openingHours->getOpens())
+                        . ' tot ' . $this->getFormattedTime($openingHours->getCloses())
+                        . PHP_EOL;
+                } else {
+                    $formattedDays[$dayOfWeek] .= 'Van '
+                        . $this->getFormattedTime($openingHours->getOpens())
+                        . ' tot ' . $this->getFormattedTime($openingHours->getCloses())
+                        . PHP_EOL;
                 }
-            } elseif (!is_null($one_day) && $one_day->getOpenType()==SchemeDay::SCHEMEDAY_OPEN_TYPE_BY_APPOINTMENT) {
-                $output_week .= $this->getDutchDay($keys[$i]) . ' ';
-                $output_week .= ' op afspraak' . PHP_EOL;
-            } else {
-                $output_week .= $this->getDutchDay($keys[$i]) . ' ';
-                $output_week .= ' gesloten' . PHP_EOL;
             }
         }
-
-        return $output_week;
+        // Create an array with formatted closed days.
+        $closedDays = [];
+        foreach (array_keys($this->mappingDays) as $day) {
+            $closedDays[$day] = $this->mappingDays[$day] . '  gesloten' . PHP_EOL;
+        }
+        // Merge the formatted days with the closed days array to fill in missing days and sort using the days mapping.
+        $formattedDays = array_replace($this->mappingDays, $formattedDays + $closedDays);
+        // Render the rest of the week scheme output.
+        foreach ($formattedDays as $formattedDay) {
+            $outputWeek .= $formattedDay;
+        }
+        return $outputWeek;
     }
 }

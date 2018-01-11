@@ -2,6 +2,7 @@
 
 namespace CultuurNet\CalendarSummaryV3\Periodic;
 
+use CultuurNet\SearchV3\ValueObjects\Offer;
 use \DateTime;
 use \DateTimeInterface;
 use \IntlDateFormatter;
@@ -47,12 +48,9 @@ class SmallPeriodicPlainTextFormatter implements PeriodicFormatterInterface
     }
 
     /**
-     * Return formatted period string.
-     *
-     * @param \CultuurNet\SearchV3\ValueObjects\Offer|\CultuurNet\SearchV3\ValueObjects\Place $offer
-     * @return string
+     * {@inheritdoc}
      */
-    public function format($offer)
+    public function format(Offer $offer)
     {
         $startDate = $offer->getStartDate();
         $startDate->setTime(0, 0, 1);
