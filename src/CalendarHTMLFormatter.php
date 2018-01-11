@@ -2,12 +2,15 @@
 
 namespace CultuurNet\CalendarSummaryV3;
 
+use CultuurNet\CalendarSummaryV3\Multiple\MediumMultipleHTMLFormatter;
 use CultuurNet\CalendarSummaryV3\Single\LargeSingleHTMLFormatter;
 use CultuurNet\CalendarSummaryV3\Single\MediumSingleHTMLFormatter;
 use CultuurNet\CalendarSummaryV3\Single\SmallSingleHTMLFormatter;
-use Cultuurnet\CalendarSummaryV3\Multiple\MediumMultipleHTMLFormatter;
 use CultuurNet\SearchV3\ValueObjects\Offer;
 
+/**
+ * Provides a formatter for calendar info of offers.
+ */
 class CalendarHTMLFormatter implements CalendarFormatterInterface
 {
     protected $mapping = array();
@@ -43,6 +46,14 @@ class CalendarHTMLFormatter implements CalendarFormatterInterface
         ];
     }
 
+    /**
+     * Format the given offer in the given format.
+     *
+     * @param Offer $offer
+     * @param $format
+     * @return mixed
+     * @throws FormatterException
+     */
     public function format(Offer $offer, $format)
     {
         $calenderType = $offer->getCalendarType();
