@@ -29,7 +29,7 @@ class LargePeriodicPlainTextFormatterTest extends \PHPUnit_Framework_TestCase
 
         $openingHours1 = new OpeningHours();
         $openingHours1->setDaysOfWeek(['monday','tuesday', 'wednesday']);
-        $openingHours1->setOpens('09:00');
+        $openingHours1->setOpens('00:00');
         $openingHours1->setCloses('17:00');
 
         $openingHours2 = new OpeningHours();
@@ -43,9 +43,9 @@ class LargePeriodicPlainTextFormatterTest extends \PHPUnit_Framework_TestCase
 
         $this->assertEquals(
             'Van 25 november 2025 tot 30 november 2030'. PHP_EOL
-            . '(ma van 9:00 tot 17:00'. PHP_EOL
-            . 'di van 9:00 tot 17:00'. PHP_EOL
-            . 'wo van 9:00 tot 17:00' . PHP_EOL
+            . '(ma van 0:00 tot 17:00'. PHP_EOL
+            . 'di van 0:00 tot 17:00'. PHP_EOL
+            . 'wo van 0:00 tot 17:00' . PHP_EOL
             . 'do  gesloten,' . PHP_EOL
             . 'vr van 10:00 tot 18:00'. PHP_EOL
             . 'za van 10:00 tot 18:00' . PHP_EOL

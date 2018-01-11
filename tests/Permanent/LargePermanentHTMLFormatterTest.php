@@ -29,7 +29,7 @@ class LargePermanentHTMLFormatterTest extends \PHPUnit_Framework_TestCase
 
         $openingHours1 = new OpeningHours();
         $openingHours1->setDaysOfWeek(['monday','tuesday', 'wednesday']);
-        $openingHours1->setOpens('09:00');
+        $openingHours1->setOpens('00:00');
         $openingHours1->setCloses('13:00');
 
         $openingHours2 = new OpeningHours();
@@ -47,9 +47,9 @@ class LargePermanentHTMLFormatterTest extends \PHPUnit_Framework_TestCase
         $place->setOpeningHours($openingHoursData);
 
         $this->assertEquals(
-            '<ul class="list-unstyled"> <meta itemprop="openingHours" datetime="Mo-We 9:00-13:00"> '
+            '<ul class="list-unstyled"> <meta itemprop="openingHours" datetime="Mo-We 0:00-13:00"> '
             . '</meta> <li itemprop="openingHoursSpecification"> <span class="cf-days">Maandag - woensdag'
-            . '</span> <span itemprop="opens" content="9:00" class="cf-from cf-meta">van</span>9:00'
+            . '</span> <span itemprop="opens" content="0:00" class="cf-from cf-meta">van</span>0:00'
             . '<span itemprop="closes" content="13:00" class="cf-to cf-meta">tot</span>13:00</li> '
             . '<meta itemprop="openingHours" datetime="Fr 9:00-13:00"> </meta> '
             . '<li itemprop="openingHoursSpecification"> <span class="cf-days">Vrijdag</span> '

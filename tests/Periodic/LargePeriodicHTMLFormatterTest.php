@@ -29,7 +29,7 @@ class LargePeriodicHTMLFormatterTest extends \PHPUnit_Framework_TestCase
 
         $openingHours1 = new OpeningHours();
         $openingHours1->setDaysOfWeek(['monday','tuesday', 'wednesday']);
-        $openingHours1->setOpens('09:00');
+        $openingHours1->setOpens('00:00');
         $openingHours1->setCloses('17:00');
 
         $openingHours2 = new OpeningHours();
@@ -46,10 +46,10 @@ class LargePeriodicHTMLFormatterTest extends \PHPUnit_Framework_TestCase
             . '<span class="cf-date">25 november 2025</span> </time> <span class="cf-to cf-meta">tot</span> '
             . '<time itemprop="endDate" datetime="2030-11-30"> <span class="cf-date">30 november 2030</span> </time> '
             . '</p> <p class="cf-openinghours">Open op:</p> <ul class="list-unstyled"> '
-            . '<meta itemprop="openingHours" datetime="Mo-We 9:00-17:00"> </meta> '
+            . '<meta itemprop="openingHours" datetime="Mo-We 0:00-17:00"> </meta> '
             . '<li itemprop="openingHoursSpecification"> <span class="cf-days">Maandag - woensdag</span> '
-            . '<span itemprop="opens" content="9:00" class="cf-from cf-meta">van</span> '
-            . '<span class="cf-time">9:00</span> <span itemprop="closes" content="17:00" class="cf-to cf-meta">tot'
+            . '<span itemprop="opens" content="0:00" class="cf-from cf-meta">van</span> '
+            . '<span class="cf-time">0:00</span> <span itemprop="closes" content="17:00" class="cf-to cf-meta">tot'
             . '</span> <span class="cf-time">17:00</span> '
             . '</li> '
             . '<meta itemprop="openingHours" datetime="Fr-Sa 10:00-18:00"> </meta> '
