@@ -34,7 +34,8 @@ class ExtraSmallPeriodicPlainTextFormatter
         );
     }
 
-    public function format(Offer $offer) {
+    public function format(Offer $offer)
+    {
         $startDate = $offer->getStartDate();
         $startDate->setTime(0, 0, 1);
         $now = new DateTime();

@@ -86,7 +86,7 @@ class LargePermanentHTMLFormatter implements PermanentFormatterInterface
     {
         $earliest = '';
         foreach ($openingHoursData as $openingHours) {
-            if ($daysOfWeek === $openingHours->getDayOfWeek()) {
+            if ($daysOfWeek === $openingHours->getDaysOfWeek()) {
                 if (!empty($earliest)) {
                     $earliest = ($openingHours->getOpens() < $earliest ? $openingHours->getOpens() : $earliest);
                 } else {
@@ -96,6 +96,7 @@ class LargePermanentHTMLFormatter implements PermanentFormatterInterface
         }
         return $earliest;
     }
+
     /**
      * Retrieve the latest time for the specified daysOfWeek.
      *
@@ -107,7 +108,7 @@ class LargePermanentHTMLFormatter implements PermanentFormatterInterface
     {
         $latest = '';
         foreach ($openingHoursData as $openingHours) {
-            if ($daysOfWeek === $openingHours->getDayOfWeek()) {
+            if ($daysOfWeek === $openingHours->getDaysOfWeek()) {
                 if (!empty($latest)) {
                     $latest = ($openingHours->getCloses() > $latest ? $openingHours->getCloses() : $latest);
                 } else {
@@ -119,6 +120,8 @@ class LargePermanentHTMLFormatter implements PermanentFormatterInterface
     }
 
     /**
+     * Generate a formatted timespan.
+     *
      * @param $daysOfWeek
      * @param bool $long
      * @return string
@@ -145,6 +148,8 @@ class LargePermanentHTMLFormatter implements PermanentFormatterInterface
     }
 
     /**
+     * Generate a weekscheme based on the given opening hours.
+     *
      * @param $openingHoursData
      * @return string
      */
@@ -154,7 +159,7 @@ class LargePermanentHTMLFormatter implements PermanentFormatterInterface
         // Create an array with formatted timespans.
         $formattedTimespans = [];
         foreach ($openingHoursData as $openingHours) {
-            $daysOfWeek = $openingHours->getDayOfWeek();
+            $daysOfWeek = $openingHours->getDaysOfWeek();
             $daySpanShort = $this->generateFormattedTimespan($daysOfWeek);
             $daySpanLong = $this->generateFormattedTimespan($daysOfWeek, true);
             $firstOpens = $this->getFormattedTime($this->getEarliestTime($openingHoursData, $daysOfWeek));

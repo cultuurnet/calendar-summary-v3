@@ -46,11 +46,8 @@ class CalendarHTMLFormatter implements CalendarFormatterInterface
     }
 
     /**
-     * Format the given offer in the given format.
+     * {@inheritdoc}
      *
-     * @param Offer $offer
-     * @param $format
-     * @return mixed
      * @throws FormatterException
      */
     public function format(Offer $offer, $format)

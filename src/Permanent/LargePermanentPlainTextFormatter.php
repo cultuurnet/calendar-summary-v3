@@ -61,7 +61,7 @@ class LargePermanentPlainTextFormatter implements PermanentFormatterInterface
         // Create an array with formatted days.
         $formattedDays = [];
         foreach ($openingHoursData as $openingHours) {
-            foreach ($openingHours->getDayOfWeek() as $dayOfWeek) {
+            foreach ($openingHours->getDaysOfWeek() as $dayOfWeek) {
                 if (!isset($formattedDays[$dayOfWeek])) {
                     $formattedDays[$dayOfWeek] = $this->mappingDays[$dayOfWeek]
                         . ' Van '
