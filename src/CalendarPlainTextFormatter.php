@@ -11,6 +11,8 @@ use CultuurNet\CalendarSummaryV3\Periodic\LargePeriodicPlainTextFormatter;
 use CultuurNet\CalendarSummaryV3\Periodic\MediumPeriodicPlainTextFormatter;
 use CultuurNet\CalendarSummaryV3\Periodic\SmallPeriodicPlainTextFormatter;
 use CultuurNet\CalendarSummaryV3\Permanent\LargePermanentPlainTextFormatter;
+use CultuurNet\CalendarSummaryV3\Multiple\LargeMultiplePlainTextFormatter;
+use CultuurNet\CalendarSummaryV3\Multiple\MediumMultiplePlainTextFormatter;
 
 class CalendarPlainTextFormatter implements CalendarFormatterInterface
 {
@@ -28,8 +30,8 @@ class CalendarPlainTextFormatter implements CalendarFormatterInterface
                 ],
             Offer::CALENDAR_TYPE_MULTIPLE =>
                 [
-                    //'lg' => new LargeTimestampsPlainTextFormatter(),
-                    //'md' => new MediumTimestampsPlainTextFormatter(),
+                    'lg' => new LargeMultiplePlainTextFormatter(),
+                    'md' => new MediumMultiplePlainTextFormatter()
                     //'sm' => new SmallTimestampsPlainTextFormatter(),
                     //'xs' => new ExtraSmallTimestampsPlainTextFormatter(),
                 ],

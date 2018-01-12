@@ -36,7 +36,7 @@ class LargeSinglePlainTextFormatter extends LargeSingleFormatter implements Sing
         $intlEndTimeEnd = $this->fmtTime->format($dateEnd);
 
         $output = $intlWeekDayFrom . ' ' . $intlDateFrom;
-        $output .= 'van ';
+        $output .= ' van ';
         $output .= $intlStartTimeFrom;
         $output .= ' tot ' . $intlEndTimeEnd;
 

@@ -24,8 +24,8 @@ class LargeMultiplePlainTextFormatter implements MultipleFormatterInterface
             $formatter = new LargeSinglePlainTextFormatter();
 
             $event = new Event();
-            $event->setStartDate(new \DateTime($subEvent['startDate']));
-            $event->setEndDate(new \DateTime($subEvent['endDate']));
+            $event->setStartDate($subEvent->getStartDate());
+            $event->setEndDate($subEvent->getEndDate());
 
             $output .= $formatter->format($event);
             if ($key + 1 !== $count) {

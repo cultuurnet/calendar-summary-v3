@@ -25,8 +25,8 @@ class MediumMultiplePlainTextFormatter implements MultipleFormatterInterface
             $formatter = new MediumSinglePlainTextFormatter();
 
             $event = new Event();
-            $event->setStartDate(new \DateTime($subEvent['startDate']));
-            $event->setEndDate(new \DateTime($subEvent['endDate']));
+            $event->setStartDate($subEvent->getStartDate());
+            $event->setEndDate($subEvent->getEndDate());
 
             $output .= $formatter->format($event);
             if ($key + 1 !== $count) {
