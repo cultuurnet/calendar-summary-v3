@@ -14,7 +14,7 @@ class SmallSinglePlainTextFormatterTest extends \PHPUnit_Framework_TestCase
 
     public function setUp()
     {
-        $this->formatter = new SmallSinglePlainTextFormatter();
+        $this->formatter = new SmallSinglePlainTextFormatter('nl_NL');
     }
 
     public function testFormatPlainTextSingleDateXsOneDay()

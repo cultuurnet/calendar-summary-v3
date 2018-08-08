@@ -46,17 +46,8 @@ class LargePeriodicPlainTextFormatter extends LargePeriodicFormatter implements 
      */
     protected function generateDates(DateTime $dateFrom, DateTime $dateTo)
     {
-        $fmt = new IntlDateFormatter(
-            'nl_BE',
-            IntlDateFormatter::FULL,
-            IntlDateFormatter::FULL,
-            date_default_timezone_get(),
-            IntlDateFormatter::GREGORIAN,
-            'd MMMM yyyy'
-        );
-
-        $intlDateFrom =$fmt->format($dateFrom);
-        $intlDateTo = $fmt->format($dateTo);
+        $intlDateFrom = $this->fmt->format($dateFrom);
+        $intlDateTo = $this->fmt->format($dateTo);
 
         $output_dates =  'Van ' . $intlDateFrom . ' tot ' . $intlDateTo;
         return $output_dates;
@@ -92,7 +83,7 @@ class LargePeriodicPlainTextFormatter extends LargePeriodicFormatter implements 
         // Create an array with formatted closed days.
         $closedDays = [];
         foreach (array_keys($this->mappingDays) as $day) {
-            $closedDays[$day] = $this->mappingDays[$day] . '  gesloten,' . PHP_EOL;
+            $closedDays[$day] = $this->mappingDays[$day] . ' gesloten,' . PHP_EOL;
         }
         // Merge the formatted days with the closed days array to fill in missing days and sort using the days mapping.
         $formattedDays = array_replace($this->mappingDays, $formattedDays + $closedDays);

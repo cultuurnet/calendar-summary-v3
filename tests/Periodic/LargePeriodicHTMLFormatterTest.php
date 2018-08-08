@@ -18,7 +18,7 @@ class LargePeriodicHTMLFormatterTest extends \PHPUnit_Framework_TestCase
 
     public function setUp()
     {
-        $this->formatter = new LargePeriodicHTMLFormatter();
+        $this->formatter = new LargePeriodicHTMLFormatter('nl_NL');
     }
 
     public function testFormatAPeriodWithSingleTimeBlocks()

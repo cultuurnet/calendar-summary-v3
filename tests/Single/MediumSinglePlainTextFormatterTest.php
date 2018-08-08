@@ -14,7 +14,7 @@ class MediumSinglePlainTextFormatterTest extends \PHPUnit_Framework_TestCase
 
     public function setUp()
     {
-        $this->formatter = new MediumSinglePlainTextFormatter();
+        $this->formatter = new MediumSinglePlainTextFormatter('nl_NL');
     }
 
     public function testFormatHTMLSingleDateMediumOneDay()

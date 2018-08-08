@@ -15,26 +15,33 @@ class LargeMultiplePlainTextFormatterTest extends \PHPUnit_Framework_TestCase
     public function setUp()
     {
         date_default_timezone_set('Europe/Brussels');
-        $this->formatter = new LargeMultiplePlainTextFormatter();
+        $this->formatter = new LargeMultiplePlainTextFormatter('nl_NL');
     }
 
     public function testFormatPlainTextMultipleDateLargeOneDay()
     {
         $subEvents = json_decode(file_get_contents(__DIR__ . '/data/subEvents.json'), true);
         $event = new Event();
-        $event->setSubEvents($subEvents);
+        $newEvents = array();
+        foreach($subEvents as $subEvent) {
+            $e = new Event();
+            $e->setStartDate(new \DateTime($subEvent['startDate']));
+            $e->setEndDate(new \DateTime($subEvent['endDate']));
+            $newEvents[] = $e;
+        }
+        $event->setSubEvents($newEvents);
 
         $expectedOutput = 'donderdag 9 november 2017';
-        $expectedOutput .= 'van 20:00 tot 22:00' . PHP_EOL;
+        $expectedOutput .= ' van 20:00 tot 22:00' . PHP_EOL;
 
         $expectedOutput .= 'donderdag 16 november 2017';
-        $expectedOutput .= 'van 20:00 tot 22:00' . PHP_EOL;
+        $expectedOutput .= ' van 20:00 tot 22:00' . PHP_EOL;
 
         $expectedOutput .= 'donderdag 23 november 2017';
-        $expectedOutput .= 'van 20:00 tot 22:00' . PHP_EOL;
+        $expectedOutput .= ' van 20:00 tot 22:00' . PHP_EOL;
 
         $expectedOutput .= 'donderdag 30 november 2017';
-        $expectedOutput .= 'van 20:00 tot 22:00';
+        $expectedOutput .= ' van 20:00 tot 22:00';
 
         $this->assertEquals(
             $expectedOutput,
@@ -46,7 +53,14 @@ class LargeMultiplePlainTextFormatterTest extends \PHPUnit_Framework_TestCase
     {
         $subEvents = json_decode(file_get_contents(__DIR__ . '/data/subEventsMoreDays.json'), true);
         $event = new Event();
-        $event->setSubEvents($subEvents);
+        $newEvents = array();
+        foreach($subEvents as $subEvent) {
+            $e = new Event();
+            $e->setStartDate(new \DateTime($subEvent['startDate']));
+            $e->setEndDate(new \DateTime($subEvent['endDate']));
+            $newEvents[] = $e;
+        }
+        $event->setSubEvents($newEvents);
 
         $expectedOutput = 'Van maandag 6 november 2017 20:00 tot donderdag 9 november 2017 22:00' . PHP_EOL;
         $expectedOutput .= 'Van dinsdag 14 november 2017 20:00 tot donderdag 16 november 2017 22:00' . PHP_EOL;

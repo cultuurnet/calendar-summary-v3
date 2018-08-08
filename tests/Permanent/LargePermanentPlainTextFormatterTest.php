@@ -18,7 +18,7 @@ class LargePermanentPlainTextFormatterTest extends \PHPUnit_Framework_TestCase
 
     public function setUp()
     {
-        $this->formatter = new LargePermanentPlainTextFormatter();
+        $this->formatter = new LargePermanentPlainTextFormatter('nl_NL');
     }
 
     public function testFormatASimplePermanent()
@@ -48,9 +48,9 @@ class LargePermanentPlainTextFormatterTest extends \PHPUnit_Framework_TestCase
 
 
         $this->assertEquals(
-            'Ma Van 9:00 tot 13:00'. PHP_EOL . 'Di Van 9:00 tot 13:00'. PHP_EOL . 'Wo Van 9:00 tot 13:00' . PHP_EOL
-            . 'Do  gesloten'. PHP_EOL . 'Vr Van 0:00 tot 13:00'. PHP_EOL . 'Za Van 9:00 tot 19:00'
-            . PHP_EOL . 'Zo Van 9:00 tot 19:00' . PHP_EOL,
+            'ma van 9:00 tot 13:00'. PHP_EOL . 'di van 9:00 tot 13:00'. PHP_EOL . 'wo van 9:00 tot 13:00' . PHP_EOL
+            . 'do gesloten'. PHP_EOL . 'vr van 0:00 tot 13:00'. PHP_EOL . 'za van 9:00 tot 19:00'
+            . PHP_EOL . 'zo van 9:00 tot 19:00' . PHP_EOL,
             $this->formatter->format($place)
         );
     }
@@ -86,13 +86,13 @@ class LargePermanentPlainTextFormatterTest extends \PHPUnit_Framework_TestCase
         $place->setOpeningHours($openingHoursData);
 
         $this->assertEquals(
-            'Ma Van 9:00 tot 13:00'. PHP_EOL . 'Van 17:00 tot 20:00'. PHP_EOL
-            . 'Di Van 9:00 tot 13:00' . PHP_EOL . 'Van 17:00 tot 20:00'. PHP_EOL
-            . 'Wo Van 9:00 tot 13:00' . PHP_EOL . 'Van 17:00 tot 20:00'. PHP_EOL
-            . 'Do  gesloten'. PHP_EOL
-            . 'Vr Van 10:00 tot 15:00' . PHP_EOL . 'Van 18:00 tot 21:00'. PHP_EOL
-            . 'Za Van 10:00 tot 15:00'. PHP_EOL . 'Van 18:00 tot 21:00'. PHP_EOL
-            . 'Zo  gesloten' . PHP_EOL,
+            'ma van 9:00 tot 13:00'. PHP_EOL . 'van 17:00 tot 20:00'. PHP_EOL
+            . 'di van 9:00 tot 13:00' . PHP_EOL . 'van 17:00 tot 20:00'. PHP_EOL
+            . 'wo van 9:00 tot 13:00' . PHP_EOL . 'van 17:00 tot 20:00'. PHP_EOL
+            . 'do gesloten'. PHP_EOL
+            . 'vr van 10:00 tot 15:00' . PHP_EOL . 'van 18:00 tot 21:00'. PHP_EOL
+            . 'za van 10:00 tot 15:00'. PHP_EOL . 'van 18:00 tot 21:00'. PHP_EOL
+            . 'zo gesloten' . PHP_EOL,
             $this->formatter->format($place)
         );
     }
@@ -131,13 +131,13 @@ class LargePermanentPlainTextFormatterTest extends \PHPUnit_Framework_TestCase
         $place->setOpeningHours($openingHoursData);
 
         $this->assertEquals(
-            'Ma Van 9:30 tot 13:45'. PHP_EOL . 'Van 17:00 tot 20:00' . PHP_EOL
-            . 'Di Van 9:30 tot 13:45'. PHP_EOL . 'Van 18:00 tot 20:00'. PHP_EOL . 'Van 21:00 tot 23:00'. PHP_EOL
-            . 'Wo  gesloten' . PHP_EOL
-            . 'Do  gesloten' . PHP_EOL
-            . 'Vr Van 10:00 tot 15:00'. PHP_EOL
-            . 'Za Van 10:00 tot 15:00' . PHP_EOL
-            . 'Zo  gesloten' . PHP_EOL,
+            'ma van 9:30 tot 13:45'. PHP_EOL . 'van 17:00 tot 20:00' . PHP_EOL
+            . 'di van 9:30 tot 13:45'. PHP_EOL . 'van 18:00 tot 20:00'. PHP_EOL . 'van 21:00 tot 23:00'. PHP_EOL
+            . 'wo gesloten' . PHP_EOL
+            . 'do gesloten' . PHP_EOL
+            . 'vr van 10:00 tot 15:00'. PHP_EOL
+            . 'za van 10:00 tot 15:00' . PHP_EOL
+            . 'zo gesloten' . PHP_EOL,
             $this->formatter->format($place)
         );
     }

@@ -15,14 +15,21 @@ class LargeMultipleHTMLFormatterTest extends \PHPUnit_Framework_TestCase
     public function setUp()
     {
         date_default_timezone_set('Europe/Brussels');
-        $this->formatter = new LargeMultipleHTMLFormatter();
+        $this->formatter = new LargeMultipleHTMLFormatter('nl_NL');
     }
 
     public function testFormatHTMLMultipleDateLargeOneDay()
     {
         $subEvents = json_decode(file_get_contents(__DIR__ . '/data/subEvents.json'), true);
         $event = new Event();
-        $event->setSubEvents($subEvents);
+        $newEvents = array();
+        foreach($subEvents as $subEvent) {
+            $e = new Event();
+            $e->setStartDate(new \DateTime($subEvent['startDate']));
+            $e->setEndDate(new \DateTime($subEvent['endDate']));
+            $newEvents[] = $e;
+        }
+        $event->setSubEvents($newEvents);
 
         $expectedOutput = '<time itemprop="startDate" datetime="2017-11-09T20:00:00+01:00">';
         $expectedOutput .= '<span class="cf-weekday cf-meta">donderdag</span>';
@@ -95,7 +102,14 @@ class LargeMultipleHTMLFormatterTest extends \PHPUnit_Framework_TestCase
     {
         $subEvents = json_decode(file_get_contents(__DIR__ . '/data/subEventsMoreDays.json'), true);
         $event = new Event();
-        $event->setSubEvents($subEvents);
+        $newEvents = array();
+        foreach($subEvents as $subEvent) {
+            $e = new Event();
+            $e->setStartDate(new \DateTime($subEvent['startDate']));
+            $e->setEndDate(new \DateTime($subEvent['endDate']));
+            $newEvents[] = $e;
+        }
+        $event->setSubEvents($newEvents);
 
         $expectedOutput = '<time itemprop="startDate" datetime="2017-11-06T20:00:00+01:00">';
         $expectedOutput .= '<span class="cf-from cf-meta">Van</span>';

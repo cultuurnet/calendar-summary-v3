@@ -49,7 +49,7 @@ class LargePermanentPlainTextFormatter extends LargePermanentFormatter implement
         foreach ($openingHoursData as $openingHours) {
             $daysOfWeek = $openingHours->getDaysOfWeek();
             foreach ($daysOfWeek as $i => $dayOfWeek) {
-                $translatedDay = $this->fmtDays->format(strtotime($dayOfWeek));
+                $translatedDay = $this->fmtShortDays->format(strtotime($dayOfWeek));
                 //$daysOfWeek[$i] = $this->fmtDays->format(strtotime($dayOfWeek));
 
                 if (!isset($formattedDays[$dayOfWeek])) {
@@ -59,7 +59,7 @@ class LargePermanentPlainTextFormatter extends LargePermanentFormatter implement
                         . ' tot ' . $this->getFormattedTime($openingHours->getCloses())
                         . PHP_EOL;
                 } else {
-                    $formattedDays[$dayOfWeek] .= 'Van '
+                    $formattedDays[$dayOfWeek] .= 'van '
                         . $this->getFormattedTime($openingHours->getOpens())
                         . ' tot ' . $this->getFormattedTime($openingHours->getCloses())
                         . PHP_EOL;
@@ -70,7 +70,7 @@ class LargePermanentPlainTextFormatter extends LargePermanentFormatter implement
         // Create an array with formatted closed days.
         $closedDays = [];
         foreach (array_keys($this->mappingDays) as $day) {
-            $closedDays[$day] = $this->fmtDays->format(strtotime($day)) . '  gesloten' . PHP_EOL;
+            $closedDays[$day] = $this->fmtShortDays->format(strtotime($day)) . ' gesloten' . PHP_EOL;
         }
 
         // Merge the formatted days with the closed days array to fill in missing days and sort using the days mapping.

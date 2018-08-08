@@ -18,7 +18,7 @@ class LargePeriodicPlainTextFormatterTest extends \PHPUnit_Framework_TestCase
 
     public function setUp()
     {
-        $this->formatter = new LargePeriodicPlainTextFormatter();
+        $this->formatter = new LargePeriodicPlainTextFormatter('nl_NL');
     }
 
     public function testFormatAPeriodWithSingleTimeBlocks()
@@ -43,13 +43,13 @@ class LargePeriodicPlainTextFormatterTest extends \PHPUnit_Framework_TestCase
 
         $this->assertEquals(
             'Van 25 november 2025 tot 30 november 2030'. PHP_EOL
-            . '(ma van 0:00 tot 17:00'. PHP_EOL
-            . 'di van 0:00 tot 17:00'. PHP_EOL
-            . 'wo van 0:00 tot 17:00' . PHP_EOL
-            . 'do  gesloten,' . PHP_EOL
-            . 'vr van 10:00 tot 18:00'. PHP_EOL
-            . 'za van 10:00 tot 18:00' . PHP_EOL
-            . 'zo  gesloten)',
+            . '(maandag van 0:00 tot 17:00'. PHP_EOL
+            . 'dinsdag van 0:00 tot 17:00'. PHP_EOL
+            . 'woensdag van 0:00 tot 17:00' . PHP_EOL
+            . 'donderdag gesloten,' . PHP_EOL
+            . 'vrijdag van 10:00 tot 18:00'. PHP_EOL
+            . 'zaterdag van 10:00 tot 18:00' . PHP_EOL
+            . 'zondag gesloten)',
             $this->formatter->format($place)
         );
     }
@@ -86,13 +86,13 @@ class LargePeriodicPlainTextFormatterTest extends \PHPUnit_Framework_TestCase
 
         $this->assertEquals(
             'Van 25 november 2025 tot 30 november 2030'. PHP_EOL
-            . '(ma van 9:00 tot 13:00'. PHP_EOL . 'van 17:00 tot 20:00,' . PHP_EOL
-            . 'di van 9:00 tot 13:00'. PHP_EOL . 'van 17:00 tot 20:00,'. PHP_EOL
-            . 'wo van 9:00 tot 13:00' . PHP_EOL . 'van 17:00 tot 20:00,'. PHP_EOL
-            . 'do  gesloten,' . PHP_EOL
-            . 'vr van 10:00 tot 15:00'. PHP_EOL . 'van 18:00 tot 21:00,'. PHP_EOL
-            . 'za van 10:00 tot 15:00' . PHP_EOL . 'van 18:00 tot 21:00,'. PHP_EOL
-            . 'zo  gesloten)',
+            . '(maandag van 9:00 tot 13:00'. PHP_EOL . 'van 17:00 tot 20:00,' . PHP_EOL
+            . 'dinsdag van 9:00 tot 13:00'. PHP_EOL . 'van 17:00 tot 20:00,'. PHP_EOL
+            . 'woensdag van 9:00 tot 13:00' . PHP_EOL . 'van 17:00 tot 20:00,'. PHP_EOL
+            . 'donderdag gesloten,' . PHP_EOL
+            . 'vrijdag van 10:00 tot 15:00'. PHP_EOL . 'van 18:00 tot 21:00,'. PHP_EOL
+            . 'zaterdag van 10:00 tot 15:00' . PHP_EOL . 'van 18:00 tot 21:00,'. PHP_EOL
+            . 'zondag gesloten)',
             $this->formatter->format($place)
         );
     }
@@ -134,13 +134,13 @@ class LargePeriodicPlainTextFormatterTest extends \PHPUnit_Framework_TestCase
 
         $this->assertEquals(
             'Van 25 november 2025 tot 30 november 2030'. PHP_EOL
-            . '(ma van 9:30 tot 13:45'. PHP_EOL . 'van 17:00 tot 20:00,' . PHP_EOL
-            . 'di van 9:30 tot 13:45'. PHP_EOL . 'van 18:00 tot 20:00,'. PHP_EOL . 'van 21:00 tot 23:00,'. PHP_EOL
-            . 'wo  gesloten,' . PHP_EOL
-            . 'do  gesloten,' . PHP_EOL
-            . 'vr van 10:00 tot 15:00'. PHP_EOL
-            . 'za van 10:00 tot 15:00' . PHP_EOL
-            . 'zo  gesloten)',
+            . '(maandag van 9:30 tot 13:45'. PHP_EOL . 'van 17:00 tot 20:00,' . PHP_EOL
+            . 'dinsdag van 9:30 tot 13:45'. PHP_EOL . 'van 18:00 tot 20:00,'. PHP_EOL . 'van 21:00 tot 23:00,'. PHP_EOL
+            . 'woensdag gesloten,' . PHP_EOL
+            . 'donderdag gesloten,' . PHP_EOL
+            . 'vrijdag van 10:00 tot 15:00'. PHP_EOL
+            . 'zaterdag van 10:00 tot 15:00' . PHP_EOL
+            . 'zondag gesloten)',
             $this->formatter->format($place)
         );
     }

@@ -14,14 +14,21 @@ class MediumMultiplePlainTextFormatterTest extends \PHPUnit_Framework_TestCase
 
     public function setUp()
     {
-        $this->formatter = new MediumMultiplePlainTextFormatter();
+        $this->formatter = new MediumMultiplePlainTextFormatter('nl_NL');
     }
 
     public function testFormatPlainTextMultipleDateMediumOneDay()
     {
         $subEvents = json_decode(file_get_contents(__DIR__ . '/data/subEvents.json'), true);
         $event = new Event();
-        $event->setSubEvents($subEvents);
+        $newEvents = array();
+        foreach($subEvents as $subEvent) {
+            $e = new Event();
+            $e->setStartDate(new \DateTime($subEvent['startDate']));
+            $e->setEndDate(new \DateTime($subEvent['endDate']));
+            $newEvents[] = $e;
+        }
+        $event->setSubEvents($newEvents);
 
         $expectedOutput = 'donderdag 9 november 2017' . PHP_EOL;
         $expectedOutput .= 'donderdag 16 november 2017' . PHP_EOL;
@@ -38,7 +45,14 @@ class MediumMultiplePlainTextFormatterTest extends \PHPUnit_Framework_TestCase
     {
         $subEvents = json_decode(file_get_contents(__DIR__ . '/data/subEventsMoreDays.json'), true);
         $event = new Event();
-        $event->setSubEvents($subEvents);
+        $newEvents = array();
+        foreach($subEvents as $subEvent) {
+            $e = new Event();
+            $e->setStartDate(new \DateTime($subEvent['startDate']));
+            $e->setEndDate(new \DateTime($subEvent['endDate']));
+            $newEvents[] = $e;
+        }
+        $event->setSubEvents($newEvents);
 
         $expectedOutput = 'Van maandag 6 november 2017 tot donderdag 9 november 2017' . PHP_EOL;
         $expectedOutput .= 'Van dinsdag 14 november 2017 tot donderdag 16 november 2017' . PHP_EOL;

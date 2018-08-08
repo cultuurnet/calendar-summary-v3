@@ -15,7 +15,7 @@ class LargeSingleHTMLFormatterTest extends \PHPUnit_Framework_TestCase
     public function setUp()
     {
         date_default_timezone_set('Europe/Brussels');
-        $this->formatter = new LargeSingleHTMLFormatter();
+        $this->formatter = new LargeSingleHTMLFormatter('nl_NL');
     }
 
     public function testFormatHTMLSingleDateLargeOneDay()

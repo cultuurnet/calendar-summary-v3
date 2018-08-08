@@ -14,7 +14,7 @@ class SmallSingleHTMLFormatterTest extends \PHPUnit_Framework_TestCase
 
     public function setUp()
     {
-        $this->formatter = new SmallSingleHTMLFormatter();
+        $this->formatter = new SmallSingleHTMLFormatter('nl_NL');
     }
 
     public function testFormatHTMLSingleDateXsOneDay()

@@ -17,7 +17,7 @@ class MediumPeriodicHTMLFormatterTest extends \PHPUnit_Framework_TestCase
 
     public function setUp()
     {
-        $this->formatter = new MediumPeriodicHTMLFormatter();
+        $this->formatter = new MediumPeriodicHTMLFormatter('nl_NL');
     }
 
     public function testFormatAPeriodWithoutLeadingZeroes()

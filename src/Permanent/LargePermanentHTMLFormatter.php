@@ -100,10 +100,18 @@ class LargePermanentHTMLFormatter extends LargePermanentFormatter implements Per
      */
     protected function generateFormattedTimespan($daysOfWeek, $long = false)
     {
-        if (count($daysOfWeek) > 1) {
-            return ucfirst($daysOfWeek[0]) . ' - ' . $daysOfWeek[count($daysOfWeek)-1];
+        if ($long) {
+            if (count($daysOfWeek) > 1) {
+                return ucfirst($daysOfWeek[0]) . ' - ' . $daysOfWeek[count($daysOfWeek)-1];
+            } else {
+                return ucfirst($daysOfWeek[0]);
+            }
         } else {
-            return ucfirst($daysOfWeek[0]);
+            if (count($daysOfWeek) > 1) {
+                return $daysOfWeek[0] . '-' . $daysOfWeek[count($daysOfWeek)-1];
+            } else {
+                return $daysOfWeek[0];
+            }
         }
     }
 
@@ -120,14 +128,15 @@ class LargePermanentHTMLFormatter extends LargePermanentFormatter implements Per
         $formattedTimespans = [];
         foreach ($openingHoursData as $openingHours) {
             $daysOfWeek = $openingHours->getDaysOfWeek();
-            $daysOfWeekShort = array();
+            $daysOfWeekTranslated = $openingHours->getDaysOfWeek();
+            $daysOfWeekShortTranslated = $openingHours->getDaysOfWeek();
             foreach($daysOfWeek as $i => $dayOfWeek) {
-                $daysOfWeek[$i] = $this->fmtDays->format(strtotime($dayOfWeek));
-                $daysOfWeekShort[$i] = $this->fmtShortDays->format(strtotime($dayOfWeek));
+                $daysOfWeekTranslated[$i] = $this->fmtDays->format(strtotime($dayOfWeek));
+                $daysOfWeekShortTranslated[$i] = $this->fmtShortDays->format(strtotime($dayOfWeek));
             }
 
-            $daySpanShort = $this->generateFormattedTimespan($daysOfWeekShort);
-            $daySpanLong = $this->generateFormattedTimespan($daysOfWeek, true);
+            $daySpanShort = $this->generateFormattedTimespan($daysOfWeekShortTranslated);
+            $daySpanLong = $this->generateFormattedTimespan($daysOfWeekTranslated, true);
             $firstOpens = $this->getFormattedTime($this->getEarliestTime($openingHoursData, $daysOfWeek));
             $lastCloses = $this->getFormattedTime($this->getLatestTime($openingHoursData, $daysOfWeek));
             $opens = $this->getFormattedTime($openingHours->getOpens());

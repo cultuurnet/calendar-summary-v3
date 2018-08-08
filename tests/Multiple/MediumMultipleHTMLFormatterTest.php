@@ -14,14 +14,21 @@ class MediumMultipleHTMLFormatterTest extends \PHPUnit_Framework_TestCase
 
     public function setUp()
     {
-        $this->formatter = new MediumMultipleHTMLFormatter();
+        $this->formatter = new MediumMultipleHTMLFormatter('nl_NL');
     }
 
     public function testFormatHTMLMultipleDateMediumOneDay()
     {
         $subEvents = json_decode(file_get_contents(__DIR__ . '/data/subEvents.json'), true);
         $event = new Event();
-        $event->setSubEvents($subEvents);
+        $newEvents = array();
+        foreach($subEvents as $subEvent) {
+            $e = new Event();
+            $e->setStartDate(new \DateTime($subEvent['startDate']));
+            $e->setEndDate(new \DateTime($subEvent['endDate']));
+            $newEvents[] = $e;
+        }
+        $event->setSubEvents($newEvents);
 
         $expectedOutput = '<span class="cf-weekday cf-meta">donderdag</span> ';
         $expectedOutput .= '<span class="cf-date">9 november 2017</span>';
@@ -42,7 +49,14 @@ class MediumMultipleHTMLFormatterTest extends \PHPUnit_Framework_TestCase
     {
         $subEvents = json_decode(file_get_contents(__DIR__ . '/data/subEventsMoreDays.json'), true);
         $event = new Event();
-        $event->setSubEvents($subEvents);
+        $newEvents = array();
+        foreach($subEvents as $subEvent) {
+            $e = new Event();
+            $e->setStartDate(new \DateTime($subEvent['startDate']));
+            $e->setEndDate(new \DateTime($subEvent['endDate']));
+            $newEvents[] = $e;
+        }
+        $event->setSubEvents($newEvents);
 
         $expectedOutput = '<span class="cf-from cf-meta">Van</span> ';
         $expectedOutput .= '<span class="cf-weekday cf-meta">maandag</span> ';

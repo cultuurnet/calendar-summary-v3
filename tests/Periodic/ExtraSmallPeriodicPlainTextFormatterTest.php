@@ -17,7 +17,7 @@ class ExtraSmallPeriodicPlainTextFormatterTest extends \PHPUnit_Framework_TestCa
 
     public function setUp()
     {
-        $this->formatter = new ExtraSmallPeriodicPlainTextFormatter();
+        $this->formatter = new ExtraSmallPeriodicPlainTextFormatter('nl_NL');
     }
 
     public function testFormatAPeriodWithoutLeadingZeroes()
