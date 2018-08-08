@@ -18,33 +18,31 @@ class CalendarPlainTextFormatter implements CalendarFormatterInterface
 {
     protected $mapping = array();
 
-    public function __construct()
+    public function __construct($langCode = 'nl_NL')
     {
         $this->mapping = [
             Offer::CALENDAR_TYPE_SINGLE =>
                 [
-                    'lg' => new LargeSinglePlainTextFormatter(),
-                    'md' => new MediumSinglePlainTextFormatter(),
-                    'sm' => new SmallSinglePlainTextFormatter(),
-                    'xs' => new SmallSinglePlainTextFormatter()
+                    'lg' => new LargeSinglePlainTextFormatter($langCode),
+                    'md' => new MediumSinglePlainTextFormatter($langCode),
+                    'sm' => new SmallSinglePlainTextFormatter($langCode),
+                    'xs' => new SmallSinglePlainTextFormatter($langCode)
                 ],
             Offer::CALENDAR_TYPE_MULTIPLE =>
                 [
-                    'lg' => new LargeMultiplePlainTextFormatter(),
-                    'md' => new MediumMultiplePlainTextFormatter()
-                    //'sm' => new SmallTimestampsPlainTextFormatter(),
-                    //'xs' => new ExtraSmallTimestampsPlainTextFormatter(),
+                    'lg' => new LargeMultiplePlainTextFormatter($langCode),
+                    'md' => new MediumMultiplePlainTextFormatter($langCode)
                 ],
             Offer::CALENDAR_TYPE_PERIODIC =>
                 [
-                    'lg' => new LargePeriodicPlainTextFormatter(),
-                    'md' => new MediumPeriodicPlainTextFormatter(),
-                    'sm' => new SmallPeriodicPlainTextFormatter(),
-                    'xs' => new ExtraSmallPeriodicPlainTextFormatter(),
+                    'lg' => new LargePeriodicPlainTextFormatter($langCode),
+                    'md' => new MediumPeriodicPlainTextFormatter($langCode),
+                    'sm' => new SmallPeriodicPlainTextFormatter($langCode),
+                    'xs' => new ExtraSmallPeriodicPlainTextFormatter($langCode),
                 ],
             Offer::CALENDAR_TYPE_PERMANENT =>
                 [
-                    'lg' => new LargePermanentPlainTextFormatter(),
+                    'lg' => new LargePermanentPlainTextFormatter($langCode),
                 ],
         ];
     }

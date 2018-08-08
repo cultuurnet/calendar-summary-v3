@@ -3,13 +3,12 @@
 namespace CultuurNet\CalendarSummaryV3\Periodic;
 
 use CultuurNet\SearchV3\ValueObjects\Offer;
-use IntlDateFormatter;
 
 /**
  * Provide a medium plain text formatter for periodic calendar type.
  * @package CultuurNet\CalendarSummaryV3\Periodic
  */
-class MediumPeriodicPlainTextFormatter implements PeriodicFormatterInterface
+class MediumPeriodicPlainTextFormatter extends MediumPeriodicFormatter implements PeriodicFormatterInterface
 {
 
     /**
@@ -17,30 +16,12 @@ class MediumPeriodicPlainTextFormatter implements PeriodicFormatterInterface
      */
     public function format(Offer $offer)
     {
-        $fmt = new IntlDateFormatter(
-            'nl_BE',
-            IntlDateFormatter::FULL,
-            IntlDateFormatter::FULL,
-            date_default_timezone_get(),
-            IntlDateFormatter::GREGORIAN,
-            'd MMMM yyyy'
-        );
-
-        $fmtDay = new IntlDateFormatter(
-            'nl_BE',
-            IntlDateFormatter::FULL,
-            IntlDateFormatter::FULL,
-            date_default_timezone_get(),
-            IntlDateFormatter::GREGORIAN,
-            'eeee'
-        );
-
         $dateFrom = $offer->getStartDate();
-        $intlDateFrom =$fmt->format($dateFrom);
-        $intlDateFromDay = $fmtDay->format($dateFrom);
+        $intlDateFrom = $this->fmt->format($dateFrom);
+        $intlDateFromDay = $this->fmtDay->format($dateFrom);
 
         $dateTo = $offer->getEndDate();
-        $intlDateTo = $fmt->format($dateTo);
+        $intlDateTo = $this->fmt->format($dateTo);
 
         if ($intlDateFrom == $intlDateTo) {
             $output = $intlDateFromDay . ' ' . $intlDateFrom;

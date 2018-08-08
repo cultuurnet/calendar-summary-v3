@@ -10,22 +10,8 @@ use IntlDateFormatter;
  * Provide a large plain text formatter for periodic calendar type.
  * @package CultuurNet\CalendarSummaryV3\Periodic
  */
-class LargePeriodicPlainTextFormatter implements PeriodicFormatterInterface
+class LargePeriodicPlainTextFormatter extends LargePeriodicFormatter implements PeriodicFormatterInterface
 {
-
-    /**
-     * Translate the day to short Dutch format.
-     */
-    protected $mappingDays = array(
-        'monday' => 'ma',
-        'tuesday' => 'di',
-        'wednesday' => 'wo',
-        'thursday' => 'do',
-        'friday' => 'vr',
-        'saturday' => 'za',
-        'sunday' => 'zo',
-    );
-
     /**
      * {@inheritdoc}
      */

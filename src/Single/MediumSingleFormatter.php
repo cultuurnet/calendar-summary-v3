@@ -10,10 +10,10 @@ abstract class MediumSingleFormatter
 
     protected $fmtDay;
 
-    public function __construct()
+    public function __construct($langCode)
     {
         $this->fmt = new IntlDateFormatter(
-            'nl_BE',
+            $langCode,
             IntlDateFormatter::FULL,
             IntlDateFormatter::FULL,
             date_default_timezone_get(),
@@ -22,7 +22,7 @@ abstract class MediumSingleFormatter
         );
 
         $this->fmtDay = new IntlDateFormatter(
-            'nl_BE',
+            $langCode,
             IntlDateFormatter::FULL,
             IntlDateFormatter::FULL,
             date_default_timezone_get(),

@@ -5,48 +5,13 @@ namespace CultuurNet\CalendarSummaryV3\Periodic;
 use CultuurNet\SearchV3\ValueObjects\Offer;
 use \DateTime;
 use \DateTimeInterface;
-use \IntlDateFormatter;
 
 /**
  * Provide a extra small HTML formatter for periodic calendar type.
  * @package CultuurNet\CalendarSummaryV3\Periodic
  */
-class ExtraSmallPeriodicHTMLFormatter implements PeriodicFormatterInterface
+class ExtraSmallPeriodicHTMLFormatter extends ExtraSmallPeriodicFormatter implements PeriodicFormatterInterface
 {
-    /**
-     * @var IntlDateFormatter
-     */
-    private $fmtDay;
-
-    /**
-     * @var IntlDateFormatter
-     */
-    private $fmtMonth;
-
-    /**
-     * ExtraSmallPeriodicHTMLFormatter constructor.
-     */
-    public function __construct()
-    {
-        $this->fmtDay = new IntlDateFormatter(
-            'nl_BE',
-            IntlDateFormatter::FULL,
-            IntlDateFormatter::FULL,
-            date_default_timezone_get(),
-            IntlDateFormatter::GREGORIAN,
-            'd'
-        );
-
-        $this->fmtMonth = new IntlDateFormatter(
-            'nl_BE',
-            IntlDateFormatter::FULL,
-            IntlDateFormatter::FULL,
-            date_default_timezone_get(),
-            IntlDateFormatter::GREGORIAN,
-            'M'
-        );
-    }
-
     /**
      * {@inheritdoc}
      */

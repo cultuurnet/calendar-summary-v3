@@ -3,39 +3,13 @@
 namespace CultuurNet\CalendarSummaryV3\Permanent;
 
 use CultuurNet\SearchV3\ValueObjects\Offer;
-use CultuurNet\SearchV3\ValueObjects\Place;
 
 /**
  * Provide a large HTML formatter for permanent calendar type.
  * @package CultuurNet\CalendarSummaryV3\Permanent
  */
-class LargePermanentHTMLFormatter implements PermanentFormatterInterface
+class LargePermanentHTMLFormatter extends LargePermanentFormatter implements PermanentFormatterInterface
 {
-    /**
-     * Translate the day to Dutch.
-     */
-    protected $mappingDays = array(
-        'monday' => 'maandag',
-        'tuesday' => 'dinsdag',
-        'wednesday' => 'woensdag',
-        'thursday' => 'donderdag',
-        'friday' => 'vrijdag',
-        'saturday' => 'zaterdag',
-        'sunday' => 'zondag',
-    );
-
-    /**
-     * Translate the day to short Dutch format.
-     */
-    protected $mappingShortDays = array(
-        'monday' => 'Mo',
-        'tuesday' => 'Tu',
-        'wednesday' => 'We',
-        'thursday' => 'Th',
-        'friday' => 'Fr',
-        'saturday' => 'Sa',
-        'sunday' => 'Su',
-    );
 
     /**
      * {@inheritdoc}
@@ -126,22 +100,10 @@ class LargePermanentHTMLFormatter implements PermanentFormatterInterface
      */
     protected function generateFormattedTimespan($daysOfWeek, $long = false)
     {
-        if ($long) {
-            if (count($daysOfWeek) > 1) {
-                return ucfirst($this->mappingDays[$daysOfWeek[0]])
-                    . ' - '
-                    . $this->mappingDays[$daysOfWeek[count($daysOfWeek)-1]];
-            } else {
-                return ucfirst($this->mappingDays[$daysOfWeek[0]]);
-            }
+        if (count($daysOfWeek) > 1) {
+            return ucfirst($daysOfWeek[0]) . ' - ' . $daysOfWeek[count($daysOfWeek)-1];
         } else {
-            if (count($daysOfWeek) > 1) {
-                return ucfirst($this->mappingShortDays[$daysOfWeek[0]])
-                    . '-'
-                    . $this->mappingShortDays[$daysOfWeek[count($daysOfWeek)-1]];
-            } else {
-                return ucfirst($this->mappingShortDays[$daysOfWeek[0]]);
-            }
+            return ucfirst($daysOfWeek[0]);
         }
     }
 
@@ -158,7 +120,13 @@ class LargePermanentHTMLFormatter implements PermanentFormatterInterface
         $formattedTimespans = [];
         foreach ($openingHoursData as $openingHours) {
             $daysOfWeek = $openingHours->getDaysOfWeek();
-            $daySpanShort = $this->generateFormattedTimespan($daysOfWeek);
+            $daysOfWeekShort = array();
+            foreach($daysOfWeek as $i => $dayOfWeek) {
+                $daysOfWeek[$i] = $this->fmtDays->format(strtotime($dayOfWeek));
+                $daysOfWeekShort[$i] = $this->fmtShortDays->format(strtotime($dayOfWeek));
+            }
+
+            $daySpanShort = $this->generateFormattedTimespan($daysOfWeekShort);
             $daySpanLong = $this->generateFormattedTimespan($daysOfWeek, true);
             $firstOpens = $this->getFormattedTime($this->getEarliestTime($openingHoursData, $daysOfWeek));
             $lastCloses = $this->getFormattedTime($this->getLatestTime($openingHoursData, $daysOfWeek));
@@ -172,12 +140,12 @@ class LargePermanentHTMLFormatter implements PermanentFormatterInterface
                     . "</meta> "
                     . "<li itemprop=\"openingHoursSpecification\"> "
                     . "<span class=\"cf-days\">$daySpanLong</span> "
-                    . "<span itemprop=\"opens\" content=\"$opens\" class=\"cf-from cf-meta\">van</span>$opens"
-                    . "<span itemprop=\"closes\" content=\"$closes\" class=\"cf-to cf-meta\">tot</span>$closes";
+                    . "<span itemprop=\"opens\" content=\"$opens\" class=\"cf-from cf-meta\"> van </span>$opens"
+                    . "<span itemprop=\"closes\" content=\"$closes\" class=\"cf-to cf-meta\"> tot </span>$closes";
             } else {
                 $formattedTimespans[$daySpanShort] .=
-                    "<span itemprop=\"opens\" content=\"$opens\" class=\"cf-from cf-meta\">van</span>$opens"
-                    . "<span itemprop=\"closes\" content=\"$closes\" class=\"cf-to cf-meta\">tot</span>$closes";
+                    "<span itemprop=\"opens\" content=\"$opens\" class=\"cf-from cf-meta\"> van </span>$opens"
+                    . "<span itemprop=\"closes\" content=\"$closes\" class=\"cf-to cf-meta\"> tot </span>$closes";
             }
         }
         // Render the rest of the week scheme output.

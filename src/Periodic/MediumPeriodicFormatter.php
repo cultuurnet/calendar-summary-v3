@@ -1,17 +1,32 @@
 <?php
+/**
+ * Created by PhpStorm.
+ * User: stijnswaanen
+ * Date: 08/08/2018
+ * Time: 11:52
+ */
 
-namespace CultuurNet\CalendarSummaryV3\Single;
+namespace CultuurNet\CalendarSummaryV3\Periodic;
 
 use IntlDateFormatter;
 
-abstract class LargeSingleFormatter
-{
+abstract class MediumPeriodicFormatter {
+
+    /**
+     * @var IntlDateFormatter
+     */
     protected $fmt;
 
-    protected $fmtWeekDayLong;
+    /**
+     * @var IntlDateFormatter
+     */
+    protected $fmtDay;
 
-    protected $fmtTime;
-
+    /**
+     * @var string $langCode
+     *
+     * MediumPeriodicHTMLFormatter constructor.
+     */
     public function __construct($langCode)
     {
         $this->fmt = new IntlDateFormatter(
@@ -23,22 +38,14 @@ abstract class LargeSingleFormatter
             'd MMMM yyyy'
         );
 
-        $this->fmtWeekDayLong = new IntlDateFormatter(
+        $this->fmtDay = new IntlDateFormatter(
             $langCode,
             IntlDateFormatter::FULL,
             IntlDateFormatter::FULL,
             date_default_timezone_get(),
             IntlDateFormatter::GREGORIAN,
-            'EEEE'
-        );
-
-        $this->fmtTime = new IntlDateFormatter(
-            $langCode,
-            IntlDateFormatter::FULL,
-            IntlDateFormatter::FULL,
-            date_default_timezone_get(),
-            IntlDateFormatter::GREGORIAN,
-            'HH:mm'
+            'eeee'
         );
     }
+
 }

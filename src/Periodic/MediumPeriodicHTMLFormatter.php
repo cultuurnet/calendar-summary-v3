@@ -3,44 +3,24 @@
 namespace CultuurNet\CalendarSummaryV3\Periodic;
 
 use CultuurNet\SearchV3\ValueObjects\Offer;
-use IntlDateFormatter;
 
 /**
  * Provide a medium HTML formatter for periodic calendar type.
  * @package CultuurNet\CalendarSummaryV3\Periodic
  */
-class MediumPeriodicHTMLFormatter implements PeriodicFormatterInterface
+class MediumPeriodicHTMLFormatter extends MediumPeriodicFormatter implements PeriodicFormatterInterface
 {
-
     /**
      * {@inheritdoc}
      */
     public function format(Offer $offer)
     {
-        $fmt = new IntlDateFormatter(
-            'nl_BE',
-            IntlDateFormatter::FULL,
-            IntlDateFormatter::FULL,
-            date_default_timezone_get(),
-            IntlDateFormatter::GREGORIAN,
-            'd MMMM yyyy'
-        );
-
-        $fmtDay = new IntlDateFormatter(
-            'nl_BE',
-            IntlDateFormatter::FULL,
-            IntlDateFormatter::FULL,
-            date_default_timezone_get(),
-            IntlDateFormatter::GREGORIAN,
-            'eeee'
-        );
-
         $dateFrom = $offer->getStartDate();
-        $intlDateFrom =$fmt->format($dateFrom);
-        $intlDateFromDay = $fmtDay->format($dateFrom);
+        $intlDateFrom = $this->fmt->format($dateFrom);
+        $intlDateFromDay = $this->fmtDay->format($dateFrom);
 
         $dateTo = $offer->getEndDate();
-        $intlDateTo = $fmt->format($dateTo);
+        $intlDateTo = $this->fmt->format($dateTo);
 
         if ($intlDateFrom == $intlDateTo) {
             $output = '<span class="cf-weekday cf-meta">' . $intlDateFromDay . '</span>';

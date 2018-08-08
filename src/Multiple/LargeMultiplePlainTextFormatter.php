@@ -8,7 +8,7 @@ use CultuurNet\CalendarSummaryV3\Single\LargeSinglePlainTextFormatter;
 /**
  * Formatter to format multiple events as plain text in large format.
  */
-class LargeMultiplePlainTextFormatter implements MultipleFormatterInterface
+class LargeMultiplePlainTextFormatter extends LargeMultipleFormatter implements MultipleFormatterInterface
 {
 
     /**
@@ -21,7 +21,7 @@ class LargeMultiplePlainTextFormatter implements MultipleFormatterInterface
         $output = '';
 
         foreach ($subEvents as $key => $subEvent) {
-            $formatter = new LargeSinglePlainTextFormatter();
+            $formatter = new LargeSinglePlainTextFormatter($this->langCode);
 
             $event = new Event();
             $event->setStartDate($subEvent->getStartDate());

@@ -8,9 +8,8 @@ use CultuurNet\CalendarSummaryV3\Single\MediumSingleHTMLFormatter;
 /**
  * Formatter to format multiple events as html in medium format.
  */
-class MediumMultipleHTMLFormatter implements MultipleFormatterInterface
+class MediumMultipleHTMLFormatter extends MediumMultipleFormatter implements MultipleFormatterInterface
 {
-
     /**
      * {@inheritdoc}
      */
@@ -20,7 +19,7 @@ class MediumMultipleHTMLFormatter implements MultipleFormatterInterface
         $output = '';
 
         foreach ($subEvents as $subEvent) {
-            $formatter = new MediumSingleHTMLFormatter();
+            $formatter = new MediumSingleHTMLFormatter($this->langCode);
 
             $event = new Event();
             $event->setStartDate($subEvent->getStartDate());

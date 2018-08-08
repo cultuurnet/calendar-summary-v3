@@ -3,26 +3,13 @@
 namespace CultuurNet\CalendarSummaryV3\Permanent;
 
 use CultuurNet\SearchV3\ValueObjects\Offer;
-use CultuurNet\SearchV3\ValueObjects\Place;
 
 /**
  * Provide a large plain text formatter for permanent calendar type.
  * @package CultuurNet\CalendarSummaryV3\Permanent
  */
-class LargePermanentPlainTextFormatter implements PermanentFormatterInterface
+class LargePermanentPlainTextFormatter extends LargePermanentFormatter implements PermanentFormatterInterface
 {
-    /**
-     * Translate the day in short Dutch.
-     */
-    protected $mappingDays = array(
-        'monday' => 'Ma',
-        'tuesday' => 'Di',
-        'wednesday' => 'Wo',
-        'thursday' => 'Do',
-        'friday' => 'Vr',
-        'saturday' => 'Za',
-        'sunday' => 'Zo',
-    );
 
     /**
      * {@inheritdoc}
@@ -58,11 +45,16 @@ class LargePermanentPlainTextFormatter implements PermanentFormatterInterface
         $outputWeek = '';
         // Create an array with formatted days.
         $formattedDays = [];
+
         foreach ($openingHoursData as $openingHours) {
-            foreach ($openingHours->getDaysOfWeek() as $dayOfWeek) {
+            $daysOfWeek = $openingHours->getDaysOfWeek();
+            foreach ($daysOfWeek as $i => $dayOfWeek) {
+                $translatedDay = $this->fmtDays->format(strtotime($dayOfWeek));
+                //$daysOfWeek[$i] = $this->fmtDays->format(strtotime($dayOfWeek));
+
                 if (!isset($formattedDays[$dayOfWeek])) {
-                    $formattedDays[$dayOfWeek] = $this->mappingDays[$dayOfWeek]
-                        . ' Van '
+                    $formattedDays[$dayOfWeek] = $translatedDay
+                        . ' van '
                         . $this->getFormattedTime($openingHours->getOpens())
                         . ' tot ' . $this->getFormattedTime($openingHours->getCloses())
                         . PHP_EOL;
@@ -74,11 +66,13 @@ class LargePermanentPlainTextFormatter implements PermanentFormatterInterface
                 }
             }
         }
+
         // Create an array with formatted closed days.
         $closedDays = [];
         foreach (array_keys($this->mappingDays) as $day) {
-            $closedDays[$day] = $this->mappingDays[$day] . '  gesloten' . PHP_EOL;
+            $closedDays[$day] = $this->fmtDays->format(strtotime($day)) . '  gesloten' . PHP_EOL;
         }
+
         // Merge the formatted days with the closed days array to fill in missing days and sort using the days mapping.
         $formattedDays = array_replace($this->mappingDays, $formattedDays + $closedDays);
         // Render the rest of the week scheme output.

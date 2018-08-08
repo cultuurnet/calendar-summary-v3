@@ -8,9 +8,8 @@ use CultuurNet\CalendarSummaryV3\Single\MediumSinglePlainTextFormatter;
 /**
  * Formatter to format multiple events as plain text in medium format.
  */
-class MediumMultiplePlainTextFormatter implements MultipleFormatterInterface
+class MediumMultiplePlainTextFormatter extends MediumMultipleFormatter implements MultipleFormatterInterface
 {
-
     /**
      * {@inheritdoc}
      */
@@ -22,7 +21,7 @@ class MediumMultiplePlainTextFormatter implements MultipleFormatterInterface
         $output = '';
 
         foreach ($subEvents as $key => $subEvent) {
-            $formatter = new MediumSinglePlainTextFormatter();
+            $formatter = new MediumSinglePlainTextFormatter($this->langCode);
 
             $event = new Event();
             $event->setStartDate($subEvent->getStartDate());

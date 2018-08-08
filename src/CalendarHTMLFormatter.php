@@ -22,31 +22,31 @@ class CalendarHTMLFormatter implements CalendarFormatterInterface
 {
     protected $mapping = array();
 
-    public function __construct()
+    public function __construct($langCode = 'nl_NL')
     {
         $this->mapping = [
             Offer::CALENDAR_TYPE_SINGLE =>
                 [
-                    'lg' => new LargeSingleHTMLFormatter(),
-                    'md' => new MediumSingleHTMLFormatter(),
-                    'sm' => new SmallSingleHTMLFormatter(),
-                    'xs' => new SmallSingleHTMLFormatter()
+                    'lg' => new LargeSingleHTMLFormatter($langCode),
+                    'md' => new MediumSingleHTMLFormatter($langCode),
+                    'sm' => new SmallSingleHTMLFormatter($langCode),
+                    'xs' => new SmallSingleHTMLFormatter($langCode)
                 ],
             Offer::CALENDAR_TYPE_MULTIPLE =>
                 [
-                    'lg' => new LargeMultipleHTMLFormatter(),
-                    'md' => new MediumMultipleHTMLFormatter(),
+                    'lg' => new LargeMultipleHTMLFormatter($langCode),
+                    'md' => new MediumMultipleHTMLFormatter($langCode),
                 ],
             Offer::CALENDAR_TYPE_PERIODIC =>
                 [
-                    'lg' => new LargePeriodicHTMLFormatter(),
-                    'md' => new MediumPeriodicHTMLFormatter(),
-                    'sm' => new SmallPeriodicHTMLFormatter(),
-                    'xs' => new ExtraSmallPeriodicHTMLFormatter(),
+                    'lg' => new LargePeriodicHTMLFormatter($langCode),
+                    'md' => new MediumPeriodicHTMLFormatter($langCode),
+                    'sm' => new SmallPeriodicHTMLFormatter($langCode),
+                    'xs' => new ExtraSmallPeriodicHTMLFormatter($langCode),
                 ],
             Offer::CALENDAR_TYPE_PERMANENT =>
                 [
-                    'lg' => new LargePermanentHTMLFormatter(),
+                    'lg' => new LargePermanentHTMLFormatter($langCode),
                 ],
         ];
     }

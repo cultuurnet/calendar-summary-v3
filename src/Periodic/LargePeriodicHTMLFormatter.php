@@ -4,41 +4,13 @@ namespace CultuurNet\CalendarSummaryV3\Periodic;
 
 use CultuurNet\SearchV3\ValueObjects\Offer;
 use DateTime;
-use IntlDateFormatter;
 
 /**
  * Provide a large HTML formatter for periodic calendar type.
  * @package CultuurNet\CalendarSummaryV3\Periodic
  */
-class LargePeriodicHTMLFormatter implements PeriodicFormatterInterface
+class LargePeriodicHTMLFormatter extends LargePeriodicFormatter implements PeriodicFormatterInterface
 {
-
-    /**
-     * Translate the day to Dutch.
-     */
-    protected $mappingDays = array(
-        'monday' => 'maandag',
-        'tuesday' => 'dinsdag',
-        'wednesday' => 'woensdag',
-        'thursday' => 'donderdag',
-        'friday' => 'vrijdag',
-        'saturday' => 'zaterdag',
-        'sunday' => 'zondag',
-    );
-
-    /**
-     * Translate the day to short Dutch format.
-     */
-    protected $mappingShortDays = array(
-        'monday' => 'Mo',
-        'tuesday' => 'Tu',
-        'wednesday' => 'We',
-        'thursday' => 'Th',
-        'friday' => 'Fr',
-        'saturday' => 'Sa',
-        'sunday' => 'Su',
-    );
-
     /**
      * {@inheritdoc}
      */
@@ -127,17 +99,9 @@ class LargePeriodicHTMLFormatter implements PeriodicFormatterInterface
      */
     protected function generateDates(DateTime $dateFrom, DateTime $dateTo)
     {
-        $fmt = new IntlDateFormatter(
-            'nl_BE',
-            IntlDateFormatter::FULL,
-            IntlDateFormatter::FULL,
-            date_default_timezone_get(),
-            IntlDateFormatter::GREGORIAN,
-            'd MMMM yyyy'
-        );
 
-        $intlDateFrom =$fmt->format($dateFrom);
-        $intlDateTo = $fmt->format($dateTo);
+        $intlDateFrom =$this->fmt->format($dateFrom);
+        $intlDateTo = $this->fmt->format($dateTo);
 
         $outputDates = '<p class="cf-period">';
         $outputDates .= '<time itemprop="startDate" datetime="' . $dateFrom->format("Y-m-d") . '">';
