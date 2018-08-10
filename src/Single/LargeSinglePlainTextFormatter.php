@@ -36,9 +36,9 @@ class LargeSinglePlainTextFormatter extends LargeSingleFormatter implements Sing
         $intlEndTimeEnd = $this->fmtTime->format($dateEnd);
 
         $output = $intlWeekDayFrom . ' ' . $intlDateFrom;
-        $output .= ' van ';
+        $output .= ' ' . $this->trans->t('from') . ' ';
         $output .= $intlStartTimeFrom;
-        $output .= ' tot ' . $intlEndTimeEnd;
+        $output .= ' ' . $this->trans->t('till') . ' ' . $intlEndTimeEnd;
 
         return $output;
     }
@@ -53,9 +53,9 @@ class LargeSinglePlainTextFormatter extends LargeSingleFormatter implements Sing
         $intlWeekDayEnd = $this->fmtWeekDayLong->format($dateEnd);
         $intlEndTimeEnd = $this->fmtTime->format($dateEnd);
 
-        $output = 'Van ';
+        $output = ucfirst($this->trans->t('from')) . ' ';
         $output .= $intlWeekDayFrom . ' ' . $intlDateFrom . ' ' . $intlStartTimeFrom;
-        $output .= ' tot ';
+        $output .= ' ' . $this->trans->t('till') . ' ';
         $output .= $intlWeekDayEnd . ' ' . $intlDateEnd . ' ' . $intlEndTimeEnd;
 
         return $output;

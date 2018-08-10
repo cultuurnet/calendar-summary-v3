@@ -3,6 +3,8 @@
 namespace CultuurNet\CalendarSummaryV3\Single;
 
 use IntlDateFormatter;
+use DElfimov\Translate\Translate;
+use DElfimov\Translate\Loader\PhpFilesLoader;
 
 abstract class LargeSingleFormatter
 {
@@ -11,6 +13,8 @@ abstract class LargeSingleFormatter
     protected $fmtWeekDayLong;
 
     protected $fmtTime;
+
+    protected $trans;
 
     public function __construct($langCode)
     {
@@ -40,5 +44,15 @@ abstract class LargeSingleFormatter
             IntlDateFormatter::GREGORIAN,
             'HH:mm'
         );
+
+        $this->trans = new Translate(
+            new PhpFilesLoader(realpath(__DIR__ . '/../Translations')),
+            [
+                'default' => 'en',
+                'available' => ['en', 'nl', 'fr', 'de'],
+            ]
+        );
+
+        $this->trans->setLanguage(substr($langCode, 0, 2));
     }
 }

@@ -9,6 +9,8 @@
 namespace CultuurNet\CalendarSummaryV3\Periodic;
 
 use IntlDateFormatter;
+use DElfimov\Translate\Translate;
+use DElfimov\Translate\Loader\PhpFilesLoader;
 
 abstract class MediumPeriodicFormatter {
 
@@ -21,6 +23,8 @@ abstract class MediumPeriodicFormatter {
      * @var IntlDateFormatter
      */
     protected $fmtDay;
+
+    protected $trans;
 
     /**
      * @var string $langCode
@@ -46,6 +50,16 @@ abstract class MediumPeriodicFormatter {
             IntlDateFormatter::GREGORIAN,
             'eeee'
         );
+
+        $this->trans = new Translate(
+            new PhpFilesLoader(realpath(__DIR__ . '/../Translations')),
+            [
+                'default' => 'en',
+                'available' => ['en', 'nl', 'fr', 'de'],
+            ]
+        );
+
+        $this->trans->setLanguage(substr($langCode, 0, 2));
     }
 
 }

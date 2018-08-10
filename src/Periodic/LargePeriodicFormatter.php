@@ -9,6 +9,8 @@
 namespace CultuurNet\CalendarSummaryV3\Periodic;
 
 use IntlDateFormatter;
+use DElfimov\Translate\Translate;
+use DElfimov\Translate\Loader\PhpFilesLoader;
 
 abstract class LargePeriodicFormatter {
 
@@ -16,6 +18,8 @@ abstract class LargePeriodicFormatter {
      * @var IntlDateFormatter
      */
     protected $fmt;
+
+    protected $trans;
 
     /**
      * Translate the day to Dutch.
@@ -58,5 +62,15 @@ abstract class LargePeriodicFormatter {
             IntlDateFormatter::GREGORIAN,
             'd MMMM yyyy'
         );
+
+        $this->trans = new Translate(
+            new PhpFilesLoader(realpath(__DIR__ . '/../Translations')),
+            [
+                'default' => 'en',
+                'available' => ['en', 'nl', 'fr', 'de'],
+            ]
+        );
+
+        $this->trans->setLanguage(substr($langCode, 0, 2));
     }
 }

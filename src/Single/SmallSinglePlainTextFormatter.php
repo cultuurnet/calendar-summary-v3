@@ -45,7 +45,7 @@ class SmallSinglePlainTextFormatter extends SmallSingleFormatter implements Sing
         $dateEndDay = $this->fmtDay->format($dateEnd);
         $dateEndMonth = rtrim($this->fmtMonth->format($dateEnd), '.');
 
-        $output = 'Van ' . $dateFromDay . ' ' . $dateFromMonth . ' tot ' . $dateEndDay . ' ' . $dateEndMonth;
+        $output = $this->trans->t('from') . ' ' . $dateFromDay . ' ' . $dateFromMonth . ' ' . $this->trans->t('till') . ' ' . $dateEndDay . ' ' . $dateEndMonth;
 
         return $output;
     }

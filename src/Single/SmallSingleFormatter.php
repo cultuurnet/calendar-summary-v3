@@ -2,7 +2,8 @@
 
 namespace CultuurNet\CalendarSummaryV3\Single;
 
-use CultuurNet\CalendarSummaryV3\Translator;
+use DElfimov\Translate\Translate;
+use DElfimov\Translate\Loader\PhpFilesLoader;
 use IntlDateFormatter;
 
 abstract class SmallSingleFormatter
@@ -10,7 +11,9 @@ abstract class SmallSingleFormatter
     protected $fmtDay;
 
     protected $fmtMonth;
-
+    /**
+     * @var \CultuurNet\CalendarSummaryV3\Translator
+     */
     protected $trans;
 
     public function __construct($langCode)
@@ -33,7 +36,14 @@ abstract class SmallSingleFormatter
             'MMM'
         );
 
-        $this->trans = new Translator();
+        $this->trans = new Translate(
+            new PhpFilesLoader(realpath(__DIR__ . '/../Translations')),
+            [
+                'default' => 'en',
+                'available' => ['en', 'nl', 'fr', 'de'],
+            ]
+        );
+
         $this->trans->setLanguage(substr($langCode, 0, 2));
     }
 }

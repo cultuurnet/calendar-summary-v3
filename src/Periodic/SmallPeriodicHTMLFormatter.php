@@ -37,7 +37,7 @@ class SmallPeriodicHTMLFormatter extends SmallPeriodicFormatter implements Perio
     private function formatStarted(DateTimeInterface $endDate)
     {
         return
-            '<span class="to meta">Tot</span> ' .
+            '<span class="to meta">' . ucfirst($this->trans->t('till')) . '</span> ' .
             $this->formatDate($endDate);
     }
 
@@ -48,7 +48,7 @@ class SmallPeriodicHTMLFormatter extends SmallPeriodicFormatter implements Perio
     private function formatNotStarted(DateTimeInterface $startDate)
     {
         return
-            '<span class="from meta">Vanaf</span> ' .
+            '<span class="from meta">' . ucfirst($this->trans->t('from_period')) . '</span> ' .
             $this->formatDate($startDate);
     }
 

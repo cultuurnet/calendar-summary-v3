@@ -5,10 +5,11 @@ namespace CultuurNet\CalendarSummaryV3;
 use DElfimov\Translate\Translate;
 use DElfimov\Translate\Loader\PhpArrayLoader;
 
-
 class Translator {
 
-    public function __construct() {
+    protected $translator;
+
+    public function __construct($language) {
 
         $messages = [
             'en' => [
@@ -33,12 +34,13 @@ class Translator {
             ]
         ];
 
-        return new Translate(new PhpArrayLoader($messages),
+        $t = new Translate(new PhpArrayLoader($messages),
             [
                 "default" => 'en',
                 "available" => ['en', 'nl', 'fr', 'de'],
             ]
         );
+        $t->setLanguage($language);
     }
 
 }

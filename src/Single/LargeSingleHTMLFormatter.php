@@ -40,12 +40,12 @@ class LargeSingleHTMLFormatter extends LargeSingleFormatter implements SingleFor
         $output .= ' ';
         $output .= '<span class="cf-date">' . $intlDateFrom . '</span>';
         $output .= ' ';
-        $output .= '<span class="cf-from cf-meta">van</span>';
+        $output .= '<span class="cf-from cf-meta">' . $this->trans->t('from') . '</span>';
         $output .= ' ';
         $output .= '<span class="cf-time">' . $intlStartTimeFrom . '</span>';
         $output .= '</time>';
         $output .= ' ';
-        $output .= '<span class="cf-to cf-meta">tot</span>';
+        $output .= '<span class="cf-to cf-meta">' . $this->trans->t('till') . '</span>';
         $output .= ' ';
         $output .= '<time itemprop="endDate" datetime="' . $dateEnd->format(\DateTime::ATOM) . '">';
         $output .= '<span class="cf-time">' . $intlEndTimeEnd . '</span>';
@@ -65,7 +65,7 @@ class LargeSingleHTMLFormatter extends LargeSingleFormatter implements SingleFor
         $intlEndTimeEnd = $this->fmtTime->format($dateEnd);
 
         $output = '<time itemprop="startDate" datetime="' . $dateFrom->format(\DateTime::ATOM) . '">';
-        $output .= '<span class="cf-from cf-meta">Van</span>';
+        $output .= '<span class="cf-from cf-meta">' . ucfirst($this->trans->t('from')) . '</span>';
         $output .= ' ';
         $output .= '<span class="cf-weekday cf-meta">' . $intlWeekDayFrom . '</span>';
         $output .= ' ';
@@ -74,7 +74,7 @@ class LargeSingleHTMLFormatter extends LargeSingleFormatter implements SingleFor
         $output .= '<span class="cf-time">' . $intlStartTimeFrom . '</span>';
         $output .= '</time>';
         $output .= ' ';
-        $output .= '<span class="cf-to cf-meta">tot</span>';
+        $output .= '<span class="cf-to cf-meta">' . $this->trans->t('till') . '</span>';
         $output .= ' ';
         $output .= '<time itemprop="endDate" datetime="' . $dateEnd->format(\DateTime::ATOM) . '">';
         $output .= '<span class="cf-weekday cf-meta">' . $intlWeekDayEnd . '</span>';

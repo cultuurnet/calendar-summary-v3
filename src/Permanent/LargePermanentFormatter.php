@@ -22,6 +22,8 @@ abstract class LargePermanentFormatter {
 
     protected $fmtShortDays;
 
+    protected $trans;
+
     public function __construct($langCode) {
         $this->fmtDays = new IntlDateFormatter(
             $langCode,
@@ -40,5 +42,15 @@ abstract class LargePermanentFormatter {
             IntlDateFormatter::GREGORIAN,
             'EEE'
         );
+
+        $this->trans = new Translate(
+            new PhpFilesLoader(realpath(__DIR__ . '/../Translations')),
+            [
+                'default' => 'en',
+                'available' => ['en', 'nl', 'fr', 'de'],
+            ]
+        );
+
+        $this->trans->setLanguage(substr($langCode, 0, 2));
     }
 }

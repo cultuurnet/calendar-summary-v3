@@ -45,7 +45,7 @@ class MediumSinglePlainTextFormatter extends MediumSingleFormatter implements Si
         $intlDateEnd = $this->fmt->format($dateEnd);
         $intlDateDayEnd = $this->fmtDay->format($dateEnd);
 
-        $output = 'Van ' . $intlDateDayFrom . ' ' . $intlDateFrom . ' tot ' . $intlDateDayEnd . ' ' . $intlDateEnd;
+        $output = $this->trans->t('from') . ' ' . $intlDateDayFrom . ' ' . $intlDateFrom . ' ' . $this->trans->t('till') . ' ' . $intlDateDayEnd . ' ' . $intlDateEnd;
 
         return $output;
     }
