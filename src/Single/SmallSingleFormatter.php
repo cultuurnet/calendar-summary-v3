@@ -2,6 +2,7 @@
 
 namespace CultuurNet\CalendarSummaryV3\Single;
 
+use CultuurNet\CalendarSummaryV3\Translator;
 use IntlDateFormatter;
 
 abstract class SmallSingleFormatter
@@ -9,6 +10,8 @@ abstract class SmallSingleFormatter
     protected $fmtDay;
 
     protected $fmtMonth;
+
+    protected $trans;
 
     public function __construct($langCode)
     {
@@ -29,5 +32,8 @@ abstract class SmallSingleFormatter
             IntlDateFormatter::GREGORIAN,
             'MMM'
         );
+
+        $this->trans = new Translator();
+        $this->trans->setLanguage(substr($langCode, 0, 2));
     }
 }

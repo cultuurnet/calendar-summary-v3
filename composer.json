@@ -19,7 +19,8 @@
     ],
     "require": {
       "php": "^7.0",
-      "ext-intl": "*"
+      "ext-intl": "*",
+        "delfimov/translate": "^2.4"
     },
     "autoload": {
       "psr-4": {
