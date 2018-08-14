@@ -4,6 +4,8 @@ namespace CultuurNet\CalendarSummaryV3;
 
 use CultuurNet\CalendarSummaryV3\Multiple\MediumMultipleHTMLFormatter;
 use CultuurNet\CalendarSummaryV3\Multiple\LargeMultipleHTMLFormatter;
+use CultuurNet\CalendarSummaryV3\Multiple\SmallMultipleHTMLFormatter;
+use CultuurNet\CalendarSummaryV3\Permanent\MediumPermanentHTMLFormatter;
 use CultuurNet\CalendarSummaryV3\Single\LargeSingleHTMLFormatter;
 use CultuurNet\CalendarSummaryV3\Single\MediumSingleHTMLFormatter;
 use CultuurNet\CalendarSummaryV3\Single\SmallSingleHTMLFormatter;
@@ -36,6 +38,7 @@ class CalendarHTMLFormatter implements CalendarFormatterInterface
                 [
                     'lg' => new LargeMultipleHTMLFormatter($langCode, $hidePastDates),
                     'md' => new MediumMultipleHTMLFormatter($langCode, $hidePastDates),
+                    'sm' => new SmallMultipleHTMLFormatter($langCode, $hidePastDates)
                 ],
             Offer::CALENDAR_TYPE_PERIODIC =>
                 [
@@ -47,6 +50,7 @@ class CalendarHTMLFormatter implements CalendarFormatterInterface
             Offer::CALENDAR_TYPE_PERMANENT =>
                 [
                     'lg' => new LargePermanentHTMLFormatter($langCode),
+                    'md' => new MediumPermanentHTMLFormatter($langCode)
                 ],
         ];
     }
