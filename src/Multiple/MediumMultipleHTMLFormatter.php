@@ -16,7 +16,7 @@ class MediumMultipleHTMLFormatter extends MediumMultipleFormatter implements Mul
     public function format(Event $event)
     {
         $subEvents = $event->getSubEvents();
-        $output = '';
+        $output = '<ul class="cnw-event-date-info">';
         $now = new \DateTime();
 
         foreach ($subEvents as $subEvent) {
@@ -28,12 +28,14 @@ class MediumMultipleHTMLFormatter extends MediumMultipleFormatter implements Mul
 
             if ($this->hidePast) {
                 if ($subEvent->getEndDate() > $now) {
-                    $output .= $formatter->format($event);
+                    $output .= '<li>' . $formatter->format($event) . '</li>';
                 }
             } else {
-                $output .= $formatter->format($event);
+                $output .= '<li>' . $formatter->format($event) . '</li>';
             }
         }
+
+        $output .= '</ul>';
 
         return $output;
     }
