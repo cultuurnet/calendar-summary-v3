@@ -15,11 +15,18 @@ abstract class LargeMultipleFormatter {
     protected $langCode;
 
     /**
+     * @var boolean $hidePast
+     */
+    protected $hidePast;
+
+    /**
      * @var string $langCode
+     * @var boolean $hidePastDates
      *
      * LargeMultipleHTMLFormatter constructor.
      */
-    public function __construct($langCode) {
+    public function __construct($langCode, $hidePastDates) {
         $this->langCode = $langCode;
+        $this->hidePast = $hidePastDates;
     }
 }

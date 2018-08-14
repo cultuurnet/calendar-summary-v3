@@ -17,6 +17,7 @@ class LargeMultipleHTMLFormatter extends LargeMultipleFormatter implements Multi
     {
         $subEvents = $event->getSubEvents();
         $output = '';
+        $now = new \DateTime();
 
         foreach ($subEvents as $subEvent) {
             $formatter = new LargeSingleHTMLFormatter($this->langCode);
@@ -25,7 +26,13 @@ class LargeMultipleHTMLFormatter extends LargeMultipleFormatter implements Multi
             $event->setStartDate($subEvent->getStartDate());
             $event->setEndDate($subEvent->getEndDate());
 
-            $output .= $formatter->format($event);
+            if ($this->hidePast) {
+                if ($subEvent->getEndDate() > $now) {
+                    $output .= $formatter->format($event);
+                }
+            } else {
+                $output .= $formatter->format($event);
+            }
         }
 
         return $output;

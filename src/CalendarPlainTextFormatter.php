@@ -18,7 +18,7 @@ class CalendarPlainTextFormatter implements CalendarFormatterInterface
 {
     protected $mapping = array();
 
-    public function __construct($langCode = 'nl_NL')
+    public function __construct($langCode = 'nl_NL', $hidePastDates = false)
     {
         $this->mapping = [
             Offer::CALENDAR_TYPE_SINGLE =>
@@ -30,8 +30,8 @@ class CalendarPlainTextFormatter implements CalendarFormatterInterface
                 ],
             Offer::CALENDAR_TYPE_MULTIPLE =>
                 [
-                    'lg' => new LargeMultiplePlainTextFormatter($langCode),
-                    'md' => new MediumMultiplePlainTextFormatter($langCode)
+                    'lg' => new LargeMultiplePlainTextFormatter($langCode, $hidePastDates),
+                    'md' => new MediumMultiplePlainTextFormatter($langCode, $hidePastDates)
                 ],
             Offer::CALENDAR_TYPE_PERIODIC =>
                 [

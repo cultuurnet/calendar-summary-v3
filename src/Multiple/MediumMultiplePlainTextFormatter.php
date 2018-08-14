@@ -17,6 +17,7 @@ class MediumMultiplePlainTextFormatter extends MediumMultipleFormatter implement
     {
         $subEvents = $event->getSubEvents();
         $count = count($subEvents);
+        $now = new \DateTime();
 
         $output = '';
 
@@ -27,9 +28,18 @@ class MediumMultiplePlainTextFormatter extends MediumMultipleFormatter implement
             $event->setStartDate($subEvent->getStartDate());
             $event->setEndDate($subEvent->getEndDate());
 
-            $output .= $formatter->format($event);
-            if ($key + 1 !== $count) {
-                $output .= PHP_EOL;
+            if ($this->hidePast) {
+                if ($subEvent->getEndDate() > $now) {
+                    $output .= $formatter->format($event);
+                    if ($key + 1 !== $count) {
+                        $output .= PHP_EOL;
+                    }
+                }
+            } else {
+                $output .= $formatter->format($event);
+                if ($key + 1 !== $count) {
+                    $output .= PHP_EOL;
+                }
             }
         }
 

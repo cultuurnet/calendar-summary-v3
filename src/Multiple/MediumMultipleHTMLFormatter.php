@@ -17,6 +17,7 @@ class MediumMultipleHTMLFormatter extends MediumMultipleFormatter implements Mul
     {
         $subEvents = $event->getSubEvents();
         $output = '';
+        $now = new \DateTime();
 
         foreach ($subEvents as $subEvent) {
             $formatter = new MediumSingleHTMLFormatter($this->langCode);
@@ -25,7 +26,13 @@ class MediumMultipleHTMLFormatter extends MediumMultipleFormatter implements Mul
             $event->setStartDate($subEvent->getStartDate());
             $event->setEndDate($subEvent->getEndDate());
 
-            $output .= $formatter->format($event);
+            if ($this->hidePast) {
+                if ($subEvent->getEndDate() > $now) {
+                    $output .= $formatter->format($event);
+                }
+            } else {
+                $output .= $formatter->format($event);
+            }
         }
 
         return $output;

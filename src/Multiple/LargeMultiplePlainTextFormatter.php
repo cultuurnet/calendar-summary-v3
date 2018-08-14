@@ -19,6 +19,7 @@ class LargeMultiplePlainTextFormatter extends LargeMultipleFormatter implements 
         $subEvents = $event->getSubEvents();
         $count = count($subEvents);
         $output = '';
+        $now = new \DateTime();
 
         foreach ($subEvents as $key => $subEvent) {
             $formatter = new LargeSinglePlainTextFormatter($this->langCode);
@@ -27,9 +28,18 @@ class LargeMultiplePlainTextFormatter extends LargeMultipleFormatter implements 
             $event->setStartDate($subEvent->getStartDate());
             $event->setEndDate($subEvent->getEndDate());
 
-            $output .= $formatter->format($event);
-            if ($key + 1 !== $count) {
-                $output .= PHP_EOL;
+            if ($this->hidePast) {
+                if ($subEvent->getEndDate() > $now) {
+                    $output .= $formatter->format($event);
+                    if ($key + 1 !== $count) {
+                        $output .= PHP_EOL;
+                    }
+                }
+            } else {
+                $output .= $formatter->format($event);
+                if ($key + 1 !== $count) {
+                    $output .= PHP_EOL;
+                }
             }
         }
 
