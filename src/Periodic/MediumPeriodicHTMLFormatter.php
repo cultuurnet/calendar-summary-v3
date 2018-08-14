@@ -27,8 +27,8 @@ class MediumPeriodicHTMLFormatter extends MediumPeriodicFormatter implements Per
             $output .= ' ';
             $output .= '<span class="cf-date">' . $intlDateFrom . '</span>';
         } else {
-            $output = '<span class="cf-from cf-meta">' . ucfirst($this->trans->t('from')) . '</span> <span class="cf-date">' . $intlDateFrom . '</span> ';
-            $output .= '<span class="cf-to cf-meta">' . $this->trans->t('till') . '</span> <span class="cf-date">'. $intlDateTo . '</span>';
+            $output = '<span class="cf-from cf-meta">' . ucfirst($this->trans->getTranslations()->t('from')) . '</span> <span class="cf-date">' . $intlDateFrom . '</span> ';
+            $output .= '<span class="cf-to cf-meta">' . $this->trans->getTranslations()->t('till') . '</span> <span class="cf-date">'. $intlDateTo . '</span>';
         }
 
         return $output;

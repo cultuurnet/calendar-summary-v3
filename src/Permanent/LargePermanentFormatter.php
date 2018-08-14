@@ -2,6 +2,7 @@
 
 namespace CultuurNet\CalendarSummaryV3\Permanent;
 
+use CultuurNet\CalendarSummaryV3\Translator;
 use IntlDateFormatter;
 
 abstract class LargePermanentFormatter {
@@ -43,14 +44,7 @@ abstract class LargePermanentFormatter {
             'EEE'
         );
 
-        $this->trans = new Translate(
-            new PhpFilesLoader(realpath(__DIR__ . '/../Translations')),
-            [
-                'default' => 'en',
-                'available' => ['en', 'nl', 'fr', 'de'],
-            ]
-        );
-
-        $this->trans->setLanguage(substr($langCode, 0, 2));
+        $this->trans = new Translator();
+        $this->trans->setLanguage($langCode);
     }
 }

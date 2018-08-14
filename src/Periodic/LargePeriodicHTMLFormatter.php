@@ -106,7 +106,7 @@ class LargePeriodicHTMLFormatter extends LargePeriodicFormatter implements Perio
         $outputDates = '<p class="cf-period">';
         $outputDates .= '<time itemprop="startDate" datetime="' . $dateFrom->format("Y-m-d") . '">';
         $outputDates .= '<span class="cf-date">' . $intlDateFrom . '</span> </time>';
-        $outputDates .= '<span class="cf-to cf-meta">' . $this->trans->t('till') . '</span>';
+        $outputDates .= '<span class="cf-to cf-meta">' . $this->trans->getTranslations()->t('till') . '</span>';
         $outputDates .= '<time itemprop="endDate" datetime="' . $dateTo->format("Y-m-d") . '">';
         $outputDates .= '<span class="cf-date">' . $intlDateTo . '</span> </time>';
         $outputDates .= '</p>';
@@ -145,7 +145,7 @@ class LargePeriodicHTMLFormatter extends LargePeriodicFormatter implements Perio
      */
     protected function generateWeekScheme($openingHoursData)
     {
-        $outputWeek = '<p class="cf-openinghours">' . $this->trans->t('open') . ':</p>';
+        $outputWeek = '<p class="cf-openinghours">' . $this->trans->getTranslations()->t('open') . ':</p>';
         $outputWeek .= '<ul class="list-unstyled">';
 
         // Create an array with formatted timespans.
@@ -168,15 +168,15 @@ class LargePeriodicHTMLFormatter extends LargePeriodicFormatter implements Perio
                     . "</meta> "
                     . "<li itemprop=\"openingHoursSpecification\"> "
                     . "<span class=\"cf-days\">$daySpanLong</span> "
-                    . "<span itemprop=\"opens\" content=\"$opens\" class=\"cf-from cf-meta\">" . $this->trans->t('from') . "</span> "
+                    . "<span itemprop=\"opens\" content=\"$opens\" class=\"cf-from cf-meta\">" . $this->trans->getTranslations()->t('from') . "</span> "
                     . "<span class=\"cf-time\">$opens</span> "
-                    . "<span itemprop=\"closes\" content=\"$closes\" class=\"cf-to cf-meta\">" . $this->trans->t('till') . "</span> "
+                    . "<span itemprop=\"closes\" content=\"$closes\" class=\"cf-to cf-meta\">" . $this->trans->getTranslations()->t('till') . "</span> "
                     . "<span class=\"cf-time\">$closes</span>";
             } else {
                 $formattedTimespans[$daySpanShort] .=
-                    "<span itemprop=\"opens\" content=\"$opens\" class=\"cf-from cf-meta\">" . $this->trans->t('from') . "</span> "
+                    "<span itemprop=\"opens\" content=\"$opens\" class=\"cf-from cf-meta\">" . $this->trans->getTranslations()->t('from') . "</span> "
                     . "<span class=\"cf-time\">$opens</span> "
-                    . "<span itemprop=\"closes\" content=\"$closes\" class=\"cf-to cf-meta\">" . $this->trans->t('till') . "</span> "
+                    . "<span itemprop=\"closes\" content=\"$closes\" class=\"cf-to cf-meta\">" . $this->trans->getTranslations()->t('till') . "</span> "
                     . "<span class=\"cf-time\">$closes</span>";
             }
         }

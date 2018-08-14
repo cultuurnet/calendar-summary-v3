@@ -9,8 +9,7 @@
 namespace CultuurNet\CalendarSummaryV3\Periodic;
 
 use IntlDateFormatter;
-use DElfimov\Translate\Translate;
-use DElfimov\Translate\Loader\PhpFilesLoader;
+use CultuurNet\CalendarSummaryV3\Translator;
 
 abstract class ExtraSmallPeriodicFormatter {
 
@@ -51,14 +50,7 @@ abstract class ExtraSmallPeriodicFormatter {
             'M'
         );
 
-        $this->trans = new Translate(
-            new PhpFilesLoader(realpath(__DIR__ . '/../Translations')),
-            [
-                'default' => 'en',
-                'available' => ['en', 'nl', 'fr', 'de'],
-            ]
-        );
-
-        $this->trans->setLanguage(substr($langCode, 0, 2));
+        $this->trans = new Translator();
+        $this->trans->setLanguage($langCode);
     }
 }

@@ -46,13 +46,13 @@ class SmallSingleHTMLFormatter extends SmallSingleFormatter implements SingleFor
         $dateEndDay = $this->fmtDay->format($dateEnd);
         $dateEndMonth = rtrim($this->fmtMonth->format($dateEnd), '.');
 
-        $output = '<span class="cf-from cf-meta">' . ucfirst($this->trans->t('from')) . '</span>';
+        $output = '<span class="cf-from cf-meta">' . ucfirst($this->trans->getTranslations()->t('from')) . '</span>';
         $output .= ' ';
         $output .= '<span class="cf-date">' . $dateFromDay . '</span>';
         $output .= ' ';
         $output .= '<span class="cf-month">' . $dateFromMonth . '</span>';
         $output .= ' ';
-        $output .= '<span class="cf-to cf-meta">' . $this->trans->t('till') . '</span>';
+        $output .= '<span class="cf-to cf-meta">' . $this->trans->getTranslations()->t('till') . '</span>';
         $output .= ' ';
         $output .= '<span class="cf-date">' . $dateEndDay . '</span>';
         $output .= ' ';

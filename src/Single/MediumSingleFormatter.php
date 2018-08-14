@@ -3,8 +3,7 @@
 namespace CultuurNet\CalendarSummaryV3\Single;
 
 use IntlDateFormatter;
-use DElfimov\Translate\Translate;
-use DElfimov\Translate\Loader\PhpFilesLoader;
+use CultuurNet\CalendarSummaryV3\Translator;
 
 abstract class MediumSingleFormatter
 {
@@ -34,14 +33,7 @@ abstract class MediumSingleFormatter
             'eeee'
         );
 
-        $this->trans = new Translate(
-            new PhpFilesLoader(realpath(__DIR__ . '/../Translations')),
-            [
-                'default' => 'en',
-                'available' => ['en', 'nl', 'fr', 'de'],
-            ]
-        );
-
-        $this->trans->setLanguage(substr($langCode, 0, 2));
+        $this->trans = new Translator();
+        $this->trans->setLanguage($langCode);
     }
 }

@@ -49,7 +49,7 @@ class LargePeriodicPlainTextFormatter extends LargePeriodicFormatter implements 
         $intlDateFrom = $this->fmt->format($dateFrom);
         $intlDateTo = $this->fmt->format($dateTo);
 
-        $output_dates =  ucfirst($this->trans->t('from')) . ' ' . $intlDateFrom . ' ' . $this->trans->t('till') . ' ' . $intlDateTo;
+        $output_dates =  ucfirst($this->trans->getTranslations()->t('from')) . ' ' . $intlDateFrom . ' ' . $this->trans->getTranslations()->t('till') . ' ' . $intlDateTo;
         return $output_dates;
     }
 
@@ -67,14 +67,14 @@ class LargePeriodicPlainTextFormatter extends LargePeriodicFormatter implements 
             foreach ($openingHours->getDaysOfWeek() as $dayOfWeek) {
                 if (!isset($formattedDays[$dayOfWeek])) {
                     $formattedDays[$dayOfWeek] = $this->mappingDays[$dayOfWeek]
-                        . ' ' . $this->trans->t('from') . ' '
+                        . ' ' . $this->trans->getTranslations()->t('from') . ' '
                         . $this->getFormattedTime($openingHours->getOpens())
-                        . ' ' . $this->trans->t('till') . ' ' . $this->getFormattedTime($openingHours->getCloses())
+                        . ' ' . $this->trans->getTranslations()->t('till') . ' ' . $this->getFormattedTime($openingHours->getCloses())
                         . PHP_EOL;
                 } else {
-                    $formattedDays[$dayOfWeek] .= $this->trans->t('from') . ' '
+                    $formattedDays[$dayOfWeek] .= $this->trans->getTranslations()->t('from') . ' '
                         . $this->getFormattedTime($openingHours->getOpens())
-                        . ' ' . $this->trans->t('till') . ' ' . $this->getFormattedTime($openingHours->getCloses())
+                        . ' ' . $this->trans->getTranslations()->t('till') . ' ' . $this->getFormattedTime($openingHours->getCloses())
                         . ','
                         . PHP_EOL;
                 }
@@ -83,7 +83,7 @@ class LargePeriodicPlainTextFormatter extends LargePeriodicFormatter implements 
         // Create an array with formatted closed days.
         $closedDays = [];
         foreach (array_keys($this->mappingDays) as $day) {
-            $closedDays[$day] = $this->mappingDays[$day] . ' ' . $this->trans->t('closed') . ',' . PHP_EOL;
+            $closedDays[$day] = $this->mappingDays[$day] . ' ' . $this->trans->getTranslations()->t('closed') . ',' . PHP_EOL;
         }
         // Merge the formatted days with the closed days array to fill in missing days and sort using the days mapping.
         $formattedDays = array_replace($this->mappingDays, $formattedDays + $closedDays);

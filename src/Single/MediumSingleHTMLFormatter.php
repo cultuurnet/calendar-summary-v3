@@ -47,13 +47,13 @@ class MediumSingleHTMLFormatter extends MediumSingleFormatter implements SingleF
         $intlDateEnd = $this->fmt->format($dateEnd);
         $intlDateDayEnd = $this->fmtDay->format($dateEnd);
 
-        $output = '<span class="cf-from cf-meta">' . ucfirst($this->trans->t('from')) . '</span>';
+        $output = '<span class="cf-from cf-meta">' . ucfirst($this->trans->getTranslations()->t('from')) . '</span>';
         $output .= ' ';
         $output .= '<span class="cf-weekday cf-meta">' . $intlDateDayFrom . '</span>';
         $output .= ' ';
         $output .= '<span class="cf-date">' . $intlDateFrom . '</span>';
         $output .= ' ';
-        $output .= '<span class="cf-to cf-meta">' . $this->trans->t('till') . '</span>';
+        $output .= '<span class="cf-to cf-meta">' . $this->trans->getTranslations()->t('till') . '</span>';
         $output .= ' ';
         $output .= '<span class="cf-weekday cf-meta">' . $intlDateDayEnd . '</span>';
         $output .= ' ';

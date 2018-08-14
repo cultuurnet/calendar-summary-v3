@@ -35,7 +35,7 @@ class SmallPeriodicPlainTextFormatter extends SmallPeriodicFormatter implements 
      */
     private function formatStarted(DateTimeInterface $endDate)
     {
-        return ucfirst($this->trans->t('till')) . ' ' . $this->formatDate($endDate);
+        return ucfirst($this->trans->getTranslations()->t('till')) . ' ' . $this->formatDate($endDate);
     }
 
     /**
@@ -44,7 +44,7 @@ class SmallPeriodicPlainTextFormatter extends SmallPeriodicFormatter implements 
      */
     private function formatNotStarted(DateTimeInterface $startDate)
     {
-        return ucfirst($this->trans->t('from_period')) . ' ' . $this->formatDate($startDate);
+        return ucfirst($this->trans->getTranslations()->t('from_period')) . ' ' . $this->formatDate($startDate);
     }
 
     /**
