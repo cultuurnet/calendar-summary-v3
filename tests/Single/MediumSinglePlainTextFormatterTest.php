@@ -48,7 +48,7 @@ class MediumSinglePlainTextFormatterTest extends \PHPUnit_Framework_TestCase
         $event->setEndDate(new \DateTime('2018-01-27T21:30:00+01:00'));
 
         $this->assertEquals(
-            'Van donderdag 25 januari 2018 tot zaterdag 27 januari 2018',
+            'van donderdag 25 januari 2018 tot zaterdag 27 januari 2018',
             $this->formatter->format($event)
         );
     }
@@ -60,7 +60,7 @@ class MediumSinglePlainTextFormatterTest extends \PHPUnit_Framework_TestCase
         $event->setEndDate(new \DateTime('2018-01-08T21:30:00+01:00'));
 
         $this->assertEquals(
-            'Van zaterdag 6 januari 2018 tot maandag 8 januari 2018',
+            'van zaterdag 6 januari 2018 tot maandag 8 januari 2018',
             $this->formatter->format($event)
         );
     }

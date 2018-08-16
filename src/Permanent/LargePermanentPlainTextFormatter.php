@@ -59,7 +59,7 @@ class LargePermanentPlainTextFormatter extends LargePermanentFormatter implement
                         . ' ' . $this->trans->getTranslations()->t('till') . ' ' . $this->getFormattedTime($openingHours->getCloses())
                         . PHP_EOL;
                 } else {
-                    $formattedDays[$dayOfWeek] .= '' . $this->trans->t('from') . ' '
+                    $formattedDays[$dayOfWeek] .= '' . $this->trans->getTranslations()->t('from') . ' '
                         . $this->getFormattedTime($openingHours->getOpens())
                         . ' ' . $this->trans->getTranslations()->t('till') . ' ' . $this->getFormattedTime($openingHours->getCloses())
                         . PHP_EOL;

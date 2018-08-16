@@ -15,7 +15,7 @@ class LargeMultiplePlainTextFormatterTest extends \PHPUnit_Framework_TestCase
     public function setUp()
     {
         date_default_timezone_set('Europe/Brussels');
-        $this->formatter = new LargeMultiplePlainTextFormatter('nl_NL');
+        $this->formatter = new LargeMultiplePlainTextFormatter('nl_NL', false);
     }
 
     public function testFormatPlainTextMultipleDateLargeOneDay()
