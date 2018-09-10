@@ -17,7 +17,8 @@ class SmallMultipleHTMLFormatterTest extends \PHPUnit_Framework_TestCase
         $this->formatter = new SmallMultipleHTMLFormatter('nl_NL', false);
     }
 
-    public function testFormatMultipleWithoutLeadingZeroes() {
+    public function testFormatMultipleWithoutLeadingZeroes()
+    {
         $offer = new Event();
         $offer->setStartDate(new \DateTime('25-11-2025'));
         $offer->setEndDate(new \DateTime('30-11-2030'));

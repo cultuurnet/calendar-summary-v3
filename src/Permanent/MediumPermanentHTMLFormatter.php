@@ -32,7 +32,8 @@ class MediumPermanentHTMLFormatter extends MediumPermanentFormatter implements P
      */
     protected function generateWeekScheme($openingHoursData)
     {
-        $outputWeek = '<span>' . ucfirst($this->trans->getTranslations()->t('open')) . ' ' . '<span class="cf-weekdays">';
+        $outputWeek = '<span>' . ucfirst($this->trans->getTranslations()->t('open'))
+            . ' ' . '<span class="cf-weekdays">';
         // Create an array with formatted days.
         $formattedDays = [];
 

@@ -130,7 +130,7 @@ class LargePermanentHTMLFormatter extends LargePermanentFormatter implements Per
             $daysOfWeek = $openingHours->getDaysOfWeek();
             $daysOfWeekTranslated = $openingHours->getDaysOfWeek();
             $daysOfWeekShortTranslated = $openingHours->getDaysOfWeek();
-            foreach($daysOfWeek as $i => $dayOfWeek) {
+            foreach ($daysOfWeek as $i => $dayOfWeek) {
                 $daysOfWeekTranslated[$i] = $this->fmtDays->format(strtotime($dayOfWeek));
                 $daysOfWeekShortTranslated[$i] = $this->fmtShortDays->format(strtotime($dayOfWeek));
             }
@@ -149,12 +149,16 @@ class LargePermanentHTMLFormatter extends LargePermanentFormatter implements Per
                     . "</meta> "
                     . "<li itemprop=\"openingHoursSpecification\"> "
                     . "<span class=\"cf-days\">$daySpanLong</span> "
-                    . "<span itemprop=\"opens\" content=\"$opens\" class=\"cf-from cf-meta\">" . $this->trans->getTranslations()->t('from') . "</span> $opens "
-                    . "<span itemprop=\"closes\" content=\"$closes\" class=\"cf-to cf-meta\">" . $this->trans->getTranslations()->t('till') . "</span> $closes";
+                    . "<span itemprop=\"opens\" content=\"$opens\" class=\"cf-from cf-meta\">"
+                    . $this->trans->getTranslations()->t('from') . "</span> $opens "
+                    . "<span itemprop=\"closes\" content=\"$closes\" class=\"cf-to cf-meta\">"
+                    . $this->trans->getTranslations()->t('till') . "</span> $closes";
             } else {
                 $formattedTimespans[$daySpanShort] .=
-                    "<span itemprop=\"opens\" content=\"$opens\" class=\"cf-from cf-meta\">" . $this->trans->getTranslations()->t('from') . "</span> $opens "
-                    . "<span itemprop=\"closes\" content=\"$closes\" class=\"cf-to cf-meta\">" . $this->trans->getTranslations()->t('till') . "</span> $closes";
+                    "<span itemprop=\"opens\" content=\"$opens\" class=\"cf-from cf-meta\">"
+                    . $this->trans->getTranslations()->t('from') . "</span> $opens "
+                    . "<span itemprop=\"closes\" content=\"$closes\" class=\"cf-to cf-meta\">"
+                    . $this->trans->getTranslations()->t('till') . "</span> $closes";
             }
         }
         // Render the rest of the week scheme output.

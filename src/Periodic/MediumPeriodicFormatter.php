@@ -11,7 +11,8 @@ namespace CultuurNet\CalendarSummaryV3\Periodic;
 use IntlDateFormatter;
 use CultuurNet\CalendarSummaryV3\Translator;
 
-abstract class MediumPeriodicFormatter {
+abstract class MediumPeriodicFormatter
+{
 
     /**
      * @var IntlDateFormatter
@@ -53,5 +54,4 @@ abstract class MediumPeriodicFormatter {
         $this->trans = new Translator();
         $this->trans->setLanguage($langCode);
     }
-
 }

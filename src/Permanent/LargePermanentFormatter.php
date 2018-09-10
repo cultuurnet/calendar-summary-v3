@@ -5,7 +5,8 @@ namespace CultuurNet\CalendarSummaryV3\Permanent;
 use CultuurNet\CalendarSummaryV3\Translator;
 use IntlDateFormatter;
 
-abstract class LargePermanentFormatter {
+abstract class LargePermanentFormatter
+{
     /**
      * Translate the day to Dutch.
      */
@@ -25,7 +26,8 @@ abstract class LargePermanentFormatter {
 
     protected $trans;
 
-    public function __construct($langCode) {
+    public function __construct($langCode)
+    {
         $this->fmtDays = new IntlDateFormatter(
             $langCode,
             IntlDateFormatter::FULL,
