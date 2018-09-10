@@ -24,8 +24,10 @@ class CalendarHTMLFormatter implements CalendarFormatterInterface
 {
     protected $mapping = array();
 
-    public function __construct($langCode = 'nl_NL', $hidePastDates = false)
+    public function __construct($langCode = 'nl_BE', $hidePastDates = false, $timeZone = 'Europe/Brussels')
     {
+        date_default_timezone_set($timeZone);
+
         $this->mapping = [
             Offer::CALENDAR_TYPE_SINGLE =>
                 [

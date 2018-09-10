@@ -16,12 +16,17 @@ use CultuurNet\CalendarSummaryV3\Permanent\LargePermanentPlainTextFormatter;
 use CultuurNet\CalendarSummaryV3\Multiple\LargeMultiplePlainTextFormatter;
 use CultuurNet\CalendarSummaryV3\Multiple\MediumMultiplePlainTextFormatter;
 
+/**
+ * Provides a formatter for calendar info of offers.
+ */
 class CalendarPlainTextFormatter implements CalendarFormatterInterface
 {
     protected $mapping = array();
 
-    public function __construct($langCode = 'nl_NL', $hidePastDates = false)
+    public function __construct($langCode = 'nl_BE', $hidePastDates = false, $timeZone = 'Europe/Brussels')
     {
+        date_default_timezone_set($timeZone);
+
         $this->mapping = [
             Offer::CALENDAR_TYPE_SINGLE =>
                 [
@@ -51,6 +56,11 @@ class CalendarPlainTextFormatter implements CalendarFormatterInterface
         ];
     }
 
+    /**
+     * {@inheritdoc}
+     *
+     * @throws FormatterException
+     */
     public function format(Offer $offer, $format)
     {
         $calenderType = $offer->getCalendarType();
