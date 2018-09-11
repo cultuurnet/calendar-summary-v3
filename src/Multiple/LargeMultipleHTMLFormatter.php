@@ -27,7 +27,7 @@ class LargeMultipleHTMLFormatter extends LargeMultipleFormatter implements Multi
             $event->setEndDate($subEvent->getEndDate());
 
             if ($this->hidePast) {
-                if ($subEvent->getEndDate() > $now) {
+                if ($subEvent->getEndDate()->setTimezone(new \DateTimeZone(date_default_timezone_get())) > $now) {
                     $output .= '<li>' . $formatter->format($event) . '</li>';
                 }
             } else {

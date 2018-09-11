@@ -16,11 +16,11 @@ class MediumPeriodicPlainTextFormatter extends MediumPeriodicFormatter implement
      */
     public function format(Offer $offer)
     {
-        $dateFrom = $offer->getStartDate();
+        $dateFrom = $offer->getStartDate()->setTimezone(new \DateTimeZone(date_default_timezone_get()));
         $intlDateFrom = $this->fmt->format($dateFrom);
         $intlDateFromDay = $this->fmtDay->format($dateFrom);
 
-        $dateTo = $offer->getEndDate();
+        $dateTo = $offer->getEndDate()->setTimezone(new \DateTimeZone(date_default_timezone_get()));
         $intlDateTo = $this->fmt->format($dateTo);
 
         if ($intlDateFrom == $intlDateTo) {

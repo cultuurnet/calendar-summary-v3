@@ -15,8 +15,8 @@ class LargeSinglePlainTextFormatter extends LargeSingleFormatter implements Sing
      */
     public function format(Offer $offer)
     {
-        $dateFrom = $offer->getStartDate();
-        $dateEnd = $offer->getEndDate();
+        $dateFrom = $offer->getStartDate()->setTimezone(new \DateTimeZone(date_default_timezone_get()));
+        $dateEnd = $offer->getEndDate()->setTimezone(new \DateTimeZone(date_default_timezone_get()));
 
         if ($dateFrom->format('Y-m-d') == $dateEnd->format('Y-m-d')) {
             $output = $this->formatSameDay($dateFrom, $dateEnd);

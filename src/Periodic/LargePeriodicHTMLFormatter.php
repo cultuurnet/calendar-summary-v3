@@ -16,7 +16,10 @@ class LargePeriodicHTMLFormatter extends LargePeriodicFormatter implements Perio
      */
     public function format(Offer $offer)
     {
-        $output = $this->generateDates($offer->getStartDate(), $offer->getEndDate());
+        $output = $this->generateDates(
+            $offer->getStartDate()->setTimezone(new \DateTimeZone(date_default_timezone_get())),
+            $offer->getEndDate()->setTimezone(new \DateTimeZone(date_default_timezone_get()))
+        );
 
         if ($offer->getOpeningHours()) {
             $output .= $this->generateWeekScheme($offer->getOpeningHours());
