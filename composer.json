@@ -21,7 +21,8 @@
       "php": "^7.0",
       "ext-intl": "*",
       "delfimov/translate": "^2.4",
-      "cultuurnet/search-v3": "dev-master"
+      "cultuurnet/search-v3": "dev-master",
+      "psr/container": "^1.0"
     },
     "autoload": {
       "psr-4": {
