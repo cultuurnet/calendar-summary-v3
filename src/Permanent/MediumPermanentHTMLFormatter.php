@@ -19,6 +19,8 @@ class MediumPermanentHTMLFormatter extends MediumPermanentFormatter implements P
         $output = '';
         if ($offer->getOpeningHours()) {
             $output .= $this->generateWeekScheme($offer->getOpeningHours());
+        } else {
+            $output .= '<p class="cf-openinghours">' . ucfirst($this->trans->getTranslations()->t('always_open')) . '</p>';
         }
 
         return $output;

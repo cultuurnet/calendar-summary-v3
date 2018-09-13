@@ -19,7 +19,10 @@ class MediumPermanentPlainTextFormatter extends MediumPermanentFormatter impleme
         $output = '';
         if ($offer->getOpeningHours()) {
             $output .= $this->generateWeekScheme($offer->getOpeningHours());
+        } else {
+            $output .= ucfirst($this->trans->getTranslations()->t('always_open')) . PHP_EOL;
         }
+
         return $output;
     }
 
