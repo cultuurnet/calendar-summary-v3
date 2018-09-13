@@ -20,7 +20,8 @@ class MediumPermanentHTMLFormatter extends MediumPermanentFormatter implements P
         if ($offer->getOpeningHours()) {
             $output .= $this->generateWeekScheme($offer->getOpeningHours());
         } else {
-            $output .= '<p class="cf-openinghours">' . ucfirst($this->trans->getTranslations()->t('always_open')) . '</p>';
+            $output .= '<p class="cf-openinghours">' .
+                ucfirst($this->trans->getTranslations()->t('always_open')) . '</p>';
         }
 
         return $output;
@@ -34,7 +35,8 @@ class MediumPermanentHTMLFormatter extends MediumPermanentFormatter implements P
      */
     protected function generateWeekScheme($openingHoursData)
     {
-        $outputWeek = '<span>' . ucfirst($this->trans->getTranslations()->t('open')) . ' ' . '<span class="cf-weekdays">';
+        $outputWeek = '<span>' . ucfirst($this->trans->getTranslations()->t('open')) . ' '
+            . '<span class="cf-weekdays">';
         // Create an array with formatted days.
         $formattedDays = [];
 

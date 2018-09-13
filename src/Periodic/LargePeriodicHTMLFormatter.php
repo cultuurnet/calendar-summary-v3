@@ -159,15 +159,19 @@ class LargePeriodicHTMLFormatter extends LargePeriodicFormatter implements Perio
                         . "</meta> "
                         . "<li itemprop=\"openingHoursSpecification\"> "
                         . "<span class=\"cf-days\">$daySpanLong</span> "
-                        . "<span itemprop=\"opens\" content=\"$opens\" class=\"cf-from cf-meta\">" . $this->trans->getTranslations()->t('from') . "</span> "
+                        . "<span itemprop=\"opens\" content=\"$opens\" class=\"cf-from cf-meta\">"
+                        . $this->trans->getTranslations()->t('from') . "</span> "
                         . "<span class=\"cf-time\">$opens</span> "
-                        . "<span itemprop=\"closes\" content=\"$closes\" class=\"cf-to cf-meta\">" . $this->trans->getTranslations()->t('till') . "</span> "
+                        . "<span itemprop=\"closes\" content=\"$closes\" class=\"cf-to cf-meta\">"
+                        . $this->trans->getTranslations()->t('till') . "</span> "
                         . "<span class=\"cf-time\">$closes</span>";
                 } else {
                     $formattedTimespans[$daySpanShort] .=
-                        "<span itemprop=\"opens\" content=\"$opens\" class=\"cf-from cf-meta\">" . $this->trans->getTranslations()->t('from') . "</span> "
+                        "<span itemprop=\"opens\" content=\"$opens\" class=\"cf-from cf-meta\">"
+                        . $this->trans->getTranslations()->t('from') . "</span> "
                         . "<span class=\"cf-time\">$opens</span> "
-                        . "<span itemprop=\"closes\" content=\"$closes\" class=\"cf-to cf-meta\">" . $this->trans->getTranslations()->t('till') . "</span> "
+                        . "<span itemprop=\"closes\" content=\"$closes\" class=\"cf-to cf-meta\">"
+                        . $this->trans->getTranslations()->t('till') . "</span> "
                         . "<span class=\"cf-time\">$closes</span>";
                 }
             }
@@ -189,7 +193,8 @@ class LargePeriodicHTMLFormatter extends LargePeriodicFormatter implements Perio
                     . "</meta> "
                     . "<li itemprop=\"openingHoursSpecification\"> "
                     . "<span class=\"cf-days\">$closedDays[$day]</span> "
-                    . "<span itemprop=\"closed\" content=\"closed\" class=\"cf-closed cf-meta\">" . $this->trans->getTranslations()->t('closed') . "</span> ";
+                    . "<span itemprop=\"closed\" content=\"closed\" class=\"cf-closed cf-meta\">"
+                    . $this->trans->getTranslations()->t('closed') . "</span> ";
             }
         }
 

@@ -52,7 +52,8 @@ class LargePeriodicPlainTextFormatter extends LargePeriodicFormatter implements 
         $intlDateFrom = $this->fmt->format($dateFrom);
         $intlDateTo = $this->fmt->format($dateTo);
 
-        $output_dates =  ucfirst($this->trans->getTranslations()->t('from')) . ' ' . $intlDateFrom . ' ' . $this->trans->getTranslations()->t('till') . ' ' . $intlDateTo;
+        $output_dates =  ucfirst($this->trans->getTranslations()->t('from')) . ' ';
+        $output_dates .= $intlDateFrom . ' ' . $this->trans->getTranslations()->t('till') . ' ' . $intlDateTo;
         return $output_dates;
     }
 
@@ -72,12 +73,14 @@ class LargePeriodicPlainTextFormatter extends LargePeriodicFormatter implements 
                     $formattedDays[$dayOfWeek] = $this->mappingDays[$dayOfWeek]
                         . ' ' . $this->trans->getTranslations()->t('from') . ' '
                         . $this->getFormattedTime($openingHours->getOpens())
-                        . ' ' . $this->trans->getTranslations()->t('till') . ' ' . $this->getFormattedTime($openingHours->getCloses())
+                        . ' ' . $this->trans->getTranslations()->t('till') . ' '
+                        . $this->getFormattedTime($openingHours->getCloses())
                         . PHP_EOL;
                 } else {
                     $formattedDays[$dayOfWeek] .= $this->trans->getTranslations()->t('from') . ' '
                         . $this->getFormattedTime($openingHours->getOpens())
-                        . ' ' . $this->trans->getTranslations()->t('till') . ' ' . $this->getFormattedTime($openingHours->getCloses())
+                        . ' ' . $this->trans->getTranslations()->t('till') . ' '
+                        . $this->getFormattedTime($openingHours->getCloses())
                         . ','
                         . PHP_EOL;
                 }
@@ -86,7 +89,8 @@ class LargePeriodicPlainTextFormatter extends LargePeriodicFormatter implements 
         // Create an array with formatted closed days.
         $closedDays = [];
         foreach (array_keys($this->mappingDays) as $day) {
-            $closedDays[$day] = $this->mappingDays[$day] . ' ' . $this->trans->getTranslations()->t('closed') . ',' . PHP_EOL;
+            $closedDays[$day] = $this->mappingDays[$day] . ' '
+                . $this->trans->getTranslations()->t('closed') . ',' . PHP_EOL;
         }
         // Merge the formatted days with the closed days array to fill in missing days and sort using the days mapping.
         $formattedDays = array_replace($this->mappingDays, $formattedDays + $closedDays);

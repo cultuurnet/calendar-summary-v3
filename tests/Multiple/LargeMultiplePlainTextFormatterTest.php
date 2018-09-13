@@ -23,7 +23,7 @@ class LargeMultiplePlainTextFormatterTest extends \PHPUnit_Framework_TestCase
         $subEvents = json_decode(file_get_contents(__DIR__ . '/data/subEvents.json'), true);
         $event = new Event();
         $newEvents = array();
-        foreach($subEvents as $subEvent) {
+        foreach ($subEvents as $subEvent) {
             $e = new Event();
             $e->setStartDate(new \DateTime($subEvent['startDate']));
             $e->setEndDate(new \DateTime($subEvent['endDate']));
@@ -54,7 +54,7 @@ class LargeMultiplePlainTextFormatterTest extends \PHPUnit_Framework_TestCase
         $subEvents = json_decode(file_get_contents(__DIR__ . '/data/subEventsMoreDays.json'), true);
         $event = new Event();
         $newEvents = array();
-        foreach($subEvents as $subEvent) {
+        foreach ($subEvents as $subEvent) {
             $e = new Event();
             $e->setStartDate(new \DateTime($subEvent['startDate']));
             $e->setEndDate(new \DateTime($subEvent['endDate']));

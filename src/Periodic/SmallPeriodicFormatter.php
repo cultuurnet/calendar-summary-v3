@@ -11,7 +11,8 @@ namespace CultuurNet\CalendarSummaryV3\Periodic;
 use IntlDateFormatter;
 use CultuurNet\CalendarSummaryV3\Translator;
 
-abstract class SmallPeriodicFormatter {
+abstract class SmallPeriodicFormatter
+{
 
     /**
      * @var IntlDateFormatter

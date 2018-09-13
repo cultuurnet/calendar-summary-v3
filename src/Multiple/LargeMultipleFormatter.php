@@ -8,7 +8,8 @@
 
 namespace CultuurNet\CalendarSummaryV3\Multiple;
 
-abstract class LargeMultipleFormatter {
+abstract class LargeMultipleFormatter
+{
     /**
      * @var string $langCode
      */
@@ -25,7 +26,8 @@ abstract class LargeMultipleFormatter {
      *
      * LargeMultipleHTMLFormatter constructor.
      */
-    public function __construct($langCode, $hidePastDates) {
+    public function __construct($langCode, $hidePastDates)
+    {
         $this->langCode = $langCode;
         $this->hidePast = $hidePastDates;
     }
