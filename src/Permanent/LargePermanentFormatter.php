@@ -19,6 +19,19 @@ abstract class LargePermanentFormatter {
         'sunday' => 'zondag',
     );
 
+    /**
+     * Translate the day to short Dutch format.
+     */
+    protected $mappingShortDays = array(
+        'monday' => 'Mo',
+        'tuesday' => 'Tu',
+        'wednesday' => 'We',
+        'thursday' => 'Th',
+        'friday' => 'Fr',
+        'saturday' => 'Sa',
+        'sunday' => 'Su',
+    );
+
     protected $fmtDays;
 
     protected $fmtShortDays;

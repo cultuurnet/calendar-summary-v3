@@ -19,6 +19,8 @@ class LargePermanentHTMLFormatter extends LargePermanentFormatter implements Per
         $output = '';
         if ($offer->getOpeningHours()) {
             $output .= $this->generateWeekScheme($offer->getOpeningHours());
+        } else {
+            $output .= '<p class="cf-openinghours">' . ucfirst($this->trans->getTranslations()->t('always_open')) . '</p>';
         }
 
         return $this->formatSummary($output);
@@ -98,20 +100,12 @@ class LargePermanentHTMLFormatter extends LargePermanentFormatter implements Per
      * @param bool $long
      * @return string
      */
-    protected function generateFormattedTimespan($daysOfWeek, $long = false)
+    protected function generateFormattedTimespan($dayOfWeek, $long = false)
     {
         if ($long) {
-            if (count($daysOfWeek) > 1) {
-                return ucfirst($daysOfWeek[0]) . ' - ' . $daysOfWeek[count($daysOfWeek)-1];
-            } else {
-                return ucfirst($daysOfWeek[0]);
-            }
+            return ucfirst($this->mappingDays[$dayOfWeek]);
         } else {
-            if (count($daysOfWeek) > 1) {
-                return $daysOfWeek[0] . '-' . $daysOfWeek[count($daysOfWeek)-1];
-            } else {
-                return $daysOfWeek[0];
-            }
+            return ucfirst($this->mappingShortDays[$dayOfWeek]);
         }
     }
 
@@ -126,41 +120,63 @@ class LargePermanentHTMLFormatter extends LargePermanentFormatter implements Per
         $outputWeek = '<ul class="list-unstyled">';
         // Create an array with formatted timespans.
         $formattedTimespans = [];
+
         foreach ($openingHoursData as $openingHours) {
             $daysOfWeek = $openingHours->getDaysOfWeek();
-            $daysOfWeekTranslated = $openingHours->getDaysOfWeek();
-            $daysOfWeekShortTranslated = $openingHours->getDaysOfWeek();
-            foreach($daysOfWeek as $i => $dayOfWeek) {
-                $daysOfWeekTranslated[$i] = $this->fmtDays->format(strtotime($dayOfWeek));
-                $daysOfWeekShortTranslated[$i] = $this->fmtShortDays->format(strtotime($dayOfWeek));
-            }
-
-            $daySpanShort = $this->generateFormattedTimespan($daysOfWeekShortTranslated);
-            $daySpanLong = $this->generateFormattedTimespan($daysOfWeekTranslated, true);
             $firstOpens = $this->getFormattedTime($this->getEarliestTime($openingHoursData, $daysOfWeek));
             $lastCloses = $this->getFormattedTime($this->getLatestTime($openingHoursData, $daysOfWeek));
             $opens = $this->getFormattedTime($openingHours->getOpens());
             $closes = $this->getFormattedTime($openingHours->getCloses());
-            // Determine whether to add a new timespan with included meta tag,
-            // or to add extra opening times to an existing timespan.
-            if (!isset($formattedTimespans[$daySpanShort])) {
-                $formattedTimespans[$daySpanShort] =
-                    "<meta itemprop=\"openingHours\" datetime=\"$daySpanShort $firstOpens-$lastCloses\"> "
-                    . "</meta> "
-                    . "<li itemprop=\"openingHoursSpecification\"> "
-                    . "<span class=\"cf-days\">$daySpanLong</span> "
-                    . "<span itemprop=\"opens\" content=\"$opens\" class=\"cf-from cf-meta\">" . $this->trans->getTranslations()->t('from') . "</span> $opens "
-                    . "<span itemprop=\"closes\" content=\"$closes\" class=\"cf-to cf-meta\">" . $this->trans->getTranslations()->t('till') . "</span> $closes";
-            } else {
-                $formattedTimespans[$daySpanShort] .=
-                    "<span itemprop=\"opens\" content=\"$opens\" class=\"cf-from cf-meta\">" . $this->trans->getTranslations()->t('from') . "</span> $opens "
-                    . "<span itemprop=\"closes\" content=\"$closes\" class=\"cf-to cf-meta\">" . $this->trans->getTranslations()->t('till') . "</span> $closes";
+
+            foreach ($daysOfWeek as $dayOfWeek) {
+                $daySpanShort = $this->generateFormattedTimespan($dayOfWeek);
+                $daySpanLong = $this->generateFormattedTimespan($dayOfWeek, true);
+
+                if (!isset($formattedTimespans[$daySpanShort])) {
+                    $formattedTimespans[$daySpanShort] =
+                        "<meta itemprop=\"openingHours\" datetime=\"$daySpanShort $firstOpens-$lastCloses\"> "
+                        . "</meta> "
+                        . "<li itemprop=\"openingHoursSpecification\"> "
+                        . "<span class=\"cf-days\">$daySpanLong</span> "
+                        . "<span itemprop=\"opens\" content=\"$opens\" class=\"cf-from cf-meta\">" . $this->trans->getTranslations()->t('from') . "</span> "
+                        . "<span class=\"cf-time\">$opens</span> "
+                        . "<span itemprop=\"closes\" content=\"$closes\" class=\"cf-to cf-meta\">" . $this->trans->getTranslations()->t('till') . "</span> "
+                        . "<span class=\"cf-time\">$closes</span>";
+                } else {
+                    $formattedTimespans[$daySpanShort] .=
+                        "<span itemprop=\"opens\" content=\"$opens\" class=\"cf-from cf-meta\">" . $this->trans->getTranslations()->t('from') . "</span> "
+                        . "<span class=\"cf-time\">$opens</span> "
+                        . "<span itemprop=\"closes\" content=\"$closes\" class=\"cf-to cf-meta\">" . $this->trans->getTranslations()->t('till') . "</span> "
+                        . "<span class=\"cf-time\">$closes</span>";
+                }
             }
         }
+
+        // Create an array with formatted closed days.
+        $closedDays = [];
+        foreach ($this->mappingShortDays as $key => $day) {
+            $closedDays[$day] = ucfirst($this->mappingDays[$key]);
+        }
+
+        $sortedTimespans = array();
+        foreach ($this->mappingShortDays as $key => $day) {
+            if (isset($formattedTimespans[$day])) {
+                $sortedTimespans[$day] = $formattedTimespans[$day];
+            } else {
+                $sortedTimespans[$day] =
+                    "<meta itemprop=\"openingHours\" datetime=\"$day\"> "
+                    . "</meta> "
+                    . "<li itemprop=\"openingHoursSpecification\"> "
+                    . "<span class=\"cf-days\">$closedDays[$day]</span> "
+                    . "<span itemprop=\"closed\" content=\"closed\" class=\"cf-closed cf-meta\">" . $this->trans->getTranslations()->t('closed') . "</span> ";
+            }
+        }
+
         // Render the rest of the week scheme output.
-        foreach ($formattedTimespans as $formattedTimespan) {
-            $outputWeek .= $formattedTimespan . '</li>';
+        foreach ($sortedTimespans as $sortedTimespan) {
+            $outputWeek .= $sortedTimespan . '</li>';
         }
         return $outputWeek . '</ul>';
+
     }
 }
