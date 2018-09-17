@@ -54,7 +54,7 @@ class MediumPermanentHTMLFormatter extends MediumPermanentFormatter implements P
         $i = 0;
 
         foreach ($formattedDays as $formattedDay) {
-            $outputWeek .= '<span class="cf-weekday-open>' . $formattedDay . '</span>';
+            $outputWeek .= '<span class="cf-weekday-open">' . $formattedDay . '</span>';
             if (++$i !== count($formattedDays)) {
                 $outputWeek .= ', ';
             }

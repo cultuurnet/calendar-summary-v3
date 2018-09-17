@@ -104,9 +104,10 @@ class LargePermanentHTMLFormatter extends LargePermanentFormatter implements Per
     protected function generateFormattedTimespan($dayOfWeek, $long = false)
     {
         if ($long) {
-            return ucfirst($this->mappingDays[$dayOfWeek]);
+            return ucfirst($this->trans->getTranslations()->t($dayOfWeek));
         } else {
-            return ucfirst($this->mappingShortDays[$dayOfWeek]);
+            //return ucfirst($this->mappingShortDays[$dayOfWeek]);
+            return ucfirst($this->trans->getTranslations()->t($dayOfWeek . 'Short'));
         }
     }
 
@@ -130,11 +131,11 @@ class LargePermanentHTMLFormatter extends LargePermanentFormatter implements Per
             $closes = $this->getFormattedTime($openingHours->getCloses());
 
             foreach ($daysOfWeek as $dayOfWeek) {
-                $daySpanShort = $this->generateFormattedTimespan($dayOfWeek);
-                $daySpanLong = $this->generateFormattedTimespan($dayOfWeek, true);
+                $daySpanShort = ucfirst($this->fmtShortDays->format(strtotime($dayOfWeek)));
+                $daySpanLong = ucfirst($this->fmtDays->format(strtotime($dayOfWeek)));
 
-                if (!isset($formattedTimespans[$daySpanShort])) {
-                    $formattedTimespans[$daySpanShort] =
+                if (!isset($formattedTimespans[$dayOfWeek])) {
+                    $formattedTimespans[$dayOfWeek] =
                         "<meta itemprop=\"openingHours\" datetime=\"$daySpanShort $firstOpens-$lastCloses\"> "
                         . "</meta> "
                         . "<li itemprop=\"openingHoursSpecification\"> "
@@ -146,7 +147,7 @@ class LargePermanentHTMLFormatter extends LargePermanentFormatter implements Per
                         . $this->trans->getTranslations()->t('till') . "</span> "
                         . "<span class=\"cf-time\">$closes</span>";
                 } else {
-                    $formattedTimespans[$daySpanShort] .=
+                    $formattedTimespans[$dayOfWeek] .=
                         "<span itemprop=\"opens\" content=\"$opens\" class=\"cf-from cf-meta\">"
                         . $this->trans->getTranslations()->t('from') . "</span> "
                         . "<span class=\"cf-time\">$opens</span> "
@@ -159,17 +160,19 @@ class LargePermanentHTMLFormatter extends LargePermanentFormatter implements Per
 
         // Create an array with formatted closed days.
         $closedDays = [];
-        foreach ($this->mappingShortDays as $key => $day) {
-            $closedDays[$day] = ucfirst($this->mappingDays[$key]);
+        foreach ($this->daysOfWeek as $day) {
+            $closedDays[$day] = ucfirst($this->fmtDays->format(strtotime($day)));
         }
 
         $sortedTimespans = array();
-        foreach ($this->mappingShortDays as $key => $day) {
+        foreach ($this->daysOfWeek as $day) {
+            $translatedDay = ucfirst($this->fmtDays->format(strtotime($day)));
+
             if (isset($formattedTimespans[$day])) {
                 $sortedTimespans[$day] = $formattedTimespans[$day];
             } else {
                 $sortedTimespans[$day] =
-                    "<meta itemprop=\"openingHours\" datetime=\"$day\"> "
+                    "<meta itemprop=\"openingHours\" datetime=\"$translatedDay\"> "
                     . "</meta> "
                     . "<li itemprop=\"openingHoursSpecification\"> "
                     . "<span class=\"cf-days\">$closedDays[$day]</span> "

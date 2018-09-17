@@ -73,16 +73,25 @@ class LargePermanentPlainTextFormatter extends LargePermanentFormatter implement
 
         // Create an array with formatted closed days.
         $closedDays = [];
-        foreach (array_keys($this->mappingDays) as $day) {
+        foreach ($this->daysOfWeek as $day) {
             $closedDays[$day] = $this->fmtShortDays->format(strtotime($day)) . ' '
                 . $this->trans->getTranslations()->t('closed') . PHP_EOL;
         }
 
         // Merge the formatted days with the closed days array to fill in missing days and sort using the days mapping.
-        $formattedDays = array_replace($this->mappingDays, $formattedDays + $closedDays);
+        //$formattedDays = array_replace($this->daysOfWeek, $formattedDays + $closedDays);
+        $sortedDays = array();
+        foreach ($this->daysOfWeek as $day) {
+            if (isset($formattedDays[$day])) {
+                $sortedDays[$day] = $formattedDays[$day];
+            } else {
+                $sortedDays[$day] = $closedDays[$day];
+            }
+        }
+
         // Render the rest of the week scheme output.
-        foreach ($formattedDays as $formattedDay) {
-            $outputWeek .= $formattedDay;
+        foreach ($sortedDays as $sortedDay) {
+            $outputWeek .= $sortedDay;
         }
         return $outputWeek;
     }
