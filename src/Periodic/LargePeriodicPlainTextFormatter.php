@@ -69,8 +69,10 @@ class LargePeriodicPlainTextFormatter extends LargePeriodicFormatter implements 
         $formattedDays = [];
         foreach ($openingHoursData as $openingHours) {
             foreach ($openingHours->getDaysOfWeek() as $dayOfWeek) {
+                $translatedDay = $this->fmtShortDays->format(strtotime($dayOfWeek));
+
                 if (!isset($formattedDays[$dayOfWeek])) {
-                    $formattedDays[$dayOfWeek] = $this->mappingDays[$dayOfWeek]
+                    $formattedDays[$dayOfWeek] = $translatedDay
                         . ' ' . $this->trans->getTranslations()->t('from') . ' '
                         . $this->getFormattedTime($openingHours->getOpens())
                         . ' ' . $this->trans->getTranslations()->t('till') . ' '
@@ -88,12 +90,19 @@ class LargePeriodicPlainTextFormatter extends LargePeriodicFormatter implements 
         }
         // Create an array with formatted closed days.
         $closedDays = [];
-        foreach (array_keys($this->mappingDays) as $day) {
-            $closedDays[$day] = $this->mappingDays[$day] . ' '
+        foreach ($this->daysOfWeek as $day) {
+            $closedDays[$day] = $this->fmtShortDays->format(strtotime($day)) . ' '
                 . $this->trans->getTranslations()->t('closed') . ',' . PHP_EOL;
         }
-        // Merge the formatted days with the closed days array to fill in missing days and sort using the days mapping.
-        $formattedDays = array_replace($this->mappingDays, $formattedDays + $closedDays);
+        // Merge the formatted days with the closed days array and sort them.
+        $sortedDays = array();
+        foreach ($this->daysOfWeek as $day) {
+            if (isset($formattedDays[$day])) {
+                $sortedDays[$day] = $formattedDays[$day];
+            } else {
+                $sortedDays[$day] = $closedDays[$day];
+            }
+        }
 
         // Render the rest of the week scheme output.
         foreach ($formattedDays as $formattedDay) {

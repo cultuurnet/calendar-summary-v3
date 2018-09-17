@@ -78,8 +78,7 @@ class LargePermanentPlainTextFormatter extends LargePermanentFormatter implement
                 . $this->trans->getTranslations()->t('closed') . PHP_EOL;
         }
 
-        // Merge the formatted days with the closed days array to fill in missing days and sort using the days mapping.
-        //$formattedDays = array_replace($this->daysOfWeek, $formattedDays + $closedDays);
+        // Merge the formatted days with the closed days array and sort them.
         $sortedDays = array();
         foreach ($this->daysOfWeek as $day) {
             if (isset($formattedDays[$day])) {

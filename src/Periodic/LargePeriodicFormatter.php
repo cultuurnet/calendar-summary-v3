@@ -19,32 +19,23 @@ abstract class LargePeriodicFormatter
      */
     protected $fmt;
 
+    protected $fmtDays;
+
+    protected $fmtShortDays;
+
     protected $trans;
 
     /**
-     * Translate the day to Dutch.
+     * weekdays
      */
-    protected $mappingDays = array(
-        'monday' => 'maandag',
-        'tuesday' => 'dinsdag',
-        'wednesday' => 'woensdag',
-        'thursday' => 'donderdag',
-        'friday' => 'vrijdag',
-        'saturday' => 'zaterdag',
-        'sunday' => 'zondag',
-    );
-
-    /**
-     * Translate the day to short Dutch format.
-     */
-    protected $mappingShortDays = array(
-        'monday' => 'Mo',
-        'tuesday' => 'Tu',
-        'wednesday' => 'We',
-        'thursday' => 'Th',
-        'friday' => 'Fr',
-        'saturday' => 'Sa',
-        'sunday' => 'Su',
+    protected $daysOfWeek = array(
+        'monday',
+        'tuesday',
+        'wednesday',
+        'thursday',
+        'friday',
+        'saturday',
+        'sunday'
     );
 
     /**
@@ -61,6 +52,24 @@ abstract class LargePeriodicFormatter
             date_default_timezone_get(),
             IntlDateFormatter::GREGORIAN,
             'd MMMM yyyy'
+        );
+
+        $this->fmtDays = new IntlDateFormatter(
+            $langCode,
+            IntlDateFormatter::FULL,
+            IntlDateFormatter::FULL,
+            date_default_timezone_get(),
+            IntlDateFormatter::GREGORIAN,
+            'EEEE'
+        );
+
+        $this->fmtShortDays = new IntlDateFormatter(
+            $langCode,
+            IntlDateFormatter::FULL,
+            IntlDateFormatter::FULL,
+            date_default_timezone_get(),
+            IntlDateFormatter::GREGORIAN,
+            'EEE'
         );
 
         $this->trans = new Translator();
