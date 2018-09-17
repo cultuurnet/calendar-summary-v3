@@ -69,7 +69,7 @@ class LargePeriodicPlainTextFormatter extends LargePeriodicFormatter implements 
         $formattedDays = [];
         foreach ($openingHoursData as $openingHours) {
             foreach ($openingHours->getDaysOfWeek() as $dayOfWeek) {
-                $translatedDay = $this->fmtShortDays->format(strtotime($dayOfWeek));
+                $translatedDay = $this->fmtDays->format(strtotime($dayOfWeek));
 
                 if (!isset($formattedDays[$dayOfWeek])) {
                     $formattedDays[$dayOfWeek] = $translatedDay
@@ -77,13 +77,14 @@ class LargePeriodicPlainTextFormatter extends LargePeriodicFormatter implements 
                         . $this->getFormattedTime($openingHours->getOpens())
                         . ' ' . $this->trans->getTranslations()->t('till') . ' '
                         . $this->getFormattedTime($openingHours->getCloses())
+                        . ', '
                         . PHP_EOL;
                 } else {
                     $formattedDays[$dayOfWeek] .= $this->trans->getTranslations()->t('from') . ' '
                         . $this->getFormattedTime($openingHours->getOpens())
                         . ' ' . $this->trans->getTranslations()->t('till') . ' '
                         . $this->getFormattedTime($openingHours->getCloses())
-                        . ','
+                        . ', '
                         . PHP_EOL;
                 }
             }
@@ -91,7 +92,7 @@ class LargePeriodicPlainTextFormatter extends LargePeriodicFormatter implements 
         // Create an array with formatted closed days.
         $closedDays = [];
         foreach ($this->daysOfWeek as $day) {
-            $closedDays[$day] = $this->fmtShortDays->format(strtotime($day)) . ' '
+            $closedDays[$day] = $this->fmtDays->format(strtotime($day)) . ' '
                 . $this->trans->getTranslations()->t('closed') . ',' . PHP_EOL;
         }
         // Merge the formatted days with the closed days array and sort them.
@@ -105,10 +106,10 @@ class LargePeriodicPlainTextFormatter extends LargePeriodicFormatter implements 
         }
 
         // Render the rest of the week scheme output.
-        foreach ($formattedDays as $formattedDay) {
-            $outputWeek .= $formattedDay;
+        foreach ($sortedDays as $sortedDay) {
+            $outputWeek .= $sortedDay;
         }
-        $outputWeek = rtrim($outputWeek, ',' . PHP_EOL);
+        $outputWeek = rtrim($outputWeek, ', ' . PHP_EOL);
         return $outputWeek . ')';
     }
 }
