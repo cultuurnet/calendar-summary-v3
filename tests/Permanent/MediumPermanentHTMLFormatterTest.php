@@ -48,12 +48,12 @@ class MediumPermanentHTMLFormatterTest extends \PHPUnit_Framework_TestCase
 
         $this->assertEquals(
             '<span>Open op <span class="cf-weekdays">'
-            . '<span class="cf-weekday-open>ma</span>, '
-            . '<span class="cf-weekday-open>di</span>, '
-            . '<span class="cf-weekday-open>wo</span>, '
-            . '<span class="cf-weekday-open>vr</span>, '
-            . '<span class="cf-weekday-open>za</span>, '
-            . '<span class="cf-weekday-open>zo</span>'
+            . '<span class="cf-weekday-open">ma</span>, '
+            . '<span class="cf-weekday-open">di</span>, '
+            . '<span class="cf-weekday-open">wo</span>, '
+            . '<span class="cf-weekday-open">vr</span>, '
+            . '<span class="cf-weekday-open">za</span>, '
+            . '<span class="cf-weekday-open">zo</span>'
             . '</span></span>',
             $this->formatter->format($place)
         );
@@ -88,11 +88,11 @@ class MediumPermanentHTMLFormatterTest extends \PHPUnit_Framework_TestCase
 
         $this->assertEquals(
             '<span>Open op <span class="cf-weekdays">'
-            . '<span class="cf-weekday-open>ma</span>, '
-            . '<span class="cf-weekday-open>di</span>, '
-            . '<span class="cf-weekday-open>wo</span>, '
-            . '<span class="cf-weekday-open>vr</span>, '
-            . '<span class="cf-weekday-open>za</span>'
+            . '<span class="cf-weekday-open">ma</span>, '
+            . '<span class="cf-weekday-open">di</span>, '
+            . '<span class="cf-weekday-open">wo</span>, '
+            . '<span class="cf-weekday-open">vr</span>, '
+            . '<span class="cf-weekday-open">za</span>'
             . '</span></span>',
             $this->formatter->format($place)
         );
@@ -132,10 +132,10 @@ class MediumPermanentHTMLFormatterTest extends \PHPUnit_Framework_TestCase
 
         $this->assertEquals(
             '<span>Open op <span class="cf-weekdays">'
-            . '<span class="cf-weekday-open>ma</span>, '
-            . '<span class="cf-weekday-open>di</span>, '
-            . '<span class="cf-weekday-open>vr</span>, '
-            . '<span class="cf-weekday-open>za</span>'
+            . '<span class="cf-weekday-open">ma</span>, '
+            . '<span class="cf-weekday-open">di</span>, '
+            . '<span class="cf-weekday-open">vr</span>, '
+            . '<span class="cf-weekday-open">za</span>'
             . '</span></span>',
             $this->formatter->format($place)
         );

@@ -15,8 +15,8 @@ class MediumSinglePlainTextFormatter extends MediumSingleFormatter implements Si
      */
     public function format(Offer $offer)
     {
-        $dateFrom = $offer->getStartDate();
-        $dateEnd = $offer->getEndDate();
+        $dateFrom = $offer->getStartDate()->setTimezone(new \DateTimeZone(date_default_timezone_get()));
+        $dateEnd = $offer->getEndDate()->setTimezone(new \DateTimeZone(date_default_timezone_get()));
 
         if ($dateFrom->format('Y-m-d') == $dateEnd->format('Y-m-d')) {
             $output = $this->formatSameDay($dateFrom);
@@ -45,9 +45,9 @@ class MediumSinglePlainTextFormatter extends MediumSingleFormatter implements Si
         $intlDateEnd = $this->fmt->format($dateEnd);
         $intlDateDayEnd = $this->fmtDay->format($dateEnd);
 
-        $output = $this->trans->getTranslations()->t('from') . ' '
-            . $intlDateDayFrom . ' ' . $intlDateFrom . ' '
-            . $this->trans->getTranslations()->t('till') . ' ' . $intlDateDayEnd . ' ' . $intlDateEnd;
+        $output = $this->trans->getTranslations()->t('from') . ' ' . $intlDateDayFrom . ' '
+            . $intlDateFrom . ' ' . $this->trans->getTranslations()->t('till') . ' '
+            . $intlDateDayEnd . ' ' . $intlDateEnd;
 
         return $output;
     }

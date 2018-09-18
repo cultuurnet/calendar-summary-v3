@@ -15,8 +15,8 @@ class LargeSinglePlainTextFormatter extends LargeSingleFormatter implements Sing
      */
     public function format(Offer $offer)
     {
-        $dateFrom = $offer->getStartDate();
-        $dateEnd = $offer->getEndDate();
+        $dateFrom = $offer->getStartDate()->setTimezone(new \DateTimeZone(date_default_timezone_get()));
+        $dateEnd = $offer->getEndDate()->setTimezone(new \DateTimeZone(date_default_timezone_get()));
 
         if ($dateFrom->format('Y-m-d') == $dateEnd->format('Y-m-d')) {
             $output = $this->formatSameDay($dateFrom, $dateEnd);
@@ -35,10 +35,14 @@ class LargeSinglePlainTextFormatter extends LargeSingleFormatter implements Sing
 
         $intlEndTimeEnd = $this->fmtTime->format($dateEnd);
 
-        $output = $intlWeekDayFrom . ' ' . $intlDateFrom;
-        $output .= ' ' . $this->trans->getTranslations()->t('from') . ' ';
-        $output .= $intlStartTimeFrom;
-        $output .= ' ' . $this->trans->getTranslations()->t('till') . ' ' . $intlEndTimeEnd;
+        if ($intlStartTimeFrom === '00:00' && $intlEndTimeEnd === '23:59') {
+            $output = $intlWeekDayFrom . ' ' . $intlDateFrom;
+        } else {
+            $output = $intlWeekDayFrom . ' ' . $intlDateFrom;
+            $output .= ' ' . $this->trans->getTranslations()->t('from') . ' ';
+            $output .= $intlStartTimeFrom;
+            $output .= ' ' . $this->trans->getTranslations()->t('till') . ' ' . $intlEndTimeEnd;
+        }
 
         return $output;
     }

@@ -17,14 +17,14 @@ class SmallPeriodicPlainTextFormatter extends SmallPeriodicFormatter implements 
      */
     public function format(Offer $offer)
     {
-        $startDate = $offer->getStartDate();
+        $startDate = $offer->getStartDate()->setTimezone(new \DateTimeZone(date_default_timezone_get()));
         $startDate->setTime(0, 0, 1);
         $now = new DateTime();
 
         if ($startDate > $now) {
             return $this->formatNotStarted($startDate);
         } else {
-            $endDate = $offer->getEndDate();
+            $endDate = $offer->getEndDate()->setTimezone(new \DateTimeZone(date_default_timezone_get()));
             return $this->formatStarted($endDate);
         }
     }

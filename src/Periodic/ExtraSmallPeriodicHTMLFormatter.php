@@ -17,7 +17,7 @@ class ExtraSmallPeriodicHTMLFormatter extends ExtraSmallPeriodicFormatter implem
      */
     public function format(Offer $offer)
     {
-        $startDate = $offer->getStartDate();
+        $startDate = $offer->getStartDate()->setTimezone(new \DateTimeZone(date_default_timezone_get()));
         $startDate->setTime(0, 0, 1);
         $now = new DateTime();
 

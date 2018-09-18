@@ -7,17 +7,18 @@ use IntlDateFormatter;
 
 abstract class LargePermanentFormatter
 {
+
     /**
-     * Translate the day to Dutch.
+     * weekdays
      */
-    protected $mappingDays = array(
-        'monday' => 'maandag',
-        'tuesday' => 'dinsdag',
-        'wednesday' => 'woensdag',
-        'thursday' => 'donderdag',
-        'friday' => 'vrijdag',
-        'saturday' => 'zaterdag',
-        'sunday' => 'zondag',
+    protected $daysOfWeek = array(
+        'monday',
+        'tuesday',
+        'wednesday',
+        'thursday',
+        'friday',
+        'saturday',
+        'sunday'
     );
 
     protected $fmtDays;

@@ -15,8 +15,8 @@ class SmallSinglePlainTextFormatter extends SmallSingleFormatter implements Sing
      */
     public function format(Offer $offer)
     {
-        $dateFrom = $offer->getStartDate();
-        $dateEnd = $offer->getEndDate();
+        $dateFrom = $offer->getStartDate()->setTimezone(new \DateTimeZone(date_default_timezone_get()));
+        $dateEnd = $offer->getEndDate()->setTimezone(new \DateTimeZone(date_default_timezone_get()));
 
         if ($dateFrom->format('Y-m-d') == $dateEnd->format('Y-m-d')) {
             $output = $this->formatSameDay($dateFrom);
@@ -45,9 +45,9 @@ class SmallSinglePlainTextFormatter extends SmallSingleFormatter implements Sing
         $dateEndDay = $this->fmtDay->format($dateEnd);
         $dateEndMonth = rtrim($this->fmtMonth->format($dateEnd), '.');
 
-        $output = $this->trans->getTranslations()->t('from') . ' '
-            . $dateFromDay . ' ' . $dateFromMonth . ' '
-            . $this->trans->getTranslations()->t('till') . ' ' . $dateEndDay . ' ' . $dateEndMonth;
+        $output = $this->trans->getTranslations()->t('from') . ' ' . $dateFromDay . ' '
+            . $dateFromMonth . ' ' . $this->trans->getTranslations()->t('till') . ' '
+            . $dateEndDay . ' ' . $dateEndMonth;
 
         return $output;
     }

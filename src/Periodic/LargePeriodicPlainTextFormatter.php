@@ -17,7 +17,10 @@ class LargePeriodicPlainTextFormatter extends LargePeriodicFormatter implements 
      */
     public function format(Offer $offer)
     {
-        $output = $this->generateDates($offer->getStartDate(), $offer->getEndDate());
+        $output = $this->generateDates(
+            $offer->getStartDate()->setTimezone(new \DateTimeZone(date_default_timezone_get())),
+            $offer->getEndDate()->setTimezone(new \DateTimeZone(date_default_timezone_get()))
+        );
 
         if ($offer->getOpeningHours()) {
             $output .= PHP_EOL . $this->generateWeekScheme($offer->getOpeningHours());
@@ -49,8 +52,8 @@ class LargePeriodicPlainTextFormatter extends LargePeriodicFormatter implements 
         $intlDateFrom = $this->fmt->format($dateFrom);
         $intlDateTo = $this->fmt->format($dateTo);
 
-        $output_dates =  ucfirst($this->trans->getTranslations()->t('from')) . ' ' . $intlDateFrom
-            . ' ' . $this->trans->getTranslations()->t('till') . ' ' . $intlDateTo;
+        $output_dates =  ucfirst($this->trans->getTranslations()->t('from')) . ' ';
+        $output_dates .= $intlDateFrom . ' ' . $this->trans->getTranslations()->t('till') . ' ' . $intlDateTo;
         return $output_dates;
     }
 
@@ -66,37 +69,47 @@ class LargePeriodicPlainTextFormatter extends LargePeriodicFormatter implements 
         $formattedDays = [];
         foreach ($openingHoursData as $openingHours) {
             foreach ($openingHours->getDaysOfWeek() as $dayOfWeek) {
+                $translatedDay = $this->fmtDays->format(strtotime($dayOfWeek));
+
                 if (!isset($formattedDays[$dayOfWeek])) {
-                    $formattedDays[$dayOfWeek] = $this->mappingDays[$dayOfWeek]
+                    $formattedDays[$dayOfWeek] = $translatedDay
                         . ' ' . $this->trans->getTranslations()->t('from') . ' '
                         . $this->getFormattedTime($openingHours->getOpens())
                         . ' ' . $this->trans->getTranslations()->t('till') . ' '
                         . $this->getFormattedTime($openingHours->getCloses())
+                        . ', '
                         . PHP_EOL;
                 } else {
                     $formattedDays[$dayOfWeek] .= $this->trans->getTranslations()->t('from') . ' '
                         . $this->getFormattedTime($openingHours->getOpens())
                         . ' ' . $this->trans->getTranslations()->t('till') . ' '
                         . $this->getFormattedTime($openingHours->getCloses())
-                        . ','
+                        . ', '
                         . PHP_EOL;
                 }
             }
         }
         // Create an array with formatted closed days.
         $closedDays = [];
-        foreach (array_keys($this->mappingDays) as $day) {
-            $closedDays[$day] = $this->mappingDays[$day] . ' '
+        foreach ($this->daysOfWeek as $day) {
+            $closedDays[$day] = $this->fmtDays->format(strtotime($day)) . ' '
                 . $this->trans->getTranslations()->t('closed') . ',' . PHP_EOL;
         }
-        // Merge the formatted days with the closed days array to fill in missing days and sort using the days mapping.
-        $formattedDays = array_replace($this->mappingDays, $formattedDays + $closedDays);
+        // Merge the formatted days with the closed days array and sort them.
+        $sortedDays = array();
+        foreach ($this->daysOfWeek as $day) {
+            if (isset($formattedDays[$day])) {
+                $sortedDays[$day] = $formattedDays[$day];
+            } else {
+                $sortedDays[$day] = $closedDays[$day];
+            }
+        }
 
         // Render the rest of the week scheme output.
-        foreach ($formattedDays as $formattedDay) {
-            $outputWeek .= $formattedDay;
+        foreach ($sortedDays as $sortedDay) {
+            $outputWeek .= $sortedDay;
         }
-        $outputWeek = rtrim($outputWeek, ',' . PHP_EOL);
+        $outputWeek = rtrim($outputWeek, ', ' . PHP_EOL);
         return $outputWeek . ')';
     }
 }

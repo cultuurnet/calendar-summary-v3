@@ -19,14 +19,16 @@ class Translator
                 'from_period' => 'from',
                 'till' => 'till',
                 'closed' => 'closed',
-                'open' => 'open at'
+                'open' => 'open at',
+                'always_open' => 'always open'
             ],
             'nl' => [
                 'from' => 'van',
                 'from_period' => 'vanaf',
                 'till' => 'tot',
                 'closed' => 'gesloten',
-                'open' => 'open op'
+                'open' => 'open op',
+                'always_open' => 'altijd open'
             ],
             'fr' => [
                 'from' => 'de',
@@ -34,6 +36,7 @@ class Translator
                 'till' => 'à',
                 'closed' => 'fermée',
                 'open' => 'ouvert à',
+                'always_open' => 'toujours ouvert'
             ],
             'de' => [
                 'from' => 'von',
@@ -41,6 +44,7 @@ class Translator
                 'till' => 'bis',
                 'closed' => 'geschlossen',
                 'open' => 'öffnen',
+                'always_open' => 'immer offen'
             ]
         ];
 
