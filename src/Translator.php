@@ -20,6 +20,7 @@ class Translator
                 'till' => 'till',
                 'closed' => 'closed',
                 'open' => 'open at',
+                'at' => 'at',
                 'always_open' => 'always open'
             ],
             'nl' => [
@@ -28,6 +29,7 @@ class Translator
                 'till' => 'tot',
                 'closed' => 'gesloten',
                 'open' => 'open op',
+                'at' => 'om',
                 'always_open' => 'altijd open'
             ],
             'fr' => [
@@ -36,6 +38,7 @@ class Translator
                 'till' => 'à',
                 'closed' => 'fermée',
                 'open' => 'ouvert à',
+                'at' => 'à',
                 'always_open' => 'toujours ouvert'
             ],
             'de' => [
@@ -44,6 +47,7 @@ class Translator
                 'till' => 'bis',
                 'closed' => 'geschlossen',
                 'open' => 'öffnen',
+                'at' => 'um',
                 'always_open' => 'immer offen'
             ]
         ];

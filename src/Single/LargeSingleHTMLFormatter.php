@@ -79,6 +79,8 @@ class LargeSingleHTMLFormatter extends LargeSingleFormatter implements SingleFor
         $output .= ' ';
         $output .= '<span class="cf-date">' . $intlDateFrom . '</span>';
         $output .= ' ';
+        $output .= '<span class="cf-at cf-meta">' . $this->trans->getTranslations()->t('at') . '</span>';
+        $output .= ' ';
         $output .= '<span class="cf-time">' . $intlStartTimeFrom . '</span>';
         $output .= '</time>';
         $output .= ' ';
@@ -88,6 +90,8 @@ class LargeSingleHTMLFormatter extends LargeSingleFormatter implements SingleFor
         $output .= '<span class="cf-weekday cf-meta">' . $intlWeekDayEnd . '</span>';
         $output .= ' ';
         $output .= '<span class="cf-date">' . $intlDateEnd . '</span>';
+        $output .= ' ';
+        $output .= '<span class="cf-at cf-meta">' . $this->trans->getTranslations()->t('at') . '</span>';
         $output .= ' ';
         $output .= '<span class="cf-time">' . $intlEndTimeEnd . '</span>';
         $output .= '</time>';
