@@ -117,20 +117,6 @@ class LargePeriodicHTMLFormatter extends LargePeriodicFormatter implements Perio
     }
 
     /**
-     * @param $daysOfWeek
-     * @param bool $long
-     * @return string
-     */
-    protected function generateFormattedTimespan($dayOfWeek, $long = false)
-    {
-        if ($long) {
-            return ucfirst($this->mappingDays[$dayOfWeek]);
-        } else {
-            return ucfirst($this->mappingShortDays[$dayOfWeek]);
-        }
-    }
-
-    /**
      * @param $openingHoursData
      * @return string
      */
