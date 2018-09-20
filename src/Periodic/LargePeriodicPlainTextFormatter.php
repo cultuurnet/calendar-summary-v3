@@ -76,38 +76,20 @@ class LargePeriodicPlainTextFormatter extends LargePeriodicFormatter implements 
                         . ' ' . $this->trans->getTranslations()->t('from') . ' '
                         . $this->getFormattedTime($openingHours->getOpens())
                         . ' ' . $this->trans->getTranslations()->t('till') . ' '
-                        . $this->getFormattedTime($openingHours->getCloses())
-                        . ', '
-                        . PHP_EOL;
+                        . $this->getFormattedTime($openingHours->getCloses());
                 } else {
-                    $formattedDays[$dayOfWeek] .= $this->trans->getTranslations()->t('from') . ' '
+                    $formattedDays[$dayOfWeek] .= ' ' . $this->trans->getTranslations()->t('and') . ' '
+                        . $this->trans->getTranslations()->t('from') . ' '
                         . $this->getFormattedTime($openingHours->getOpens())
                         . ' ' . $this->trans->getTranslations()->t('till') . ' '
-                        . $this->getFormattedTime($openingHours->getCloses())
-                        . ', '
-                        . PHP_EOL;
+                        . $this->getFormattedTime($openingHours->getCloses());
                 }
-            }
-        }
-        // Create an array with formatted closed days.
-        $closedDays = [];
-        foreach ($this->daysOfWeek as $day) {
-            $closedDays[$day] = $this->fmtDays->format(strtotime($day)) . ' '
-                . $this->trans->getTranslations()->t('closed') . ',' . PHP_EOL;
-        }
-        // Merge the formatted days with the closed days array and sort them.
-        $sortedDays = array();
-        foreach ($this->daysOfWeek as $day) {
-            if (isset($formattedDays[$day])) {
-                $sortedDays[$day] = $formattedDays[$day];
-            } else {
-                $sortedDays[$day] = $closedDays[$day];
             }
         }
 
         // Render the rest of the week scheme output.
-        foreach ($sortedDays as $sortedDay) {
-            $outputWeek .= $sortedDay;
+        foreach ($formattedDays as $formattedDay) {
+            $outputWeek .= $formattedDay . ', ';
         }
         $outputWeek = rtrim($outputWeek, ', ' . PHP_EOL);
         return $outputWeek . ')';

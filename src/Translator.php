@@ -21,7 +21,8 @@ class Translator
                 'closed' => 'closed',
                 'open' => 'open at',
                 'at' => 'at',
-                'always_open' => 'always open'
+                'always_open' => 'always open',
+                'and' => 'and'
             ],
             'nl' => [
                 'from' => 'van',
@@ -30,7 +31,8 @@ class Translator
                 'closed' => 'gesloten',
                 'open' => 'open op',
                 'at' => 'om',
-                'always_open' => 'altijd open'
+                'always_open' => 'altijd open',
+                'and' => 'en'
             ],
             'fr' => [
                 'from' => 'de',
@@ -39,7 +41,8 @@ class Translator
                 'closed' => 'fermée',
                 'open' => 'ouvert à',
                 'at' => 'à',
-                'always_open' => 'toujours ouvert'
+                'always_open' => 'toujours ouvert',
+                'and' => 'et'
             ],
             'de' => [
                 'from' => 'von',
@@ -48,7 +51,8 @@ class Translator
                 'closed' => 'geschlossen',
                 'open' => 'öffnen',
                 'at' => 'um',
-                'always_open' => 'immer offen'
+                'always_open' => 'immer offen',
+                'and' => 'und'
             ]
         ];
 

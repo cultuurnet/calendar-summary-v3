@@ -168,6 +168,7 @@ class LargePeriodicHTMLFormatter extends LargePeriodicFormatter implements Perio
                 } else {
                     $formattedTimespans[$dayOfWeek] .=
                         "<span itemprop=\"opens\" content=\"$opens\" class=\"cf-from cf-meta\">"
+                        . $this->trans->getTranslations()->t('and') . ' '
                         . $this->trans->getTranslations()->t('from') . "</span> "
                         . "<span class=\"cf-time\">$opens</span> "
                         . "<span itemprop=\"closes\" content=\"$closes\" class=\"cf-to cf-meta\">"
@@ -177,32 +178,9 @@ class LargePeriodicHTMLFormatter extends LargePeriodicFormatter implements Perio
             }
         }
 
-        // Create an array with formatted closed days.
-        $closedDays = [];
-        foreach ($this->daysOfWeek as $day) {
-            $closedDays[$day] = ucfirst($this->fmtDays->format(strtotime($day)));
-        }
-
-        $sortedTimespans = array();
-        foreach ($this->daysOfWeek as $day) {
-            $translatedDay = ucfirst($this->fmtDays->format(strtotime($day)));
-
-            if (isset($formattedTimespans[$day])) {
-                $sortedTimespans[$day] = $formattedTimespans[$day];
-            } else {
-                $sortedTimespans[$day] =
-                    "<meta itemprop=\"openingHours\" datetime=\"$translatedDay\"> "
-                    . "</meta> "
-                    . "<li itemprop=\"openingHoursSpecification\"> "
-                    . "<span class=\"cf-days\">$closedDays[$day]</span> "
-                    . "<span itemprop=\"closed\" content=\"closed\" class=\"cf-closed cf-meta\">"
-                    . $this->trans->getTranslations()->t('closed') . "</span> ";
-            }
-        }
-
         // Render the rest of the week scheme output.
-        foreach ($sortedTimespans as $sortedTimespan) {
-            $outputWeek .= $sortedTimespan . '</li>';
+        foreach ($formattedTimespans as $formattedTimespan) {
+            $outputWeek .= $formattedTimespan . '</li>';
         }
         return $outputWeek . '</ul>';
     }

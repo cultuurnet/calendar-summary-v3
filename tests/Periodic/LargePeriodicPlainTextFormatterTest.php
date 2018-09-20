@@ -43,13 +43,11 @@ class LargePeriodicPlainTextFormatterTest extends \PHPUnit_Framework_TestCase
 
         $this->assertEquals(
             'Van 25 november 2025 tot 30 november 2030'. PHP_EOL
-            . '(maandag van 0:00 tot 17:00, ' . PHP_EOL
-            . 'dinsdag van 0:00 tot 17:00, ' . PHP_EOL
-            . 'woensdag van 0:00 tot 17:00, ' . PHP_EOL
-            . 'donderdag gesloten,' . PHP_EOL
-            . 'vrijdag van 10:00 tot 18:00, '. PHP_EOL
-            . 'zaterdag van 10:00 tot 18:00, ' . PHP_EOL
-            . 'zondag gesloten)',
+            . '(maandag van 0:00 tot 17:00, '
+            . 'dinsdag van 0:00 tot 17:00, '
+            . 'woensdag van 0:00 tot 17:00, '
+            . 'vrijdag van 10:00 tot 18:00, '
+            . 'zaterdag van 10:00 tot 18:00)',
             $this->formatter->format($place)
         );
     }
@@ -86,13 +84,11 @@ class LargePeriodicPlainTextFormatterTest extends \PHPUnit_Framework_TestCase
 
         $this->assertEquals(
             'Van 25 november 2025 tot 30 november 2030'. PHP_EOL
-            . '(maandag van 9:00 tot 13:00, '. PHP_EOL . 'van 17:00 tot 20:00, ' . PHP_EOL
-            . 'dinsdag van 9:00 tot 13:00, '. PHP_EOL . 'van 17:00 tot 20:00, '. PHP_EOL
-            . 'woensdag van 9:00 tot 13:00, ' . PHP_EOL . 'van 17:00 tot 20:00, '. PHP_EOL
-            . 'donderdag gesloten,' . PHP_EOL
-            . 'vrijdag van 10:00 tot 15:00, '. PHP_EOL . 'van 18:00 tot 21:00, '. PHP_EOL
-            . 'zaterdag van 10:00 tot 15:00, ' . PHP_EOL . 'van 18:00 tot 21:00, '. PHP_EOL
-            . 'zondag gesloten)',
+            . '(maandag van 9:00 tot 13:00 en van 17:00 tot 20:00, '
+            . 'dinsdag van 9:00 tot 13:00 en van 17:00 tot 20:00, '
+            . 'woensdag van 9:00 tot 13:00 en van 17:00 tot 20:00, '
+            . 'vrijdag van 10:00 tot 15:00 en van 18:00 tot 21:00, '
+            . 'zaterdag van 10:00 tot 15:00 en van 18:00 tot 21:00)',
             $this->formatter->format($place)
         );
     }
@@ -134,14 +130,10 @@ class LargePeriodicPlainTextFormatterTest extends \PHPUnit_Framework_TestCase
 
         $this->assertEquals(
             'Van 25 november 2025 tot 30 november 2030'. PHP_EOL
-            . '(maandag van 9:30 tot 13:45, '. PHP_EOL . 'van 17:00 tot 20:00, ' . PHP_EOL
-            . 'dinsdag van 9:30 tot 13:45, '. PHP_EOL . 'van 18:00 tot 20:00, '
-            . PHP_EOL . 'van 21:00 tot 23:00, '. PHP_EOL
-            . 'woensdag gesloten,' . PHP_EOL
-            . 'donderdag gesloten,' . PHP_EOL
-            . 'vrijdag van 10:00 tot 15:00, '. PHP_EOL
-            . 'zaterdag van 10:00 tot 15:00, ' . PHP_EOL
-            . 'zondag gesloten)',
+            . '(maandag van 9:30 tot 13:45 en van 17:00 tot 20:00, '
+            . 'dinsdag van 9:30 tot 13:45 en van 18:00 tot 20:00 en van 21:00 tot 23:00, '
+            . 'vrijdag van 10:00 tot 15:00, '
+            . 'zaterdag van 10:00 tot 15:00)',
             $this->formatter->format($place)
         );
     }
