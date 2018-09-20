@@ -120,6 +120,8 @@ class LargeMultipleHTMLFormatterTest extends \PHPUnit_Framework_TestCase
         $expectedOutput .= ' ';
         $expectedOutput .= '<span class="cf-date">6 november 2017</span>';
         $expectedOutput .= ' ';
+        $expectedOutput .= '<span class="cf-at cf-meta">om</span>';
+        $expectedOutput .= ' ';
         $expectedOutput .= '<span class="cf-time">20:00</span>';
         $expectedOutput .= '</time>';
         $expectedOutput .= ' ';
@@ -129,6 +131,8 @@ class LargeMultipleHTMLFormatterTest extends \PHPUnit_Framework_TestCase
         $expectedOutput .= '<span class="cf-weekday cf-meta">donderdag</span>';
         $expectedOutput .= ' ';
         $expectedOutput .= '<span class="cf-date">9 november 2017</span>';
+        $expectedOutput .= ' ';
+        $expectedOutput .= '<span class="cf-at cf-meta">om</span>';
         $expectedOutput .= ' ';
         $expectedOutput .= '<span class="cf-time">22:00</span>';
         $expectedOutput .= '</time></li>';
@@ -140,6 +144,8 @@ class LargeMultipleHTMLFormatterTest extends \PHPUnit_Framework_TestCase
         $expectedOutput .= ' ';
         $expectedOutput .= '<span class="cf-date">14 november 2017</span>';
         $expectedOutput .= ' ';
+        $expectedOutput .= '<span class="cf-at cf-meta">om</span>';
+        $expectedOutput .= ' ';
         $expectedOutput .= '<span class="cf-time">20:00</span>';
         $expectedOutput .= '</time>';
         $expectedOutput .= ' ';
@@ -149,6 +155,8 @@ class LargeMultipleHTMLFormatterTest extends \PHPUnit_Framework_TestCase
         $expectedOutput .= '<span class="cf-weekday cf-meta">donderdag</span>';
         $expectedOutput .= ' ';
         $expectedOutput .= '<span class="cf-date">16 november 2017</span>';
+        $expectedOutput .= ' ';
+        $expectedOutput .= '<span class="cf-at cf-meta">om</span>';
         $expectedOutput .= ' ';
         $expectedOutput .= '<span class="cf-time">22:00</span>';
         $expectedOutput .= '</time></li>';
@@ -160,6 +168,8 @@ class LargeMultipleHTMLFormatterTest extends \PHPUnit_Framework_TestCase
         $expectedOutput .= ' ';
         $expectedOutput .= '<span class="cf-date">21 november 2017</span>';
         $expectedOutput .= ' ';
+        $expectedOutput .= '<span class="cf-at cf-meta">om</span>';
+        $expectedOutput .= ' ';
         $expectedOutput .= '<span class="cf-time">20:00</span>';
         $expectedOutput .= '</time>';
         $expectedOutput .= ' ';
@@ -169,6 +179,8 @@ class LargeMultipleHTMLFormatterTest extends \PHPUnit_Framework_TestCase
         $expectedOutput .= '<span class="cf-weekday cf-meta">donderdag</span>';
         $expectedOutput .= ' ';
         $expectedOutput .= '<span class="cf-date">23 november 2017</span>';
+        $expectedOutput .= ' ';
+        $expectedOutput .= '<span class="cf-at cf-meta">om</span>';
         $expectedOutput .= ' ';
         $expectedOutput .= '<span class="cf-time">22:00</span>';
         $expectedOutput .= '</time></li>';
@@ -180,6 +192,8 @@ class LargeMultipleHTMLFormatterTest extends \PHPUnit_Framework_TestCase
         $expectedOutput .= ' ';
         $expectedOutput .= '<span class="cf-date">28 november 2017</span>';
         $expectedOutput .= ' ';
+        $expectedOutput .= '<span class="cf-at cf-meta">om</span>';
+        $expectedOutput .= ' ';
         $expectedOutput .= '<span class="cf-time">20:00</span>';
         $expectedOutput .= '</time>';
         $expectedOutput .= ' ';
@@ -189,6 +203,8 @@ class LargeMultipleHTMLFormatterTest extends \PHPUnit_Framework_TestCase
         $expectedOutput .= '<span class="cf-weekday cf-meta">donderdag</span>';
         $expectedOutput .= ' ';
         $expectedOutput .= '<span class="cf-date">30 november 2017</span>';
+        $expectedOutput .= ' ';
+        $expectedOutput .= '<span class="cf-at cf-meta">om</span>';
         $expectedOutput .= ' ';
         $expectedOutput .= '<span class="cf-time">22:00</span>';
         $expectedOutput .= '</time></li></ul>';
