@@ -38,7 +38,7 @@ class Translator
                 'from' => 'de',
                 'from_period' => 'de',
                 'till' => 'à',
-                'closed' => 'fermée',
+                'closed' => 'fermé',
                 'open' => 'ouvert à',
                 'at' => 'à',
                 'always_open' => 'toujours ouvert',
