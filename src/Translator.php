@@ -35,11 +35,11 @@ class Translator
                 'and' => 'en'
             ],
             'fr' => [
-                'from' => 'de',
-                'from_period' => 'de',
-                'till' => 'à',
+                'from' => 'du',
+                'from_period' => 'du',
+                'till' => 'au',
                 'closed' => 'fermé',
-                'open' => 'ouvert à',
+                'open' => 'ouvert le',
                 'at' => 'à',
                 'always_open' => 'toujours ouvert',
                 'and' => 'et'
