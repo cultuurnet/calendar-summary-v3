@@ -49,7 +49,8 @@ class LargePermanentPlainTextFormatterTest extends \PHPUnit_Framework_TestCase
 
 
         $this->assertEquals(
-            'ma van 9:00 tot en met 13:00'. PHP_EOL . 'di van 9:00 tot en met 13:00'. PHP_EOL . 'wo van 9:00 tot en met 13:00' . PHP_EOL
+            'ma van 9:00 tot en met 13:00'. PHP_EOL . 'di van 9:00 tot en met 13:00'. PHP_EOL
+            . 'wo van 9:00 tot en met 13:00' . PHP_EOL
             . 'do gesloten'. PHP_EOL . 'vr van 0:00 tot en met 13:00'. PHP_EOL . 'za van 9:00 tot en met 19:00'
             . PHP_EOL . 'zo van 9:00 tot en met 19:00' . PHP_EOL,
             $this->formatter->format($place)
@@ -133,7 +134,8 @@ class LargePermanentPlainTextFormatterTest extends \PHPUnit_Framework_TestCase
 
         $this->assertEquals(
             'ma van 9:30 tot en met 13:45'. PHP_EOL . 'van 17:00 tot en met 20:00' . PHP_EOL
-            . 'di van 9:30 tot en met 13:45'. PHP_EOL . 'van 18:00 tot en met 20:00'. PHP_EOL . 'van 21:00 tot en met 23:00'. PHP_EOL
+            . 'di van 9:30 tot en met 13:45'. PHP_EOL . 'van 18:00 tot en met 20:00'. PHP_EOL
+            . 'van 21:00 tot en met 23:00'. PHP_EOL
             . 'wo gesloten' . PHP_EOL
             . 'do gesloten' . PHP_EOL
             . 'vr van 10:00 tot en met 15:00'. PHP_EOL
