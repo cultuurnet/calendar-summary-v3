@@ -75,7 +75,7 @@ class ExtraSmallPeriodicPlainTextFormatterTest extends \PHPUnit_Framework_TestCa
         $offer->setEndDate(new \DateTime('18-03-2030'));
 
         $this->assertEquals(
-            'Tot 18/3',
+            'Tot en met 18/3',
             $this->formatter->format($offer)
         );
     }

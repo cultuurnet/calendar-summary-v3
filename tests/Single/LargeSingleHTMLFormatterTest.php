@@ -34,7 +34,7 @@ class LargeSingleHTMLFormatterTest extends \PHPUnit_Framework_TestCase
         $expectedOutput .= '<span class="cf-time">20:00</span>';
         $expectedOutput .= '</time>';
         $expectedOutput .= ' ';
-        $expectedOutput .= '<span class="cf-to cf-meta">tot</span>';
+        $expectedOutput .= '<span class="cf-to cf-meta">tot en met</span>';
         $expectedOutput .= ' ';
         $expectedOutput .= '<time itemprop="endDate" datetime="2018-01-25T21:30:00+01:00">';
         $expectedOutput .= '<span class="cf-time">21:30</span>';
@@ -62,7 +62,7 @@ class LargeSingleHTMLFormatterTest extends \PHPUnit_Framework_TestCase
         $expectedOutput .= '<span class="cf-time">20:00</span>';
         $expectedOutput .= '</time>';
         $expectedOutput .= ' ';
-        $expectedOutput .= '<span class="cf-to cf-meta">tot</span>';
+        $expectedOutput .= '<span class="cf-to cf-meta">tot en met</span>';
         $expectedOutput .= ' ';
         $expectedOutput .= '<time itemprop="endDate" datetime="2018-01-08T21:30:00+01:00">';
         $expectedOutput .= '<span class="cf-time">21:30</span>';
@@ -92,7 +92,7 @@ class LargeSingleHTMLFormatterTest extends \PHPUnit_Framework_TestCase
         $expectedOutput .= '<span class="cf-time">20:00</span>';
         $expectedOutput .= '</time>';
         $expectedOutput .= ' ';
-        $expectedOutput .= '<span class="cf-to cf-meta">tot</span>';
+        $expectedOutput .= '<span class="cf-to cf-meta">tot en met</span>';
         $expectedOutput .= ' ';
         $expectedOutput .= '<time itemprop="endDate" datetime="2018-01-28T21:30:00+01:00">';
         $expectedOutput .= '<span class="cf-weekday cf-meta">zondag</span>';
@@ -128,7 +128,7 @@ class LargeSingleHTMLFormatterTest extends \PHPUnit_Framework_TestCase
         $expectedOutput .= '<span class="cf-time">20:00</span>';
         $expectedOutput .= '</time>';
         $expectedOutput .= ' ';
-        $expectedOutput .= '<span class="cf-to cf-meta">tot</span>';
+        $expectedOutput .= '<span class="cf-to cf-meta">tot en met</span>';
         $expectedOutput .= ' ';
         $expectedOutput .= '<time itemprop="endDate" datetime="2018-01-08T21:30:00+01:00">';
         $expectedOutput .= '<span class="cf-weekday cf-meta">maandag</span>';

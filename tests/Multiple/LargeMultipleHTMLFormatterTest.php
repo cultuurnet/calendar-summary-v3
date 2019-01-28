@@ -42,7 +42,7 @@ class LargeMultipleHTMLFormatterTest extends \PHPUnit_Framework_TestCase
         $expectedOutput .= '<span class="cf-time">20:00</span>';
         $expectedOutput .= '</time>';
         $expectedOutput .= ' ';
-        $expectedOutput .= '<span class="cf-to cf-meta">tot</span>';
+        $expectedOutput .= '<span class="cf-to cf-meta">tot en met</span>';
         $expectedOutput .= ' ';
         $expectedOutput .= '<time itemprop="endDate" datetime="2017-11-09T22:00:00+01:00">';
         $expectedOutput .= '<span class="cf-time">22:00</span>';
@@ -57,7 +57,7 @@ class LargeMultipleHTMLFormatterTest extends \PHPUnit_Framework_TestCase
         $expectedOutput .= '<span class="cf-time">20:00</span>';
         $expectedOutput .= '</time>';
         $expectedOutput .= ' ';
-        $expectedOutput .= '<span class="cf-to cf-meta">tot</span>';
+        $expectedOutput .= '<span class="cf-to cf-meta">tot en met</span>';
         $expectedOutput .= ' ';
         $expectedOutput .= '<time itemprop="endDate" datetime="2017-11-16T22:00:00+01:00">';
         $expectedOutput .= '<span class="cf-time">22:00</span>';
@@ -72,7 +72,7 @@ class LargeMultipleHTMLFormatterTest extends \PHPUnit_Framework_TestCase
         $expectedOutput .= '<span class="cf-time">20:00</span>';
         $expectedOutput .= '</time>';
         $expectedOutput .= ' ';
-        $expectedOutput .= '<span class="cf-to cf-meta">tot</span>';
+        $expectedOutput .= '<span class="cf-to cf-meta">tot en met</span>';
         $expectedOutput .= ' ';
         $expectedOutput .= '<time itemprop="endDate" datetime="2017-11-23T22:00:00+01:00">';
         $expectedOutput .= '<span class="cf-time">22:00</span>';
@@ -87,7 +87,7 @@ class LargeMultipleHTMLFormatterTest extends \PHPUnit_Framework_TestCase
         $expectedOutput .= '<span class="cf-time">20:00</span>';
         $expectedOutput .= '</time>';
         $expectedOutput .= ' ';
-        $expectedOutput .= '<span class="cf-to cf-meta">tot</span>';
+        $expectedOutput .= '<span class="cf-to cf-meta">tot en met</span>';
         $expectedOutput .= ' ';
         $expectedOutput .= '<time itemprop="endDate" datetime="2017-11-30T22:00:00+01:00">';
         $expectedOutput .= '<span class="cf-time">22:00</span>';
@@ -125,7 +125,7 @@ class LargeMultipleHTMLFormatterTest extends \PHPUnit_Framework_TestCase
         $expectedOutput .= '<span class="cf-time">20:00</span>';
         $expectedOutput .= '</time>';
         $expectedOutput .= ' ';
-        $expectedOutput .= '<span class="cf-to cf-meta">tot</span>';
+        $expectedOutput .= '<span class="cf-to cf-meta">tot en met</span>';
         $expectedOutput .= ' ';
         $expectedOutput .= '<time itemprop="endDate" datetime="2017-11-09T22:00:00+01:00">';
         $expectedOutput .= '<span class="cf-weekday cf-meta">donderdag</span>';
@@ -149,7 +149,7 @@ class LargeMultipleHTMLFormatterTest extends \PHPUnit_Framework_TestCase
         $expectedOutput .= '<span class="cf-time">20:00</span>';
         $expectedOutput .= '</time>';
         $expectedOutput .= ' ';
-        $expectedOutput .= '<span class="cf-to cf-meta">tot</span>';
+        $expectedOutput .= '<span class="cf-to cf-meta">tot en met</span>';
         $expectedOutput .= ' ';
         $expectedOutput .= '<time itemprop="endDate" datetime="2017-11-16T22:00:00+01:00">';
         $expectedOutput .= '<span class="cf-weekday cf-meta">donderdag</span>';
@@ -173,7 +173,7 @@ class LargeMultipleHTMLFormatterTest extends \PHPUnit_Framework_TestCase
         $expectedOutput .= '<span class="cf-time">20:00</span>';
         $expectedOutput .= '</time>';
         $expectedOutput .= ' ';
-        $expectedOutput .= '<span class="cf-to cf-meta">tot</span>';
+        $expectedOutput .= '<span class="cf-to cf-meta">tot en met</span>';
         $expectedOutput .= ' ';
         $expectedOutput .= '<time itemprop="endDate" datetime="2017-11-23T22:00:00+01:00">';
         $expectedOutput .= '<span class="cf-weekday cf-meta">donderdag</span>';
@@ -197,7 +197,7 @@ class LargeMultipleHTMLFormatterTest extends \PHPUnit_Framework_TestCase
         $expectedOutput .= '<span class="cf-time">20:00</span>';
         $expectedOutput .= '</time>';
         $expectedOutput .= ' ';
-        $expectedOutput .= '<span class="cf-to cf-meta">tot</span>';
+        $expectedOutput .= '<span class="cf-to cf-meta">tot en met</span>';
         $expectedOutput .= ' ';
         $expectedOutput .= '<time itemprop="endDate" datetime="2017-11-30T22:00:00+01:00">';
         $expectedOutput .= '<span class="cf-weekday cf-meta">donderdag</span>';

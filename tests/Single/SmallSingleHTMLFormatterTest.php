@@ -53,7 +53,7 @@ class SmallSingleHTMLFormatterTest extends \PHPUnit_Framework_TestCase
         $expectedOutput .= ' ';
         $expectedOutput .= '<span class="cf-month">jan</span>';
         $expectedOutput .= ' ';
-        $expectedOutput .= '<span class="cf-to cf-meta">tot</span>';
+        $expectedOutput .= '<span class="cf-to cf-meta">tot en met</span>';
         $expectedOutput .= ' ';
         $expectedOutput .= '<span class="cf-date">27</span>';
         $expectedOutput .= ' ';
@@ -77,7 +77,7 @@ class SmallSingleHTMLFormatterTest extends \PHPUnit_Framework_TestCase
         $expectedOutput .= ' ';
         $expectedOutput .= '<span class="cf-month">jan</span>';
         $expectedOutput .= ' ';
-        $expectedOutput .= '<span class="cf-to cf-meta">tot</span>';
+        $expectedOutput .= '<span class="cf-to cf-meta">tot en met</span>';
         $expectedOutput .= ' ';
         $expectedOutput .= '<span class="cf-date">8</span>';
         $expectedOutput .= ' ';

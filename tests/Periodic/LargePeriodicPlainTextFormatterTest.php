@@ -42,12 +42,12 @@ class LargePeriodicPlainTextFormatterTest extends \PHPUnit_Framework_TestCase
         $place->setOpeningHours($openingHoursData);
 
         $this->assertEquals(
-            'Van 25 november 2025 tot 30 november 2030'. PHP_EOL
-            . '(maandag van 0:00 tot 17:00, '
-            . 'dinsdag van 0:00 tot 17:00, '
-            . 'woensdag van 0:00 tot 17:00, '
-            . 'vrijdag van 10:00 tot 18:00, '
-            . 'zaterdag van 10:00 tot 18:00)',
+            'Van 25 november 2025 tot en met 30 november 2030'. PHP_EOL
+            . '(maandag van 0:00 tot en met 17:00, '
+            . 'dinsdag van 0:00 tot en met 17:00, '
+            . 'woensdag van 0:00 tot en met 17:00, '
+            . 'vrijdag van 10:00 tot en met 18:00, '
+            . 'zaterdag van 10:00 tot en met 18:00)',
             $this->formatter->format($place)
         );
     }
@@ -83,12 +83,12 @@ class LargePeriodicPlainTextFormatterTest extends \PHPUnit_Framework_TestCase
         $place->setOpeningHours($openingHoursData);
 
         $this->assertEquals(
-            'Van 25 november 2025 tot 30 november 2030'. PHP_EOL
-            . '(maandag van 9:00 tot 13:00 en van 17:00 tot 20:00, '
-            . 'dinsdag van 9:00 tot 13:00 en van 17:00 tot 20:00, '
-            . 'woensdag van 9:00 tot 13:00 en van 17:00 tot 20:00, '
-            . 'vrijdag van 10:00 tot 15:00 en van 18:00 tot 21:00, '
-            . 'zaterdag van 10:00 tot 15:00 en van 18:00 tot 21:00)',
+            'Van 25 november 2025 tot en met 30 november 2030'. PHP_EOL
+            . '(maandag van 9:00 tot en met 13:00 en van 17:00 tot en met 20:00, '
+            . 'dinsdag van 9:00 tot en met 13:00 en van 17:00 tot en met 20:00, '
+            . 'woensdag van 9:00 tot en met 13:00 en van 17:00 tot en met 20:00, '
+            . 'vrijdag van 10:00 tot en met 15:00 en van 18:00 tot en met 21:00, '
+            . 'zaterdag van 10:00 tot en met 15:00 en van 18:00 tot en met 21:00)',
             $this->formatter->format($place)
         );
     }
@@ -129,11 +129,11 @@ class LargePeriodicPlainTextFormatterTest extends \PHPUnit_Framework_TestCase
         $place->setOpeningHours($openingHoursData);
 
         $this->assertEquals(
-            'Van 25 november 2025 tot 30 november 2030'. PHP_EOL
-            . '(maandag van 9:30 tot 13:45 en van 17:00 tot 20:00, '
-            . 'dinsdag van 9:30 tot 13:45 en van 18:00 tot 20:00 en van 21:00 tot 23:00, '
-            . 'vrijdag van 10:00 tot 15:00, '
-            . 'zaterdag van 10:00 tot 15:00)',
+            'Van 25 november 2025 tot en met 30 november 2030'. PHP_EOL
+            . '(maandag van 9:30 tot en met 13:45 en van 17:00 tot en met 20:00, '
+            . 'dinsdag van 9:30 tot en met 13:45 en van 18:00 tot en met 20:00 en van 21:00 tot en met 23:00, '
+            . 'vrijdag van 10:00 tot en met 15:00, '
+            . 'zaterdag van 10:00 tot en met 15:00)',
             $this->formatter->format($place)
         );
     }
@@ -145,7 +145,7 @@ class LargePeriodicPlainTextFormatterTest extends \PHPUnit_Framework_TestCase
         $place->setEndDate(new \DateTime('30-11-2030'));
 
         $this->assertEquals(
-            'Van 25 november 2025 tot 30 november 2030',
+            'Van 25 november 2025 tot en met 30 november 2030',
             $this->formatter->format($place)
         );
     }
