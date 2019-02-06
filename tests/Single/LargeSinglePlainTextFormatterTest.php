@@ -77,4 +77,32 @@ class LargeSinglePlainTextFormatterTest extends \PHPUnit_Framework_TestCase
             $this->formatter->format($event)
         );
     }
+
+    public function testFormatPlainTextSingleDateLargeWholeDay()
+    {
+        $event = new Event();
+        $event->setStartDate(new \DateTime('2018-01-06T00:00:00+01:00'));
+        $event->setEndDate(new \DateTime('2018-01-06T23:59:59+01:00'));
+
+        $expectedOutput = 'zaterdag 6 januari 2018';
+
+        $this->assertEquals(
+            $expectedOutput,
+            $this->formatter->format($event)
+        );
+    }
+
+    public function testFormatPlainTextSingleDateLargeSameTime()
+    {
+        $event = new Event();
+        $event->setStartDate(new \DateTime('2018-01-06T13:30:00+01:00'));
+        $event->setEndDate(new \DateTime('2018-01-06T13:30:00+01:00'));
+
+        $expectedOutput = 'zaterdag 6 januari 2018 om 13:30';
+
+        $this->assertEquals(
+            $expectedOutput,
+            $this->formatter->format($event)
+        );
+    }
 }
