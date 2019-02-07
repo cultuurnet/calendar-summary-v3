@@ -179,5 +179,10 @@ class LargeSingleHTMLFormatterTest extends \PHPUnit_Framework_TestCase
         $expectedOutput .= ' ';
         $expectedOutput .= '<span class="cf-time">13:30</span>';
         $expectedOutput .= '</time>';
+
+        $this->assertEquals(
+            $expectedOutput,
+            $this->formatter->format($event)
+        );
     }
 }
