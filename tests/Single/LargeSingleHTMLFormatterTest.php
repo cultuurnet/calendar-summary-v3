@@ -145,4 +145,44 @@ class LargeSingleHTMLFormatterTest extends \PHPUnit_Framework_TestCase
             $this->formatter->format($event)
         );
     }
+
+    public function testFormatHTMLSingleDateLargeWholeDay()
+    {
+        $event = new Event();
+        $event->setStartDate(new \DateTime('2018-01-06T00:00:00+01:00'));
+        $event->setEndDate(new \DateTime('2018-01-06T23:59:59+01:00'));
+
+        $expectedOutput = '<time itemprop="startDate" datetime="2018-01-06T00:00:00+01:00">';
+        $expectedOutput .= '<span class="cf-weekday cf-meta">zaterdag</span>';
+        $expectedOutput .= ' ';
+        $expectedOutput .= '<span class="cf-date">6 januari 2018</span>';
+        $expectedOutput .= '</time>';
+
+        $this->assertEquals(
+            $expectedOutput,
+            $this->formatter->format($event)
+        );
+    }
+
+    public function testFormatHTMLSingleDateSameTime()
+    {
+        $event = new Event();
+        $event->setStartDate(new \DateTime('2018-01-06T13:30:00+01:00'));
+        $event->setEndDate(new \DateTime('2018-01-06T13:30:00+01:00'));
+
+        $expectedOutput = '<time itemprop="startDate" datetime="2018-01-06T13:30:00+01:00">';
+        $expectedOutput .= '<span class="cf-weekday cf-meta">zaterdag</span>';
+        $expectedOutput .= ' ';
+        $expectedOutput .= '<span class="cf-date">6 januari 2018</span>';
+        $expectedOutput .= ' ';
+        $expectedOutput .= '<span class="cf-from cf-meta">om</span>';
+        $expectedOutput .= ' ';
+        $expectedOutput .= '<span class="cf-time">13:30</span>';
+        $expectedOutput .= '</time>';
+
+        $this->assertEquals(
+            $expectedOutput,
+            $this->formatter->format($event)
+        );
+    }
 }
