@@ -24,7 +24,7 @@ class SmallMultiplePlainTextFormatterTest extends \PHPUnit_Framework_TestCase
         $offer->setEndDate(new \DateTime('30-11-2030'));
 
         $this->assertEquals(
-            'Van 25 november 2025 tot en met 30 november 2030',
+            'Van 25 november 2025 tot 30 november 2030',
             $this->formatter->format($offer)
         );
     }
@@ -36,7 +36,7 @@ class SmallMultiplePlainTextFormatterTest extends \PHPUnit_Framework_TestCase
         $offer->setEndDate(new \DateTime('08-03-2030'));
 
         $this->assertEquals(
-            'Van 4 maart 2025 tot en met 8 maart 2030',
+            'Van 4 maart 2025 tot 8 maart 2030',
             $this->formatter->format($offer)
         );
     }
@@ -49,7 +49,7 @@ class SmallMultiplePlainTextFormatterTest extends \PHPUnit_Framework_TestCase
         $offer->setEndDate(new \DateTime('30-03-2030'));
 
         $this->assertEquals(
-            'Van 25 maart 2025 tot en met 30 maart 2030',
+            'Van 25 maart 2025 tot 30 maart 2030',
             $this->formatter->format($offer)
         );
     }
@@ -61,7 +61,7 @@ class SmallMultiplePlainTextFormatterTest extends \PHPUnit_Framework_TestCase
         $offer->setEndDate(new \DateTime('08-10-2030'));
 
         $this->assertEquals(
-            'Van 4 oktober 2025 tot en met 8 oktober 2030',
+            'Van 4 oktober 2025 tot 8 oktober 2030',
             $this->formatter->format($offer)
         );
     }

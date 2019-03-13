@@ -25,7 +25,7 @@ class SmallMultipleHTMLFormatterTest extends \PHPUnit_Framework_TestCase
 
         $this->assertEquals(
             '<span class="cf-from cf-meta">Van</span> <span class="cf-date">25 november 2025</span> '
-            . '<span class="cf-to cf-meta">tot en met</span> <span class="cf-date">30 november 2030</span>',
+            . '<span class="cf-to cf-meta">tot</span> <span class="cf-date">30 november 2030</span>',
             $this->formatter->format($offer)
         );
     }
@@ -38,7 +38,7 @@ class SmallMultipleHTMLFormatterTest extends \PHPUnit_Framework_TestCase
 
         $this->assertEquals(
             '<span class="cf-from cf-meta">Van</span> <span class="cf-date">4 maart 2025</span> '
-            . '<span class="cf-to cf-meta">tot en met</span> <span class="cf-date">8 maart 2030</span>',
+            . '<span class="cf-to cf-meta">tot</span> <span class="cf-date">8 maart 2030</span>',
             $this->formatter->format($offer)
         );
     }
@@ -51,7 +51,7 @@ class SmallMultipleHTMLFormatterTest extends \PHPUnit_Framework_TestCase
 
         $this->assertEquals(
             '<span class="cf-from cf-meta">Van</span> <span class="cf-date">4 oktober 2025</span> '
-            . '<span class="cf-to cf-meta">tot en met</span> <span class="cf-date">8 oktober 2030</span>',
+            . '<span class="cf-to cf-meta">tot</span> <span class="cf-date">8 oktober 2030</span>',
             $this->formatter->format($offer)
         );
     }

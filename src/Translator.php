@@ -27,7 +27,7 @@ class Translator
             'nl' => [
                 'from' => 'van',
                 'from_period' => 'vanaf',
-                'till' => 'tot en met',
+                'till' => 'tot',
                 'closed' => 'gesloten',
                 'open' => 'open op',
                 'at' => 'om',

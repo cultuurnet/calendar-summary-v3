@@ -53,7 +53,7 @@ class MediumSingleHTMLFormatterTest extends \PHPUnit_Framework_TestCase
         $expectedOutput .= ' ';
         $expectedOutput .= '<span class="cf-date">25 januari 2018</span>';
         $expectedOutput .= ' ';
-        $expectedOutput .= '<span class="cf-to cf-meta">tot en met</span>';
+        $expectedOutput .= '<span class="cf-to cf-meta">tot</span>';
         $expectedOutput .= ' ';
         $expectedOutput .= '<span class="cf-weekday cf-meta">zondag</span>';
         $expectedOutput .= ' ';
@@ -77,7 +77,7 @@ class MediumSingleHTMLFormatterTest extends \PHPUnit_Framework_TestCase
         $expectedOutput .= ' ';
         $expectedOutput .= '<span class="cf-date">6 januari 2018</span>';
         $expectedOutput .= ' ';
-        $expectedOutput .= '<span class="cf-to cf-meta">tot en met</span>';
+        $expectedOutput .= '<span class="cf-to cf-meta">tot</span>';
         $expectedOutput .= ' ';
         $expectedOutput .= '<span class="cf-weekday cf-meta">maandag</span>';
         $expectedOutput .= ' ';
