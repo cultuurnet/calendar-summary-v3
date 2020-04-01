@@ -75,7 +75,7 @@ class SmallPeriodicPlainTextFormatterTest extends \PHPUnit_Framework_TestCase
         $offer->setEndDate(new \DateTime('18-03-2030'));
 
         $this->assertEquals(
-            'tot 18 mrt',
+            'Tot 18 mrt',
             $this->formatter->format($offer)
         );
     }
