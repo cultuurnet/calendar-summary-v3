@@ -10,7 +10,7 @@
       }
     ],
     "require": {
-      "php": "^7.0",
+      "php": "^7.1",
       "ext-intl": "*",
       "delfimov/translate": "^2.4",
       "cultuurnet/search-v3": "dev-master",
