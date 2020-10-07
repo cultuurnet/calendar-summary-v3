@@ -27,7 +27,7 @@ class ExtraSmallPeriodicPlainTextFormatterTest extends \PHPUnit_Framework_TestCa
         $offer->setEndDate(new \DateTime('30-11-2030'));
 
         $this->assertEquals(
-            'Vanaf 25/11',
+            'Vanaf 25/11/25',
             $this->formatter->format($offer)
         );
     }
@@ -39,7 +39,7 @@ class ExtraSmallPeriodicPlainTextFormatterTest extends \PHPUnit_Framework_TestCa
         $offer->setEndDate(new \DateTime('08-03-2030'));
 
         $this->assertEquals(
-            'Vanaf 4/3',
+            'Vanaf 4/3/25',
             $this->formatter->format($offer)
         );
     }
@@ -51,7 +51,7 @@ class ExtraSmallPeriodicPlainTextFormatterTest extends \PHPUnit_Framework_TestCa
         $offer->setEndDate(new \DateTime('30-03-2030'));
 
         $this->assertEquals(
-            'Vanaf 25/3',
+            'Vanaf 25/3/25',
             $this->formatter->format($offer)
         );
     }
@@ -63,7 +63,7 @@ class ExtraSmallPeriodicPlainTextFormatterTest extends \PHPUnit_Framework_TestCa
         $offer->setEndDate(new \DateTime('08-10-2030'));
 
         $this->assertEquals(
-            'Vanaf 4/10',
+            'Vanaf 4/10/25',
             $this->formatter->format($offer)
         );
     }
@@ -75,7 +75,7 @@ class ExtraSmallPeriodicPlainTextFormatterTest extends \PHPUnit_Framework_TestCa
         $offer->setEndDate(new \DateTime('18-03-2030'));
 
         $this->assertEquals(
-            'Tot 18/3',
+            'Tot 18/3/30',
             $this->formatter->format($offer)
         );
     }
