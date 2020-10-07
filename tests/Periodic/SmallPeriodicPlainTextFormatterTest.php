@@ -27,7 +27,7 @@ class SmallPeriodicPlainTextFormatterTest extends \PHPUnit_Framework_TestCase
         $offer->setEndDate(new \DateTime('30-11-2030'));
 
         $this->assertEquals(
-            'Vanaf 25 nov',
+            'Vanaf 25 nov 2025',
             $this->formatter->format($offer)
         );
     }
@@ -39,7 +39,7 @@ class SmallPeriodicPlainTextFormatterTest extends \PHPUnit_Framework_TestCase
         $offer->setEndDate(new \DateTime('08-03-2030'));
 
         $this->assertEquals(
-            'Vanaf 4 mrt',
+            'Vanaf 4 mrt 2025',
             $this->formatter->format($offer)
         );
     }
@@ -51,7 +51,7 @@ class SmallPeriodicPlainTextFormatterTest extends \PHPUnit_Framework_TestCase
         $offer->setEndDate(new \DateTime('30-03-2030'));
 
         $this->assertEquals(
-            'Vanaf 25 mrt',
+            'Vanaf 25 mrt 2025',
             $this->formatter->format($offer)
         );
     }
@@ -63,7 +63,7 @@ class SmallPeriodicPlainTextFormatterTest extends \PHPUnit_Framework_TestCase
         $offer->setEndDate(new \DateTime('08-10-2030'));
 
         $this->assertEquals(
-            'Vanaf 4 okt',
+            'Vanaf 4 okt 2025',
             $this->formatter->format($offer)
         );
     }
@@ -75,7 +75,7 @@ class SmallPeriodicPlainTextFormatterTest extends \PHPUnit_Framework_TestCase
         $offer->setEndDate(new \DateTime('18-03-2030'));
 
         $this->assertEquals(
-            'Tot 18 mrt',
+            'Tot 18 mrt 2030',
             $this->formatter->format($offer)
         );
     }
