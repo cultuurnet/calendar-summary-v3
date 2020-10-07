@@ -30,5 +30,8 @@
       "mikey179/vfsstream": "~1.6.2"
     },
     "minimum-stability": "dev",
-    "prefer-stable": true
+    "prefer-stable": true,
+    "scripts": {
+      "phing": "./vendor/bin/phing test"
+    }
 }
