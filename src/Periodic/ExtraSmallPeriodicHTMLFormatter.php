@@ -59,10 +59,12 @@ class ExtraSmallPeriodicHTMLFormatter extends ExtraSmallPeriodicFormatter implem
     {
         $dateFromDay = $this->fmtDay->format($date);
         $dateFromMonth = $this->fmtMonth->format($date);
+        $dateFromYear = $date->format('y');
 
         $output =
             '<span class="cf-date">' . $dateFromDay . '</span>/' .
-            '<span class="cf-month">' . $dateFromMonth . '</span>';
+            '<span class="cf-month">' . $dateFromMonth . '</span>/' .
+            '<span class="cf-year">' . $dateFromYear . '</span>';
 
         return $output;
     }
