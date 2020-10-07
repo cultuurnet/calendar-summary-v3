@@ -65,7 +65,7 @@ Not every output format is supported for every calendarType!
 | `single` | x | x | x | x |
 | `multiple` | - | x | x | x |
 | `periodic` | x | x | x | x |
-| `permanent` | - | - | x | x | 
+| `permanent` | x | x | x | x | 
 
 Using an unsupported format will throw an exception.
 
