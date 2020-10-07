@@ -2,6 +2,7 @@
 
 namespace CultuurNet\CalendarSummaryV3;
 
+use CultuurNet\CalendarSummaryV3\Multiple\ExtraSmallMultiplePlainTextFormatter;
 use CultuurNet\CalendarSummaryV3\Multiple\SmallMultiplePlainTextFormatter;
 use CultuurNet\CalendarSummaryV3\Permanent\MediumPermanentPlainTextFormatter;
 use CultuurNet\CalendarSummaryV3\Single\LargeSinglePlainTextFormatter;
@@ -39,7 +40,8 @@ class CalendarPlainTextFormatter implements CalendarFormatterInterface
                 [
                     'lg' => new LargeMultiplePlainTextFormatter($langCode, $hidePastDates),
                     'md' => new MediumMultiplePlainTextFormatter($langCode, $hidePastDates),
-                    'sm' => new SmallMultiplePlainTextFormatter($langCode, $hidePastDates)
+                    'sm' => new SmallMultiplePlainTextFormatter($langCode, $hidePastDates),
+                    'xs' => new ExtraSmallMultiplePlainTextFormatter($langCode, $hidePastDates)
                 ],
             Offer::CALENDAR_TYPE_PERIODIC =>
                 [
