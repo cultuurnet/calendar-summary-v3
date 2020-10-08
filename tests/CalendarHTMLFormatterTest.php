@@ -26,7 +26,10 @@ class CalendarHTMLFormatterTest extends TestCase
         $offer->setStartDate(new \DateTime('2018-01-25T20:00:00+01:00'));
         $offer->setEndDate(new \DateTime('2018-01-25T21:30:00+01:00'));
 
-        $this->assertIsString($this->formatter->format($offer, 'xs'));
+        $this->assertSame(
+            '<span class="cf-date">25</span> <span class="cf-month">jan</span>',
+            $this->formatter->format($offer, 'xs')
+        );
     }
 
     public function testGeneralFormatMethodAndCatchException(): void

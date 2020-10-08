@@ -26,7 +26,7 @@ class CalendarPlainTextFormatterTest extends TestCase
         $offer->setStartDate(new \DateTime('2018-01-25T20:00:00+01:00'));
         $offer->setEndDate(new \DateTime('2018-01-25T21:30:00+01:00'));
 
-        $this->assertIsString($this->formatter->format($offer, 'xs'));
+        $this->assertSame('25 jan', $this->formatter->format($offer, 'xs'));
     }
 
     public function testGeneralFormatMethodAndCatchException(): void
