@@ -4,21 +4,22 @@ namespace CultuurNet\CalendarSummaryV3\Tests\Single;
 
 use CultuurNet\CalendarSummaryV3\Single\LargeSinglePlainTextFormatter;
 use CultuurNet\SearchV3\ValueObjects\Event;
+use PHPUnit\Framework\TestCase;
 
-class LargeSinglePlainTextFormatterTest extends \PHPUnit_Framework_TestCase
+class LargeSinglePlainTextFormatterTest extends TestCase
 {
     /**
      * @var LargeSinglePlainTextFormatter
      */
     protected $formatter;
 
-    public function setUp()
+    protected function setUp(): void
     {
         date_default_timezone_set('Europe/Brussels');
         $this->formatter = new LargeSinglePlainTextFormatter('nl_NL');
     }
 
-    public function testFormatPlainTextSingleDateLargeOneDay()
+    public function testFormatPlainTextSingleDateLargeOneDay(): void
     {
         $event = new Event();
         $event->setStartDate(new \DateTime('2018-01-25T20:00:00+01:00'));
@@ -33,7 +34,7 @@ class LargeSinglePlainTextFormatterTest extends \PHPUnit_Framework_TestCase
         );
     }
 
-    public function testFormatPlainTextSingleDateLargeWithLeadingZeroOneDay()
+    public function testFormatPlainTextSingleDateLargeWithLeadingZeroOneDay(): void
     {
         $event = new Event();
         $event->setStartDate(new \DateTime('2018-01-08T20:00:00+01:00'));
@@ -48,7 +49,7 @@ class LargeSinglePlainTextFormatterTest extends \PHPUnit_Framework_TestCase
         );
     }
 
-    public function testFormatPlainTextSingleDateLargeMoreDays()
+    public function testFormatPlainTextSingleDateLargeMoreDays(): void
     {
         $event = new Event();
         $event->setStartDate(new \DateTime('2018-01-25T20:00:00+01:00'));
@@ -63,7 +64,7 @@ class LargeSinglePlainTextFormatterTest extends \PHPUnit_Framework_TestCase
         );
     }
 
-    public function testFormatPlainTextSingleDateLargeWithLeadingZeroMoreDays()
+    public function testFormatPlainTextSingleDateLargeWithLeadingZeroMoreDays(): void
     {
         $event = new Event();
         $event->setStartDate(new \DateTime('2018-01-06T20:00:00+01:00'));
@@ -78,7 +79,7 @@ class LargeSinglePlainTextFormatterTest extends \PHPUnit_Framework_TestCase
         );
     }
 
-    public function testFormatPlainTextSingleDateLargeWholeDay()
+    public function testFormatPlainTextSingleDateLargeWholeDay(): void
     {
         $event = new Event();
         $event->setStartDate(new \DateTime('2018-01-06T00:00:00+01:00'));
@@ -92,7 +93,7 @@ class LargeSinglePlainTextFormatterTest extends \PHPUnit_Framework_TestCase
         );
     }
 
-    public function testFormatPlainTextSingleDateLargeSameTime()
+    public function testFormatPlainTextSingleDateLargeSameTime(): void
     {
         $event = new Event();
         $event->setStartDate(new \DateTime('2018-01-06T13:30:00+01:00'));

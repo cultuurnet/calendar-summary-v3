@@ -4,20 +4,21 @@ namespace CultuurNet\CalendarSummaryV3\Tests\Single;
 
 use CultuurNet\CalendarSummaryV3\Single\MediumSinglePlainTextFormatter;
 use CultuurNet\SearchV3\ValueObjects\Event;
+use PHPUnit\Framework\TestCase;
 
-class MediumSinglePlainTextFormatterTest extends \PHPUnit_Framework_TestCase
+class MediumSinglePlainTextFormatterTest extends TestCase
 {
     /**
      * @var MediumSinglePlainTextFormatter
      */
     protected $formatter;
 
-    public function setUp()
+    protected function setUp(): void
     {
         $this->formatter = new MediumSinglePlainTextFormatter('nl_NL');
     }
 
-    public function testFormatHTMLSingleDateMediumOneDay()
+    public function testFormatHTMLSingleDateMediumOneDay(): void
     {
         $event = new Event();
         $event->setStartDate(new \DateTime('2018-01-25T20:00:00+01:00'));
@@ -29,7 +30,7 @@ class MediumSinglePlainTextFormatterTest extends \PHPUnit_Framework_TestCase
         );
     }
 
-    public function testFormatHTMLSingleDateMediumWithLeadingZeroOneDay()
+    public function testFormatHTMLSingleDateMediumWithLeadingZeroOneDay(): void
     {
         $event = new Event();
         $event->setStartDate(new \DateTime('2018-01-08T20:00:00+01:00'));
@@ -41,7 +42,7 @@ class MediumSinglePlainTextFormatterTest extends \PHPUnit_Framework_TestCase
         );
     }
 
-    public function testFormatHTMLSingleDateMediumMoreDays()
+    public function testFormatHTMLSingleDateMediumMoreDays(): void
     {
         $event = new Event();
         $event->setStartDate(new \DateTime('2018-01-25T20:00:00+01:00'));
@@ -53,7 +54,7 @@ class MediumSinglePlainTextFormatterTest extends \PHPUnit_Framework_TestCase
         );
     }
 
-    public function testFormatHTMLSingleDateMediumWithLeadingZeroMoreDays()
+    public function testFormatHTMLSingleDateMediumWithLeadingZeroMoreDays(): void
     {
         $event = new Event();
         $event->setStartDate(new \DateTime('2018-01-06T20:00:00+01:00'));

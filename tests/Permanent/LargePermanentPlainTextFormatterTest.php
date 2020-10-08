@@ -1,28 +1,29 @@
 <?php
 
-namespace CultuurNet\CalendarSummaryV3\Permanent;
+namespace CultuurNet\CalendarSummaryV3\Tests\Permanent;
 
-use CultuurNet\CalendarSummaryV3\Translator;
+use CultuurNet\CalendarSummaryV3\Permanent\LargePermanentPlainTextFormatter;
 use CultuurNet\SearchV3\ValueObjects\OpeningHours;
 use CultuurNet\SearchV3\ValueObjects\Place;
+use PHPUnit\Framework\TestCase;
 
 /**
  * Provide unit tests for large plain text permanent formatter.
  * @package CultuurNet\CalendarSummaryV3\Permanent
  */
-class LargePermanentPlainTextFormatterTest extends \PHPUnit_Framework_TestCase
+class LargePermanentPlainTextFormatterTest extends TestCase
 {
     /**
      * @var LargePermanentPlainTextFormatter
      */
     protected $formatter;
 
-    public function setUp()
+    protected function setUp(): void
     {
         $this->formatter = new LargePermanentPlainTextFormatter('nl_NL');
     }
 
-    public function testFormatASimplePermanent()
+    public function testFormatASimplePermanent(): void
     {
         $place = new Place();
         $place->setStartDate(new \DateTime('25-11-2025'));
@@ -57,7 +58,7 @@ class LargePermanentPlainTextFormatterTest extends \PHPUnit_Framework_TestCase
         );
     }
 
-    public function testFormatAMixedPermanent()
+    public function testFormatAMixedPermanent(): void
     {
         $place = new Place();
         $place->setStartDate(new \DateTime('25-11-2025'));
@@ -99,7 +100,7 @@ class LargePermanentPlainTextFormatterTest extends \PHPUnit_Framework_TestCase
         );
     }
 
-    public function testFormatAComplexPermanent()
+    public function testFormatAComplexPermanent(): void
     {
         $place = new Place();
 

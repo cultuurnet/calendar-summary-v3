@@ -4,21 +4,22 @@ namespace CultuurNet\CalendarSummaryV3\Tests\Multiple;
 
 use CultuurNet\CalendarSummaryV3\Multiple\LargeMultiplePlainTextFormatter;
 use CultuurNet\SearchV3\ValueObjects\Event;
+use PHPUnit\Framework\TestCase;
 
-class LargeMultiplePlainTextFormatterTest extends \PHPUnit_Framework_TestCase
+class LargeMultiplePlainTextFormatterTest extends TestCase
 {
     /**
      * @var LargeMultiplePlainTextFormatter
      */
     protected $formatter;
 
-    public function setUp()
+    protected function setUp(): void
     {
         date_default_timezone_set('Europe/Brussels');
         $this->formatter = new LargeMultiplePlainTextFormatter('nl_NL', false);
     }
 
-    public function testFormatPlainTextMultipleDateLargeOneDay()
+    public function testFormatPlainTextMultipleDateLargeOneDay(): void
     {
         $subEvents = json_decode(file_get_contents(__DIR__ . '/data/subEvents.json'), true);
         $event = new Event();
@@ -49,7 +50,7 @@ class LargeMultiplePlainTextFormatterTest extends \PHPUnit_Framework_TestCase
         );
     }
 
-    public function testFormatPlainTextMultipleDateLargeMoreDays()
+    public function testFormatPlainTextMultipleDateLargeMoreDays(): void
     {
         $subEvents = json_decode(file_get_contents(__DIR__ . '/data/subEventsMoreDays.json'), true);
         $event = new Event();

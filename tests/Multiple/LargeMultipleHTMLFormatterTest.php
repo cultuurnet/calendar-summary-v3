@@ -4,21 +4,22 @@ namespace CultuurNet\CalendarSummaryV3\Tests\Multiple;
 
 use CultuurNet\CalendarSummaryV3\Multiple\LargeMultipleHTMLFormatter;
 use CultuurNet\SearchV3\ValueObjects\Event;
+use PHPUnit\Framework\TestCase;
 
-class LargeMultipleHTMLFormatterTest extends \PHPUnit_Framework_TestCase
+class LargeMultipleHTMLFormatterTest extends TestCase
 {
     /**
      * @var LargeMultipleHTMLFormatter
      */
     protected $formatter;
 
-    public function setUp()
+    protected function setUp(): void
     {
         date_default_timezone_set('Europe/Brussels');
         $this->formatter = new LargeMultipleHTMLFormatter('nl_NL', false);
     }
 
-    public function testFormatHTMLMultipleDateLargeOneDay()
+    public function testFormatHTMLMultipleDateLargeOneDay(): void
     {
         $subEvents = json_decode(file_get_contents(__DIR__ . '/data/subEvents.json'), true);
         $event = new Event();
@@ -99,7 +100,7 @@ class LargeMultipleHTMLFormatterTest extends \PHPUnit_Framework_TestCase
         );
     }
 
-    public function testFormatHTMLMultipleDateLargeMoreDays()
+    public function testFormatHTMLMultipleDateLargeMoreDays(): void
     {
         $subEvents = json_decode(file_get_contents(__DIR__ . '/data/subEventsMoreDays.json'), true);
         $event = new Event();

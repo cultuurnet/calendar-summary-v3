@@ -4,20 +4,21 @@ namespace CultuurNet\CalendarSummaryV3\Tests\Multiple;
 
 use CultuurNet\CalendarSummaryV3\Multiple\MediumMultipleHTMLFormatter;
 use CultuurNet\SearchV3\ValueObjects\Event;
+use PHPUnit\Framework\TestCase;
 
-class MediumMultipleHTMLFormatterTest extends \PHPUnit_Framework_TestCase
+class MediumMultipleHTMLFormatterTest extends TestCase
 {
     /**
      * @var MediumMultipleHTMLFormatter
      */
     protected $formatter;
 
-    public function setUp()
+    protected function setUp(): void
     {
         $this->formatter = new MediumMultipleHTMLFormatter('nl_NL', false);
     }
 
-    public function testFormatHTMLMultipleDateMediumOneDay()
+    public function testFormatHTMLMultipleDateMediumOneDay(): void
     {
         $subEvents = json_decode(file_get_contents(__DIR__ . '/data/subEvents.json'), true);
         $event = new Event();
@@ -46,7 +47,7 @@ class MediumMultipleHTMLFormatterTest extends \PHPUnit_Framework_TestCase
         );
     }
 
-    public function testFormatHTMLMultipleDateMediumMoreDays()
+    public function testFormatHTMLMultipleDateMediumMoreDays(): void
     {
         $subEvents = json_decode(file_get_contents(__DIR__ . '/data/subEventsMoreDays.json'), true);
         $event = new Event();

@@ -4,17 +4,18 @@ namespace CultuurNet\CalendarSummaryV3\Tests\Multiple;
 
 use CultuurNet\CalendarSummaryV3\Multiple\ExtraSmallMultiplePlainTextFormatter;
 use CultuurNet\SearchV3\ValueObjects\Event;
+use PHPUnit\Framework\TestCase;
 
-class ExtraSmallMultiplePlainTextFormatterTest extends \PHPUnit_Framework_TestCase
+class ExtraSmallMultiplePlainTextFormatterTest extends TestCase
 {
     /**
      * @var ExtraSmallMultiplePlainTextFormatter
      */
     protected $formatter;
 
-    protected function setUp()
+    protected function setUp(): void
     {
-        $this->formatter = new ExtraSmallMultiplePlainTextFormatter('nl_NL', false);
+        $this->formatter = new ExtraSmallMultiplePlainTextFormatter('nl_NL');
     }
 
     public function testFormatMultipleWithoutLeadingZeroes(): void

@@ -1,33 +1,35 @@
 <?php
 
-namespace CultuurNet\CalendarSummaryV3;
+namespace CultuurNet\CalendarSummaryV3\Tests;
 
+use CultuurNet\CalendarSummaryV3\CalendarPlainTextFormatter;
+use CultuurNet\CalendarSummaryV3\FormatterException;
 use CultuurNet\SearchV3\ValueObjects\Event;
+use PHPUnit\Framework\TestCase;
 
-class CalendarPlainTextFormatterTest extends \PHPUnit_Framework_TestCase
+class CalendarPlainTextFormatterTest extends TestCase
 {
     /**
      * @var CalendarPlainTextFormatter
      */
     protected $formatter;
 
-
-    public function setUp()
+    protected function setUp(): void
     {
         $this->formatter = new CalendarPlainTextFormatter();
     }
 
-    public function testGeneralFormatMethod()
+    public function testGeneralFormatMethod(): void
     {
         $offer = new Event();
         $offer->setCalendarType(Event::CALENDAR_TYPE_SINGLE);
         $offer->setStartDate(new \DateTime('2018-01-25T20:00:00+01:00'));
         $offer->setEndDate(new \DateTime('2018-01-25T21:30:00+01:00'));
 
-        $this->formatter->format($offer, 'xs');
+        $this->assertSame('25 jan', $this->formatter->format($offer, 'xs'));
     }
 
-    public function testGeneralFormatMethodAndCatchException()
+    public function testGeneralFormatMethodAndCatchException(): void
     {
         $offer = new Event();
         $offer->setCalendarType(Event::CALENDAR_TYPE_SINGLE);

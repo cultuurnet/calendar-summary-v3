@@ -4,20 +4,21 @@ namespace CultuurNet\CalendarSummaryV3\Tests\Multiple;
 
 use CultuurNet\CalendarSummaryV3\Multiple\SmallMultiplePlainTextFormatter;
 use CultuurNet\SearchV3\ValueObjects\Event;
+use PHPUnit\Framework\TestCase;
 
-class SmallMultiplePlainTextFormatterTest extends \PHPUnit_Framework_TestCase
+class SmallMultiplePlainTextFormatterTest extends TestCase
 {
     /**
      * @var SmallMultiplePlainTextFormatter
      */
     protected $formatter;
 
-    public function setUp()
+    protected function setUp(): void
     {
-        $this->formatter = new SmallMultiplePlainTextFormatter('nl_NL', false);
+        $this->formatter = new SmallMultiplePlainTextFormatter('nl_NL');
     }
 
-    public function testFormatMultipleWithoutLeadingZeroes()
+    public function testFormatMultipleWithoutLeadingZeroes(): void
     {
         $offer = new Event();
         $offer->setStartDate(new \DateTime('25-11-2025'));
@@ -29,7 +30,7 @@ class SmallMultiplePlainTextFormatterTest extends \PHPUnit_Framework_TestCase
         );
     }
 
-    public function testFormatMultipleWithLeadingZeroes()
+    public function testFormatMultipleWithLeadingZeroes(): void
     {
         $offer = new Event();
         $offer->setStartDate(new \DateTime('04-03-2025'));
@@ -42,7 +43,7 @@ class SmallMultiplePlainTextFormatterTest extends \PHPUnit_Framework_TestCase
     }
 
 
-    public function testFormatMultipleDayWithoutLeadingZero()
+    public function testFormatMultipleDayWithoutLeadingZero(): void
     {
         $offer = new Event();
         $offer->setStartDate(new \DateTime('25-03-2025'));
@@ -54,7 +55,7 @@ class SmallMultiplePlainTextFormatterTest extends \PHPUnit_Framework_TestCase
         );
     }
 
-    public function testFormatMultipleMonthWithoutLeadingZero()
+    public function testFormatMultipleMonthWithoutLeadingZero(): void
     {
         $offer = new Event();
         $offer->setStartDate(new \DateTime('04-10-2025'));
@@ -66,7 +67,7 @@ class SmallMultiplePlainTextFormatterTest extends \PHPUnit_Framework_TestCase
         );
     }
 
-    public function testFormatAPeriodWithSameBeginAndEndDate()
+    public function testFormatAPeriodWithSameBeginAndEndDate(): void
     {
         $offer = new Event();
         $offer->setStartDate(new \DateTime('08-10-2025'));

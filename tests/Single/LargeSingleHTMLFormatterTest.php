@@ -4,26 +4,27 @@ namespace CultuurNet\CalendarSummaryV3\Tests\Single;
 
 use CultuurNet\CalendarSummaryV3\Single\LargeSingleHTMLFormatter;
 use CultuurNet\SearchV3\ValueObjects\Event;
+use PHPUnit\Framework\TestCase;
 
-class LargeSingleHTMLFormatterTest extends \PHPUnit_Framework_TestCase
+class LargeSingleHTMLFormatterTest extends TestCase
 {
     /**
      * @var LargeSingleHTMLFormatter
      */
     protected $formatter;
 
-    public function setUp()
+    protected function setUp(): void
     {
         date_default_timezone_set('Europe/Brussels');
         $this->formatter = new LargeSingleHTMLFormatter('nl_NL');
     }
 
-    public function testFormatHTMLSingleDateLargeOneDay()
+    public function testFormatHTMLSingleDateLargeOneDay(): void
     {
         $event = new Event();
         $event->setStartDate(new \DateTime('2018-01-25T20:00:00+01:00'));
         $event->setEndDate(new \DateTime('2018-01-25T21:30:00+01:00'));
-        
+
         $expectedOutput = '<time itemprop="startDate" datetime="2018-01-25T20:00:00+01:00">';
         $expectedOutput .= '<span class="cf-weekday cf-meta">donderdag</span>';
         $expectedOutput .= ' ';
@@ -46,7 +47,7 @@ class LargeSingleHTMLFormatterTest extends \PHPUnit_Framework_TestCase
         );
     }
 
-    public function testFormatHTMLSingleDateLargeWithLeadingZeroOneDay()
+    public function testFormatHTMLSingleDateLargeWithLeadingZeroOneDay(): void
     {
         $event = new Event();
         $event->setStartDate(new \DateTime('2018-01-08T20:00:00+01:00'));
@@ -74,7 +75,7 @@ class LargeSingleHTMLFormatterTest extends \PHPUnit_Framework_TestCase
         );
     }
 
-    public function testFormatHTMLSingleDateLargeMoreDays()
+    public function testFormatHTMLSingleDateLargeMoreDays(): void
     {
         $event = new Event();
         $event->setStartDate(new \DateTime('2018-01-25T20:00:00+01:00'));
@@ -110,7 +111,7 @@ class LargeSingleHTMLFormatterTest extends \PHPUnit_Framework_TestCase
         );
     }
 
-    public function testFormatHTMLSingleDateLargeWithLeadingZerosMoreDays()
+    public function testFormatHTMLSingleDateLargeWithLeadingZerosMoreDays(): void
     {
         $event = new Event();
         $event->setStartDate(new \DateTime('2018-01-06T20:00:00+01:00'));
@@ -146,7 +147,7 @@ class LargeSingleHTMLFormatterTest extends \PHPUnit_Framework_TestCase
         );
     }
 
-    public function testFormatHTMLSingleDateLargeWholeDay()
+    public function testFormatHTMLSingleDateLargeWholeDay(): void
     {
         $event = new Event();
         $event->setStartDate(new \DateTime('2018-01-06T00:00:00+01:00'));
@@ -164,7 +165,7 @@ class LargeSingleHTMLFormatterTest extends \PHPUnit_Framework_TestCase
         );
     }
 
-    public function testFormatHTMLSingleDateSameTime()
+    public function testFormatHTMLSingleDateSameTime(): void
     {
         $event = new Event();
         $event->setStartDate(new \DateTime('2018-01-06T13:30:00+01:00'));

@@ -1,27 +1,29 @@
 <?php
 
-namespace CultuurNet\CalendarSummaryV3\Periodic;
+namespace CultuurNet\CalendarSummaryV3\Tests\Periodic;
 
+use CultuurNet\CalendarSummaryV3\Periodic\LargePeriodicPlainTextFormatter;
 use CultuurNet\SearchV3\ValueObjects\OpeningHours;
 use CultuurNet\SearchV3\ValueObjects\Place;
+use PHPUnit\Framework\TestCase;
 
 /**
  * Provide unit tests for large plain text periodic formatter.
  * @package CultuurNet\CalendarSummaryV3\Periodic
  */
-class LargePeriodicPlainTextFormatterTest extends \PHPUnit_Framework_TestCase
+class LargePeriodicPlainTextFormatterTest extends TestCase
 {
     /**
      * @var LargePeriodicPlainTextFormatter
      */
     protected $formatter;
 
-    public function setUp()
+    protected function setUp(): void
     {
         $this->formatter = new LargePeriodicPlainTextFormatter('nl_NL');
     }
 
-    public function testFormatAPeriodWithSingleTimeBlocks()
+    public function testFormatAPeriodWithSingleTimeBlocks(): void
     {
         $place = new Place();
         $place->setStartDate(new \DateTime('25-11-2025'));
@@ -52,7 +54,7 @@ class LargePeriodicPlainTextFormatterTest extends \PHPUnit_Framework_TestCase
         );
     }
 
-    public function testFormatAPeriodWithSplitTimeBlocks()
+    public function testFormatAPeriodWithSplitTimeBlocks(): void
     {
         $place = new Place();
         $place->setStartDate(new \DateTime('25-11-2025'));
@@ -93,7 +95,7 @@ class LargePeriodicPlainTextFormatterTest extends \PHPUnit_Framework_TestCase
         );
     }
 
-    public function testFormatAPeriodWithComplexTimeBlocks()
+    public function testFormatAPeriodWithComplexTimeBlocks(): void
     {
         $place = new Place();
         $place->setStartDate(new \DateTime('25-11-2025'));
@@ -138,7 +140,7 @@ class LargePeriodicPlainTextFormatterTest extends \PHPUnit_Framework_TestCase
         );
     }
 
-    public function testFormatAPeriodWithoutTimeBlocks()
+    public function testFormatAPeriodWithoutTimeBlocks(): void
     {
         $place = new Place();
         $place->setStartDate(new \DateTime('25-11-2025'));

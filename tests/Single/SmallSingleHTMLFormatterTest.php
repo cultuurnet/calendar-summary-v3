@@ -4,20 +4,21 @@ namespace CultuurNet\CalendarSummaryV3\Tests\Single;
 
 use CultuurNet\CalendarSummaryV3\Single\SmallSingleHTMLFormatter;
 use CultuurNet\SearchV3\ValueObjects\Event;
+use PHPUnit\Framework\TestCase;
 
-class SmallSingleHTMLFormatterTest extends \PHPUnit_Framework_TestCase
+class SmallSingleHTMLFormatterTest extends TestCase
 {
     /**
      * @var SmallSingleHTMLFormatter
      */
     protected $formatter;
 
-    public function setUp()
+    protected function setUp(): void
     {
         $this->formatter = new SmallSingleHTMLFormatter('nl_NL');
     }
 
-    public function testFormatHTMLSingleDateXsOneDay()
+    public function testFormatHTMLSingleDateXsOneDay(): void
     {
         $event = new Event();
         $event->setStartDate(new \DateTime('2018-01-25T20:00:00+01:00'));
@@ -29,7 +30,7 @@ class SmallSingleHTMLFormatterTest extends \PHPUnit_Framework_TestCase
         );
     }
 
-    public function testFormatHTMLSingleDateXsWithLeadingZeroOneDay()
+    public function testFormatHTMLSingleDateXsWithLeadingZeroOneDay(): void
     {
         $event = new Event();
         $event->setStartDate(new \DateTime('2018-01-08T20:00:00+01:00'));
@@ -41,7 +42,7 @@ class SmallSingleHTMLFormatterTest extends \PHPUnit_Framework_TestCase
         );
     }
 
-    public function testFormatHTMLSingleDateXsMoreDays()
+    public function testFormatHTMLSingleDateXsMoreDays(): void
     {
         $event = new Event();
         $event->setStartDate(new \DateTime('2018-01-25T20:00:00+01:00'));
@@ -65,7 +66,7 @@ class SmallSingleHTMLFormatterTest extends \PHPUnit_Framework_TestCase
         );
     }
 
-    public function testFormatHTMLSingleDateXsWithLeadingZeroMoreDays()
+    public function testFormatHTMLSingleDateXsWithLeadingZeroMoreDays(): void
     {
         $event = new Event();
         $event->setStartDate(new \DateTime('2018-01-06T20:00:00+01:00'));

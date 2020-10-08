@@ -1,26 +1,28 @@
 <?php
 
-namespace CultuurNet\CalendarSummaryV3\Periodic;
+namespace CultuurNet\CalendarSummaryV3\Tests\Periodic;
 
+use CultuurNet\CalendarSummaryV3\Periodic\ExtraSmallPeriodicPlainTextFormatter;
 use CultuurNet\SearchV3\ValueObjects\Event;
+use PHPUnit\Framework\TestCase;
 
 /**
  * Provide unit tests for extra small plain text periodic formatter.
  * @package CultuurNet\CalendarSummaryV3\Periodic
  */
-class ExtraSmallPeriodicPlainTextFormatterTest extends \PHPUnit_Framework_TestCase
+class ExtraSmallPeriodicPlainTextFormatterTest extends TestCase
 {
     /**
      * @var ExtraSmallPeriodicPlainTextFormatter
      */
     protected $formatter;
 
-    public function setUp()
+    protected function setUp(): void
     {
         $this->formatter = new ExtraSmallPeriodicPlainTextFormatter('nl_NL');
     }
 
-    public function testFormatAPeriodWithoutLeadingZeroes()
+    public function testFormatAPeriodWithoutLeadingZeroes(): void
     {
         $offer = new Event();
         $offer->setStartDate(new \DateTime('25-11-2025'));
@@ -32,7 +34,7 @@ class ExtraSmallPeriodicPlainTextFormatterTest extends \PHPUnit_Framework_TestCa
         );
     }
 
-    public function testFormatAPeriodWithLeadingZeroes()
+    public function testFormatAPeriodWithLeadingZeroes(): void
     {
         $offer = new Event();
         $offer->setStartDate(new \DateTime('04-03-2025'));
@@ -44,7 +46,7 @@ class ExtraSmallPeriodicPlainTextFormatterTest extends \PHPUnit_Framework_TestCa
         );
     }
 
-    public function testFormatAPeriodDayWithoutLeadingZero()
+    public function testFormatAPeriodDayWithoutLeadingZero(): void
     {
         $offer = new Event();
         $offer->setStartDate(new \DateTime('25-03-2025'));
@@ -56,7 +58,7 @@ class ExtraSmallPeriodicPlainTextFormatterTest extends \PHPUnit_Framework_TestCa
         );
     }
 
-    public function testFormatAPeriodMonthWithoutLeadingZero()
+    public function testFormatAPeriodMonthWithoutLeadingZero(): void
     {
         $offer = new Event();
         $offer->setStartDate(new \DateTime('04-10-2025'));
@@ -68,7 +70,7 @@ class ExtraSmallPeriodicPlainTextFormatterTest extends \PHPUnit_Framework_TestCa
         );
     }
 
-    public function testFormatAPeriodThatHasAlreadyStarted()
+    public function testFormatAPeriodThatHasAlreadyStarted(): void
     {
         $offer = new Event();
         $offer->setStartDate(new \DateTime('12-03-2015'));
