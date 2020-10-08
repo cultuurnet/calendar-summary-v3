@@ -56,8 +56,9 @@ class ExtraSmallPeriodicPlainTextFormatter extends ExtraSmallPeriodicFormatter i
     {
         $dateFromDay = $this->fmtDay->format($date);
         $dateFromMonth = $this->fmtMonth->format($date);
+        $dateFromYear = $date->format('y');
 
-        $output = $dateFromDay . '/' . $dateFromMonth;
+        $output = $dateFromDay . '/' . $dateFromMonth . '/' . $dateFromYear;
 
         return $output;
     }

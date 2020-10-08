@@ -56,8 +56,9 @@ class SmallPeriodicPlainTextFormatter extends SmallPeriodicFormatter implements 
         $dateFromDay = $this->fmtDay->format($date);
         $dateFromMonth = $this->fmtMonth->format($date);
         $dateFromMonth = rtrim($dateFromMonth, ".");
+        $dateFromYear = $date->format('Y');
 
-        $output = $dateFromDay . ' ' . strtolower($dateFromMonth);
+        $output = $dateFromDay . ' ' . strtolower($dateFromMonth) . ' ' . $dateFromYear;
 
         return $output;
     }

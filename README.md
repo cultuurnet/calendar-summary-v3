@@ -57,16 +57,6 @@ After initializing the formatter, you call the format method with the following 
 * Event or Place object (from [cultuurnet/search-v3](https://github.com/cultuurnet/search-v3))
 * The desired output format ('xs', 'sm', 'md' or 'lg')
 
-**warning**
-Not every output format is supported for every calendarType!
-
-| calendarType  | xs | sm | md | lg |
-| :--- | :---: | :---: | :---: | :---: |
-| `single` | x | x | x | x |
-| `multiple` | - | x | x | x |
-| `periodic` | x | x | x | x |
-| `permanent` | - | - | x | x | 
-
 Using an unsupported format will throw an exception.
 
 ## Example

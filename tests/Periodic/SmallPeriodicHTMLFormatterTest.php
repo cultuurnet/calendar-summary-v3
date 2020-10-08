@@ -27,7 +27,7 @@ class SmallPeriodicHTMLFormatterTest extends \PHPUnit_Framework_TestCase
         $offer->setEndDate(new \DateTime('30-11-2030'));
 
         $this->assertEquals(
-            '<span class="from meta">Vanaf</span> <span class="cf-date">25</span> <span class="cf-month">nov</span>',
+            '<span class="from meta">Vanaf</span> <span class="cf-date">25</span> <span class="cf-month">nov</span> <span class="cf-year">2025</span>',
             $this->formatter->format($offer)
         );
     }
@@ -39,7 +39,7 @@ class SmallPeriodicHTMLFormatterTest extends \PHPUnit_Framework_TestCase
         $offer->setEndDate(new \DateTime('08-03-2030'));
 
         $this->assertEquals(
-            '<span class="from meta">Vanaf</span> <span class="cf-date">4</span> <span class="cf-month">mrt</span>',
+            '<span class="from meta">Vanaf</span> <span class="cf-date">4</span> <span class="cf-month">mrt</span> <span class="cf-year">2025</span>',
             $this->formatter->format($offer)
         );
     }
@@ -52,7 +52,7 @@ class SmallPeriodicHTMLFormatterTest extends \PHPUnit_Framework_TestCase
         $offer->setEndDate(new \DateTime('30-03-2030'));
 
         $this->assertEquals(
-            '<span class="from meta">Vanaf</span> <span class="cf-date">25</span> <span class="cf-month">mrt</span>',
+            '<span class="from meta">Vanaf</span> <span class="cf-date">25</span> <span class="cf-month">mrt</span> <span class="cf-year">2025</span>',
             $this->formatter->format($offer)
         );
     }
@@ -64,7 +64,7 @@ class SmallPeriodicHTMLFormatterTest extends \PHPUnit_Framework_TestCase
         $offer->setEndDate(new \DateTime('08-10-2030'));
 
         $this->assertEquals(
-            '<span class="from meta">Vanaf</span> <span class="cf-date">4</span> <span class="cf-month">okt</span>',
+            '<span class="from meta">Vanaf</span> <span class="cf-date">4</span> <span class="cf-month">okt</span> <span class="cf-year">2025</span>',
             $this->formatter->format($offer)
         );
     }
@@ -76,7 +76,7 @@ class SmallPeriodicHTMLFormatterTest extends \PHPUnit_Framework_TestCase
         $offer->setEndDate(new \DateTime('18-03-2030'));
 
         $this->assertEquals(
-            '<span class="to meta">Tot</span> <span class="cf-date">18</span> <span class="cf-month">mrt</span>',
+            '<span class="to meta">Tot</span> <span class="cf-date">18</span> <span class="cf-month">mrt</span> <span class="cf-year">2030</span>',
             $this->formatter->format($offer)
         );
     }

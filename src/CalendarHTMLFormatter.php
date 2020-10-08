@@ -2,6 +2,7 @@
 
 namespace CultuurNet\CalendarSummaryV3;
 
+use CultuurNet\CalendarSummaryV3\Multiple\ExtraSmallMultipleHTMLFormatter;
 use CultuurNet\CalendarSummaryV3\Multiple\MediumMultipleHTMLFormatter;
 use CultuurNet\CalendarSummaryV3\Multiple\LargeMultipleHTMLFormatter;
 use CultuurNet\CalendarSummaryV3\Multiple\SmallMultipleHTMLFormatter;
@@ -9,7 +10,6 @@ use CultuurNet\CalendarSummaryV3\Permanent\MediumPermanentHTMLFormatter;
 use CultuurNet\CalendarSummaryV3\Single\LargeSingleHTMLFormatter;
 use CultuurNet\CalendarSummaryV3\Single\MediumSingleHTMLFormatter;
 use CultuurNet\CalendarSummaryV3\Single\SmallSingleHTMLFormatter;
-use CultuurNet\SearchV3\ValueObjects\Event;
 use CultuurNet\SearchV3\ValueObjects\Offer;
 use CultuurNet\CalendarSummaryV3\Permanent\LargePermanentHTMLFormatter;
 use CultuurNet\CalendarSummaryV3\Periodic\ExtraSmallPeriodicHTMLFormatter;
@@ -40,7 +40,8 @@ class CalendarHTMLFormatter implements CalendarFormatterInterface
                 [
                     'lg' => new LargeMultipleHTMLFormatter($langCode, $hidePastDates),
                     'md' => new MediumMultipleHTMLFormatter($langCode, $hidePastDates),
-                    'sm' => new SmallMultipleHTMLFormatter($langCode, $hidePastDates)
+                    'sm' => new SmallMultipleHTMLFormatter($langCode, $hidePastDates),
+                    'xs' => new ExtraSmallMultipleHTMLFormatter($langCode, $hidePastDates)
                 ],
             Offer::CALENDAR_TYPE_PERIODIC =>
                 [
@@ -52,7 +53,9 @@ class CalendarHTMLFormatter implements CalendarFormatterInterface
             Offer::CALENDAR_TYPE_PERMANENT =>
                 [
                     'lg' => new LargePermanentHTMLFormatter($langCode),
-                    'md' => new MediumPermanentHTMLFormatter($langCode)
+                    'md' => new MediumPermanentHTMLFormatter($langCode),
+                    'sm' => new MediumPermanentHTMLFormatter($langCode),
+                    'xs' => new MediumPermanentHTMLFormatter($langCode)
                 ],
         ];
     }

@@ -61,10 +61,12 @@ class SmallPeriodicHTMLFormatter extends SmallPeriodicFormatter implements Perio
         $dateFromDay = $this->fmtDay->format($date);
         $dateFromMonth = $this->fmtMonth->format($date);
         $dateFromMonth = rtrim($dateFromMonth, ".");
+        $dateFromYear = $date->format('Y');
 
         $output =
             '<span class="cf-date">' . $dateFromDay . '</span> ' .
-            '<span class="cf-month">' . strtolower($dateFromMonth) . '</span>';
+            '<span class="cf-month">' . strtolower($dateFromMonth) . '</span> ' .
+            '<span class="cf-year">' . $dateFromYear . '</span>';
 
         return $output;
     }
