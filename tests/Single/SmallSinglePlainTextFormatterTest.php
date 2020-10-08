@@ -9,7 +9,7 @@ use PHPUnit\Framework\TestCase;
 class SmallSinglePlainTextFormatterTest extends TestCase
 {
     /**
-     * @var SmallSingleHTMLFormatter
+     * @var SmallSinglePlainTextFormatter
      */
     protected $formatter;
 
