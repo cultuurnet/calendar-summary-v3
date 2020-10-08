@@ -4,8 +4,9 @@ namespace CultuurNet\CalendarSummaryV3\Tests\Single;
 
 use CultuurNet\CalendarSummaryV3\Single\LargeSingleHTMLFormatter;
 use CultuurNet\SearchV3\ValueObjects\Event;
+use PHPUnit\Framework\TestCase;
 
-class LargeSingleHTMLFormatterTest extends \PHPUnit_Framework_TestCase
+class LargeSingleHTMLFormatterTest extends TestCase
 {
     /**
      * @var LargeSingleHTMLFormatter
@@ -23,7 +24,7 @@ class LargeSingleHTMLFormatterTest extends \PHPUnit_Framework_TestCase
         $event = new Event();
         $event->setStartDate(new \DateTime('2018-01-25T20:00:00+01:00'));
         $event->setEndDate(new \DateTime('2018-01-25T21:30:00+01:00'));
-        
+
         $expectedOutput = '<time itemprop="startDate" datetime="2018-01-25T20:00:00+01:00">';
         $expectedOutput .= '<span class="cf-weekday cf-meta">donderdag</span>';
         $expectedOutput .= ' ';

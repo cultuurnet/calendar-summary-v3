@@ -3,12 +3,13 @@
 namespace CultuurNet\CalendarSummaryV3\Periodic;
 
 use CultuurNet\SearchV3\ValueObjects\Event;
+use PHPUnit\Framework\TestCase;
 
 /**
  * Provide unit tests for extra small HTML periodic formatter.
  * @package CultuurNet\CalendarSummaryV3\Periodic
  */
-class ExtraSmallPeriodicHTMLFormatterTest extends \PHPUnit_Framework_TestCase
+class ExtraSmallPeriodicHTMLFormatterTest extends TestCase
 {
     /**
      * @var ExtraSmallPeriodicHTMLFormatter

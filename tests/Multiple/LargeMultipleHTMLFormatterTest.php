@@ -4,8 +4,9 @@ namespace CultuurNet\CalendarSummaryV3\Tests\Multiple;
 
 use CultuurNet\CalendarSummaryV3\Multiple\LargeMultipleHTMLFormatter;
 use CultuurNet\SearchV3\ValueObjects\Event;
+use PHPUnit\Framework\TestCase;
 
-class LargeMultipleHTMLFormatterTest extends \PHPUnit_Framework_TestCase
+class LargeMultipleHTMLFormatterTest extends TestCase
 {
     /**
      * @var LargeMultipleHTMLFormatter

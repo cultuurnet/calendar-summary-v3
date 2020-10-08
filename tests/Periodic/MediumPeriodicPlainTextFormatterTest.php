@@ -3,12 +3,13 @@
 namespace CultuurNet\CalendarSummaryV3\Periodic;
 
 use CultuurNet\SearchV3\ValueObjects\Event;
+use PHPUnit\Framework\TestCase;
 
 /**
  * Provide unit tests for medium plain text periodic formatter.
  * @package CultuurNet\CalendarSummaryV3\Periodic
  */
-class MediumPeriodicPlainTextFormatterTest extends \PHPUnit_Framework_TestCase
+class MediumPeriodicPlainTextFormatterTest extends TestCase
 {
     /**
      * @var MediumPeriodicPlainTextFormatter

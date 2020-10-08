@@ -3,8 +3,9 @@
 namespace CultuurNet\CalendarSummaryV3;
 
 use CultuurNet\SearchV3\ValueObjects\Event;
+use PHPUnit\Framework\TestCase;
 
-class CalendarHTMLFormatterTest extends \PHPUnit_Framework_TestCase
+class CalendarHTMLFormatterTest extends TestCase
 {
     /**
      * @var CalendarHTMLFormatter

@@ -4,12 +4,13 @@ namespace CultuurNet\CalendarSummaryV3\Periodic;
 
 use CultuurNet\SearchV3\ValueObjects\OpeningHours;
 use CultuurNet\SearchV3\ValueObjects\Place;
+use PHPUnit\Framework\TestCase;
 
 /**
  * Provide unit tests for large HTML periodic formatter.
  * @package CultuurNet\CalendarSummaryV3\Periodic
  */
-class LargePeriodicHTMLFormatterTest extends \PHPUnit_Framework_TestCase
+class LargePeriodicHTMLFormatterTest extends TestCase
 {
     /**
      * @var LargePeriodicHTMLFormatter
