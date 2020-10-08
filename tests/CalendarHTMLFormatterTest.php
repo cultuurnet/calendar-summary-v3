@@ -1,7 +1,8 @@
 <?php
 
-namespace CultuurNet\CalendarSummaryV3;
+namespace CultuurNet\CalendarSummaryV3\Tests;
 
+use CultuurNet\CalendarSummaryV3\CalendarHTMLFormatter;
 use CultuurNet\SearchV3\ValueObjects\Event;
 use PHPUnit\Framework\TestCase;
 
@@ -11,7 +12,6 @@ class CalendarHTMLFormatterTest extends TestCase
      * @var CalendarHTMLFormatter
      */
     protected $formatter;
-
 
     protected function setUp(): void
     {
