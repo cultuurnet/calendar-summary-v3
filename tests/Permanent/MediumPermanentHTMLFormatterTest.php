@@ -1,7 +1,8 @@
 <?php
 
-namespace CultuurNet\CalendarSummaryV3\Permanent;
+namespace CultuurNet\CalendarSummaryV3\Tests\Permanent;
 
+use CultuurNet\CalendarSummaryV3\Permanent\MediumPermanentHTMLFormatter;
 use CultuurNet\SearchV3\ValueObjects\OpeningHours;
 use CultuurNet\SearchV3\ValueObjects\Place;
 use PHPUnit\Framework\TestCase;
