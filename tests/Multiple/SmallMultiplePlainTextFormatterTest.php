@@ -15,7 +15,7 @@ class SmallMultiplePlainTextFormatterTest extends TestCase
 
     protected function setUp(): void
     {
-        $this->formatter = new SmallMultiplePlainTextFormatter('nl_NL', false);
+        $this->formatter = new SmallMultiplePlainTextFormatter('nl_NL');
     }
 
     public function testFormatMultipleWithoutLeadingZeroes(): void

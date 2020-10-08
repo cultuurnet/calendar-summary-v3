@@ -15,7 +15,7 @@ class ExtraSmallMultipleHTMLFormatterTest extends TestCase
 
     protected function setUp(): void
     {
-        $this->formatter = new ExtraSmallMultipleHTMLFormatter('nl_NL', false);
+        $this->formatter = new ExtraSmallMultipleHTMLFormatter('nl_NL');
     }
 
     public function testFormatMultipleWithoutLeadingZeroes(): void
