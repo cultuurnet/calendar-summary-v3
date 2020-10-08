@@ -19,7 +19,7 @@ class LargeMultiplePlainTextFormatterTest extends TestCase
         $this->formatter = new LargeMultiplePlainTextFormatter('nl_NL', false);
     }
 
-    public function testFormatPlainTextMultipleDateLargeOneDay()
+    public function testFormatPlainTextMultipleDateLargeOneDay(): void
     {
         $subEvents = json_decode(file_get_contents(__DIR__ . '/data/subEvents.json'), true);
         $event = new Event();
@@ -50,7 +50,7 @@ class LargeMultiplePlainTextFormatterTest extends TestCase
         );
     }
 
-    public function testFormatPlainTextMultipleDateLargeMoreDays()
+    public function testFormatPlainTextMultipleDateLargeMoreDays(): void
     {
         $subEvents = json_decode(file_get_contents(__DIR__ . '/data/subEventsMoreDays.json'), true);
         $event = new Event();

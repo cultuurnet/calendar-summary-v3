@@ -18,7 +18,7 @@ class MediumMultipleHTMLFormatterTest extends TestCase
         $this->formatter = new MediumMultipleHTMLFormatter('nl_NL', false);
     }
 
-    public function testFormatHTMLMultipleDateMediumOneDay()
+    public function testFormatHTMLMultipleDateMediumOneDay(): void
     {
         $subEvents = json_decode(file_get_contents(__DIR__ . '/data/subEvents.json'), true);
         $event = new Event();
@@ -47,7 +47,7 @@ class MediumMultipleHTMLFormatterTest extends TestCase
         );
     }
 
-    public function testFormatHTMLMultipleDateMediumMoreDays()
+    public function testFormatHTMLMultipleDateMediumMoreDays(): void
     {
         $subEvents = json_decode(file_get_contents(__DIR__ . '/data/subEventsMoreDays.json'), true);
         $event = new Event();

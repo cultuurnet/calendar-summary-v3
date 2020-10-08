@@ -19,7 +19,7 @@ class LargeMultipleHTMLFormatterTest extends TestCase
         $this->formatter = new LargeMultipleHTMLFormatter('nl_NL', false);
     }
 
-    public function testFormatHTMLMultipleDateLargeOneDay()
+    public function testFormatHTMLMultipleDateLargeOneDay(): void
     {
         $subEvents = json_decode(file_get_contents(__DIR__ . '/data/subEvents.json'), true);
         $event = new Event();
@@ -100,7 +100,7 @@ class LargeMultipleHTMLFormatterTest extends TestCase
         );
     }
 
-    public function testFormatHTMLMultipleDateLargeMoreDays()
+    public function testFormatHTMLMultipleDateLargeMoreDays(): void
     {
         $subEvents = json_decode(file_get_contents(__DIR__ . '/data/subEventsMoreDays.json'), true);
         $event = new Event();

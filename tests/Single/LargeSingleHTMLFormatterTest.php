@@ -19,7 +19,7 @@ class LargeSingleHTMLFormatterTest extends TestCase
         $this->formatter = new LargeSingleHTMLFormatter('nl_NL');
     }
 
-    public function testFormatHTMLSingleDateLargeOneDay()
+    public function testFormatHTMLSingleDateLargeOneDay(): void
     {
         $event = new Event();
         $event->setStartDate(new \DateTime('2018-01-25T20:00:00+01:00'));
@@ -47,7 +47,7 @@ class LargeSingleHTMLFormatterTest extends TestCase
         );
     }
 
-    public function testFormatHTMLSingleDateLargeWithLeadingZeroOneDay()
+    public function testFormatHTMLSingleDateLargeWithLeadingZeroOneDay(): void
     {
         $event = new Event();
         $event->setStartDate(new \DateTime('2018-01-08T20:00:00+01:00'));
@@ -75,7 +75,7 @@ class LargeSingleHTMLFormatterTest extends TestCase
         );
     }
 
-    public function testFormatHTMLSingleDateLargeMoreDays()
+    public function testFormatHTMLSingleDateLargeMoreDays(): void
     {
         $event = new Event();
         $event->setStartDate(new \DateTime('2018-01-25T20:00:00+01:00'));
@@ -111,7 +111,7 @@ class LargeSingleHTMLFormatterTest extends TestCase
         );
     }
 
-    public function testFormatHTMLSingleDateLargeWithLeadingZerosMoreDays()
+    public function testFormatHTMLSingleDateLargeWithLeadingZerosMoreDays(): void
     {
         $event = new Event();
         $event->setStartDate(new \DateTime('2018-01-06T20:00:00+01:00'));
@@ -147,7 +147,7 @@ class LargeSingleHTMLFormatterTest extends TestCase
         );
     }
 
-    public function testFormatHTMLSingleDateLargeWholeDay()
+    public function testFormatHTMLSingleDateLargeWholeDay(): void
     {
         $event = new Event();
         $event->setStartDate(new \DateTime('2018-01-06T00:00:00+01:00'));
@@ -165,7 +165,7 @@ class LargeSingleHTMLFormatterTest extends TestCase
         );
     }
 
-    public function testFormatHTMLSingleDateSameTime()
+    public function testFormatHTMLSingleDateSameTime(): void
     {
         $event = new Event();
         $event->setStartDate(new \DateTime('2018-01-06T13:30:00+01:00'));

@@ -18,7 +18,7 @@ class MediumSingleHTMLFormatterTest extends TestCase
         $this->formatter = new MediumSingleHTMLFormatter('nl_NL');
     }
 
-    public function testFormatHTMLSingleDateMediumOneDay()
+    public function testFormatHTMLSingleDateMediumOneDay(): void
     {
         $event = new Event();
         $event->setStartDate(new \DateTime('2018-01-25T20:00:00+01:00'));
@@ -30,7 +30,7 @@ class MediumSingleHTMLFormatterTest extends TestCase
         );
     }
 
-    public function testFormatHTMLSingleDateMediumWithLeadingZeroOneDay()
+    public function testFormatHTMLSingleDateMediumWithLeadingZeroOneDay(): void
     {
         $event = new Event();
         $event->setStartDate(new \DateTime('2018-01-08T20:00:00+01:00'));
@@ -42,7 +42,7 @@ class MediumSingleHTMLFormatterTest extends TestCase
         );
     }
 
-    public function testFormatHTMLSingleDateMediumMoreDays()
+    public function testFormatHTMLSingleDateMediumMoreDays(): void
     {
         $event = new Event();
         $event->setStartDate(new \DateTime('2018-01-25T20:00:00+01:00'));
@@ -66,7 +66,7 @@ class MediumSingleHTMLFormatterTest extends TestCase
         );
     }
 
-    public function testFormatHTMLSingleDateMediumWithLeadingZeroMoreDays()
+    public function testFormatHTMLSingleDateMediumWithLeadingZeroMoreDays(): void
     {
         $event = new Event();
         $event->setStartDate(new \DateTime('2018-01-06T20:00:00+01:00'));

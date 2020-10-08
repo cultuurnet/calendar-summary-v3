@@ -21,7 +21,7 @@ class SmallPeriodicPlainTextFormatterTest extends TestCase
         $this->formatter = new SmallPeriodicPlainTextFormatter('nl_NL');
     }
 
-    public function testFormatAPeriodWithoutLeadingZeroes()
+    public function testFormatAPeriodWithoutLeadingZeroes(): void
     {
         $offer = new Event();
         $offer->setStartDate(new \DateTime('25-11-2025'));
@@ -33,7 +33,7 @@ class SmallPeriodicPlainTextFormatterTest extends TestCase
         );
     }
 
-    public function testFormatAPeriodWithLeadingZeroes()
+    public function testFormatAPeriodWithLeadingZeroes(): void
     {
         $offer = new Event();
         $offer->setStartDate(new \DateTime('04-03-2025'));
@@ -45,7 +45,7 @@ class SmallPeriodicPlainTextFormatterTest extends TestCase
         );
     }
 
-    public function testFormatAPeriodDayWithoutLeadingZero()
+    public function testFormatAPeriodDayWithoutLeadingZero(): void
     {
         $offer = new Event();
         $offer->setStartDate(new \DateTime('25-03-2025'));
@@ -57,7 +57,7 @@ class SmallPeriodicPlainTextFormatterTest extends TestCase
         );
     }
 
-    public function testFormatAPeriodMonthWithoutLeadingZero()
+    public function testFormatAPeriodMonthWithoutLeadingZero(): void
     {
         $offer = new Event();
         $offer->setStartDate(new \DateTime('04-10-2025'));
@@ -69,7 +69,7 @@ class SmallPeriodicPlainTextFormatterTest extends TestCase
         );
     }
 
-    public function testFormatAPeriodThatHasAlreadyStarted()
+    public function testFormatAPeriodThatHasAlreadyStarted(): void
     {
         $offer = new Event();
         $offer->setStartDate(new \DateTime('12-03-2015'));

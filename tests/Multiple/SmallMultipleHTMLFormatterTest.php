@@ -18,7 +18,7 @@ class SmallMultipleHTMLFormatterTest extends TestCase
         $this->formatter = new SmallMultipleHTMLFormatter('nl_NL', false);
     }
 
-    public function testFormatMultipleWithoutLeadingZeroes()
+    public function testFormatMultipleWithoutLeadingZeroes(): void
     {
         $offer = new Event();
         $offer->setStartDate(new \DateTime('25-11-2025'));
@@ -31,7 +31,7 @@ class SmallMultipleHTMLFormatterTest extends TestCase
         );
     }
 
-    public function testFormatMultipleWithLeadingZeroes()
+    public function testFormatMultipleWithLeadingZeroes(): void
     {
         $offer = new Event();
         $offer->setStartDate(new \DateTime('04-03-2025'));
@@ -44,7 +44,7 @@ class SmallMultipleHTMLFormatterTest extends TestCase
         );
     }
 
-    public function testFormatMultipleMonthWithoutLeadingZero()
+    public function testFormatMultipleMonthWithoutLeadingZero(): void
     {
         $offer = new Event();
         $offer->setStartDate(new \DateTime('04-10-2025'));
@@ -57,7 +57,7 @@ class SmallMultipleHTMLFormatterTest extends TestCase
         );
     }
 
-    public function testFormatAMultipleWithSameBeginAndEndDate()
+    public function testFormatAMultipleWithSameBeginAndEndDate(): void
     {
         $offer = new Event();
         $offer->setStartDate(new \DateTime('08-10-2025'));

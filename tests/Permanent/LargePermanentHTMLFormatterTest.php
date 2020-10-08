@@ -22,7 +22,7 @@ class LargePermanentHTMLFormatterTest extends TestCase
         $this->formatter = new LargePermanentHTMLFormatter('nl_NL');
     }
 
-    public function testFormatASimplePermanent()
+    public function testFormatASimplePermanent(): void
     {
         $place = new Place();
         $place->setStartDate(new \DateTime('25-11-2025'));
@@ -106,7 +106,7 @@ class LargePermanentHTMLFormatterTest extends TestCase
         );
     }
 
-    public function testFormatAMixedPermanent()
+    public function testFormatAMixedPermanent(): void
     {
         $place = new Place();
 
@@ -209,7 +209,7 @@ class LargePermanentHTMLFormatterTest extends TestCase
         );
     }
 
-    public function testFormatAComplexPermanent()
+    public function testFormatAComplexPermanent(): void
     {
         $place = new Place();
 

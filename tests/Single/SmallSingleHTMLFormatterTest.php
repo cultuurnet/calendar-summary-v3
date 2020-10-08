@@ -18,7 +18,7 @@ class SmallSingleHTMLFormatterTest extends TestCase
         $this->formatter = new SmallSingleHTMLFormatter('nl_NL');
     }
 
-    public function testFormatHTMLSingleDateXsOneDay()
+    public function testFormatHTMLSingleDateXsOneDay(): void
     {
         $event = new Event();
         $event->setStartDate(new \DateTime('2018-01-25T20:00:00+01:00'));
@@ -30,7 +30,7 @@ class SmallSingleHTMLFormatterTest extends TestCase
         );
     }
 
-    public function testFormatHTMLSingleDateXsWithLeadingZeroOneDay()
+    public function testFormatHTMLSingleDateXsWithLeadingZeroOneDay(): void
     {
         $event = new Event();
         $event->setStartDate(new \DateTime('2018-01-08T20:00:00+01:00'));
@@ -42,7 +42,7 @@ class SmallSingleHTMLFormatterTest extends TestCase
         );
     }
 
-    public function testFormatHTMLSingleDateXsMoreDays()
+    public function testFormatHTMLSingleDateXsMoreDays(): void
     {
         $event = new Event();
         $event->setStartDate(new \DateTime('2018-01-25T20:00:00+01:00'));
@@ -66,7 +66,7 @@ class SmallSingleHTMLFormatterTest extends TestCase
         );
     }
 
-    public function testFormatHTMLSingleDateXsWithLeadingZeroMoreDays()
+    public function testFormatHTMLSingleDateXsWithLeadingZeroMoreDays(): void
     {
         $event = new Event();
         $event->setStartDate(new \DateTime('2018-01-06T20:00:00+01:00'));

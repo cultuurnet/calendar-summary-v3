@@ -18,7 +18,7 @@ class CalendarHTMLFormatterTest extends TestCase
         $this->formatter = new CalendarHTMLFormatter();
     }
 
-    public function testGeneralFormatMethod()
+    public function testGeneralFormatMethod(): void
     {
         $offer = new Event();
         $offer->setCalendarType(Event::CALENDAR_TYPE_SINGLE);
@@ -28,7 +28,7 @@ class CalendarHTMLFormatterTest extends TestCase
         $this->formatter->format($offer, 'xs');
     }
 
-    public function testGeneralFormatMethodAndCatchException()
+    public function testGeneralFormatMethodAndCatchException(): void
     {
         $offer = new Event();
         $offer->setCalendarType(Event::CALENDAR_TYPE_SINGLE);

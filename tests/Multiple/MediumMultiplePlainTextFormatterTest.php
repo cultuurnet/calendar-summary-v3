@@ -18,7 +18,7 @@ class MediumMultiplePlainTextFormatterTest extends TestCase
         $this->formatter = new MediumMultiplePlainTextFormatter('nl_NL', false);
     }
 
-    public function testFormatPlainTextMultipleDateMediumOneDay()
+    public function testFormatPlainTextMultipleDateMediumOneDay(): void
     {
         $subEvents = json_decode(file_get_contents(__DIR__ . '/data/subEvents.json'), true);
         $event = new Event();
@@ -42,7 +42,7 @@ class MediumMultiplePlainTextFormatterTest extends TestCase
         );
     }
 
-    public function testFormatPlainTextMultipleDateMediumMoreDays()
+    public function testFormatPlainTextMultipleDateMediumMoreDays(): void
     {
         $subEvents = json_decode(file_get_contents(__DIR__ . '/data/subEventsMoreDays.json'), true);
         $event = new Event();

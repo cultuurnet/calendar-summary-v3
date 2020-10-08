@@ -22,7 +22,7 @@ class LargePeriodicPlainTextFormatterTest extends TestCase
         $this->formatter = new LargePeriodicPlainTextFormatter('nl_NL');
     }
 
-    public function testFormatAPeriodWithSingleTimeBlocks()
+    public function testFormatAPeriodWithSingleTimeBlocks(): void
     {
         $place = new Place();
         $place->setStartDate(new \DateTime('25-11-2025'));
@@ -53,7 +53,7 @@ class LargePeriodicPlainTextFormatterTest extends TestCase
         );
     }
 
-    public function testFormatAPeriodWithSplitTimeBlocks()
+    public function testFormatAPeriodWithSplitTimeBlocks(): void
     {
         $place = new Place();
         $place->setStartDate(new \DateTime('25-11-2025'));
@@ -94,7 +94,7 @@ class LargePeriodicPlainTextFormatterTest extends TestCase
         );
     }
 
-    public function testFormatAPeriodWithComplexTimeBlocks()
+    public function testFormatAPeriodWithComplexTimeBlocks(): void
     {
         $place = new Place();
         $place->setStartDate(new \DateTime('25-11-2025'));
@@ -139,7 +139,7 @@ class LargePeriodicPlainTextFormatterTest extends TestCase
         );
     }
 
-    public function testFormatAPeriodWithoutTimeBlocks()
+    public function testFormatAPeriodWithoutTimeBlocks(): void
     {
         $place = new Place();
         $place->setStartDate(new \DateTime('25-11-2025'));

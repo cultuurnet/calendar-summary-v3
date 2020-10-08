@@ -19,7 +19,7 @@ class LargeSinglePlainTextFormatterTest extends TestCase
         $this->formatter = new LargeSinglePlainTextFormatter('nl_NL');
     }
 
-    public function testFormatPlainTextSingleDateLargeOneDay()
+    public function testFormatPlainTextSingleDateLargeOneDay(): void
     {
         $event = new Event();
         $event->setStartDate(new \DateTime('2018-01-25T20:00:00+01:00'));
@@ -34,7 +34,7 @@ class LargeSinglePlainTextFormatterTest extends TestCase
         );
     }
 
-    public function testFormatPlainTextSingleDateLargeWithLeadingZeroOneDay()
+    public function testFormatPlainTextSingleDateLargeWithLeadingZeroOneDay(): void
     {
         $event = new Event();
         $event->setStartDate(new \DateTime('2018-01-08T20:00:00+01:00'));
@@ -49,7 +49,7 @@ class LargeSinglePlainTextFormatterTest extends TestCase
         );
     }
 
-    public function testFormatPlainTextSingleDateLargeMoreDays()
+    public function testFormatPlainTextSingleDateLargeMoreDays(): void
     {
         $event = new Event();
         $event->setStartDate(new \DateTime('2018-01-25T20:00:00+01:00'));
@@ -64,7 +64,7 @@ class LargeSinglePlainTextFormatterTest extends TestCase
         );
     }
 
-    public function testFormatPlainTextSingleDateLargeWithLeadingZeroMoreDays()
+    public function testFormatPlainTextSingleDateLargeWithLeadingZeroMoreDays(): void
     {
         $event = new Event();
         $event->setStartDate(new \DateTime('2018-01-06T20:00:00+01:00'));
@@ -79,7 +79,7 @@ class LargeSinglePlainTextFormatterTest extends TestCase
         );
     }
 
-    public function testFormatPlainTextSingleDateLargeWholeDay()
+    public function testFormatPlainTextSingleDateLargeWholeDay(): void
     {
         $event = new Event();
         $event->setStartDate(new \DateTime('2018-01-06T00:00:00+01:00'));
@@ -93,7 +93,7 @@ class LargeSinglePlainTextFormatterTest extends TestCase
         );
     }
 
-    public function testFormatPlainTextSingleDateLargeSameTime()
+    public function testFormatPlainTextSingleDateLargeSameTime(): void
     {
         $event = new Event();
         $event->setStartDate(new \DateTime('2018-01-06T13:30:00+01:00'));
