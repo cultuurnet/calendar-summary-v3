@@ -13,7 +13,7 @@ class SmallSingleHTMLFormatterTest extends TestCase
      */
     protected $formatter;
 
-    public function setUp()
+    protected function setUp(): void
     {
         $this->formatter = new SmallSingleHTMLFormatter('nl_NL');
     }

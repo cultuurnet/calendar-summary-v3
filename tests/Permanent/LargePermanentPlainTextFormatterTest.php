@@ -18,7 +18,7 @@ class LargePermanentPlainTextFormatterTest extends TestCase
      */
     protected $formatter;
 
-    public function setUp()
+    protected function setUp(): void
     {
         $this->formatter = new LargePermanentPlainTextFormatter('nl_NL');
     }

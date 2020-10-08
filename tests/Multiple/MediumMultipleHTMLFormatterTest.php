@@ -13,7 +13,7 @@ class MediumMultipleHTMLFormatterTest extends TestCase
      */
     protected $formatter;
 
-    public function setUp()
+    protected function setUp(): void
     {
         $this->formatter = new MediumMultipleHTMLFormatter('nl_NL', false);
     }

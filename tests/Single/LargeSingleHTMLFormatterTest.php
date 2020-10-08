@@ -13,7 +13,7 @@ class LargeSingleHTMLFormatterTest extends TestCase
      */
     protected $formatter;
 
-    public function setUp()
+    protected function setUp(): void
     {
         date_default_timezone_set('Europe/Brussels');
         $this->formatter = new LargeSingleHTMLFormatter('nl_NL');

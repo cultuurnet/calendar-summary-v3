@@ -13,7 +13,7 @@ class MediumSinglePlainTextFormatterTest extends TestCase
      */
     protected $formatter;
 
-    public function setUp()
+    protected function setUp(): void
     {
         $this->formatter = new MediumSinglePlainTextFormatter('nl_NL');
     }

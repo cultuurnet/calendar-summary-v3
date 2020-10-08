@@ -16,7 +16,7 @@ class ExtraSmallPeriodicHTMLFormatterTest extends TestCase
      */
     protected $formatter;
 
-    public function setUp()
+    protected function setUp(): void
     {
         $this->formatter = new ExtraSmallPeriodicHTMLFormatter('nl_NL');
     }

@@ -16,7 +16,7 @@ class MediumPeriodicPlainTextFormatterTest extends TestCase
      */
     protected $formatter;
 
-    public function setUp()
+    protected function setUp(): void
     {
         $this->formatter = new MediumPeriodicPlainTextFormatter('nl_NL');
     }
