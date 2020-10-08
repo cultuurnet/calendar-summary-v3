@@ -5,20 +5,12 @@
     "license": "Apache-2.0",
     "authors": [
       {
-        "name": "Nils Destoop",
-        "email": "nils.destoop@wunderkraut.com"
-      },
-      {
-        "name": "Thomas Jacobs",
-        "email": "thomas.jacobs@wunderkraut.com"
-      },
-      {
-        "name": "Stijn Swaanen",
-        "email": "stijn.swaanen@publiq.be"
+        "name": "Publiq vzw",
+        "email": "info@publiq.be"
       }
     ],
     "require": {
-      "php": "^7.0",
+      "php": "^7.1",
       "ext-intl": "*",
       "delfimov/translate": "^2.4",
       "cultuurnet/search-v3": "dev-master",
@@ -35,9 +27,11 @@
       "squizlabs/php_codesniffer": "2.6.1",
       "phing/phing": "~2.10",
       "satooshi/php-coveralls": "~0.7",
-      "mikey179/vfsstream": "~1.6.2",
-      "psr/container": "~1.0.0"
+      "mikey179/vfsstream": "~1.6.2"
     },
     "minimum-stability": "dev",
-    "prefer-stable": true
+    "prefer-stable": true,
+    "scripts": {
+      "phing": "./vendor/bin/phing test"
+    }
 }
