@@ -13,7 +13,7 @@ class ExtraSmallMultiplePlainTextFormatterTest extends TestCase
      */
     protected $formatter;
 
-    protected function setUp()
+    protected function setUp(): void
     {
         $this->formatter = new ExtraSmallMultiplePlainTextFormatter('nl_NL');
     }
