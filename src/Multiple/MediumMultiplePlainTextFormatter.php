@@ -11,8 +11,7 @@ class MediumMultiplePlainTextFormatter extends MediumMultipleFormatter implement
     {
         $subEvents = $event->getSubEvents();
         $now = new \DateTime();
-
-        $output = '';
+        $output = [];
 
         foreach ($subEvents as $key => $subEvent) {
             $formatter = new MediumSinglePlainTextFormatter($this->langCode);
@@ -23,10 +22,10 @@ class MediumMultiplePlainTextFormatter extends MediumMultipleFormatter implement
 
             if (!$this->hidePast ||
                 $subEvent->getEndDate()->setTimezone(new \DateTimeZone(date_default_timezone_get())) > $now) {
-                $output .= $formatter->format($event) . PHP_EOL;
+                $output[] = $formatter->format($event);
             }
         }
 
-        return trim($output, PHP_EOL);
+        return implode(PHP_EOL, $output);
     }
 }

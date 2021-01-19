@@ -10,8 +10,8 @@ class LargeMultiplePlainTextFormatter extends LargeMultipleFormatter implements 
     public function format(Event $event): string
     {
         $subEvents = $event->getSubEvents();
-        $output = '';
         $now = new \DateTime();
+        $output = [];
 
         foreach ($subEvents as $key => $subEvent) {
             $formatter = new LargeSinglePlainTextFormatter($this->langCode);
@@ -22,10 +22,10 @@ class LargeMultiplePlainTextFormatter extends LargeMultipleFormatter implements 
 
             if (!$this->hidePast ||
                 $subEvent->getEndDate()->setTimezone(new \DateTimeZone(date_default_timezone_get())) > $now) {
-                $output .= $formatter->format($event) . PHP_EOL;
+                $output[] = $formatter->format($event);
             }
         }
 
-        return trim($output, PHP_EOL);
+        return implode(PHP_EOL, $output);
     }
 }
