@@ -10,7 +10,7 @@ final class MediumMultipleHTMLFormatter implements MultipleFormatterInterface
     /**
      * @var string $langCode
      */
-    protected $langCode;
+    private $langCode;
 
     /**
      * @var bool $hidepast

@@ -10,7 +10,7 @@ final class LargeMultipleHTMLFormatter implements MultipleFormatterInterface
     /**
      * @var string $langCode
      */
-    protected $langCode;
+    private $langCode;
 
     /**
      * @var bool $hidePast

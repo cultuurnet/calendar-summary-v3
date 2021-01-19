@@ -10,7 +10,7 @@ final class MediumMultiplePlainTextFormatter implements MultipleFormatterInterfa
     /**
      * @var string $langCode
      */
-    protected $langCode;
+    private $langCode;
 
     /**
      * @var bool $hidepast

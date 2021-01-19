@@ -10,7 +10,7 @@ final class SmallMultiplePlainTextFormatter implements MultipleFormatterInterfac
     /**
      * @var string
      */
-    protected $langCode;
+    private $langCode;
 
     public function __construct(string $langCode)
     {

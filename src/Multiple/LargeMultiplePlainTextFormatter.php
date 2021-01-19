@@ -10,7 +10,7 @@ final class LargeMultiplePlainTextFormatter implements MultipleFormatterInterfac
     /**
      * @var string $langCode
      */
-    protected $langCode;
+    private $langCode;
 
     /**
      * @var bool $hidePast
