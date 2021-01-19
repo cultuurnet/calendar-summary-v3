@@ -22,7 +22,7 @@ final class MediumPermanentPlainTextFormatter implements PermanentFormatterInter
     /**
      * @var Translator
      */
-    protected $trans;
+    private $trans;
 
     public function __construct(string $langCode)
     {

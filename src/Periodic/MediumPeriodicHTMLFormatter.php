@@ -21,7 +21,7 @@ final class MediumPeriodicHTMLFormatter implements PeriodicFormatterInterface
     /**
      * @var Translator
      */
-    protected $trans;
+    private $trans;
 
     public function __construct(string $langCode)
     {

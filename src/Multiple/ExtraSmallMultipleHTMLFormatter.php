@@ -11,7 +11,7 @@ final class ExtraSmallMultipleHTMLFormatter implements MultipleFormatterInterfac
     /**
      * @var Translator
      */
-    protected $trans;
+    private $trans;
 
     public function __construct(string $langCode)
     {

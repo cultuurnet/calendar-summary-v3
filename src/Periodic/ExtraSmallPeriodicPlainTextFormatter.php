@@ -23,7 +23,7 @@ final class ExtraSmallPeriodicPlainTextFormatter implements PeriodicFormatterInt
     /**
      * @var Translator
      */
-    protected $trans;
+    private $trans;
 
     public function __construct(string $langCode)
     {

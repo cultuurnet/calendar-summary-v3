@@ -28,7 +28,7 @@ final class LargePeriodicPlainTextFormatter implements PeriodicFormatterInterfac
     /**
      * @var Translator
      */
-    protected $trans;
+    private $trans;
 
     public function __construct(string $langCode)
     {

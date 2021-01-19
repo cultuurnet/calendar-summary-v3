@@ -22,7 +22,7 @@ final class MediumSingleHTMLFormatter implements SingleFormatterInterface
     /**
      * @var Translator
      */
-    protected $trans;
+    private $trans;
 
     public function __construct(string $langCode)
     {

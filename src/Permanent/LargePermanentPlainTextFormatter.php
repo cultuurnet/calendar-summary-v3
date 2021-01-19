@@ -32,7 +32,7 @@ final class LargePermanentPlainTextFormatter implements PermanentFormatterInterf
     /**
      * @var Translator
      */
-    protected $trans;
+    private $trans;
 
     public function __construct(string $langCode)
     {
