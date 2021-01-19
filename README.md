@@ -10,7 +10,7 @@ You can install the cultuurnet\calendar-summary-v3 PHP library in different ways
   the root of the clone to download the necessary dependencies. Standalone usage is probably only useful for testing
   purposes.
 * Inside your project: require the cultuurnet/calendar-summary-v3 package (it is
-  [registered on Packagist](https://packagist.org/packages/cultuurnet/calendar-summary-v3)) and the cultuurnet/cdb package in your project's
+  [registered on Packagist](https://packagist.org/packages/cultuurnet/calendar-summary-v3)) package in your project's
   composer.json file and run ``composer update``.
 
 ```json
@@ -22,7 +22,7 @@ You can install the cultuurnet\calendar-summary-v3 PHP library in different ways
 ```
 
 ## How it works
-The calendar-summary-v3 PHP takes the start and end date of an Event or Place object (hence the dependency on[cultuurnet/search-v3](https://github.com/cultuurnet/search-v3)), 
+The calendar-summary-v3 PHP takes the start and end date of an Event or Place object (hence the dependency on [cultuurnet/search-v3](https://github.com/cultuurnet/search-v3)), 
 and formats it. 
 There's a HTML formatter and a plain text formatter.
 
@@ -50,7 +50,7 @@ This parameter (when true) will only be used on offers with a calendarType 'mult
 #### timeZone
 (string) Default value: 'Europe/Brussels'
 You can set a different timezone with this parameter.
-Supported timezones can be found in this[list](http://php.net/manual/en/timezones.php).
+Supported timezones can be found in this [list](http://php.net/manual/en/timezones.php).
 
 ## Formats
 After initializing the formatter, you call the format method with the following 2 parameters:
