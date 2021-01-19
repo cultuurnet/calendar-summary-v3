@@ -5,7 +5,7 @@ namespace CultuurNet\CalendarSummaryV3\Multiple;
 use CultuurNet\SearchV3\ValueObjects\Event;
 use CultuurNet\CalendarSummaryV3\Single\MediumSinglePlainTextFormatter;
 
-class MediumMultiplePlainTextFormatter extends MediumMultipleFormatter implements MultipleFormatterInterface
+class MediumMultiplePlainTextFormatter implements MultipleFormatterInterface
 {
     /**
      * @var string $langCode
