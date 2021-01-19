@@ -62,7 +62,7 @@ final class SmallSingleHTMLFormatter implements SingleFormatterInterface
         return $output;
     }
 
-    protected function formatSameDay(DateTimeInterface $dateFrom): string
+    private function formatSameDay(DateTimeInterface $dateFrom): string
     {
         $dateFromDay = $this->fmtDay->format($dateFrom);
         $dateFromMonth = rtrim($this->fmtMonth->format($dateFrom), '.');
@@ -74,7 +74,7 @@ final class SmallSingleHTMLFormatter implements SingleFormatterInterface
         return $output;
     }
 
-    protected function formatMoreDays(DateTimeInterface $dateFrom, DateTimeInterface $dateEnd): string
+    private function formatMoreDays(DateTimeInterface $dateFrom, DateTimeInterface $dateEnd): string
     {
         $dateFromDay = $this->fmtDay->format($dateFrom);
         $dateFromMonth = rtrim($this->fmtMonth->format($dateFrom), '.');

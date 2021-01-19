@@ -76,7 +76,7 @@ final class LargeSingleHTMLFormatter implements SingleFormatterInterface
         return $output;
     }
 
-    protected function formatSameDay(DateTimeInterface $dateFrom, DateTimeInterface $dateEnd): string
+    private function formatSameDay(DateTimeInterface $dateFrom, DateTimeInterface $dateEnd): string
     {
         $intlDateFrom = $this->fmt->format($dateFrom);
         $intlWeekDayFrom = $this->fmtWeekDayLong->format($dateFrom);
@@ -121,7 +121,7 @@ final class LargeSingleHTMLFormatter implements SingleFormatterInterface
         return $output;
     }
 
-    protected function formatMoreDays(DateTimeInterface $dateFrom, DateTimeInterface $dateEnd): string
+    private function formatMoreDays(DateTimeInterface $dateFrom, DateTimeInterface $dateEnd): string
     {
         $intlDateFrom = $this->fmt->format($dateFrom);
         $intlWeekDayFrom = $this->fmtWeekDayLong->format($dateFrom);

@@ -62,7 +62,7 @@ final class MediumSingleHTMLFormatter implements SingleFormatterInterface
         return $output;
     }
 
-    protected function formatSameDay(DateTimeInterface $dateFrom): string
+    private function formatSameDay(DateTimeInterface $dateFrom): string
     {
         $intlDateFrom = $this->fmt->format($dateFrom);
         $intlDateDayFrom = $this->fmtDay->format($dateFrom);
@@ -74,7 +74,7 @@ final class MediumSingleHTMLFormatter implements SingleFormatterInterface
         return $output;
     }
 
-    protected function formatMoreDays(DateTimeInterface $dateFrom, DateTimeInterface $dateEnd): string
+    private function formatMoreDays(DateTimeInterface $dateFrom, DateTimeInterface $dateEnd): string
     {
         $intlDateFrom = $this->fmt->format($dateFrom);
         $intlDateDayFrom = $this->fmtDay->format($dateFrom);

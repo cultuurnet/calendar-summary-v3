@@ -80,7 +80,7 @@ final class LargePeriodicHTMLFormatter implements PeriodicFormatterInterface
      * @param $calsum
      * @return mixed
      */
-    protected function formatSummary($calsum)
+    private function formatSummary($calsum)
     {
         $calsum = str_replace('><', '> <', $calsum);
         return str_replace('  ', ' ', $calsum);

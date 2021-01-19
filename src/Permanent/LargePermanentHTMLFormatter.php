@@ -80,7 +80,7 @@ final class LargePermanentHTMLFormatter implements PermanentFormatterInterface
         return $formattedShortTime;
     }
 
-    protected function formatSummary(string $calsum): string
+    private function formatSummary(string $calsum): string
     {
         $calsum = str_replace('><', '> <', $calsum);
         return str_replace('  ', ' ', $calsum);
