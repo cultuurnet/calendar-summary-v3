@@ -7,7 +7,7 @@ use CultuurNet\SearchV3\ValueObjects\Offer;
 use CultuurNet\SearchV3\ValueObjects\OpeningHours;
 use IntlDateFormatter;
 
-class MediumPermanentHTMLFormatter implements PermanentFormatterInterface
+final class MediumPermanentHTMLFormatter implements PermanentFormatterInterface
 {
     /**
      * @var IntlDateFormatter

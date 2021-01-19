@@ -5,7 +5,7 @@ namespace CultuurNet\CalendarSummaryV3;
 use DElfimov\Translate\Translate;
 use DElfimov\Translate\Loader\PhpArrayLoader;
 
-class Translator
+final class Translator
 {
     /**
      * @var Translate

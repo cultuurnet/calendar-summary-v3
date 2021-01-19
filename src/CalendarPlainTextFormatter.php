@@ -17,7 +17,7 @@ use CultuurNet\CalendarSummaryV3\Permanent\LargePermanentPlainTextFormatter;
 use CultuurNet\CalendarSummaryV3\Multiple\LargeMultiplePlainTextFormatter;
 use CultuurNet\CalendarSummaryV3\Multiple\MediumMultiplePlainTextFormatter;
 
-class CalendarPlainTextFormatter implements CalendarFormatterInterface
+final class CalendarPlainTextFormatter implements CalendarFormatterInterface
 {
     protected $mapping = array();
 

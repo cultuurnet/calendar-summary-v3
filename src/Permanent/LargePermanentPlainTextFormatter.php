@@ -7,7 +7,7 @@ use CultuurNet\SearchV3\ValueObjects\Offer;
 use CultuurNet\SearchV3\ValueObjects\OpeningHours;
 use IntlDateFormatter;
 
-class LargePermanentPlainTextFormatter implements PermanentFormatterInterface
+final class LargePermanentPlainTextFormatter implements PermanentFormatterInterface
 {
     protected $daysOfWeek = array(
         'monday',

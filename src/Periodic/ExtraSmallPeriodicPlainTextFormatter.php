@@ -8,7 +8,7 @@ use \DateTime;
 use \DateTimeInterface;
 use IntlDateFormatter;
 
-class ExtraSmallPeriodicPlainTextFormatter implements PeriodicFormatterInterface
+final class ExtraSmallPeriodicPlainTextFormatter implements PeriodicFormatterInterface
 {
     /**
      * @var IntlDateFormatter

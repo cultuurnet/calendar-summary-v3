@@ -7,7 +7,7 @@ use CultuurNet\SearchV3\ValueObjects\Offer;
 use DateTime;
 use IntlDateFormatter;
 
-class LargePeriodicHTMLFormatter implements PeriodicFormatterInterface
+final class LargePeriodicHTMLFormatter implements PeriodicFormatterInterface
 {
     /**
      * @var IntlDateFormatter

@@ -7,7 +7,7 @@ use CultuurNet\SearchV3\ValueObjects\Offer;
 use DateTimeInterface;
 use IntlDateFormatter;
 
-class MediumSinglePlainTextFormatter implements SingleFormatterInterface
+final class MediumSinglePlainTextFormatter implements SingleFormatterInterface
 {
     /**
      * @var IntlDateFormatter

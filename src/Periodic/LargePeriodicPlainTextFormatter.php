@@ -8,7 +8,7 @@ use CultuurNet\SearchV3\ValueObjects\OpeningHours;
 use DateTime;
 use IntlDateFormatter;
 
-class LargePeriodicPlainTextFormatter implements PeriodicFormatterInterface
+final class LargePeriodicPlainTextFormatter implements PeriodicFormatterInterface
 {
     /**
      * @var IntlDateFormatter

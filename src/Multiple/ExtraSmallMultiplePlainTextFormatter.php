@@ -6,7 +6,7 @@ use CultuurNet\CalendarSummaryV3\Translator;
 use CultuurNet\SearchV3\ValueObjects\Event;
 use DateTimeZone;
 
-class ExtraSmallMultiplePlainTextFormatter implements MultipleFormatterInterface
+final class ExtraSmallMultiplePlainTextFormatter implements MultipleFormatterInterface
 {
     /**
      * @var Translator
