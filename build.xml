@@ -35,6 +35,7 @@
 
     <target name="coding-standards">
         <exec command="./vendor/bin/phpcs"
+              checkreturn="true"
               passthru="true"/>
     </target>
 
