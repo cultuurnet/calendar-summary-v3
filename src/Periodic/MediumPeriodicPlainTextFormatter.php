@@ -11,12 +11,12 @@ final class MediumPeriodicPlainTextFormatter implements PeriodicFormatterInterfa
     /**
      * @var IntlDateFormatter
      */
-    protected $fmt;
+    private $fmt;
 
     /**
      * @var IntlDateFormatter
      */
-    protected $fmtDay;
+    private $fmtDay;
 
     /**
      * @var Translator

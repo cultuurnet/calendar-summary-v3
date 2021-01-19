@@ -13,17 +13,17 @@ final class LargePeriodicPlainTextFormatter implements PeriodicFormatterInterfac
     /**
      * @var IntlDateFormatter
      */
-    protected $fmt;
+    private $fmt;
 
     /**
      * @var IntlDateFormatter
      */
-    protected $fmtDays;
+    private $fmtDays;
 
     /**
      * @var IntlDateFormatter
      */
-    protected $fmtShortDays;
+    private $fmtShortDays;
 
     /**
      * @var Translator

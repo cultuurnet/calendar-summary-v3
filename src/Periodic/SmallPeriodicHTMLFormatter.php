@@ -13,12 +13,12 @@ final class SmallPeriodicHTMLFormatter implements PeriodicFormatterInterface
     /**
      * @var IntlDateFormatter
      */
-    protected $fmtDay;
+    private $fmtDay;
 
     /**
      * @var IntlDateFormatter
      */
-    protected $fmtMonth;
+    private $fmtMonth;
 
     /**
      * @var Translator

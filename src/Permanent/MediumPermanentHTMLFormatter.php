@@ -12,12 +12,12 @@ final class MediumPermanentHTMLFormatter implements PermanentFormatterInterface
     /**
      * @var IntlDateFormatter
      */
-    protected $fmtDays;
+    private $fmtDays;
 
     /**
      * @var IntlDateFormatter
      */
-    protected $fmtShortDays;
+    private $fmtShortDays;
 
     /**
      * @var Translator

@@ -12,12 +12,12 @@ final class MediumSingleHTMLFormatter implements SingleFormatterInterface
     /**
      * @var IntlDateFormatter
      */
-    protected $fmt;
+    private $fmt;
 
     /**
      * @var IntlDateFormatter
      */
-    protected $fmtDay;
+    private $fmtDay;
 
     /**
      * @var Translator

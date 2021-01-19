@@ -12,17 +12,17 @@ final class LargePeriodicHTMLFormatter implements PeriodicFormatterInterface
     /**
      * @var IntlDateFormatter
      */
-    protected $fmt;
+    private $fmt;
 
     /**
      * @var IntlDateFormatter
      */
-    protected $fmtDays;
+    private $fmtDays;
 
     /**
      * @var IntlDateFormatter
      */
-    protected $fmtShortDays;
+    private $fmtShortDays;
 
     /**
      * @var Translator

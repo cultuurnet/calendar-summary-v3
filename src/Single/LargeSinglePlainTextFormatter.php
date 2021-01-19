@@ -12,17 +12,17 @@ final class LargeSinglePlainTextFormatter implements SingleFormatterInterface
     /**
      * @var IntlDateFormatter
      */
-    protected $fmt;
+    private $fmt;
 
     /**
      * @var IntlDateFormatter
      */
-    protected $fmtWeekDayLong;
+    private $fmtWeekDayLong;
 
     /**
      * @var IntlDateFormatter
      */
-    protected $fmtTime;
+    private $fmtTime;
 
     /**
      * @var Translator

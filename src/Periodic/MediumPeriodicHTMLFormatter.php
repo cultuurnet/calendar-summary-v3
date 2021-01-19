@@ -11,12 +11,12 @@ final class MediumPeriodicHTMLFormatter implements PeriodicFormatterInterface
     /**
      * @var IntlDateFormatter
      */
-    protected $fmt;
+    private $fmt;
 
     /**
      * @var IntlDateFormatter
      */
-    protected $fmtDay;
+    private $fmtDay;
 
     /**
      * @var Translator

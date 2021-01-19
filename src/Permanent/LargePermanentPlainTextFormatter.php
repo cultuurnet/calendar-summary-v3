@@ -22,12 +22,12 @@ final class LargePermanentPlainTextFormatter implements PermanentFormatterInterf
     /**
      * @var IntlDateFormatter
      */
-    protected $fmtDays;
+    private $fmtDays;
 
     /**
      * @var IntlDateFormatter
      */
-    protected $fmtShortDays;
+    private $fmtShortDays;
 
     /**
      * @var Translator
