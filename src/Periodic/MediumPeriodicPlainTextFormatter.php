@@ -4,10 +4,6 @@ namespace CultuurNet\CalendarSummaryV3\Periodic;
 
 use CultuurNet\SearchV3\ValueObjects\Offer;
 
-/**
- * Provide a medium plain text formatter for periodic calendar type.
- * @package CultuurNet\CalendarSummaryV3\Periodic
- */
 class MediumPeriodicPlainTextFormatter extends MediumPeriodicFormatter implements PeriodicFormatterInterface
 {
     public function format(Offer $offer): string

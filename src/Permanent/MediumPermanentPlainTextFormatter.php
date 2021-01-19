@@ -5,10 +5,6 @@ namespace CultuurNet\CalendarSummaryV3\Permanent;
 use CultuurNet\SearchV3\ValueObjects\Offer;
 use CultuurNet\SearchV3\ValueObjects\OpeningHours;
 
-/**
- * Provide a large plain text formatter for permanent calendar type.
- * @package CultuurNet\CalendarSummaryV3\Permanent
- */
 class MediumPermanentPlainTextFormatter extends MediumPermanentFormatter implements PermanentFormatterInterface
 {
     public function format(Offer $offer): string
