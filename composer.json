@@ -13,7 +13,7 @@
       "php": "^7.1",
       "ext-intl": "*",
       "delfimov/translate": "^2.4",
-      "cultuurnet/search-v3": "dev-master",
+      "cultuurnet/search-v3": "^1.2",
       "psr/container": "^1.0"
     },
     "autoload": {
