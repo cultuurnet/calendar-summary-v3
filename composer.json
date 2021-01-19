@@ -27,7 +27,6 @@
       }
     },
     "require-dev": {
-      "escapestudios/symfony2-coding-standard": "~2.0",
       "squizlabs/php_codesniffer": "2.6.1",
       "phing/phing": "~2.10",
       "satooshi/php-coveralls": "~0.7",
