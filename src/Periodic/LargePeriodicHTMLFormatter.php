@@ -5,10 +5,6 @@ namespace CultuurNet\CalendarSummaryV3\Periodic;
 use CultuurNet\SearchV3\ValueObjects\Offer;
 use DateTime;
 
-/**
- * Provide a large HTML formatter for periodic calendar type.
- * @package CultuurNet\CalendarSummaryV3\Periodic
- */
 class LargePeriodicHTMLFormatter extends LargePeriodicFormatter implements PeriodicFormatterInterface
 {
     public function format(Offer $offer): string

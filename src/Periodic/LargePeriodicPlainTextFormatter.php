@@ -7,10 +7,6 @@ use CultuurNet\SearchV3\ValueObjects\OpeningHours;
 use DateTime;
 use IntlDateFormatter;
 
-/**
- * Provide a large plain text formatter for periodic calendar type.
- * @package CultuurNet\CalendarSummaryV3\Periodic
- */
 class LargePeriodicPlainTextFormatter extends LargePeriodicFormatter implements PeriodicFormatterInterface
 {
     public function format(Offer $offer): string

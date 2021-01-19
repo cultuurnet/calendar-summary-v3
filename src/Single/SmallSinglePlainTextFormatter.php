@@ -5,9 +5,6 @@ namespace CultuurNet\CalendarSummaryV3\Single;
 use CultuurNet\SearchV3\ValueObjects\Offer;
 use DateTimeInterface;
 
-/**
- * Provides a formatter for formatting single events in small plain text format.
- */
 class SmallSinglePlainTextFormatter extends SmallSingleFormatter implements SingleFormatterInterface
 {
     public function format(Offer $offer): string
