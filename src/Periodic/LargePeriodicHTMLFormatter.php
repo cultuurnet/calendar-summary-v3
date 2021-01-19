@@ -90,7 +90,7 @@ final class LargePeriodicHTMLFormatter implements PeriodicFormatterInterface
      * @param $time
      * @return string
      */
-    protected function getFormattedTime($time)
+    private function getFormattedTime($time)
     {
         $formattedShortTime = ltrim($time, '0');
         if ($formattedShortTime == ':00') {
@@ -106,7 +106,7 @@ final class LargePeriodicHTMLFormatter implements PeriodicFormatterInterface
      * @param $daysOfWeek
      * @return string
      */
-    protected function getEarliestTime($openingHoursData, $daysOfWeek)
+    private function getEarliestTime($openingHoursData, $daysOfWeek)
     {
         $earliest = '';
         foreach ($openingHoursData as $openingHours) {
@@ -128,7 +128,7 @@ final class LargePeriodicHTMLFormatter implements PeriodicFormatterInterface
      * @param $daysOfWeek
      * @return string
      */
-    protected function getLatestTime($openingHoursData, $daysOfWeek)
+    private function getLatestTime($openingHoursData, $daysOfWeek)
     {
         $latest = '';
         foreach ($openingHoursData as $openingHours) {

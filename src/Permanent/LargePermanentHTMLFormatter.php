@@ -71,7 +71,7 @@ final class LargePermanentHTMLFormatter implements PermanentFormatterInterface
         return $this->formatSummary($output);
     }
 
-    protected function getFormattedTime(string $time): string
+    private function getFormattedTime(string $time): string
     {
         $formattedShortTime = ltrim($time, '0');
         if ($formattedShortTime == ':00') {
@@ -93,7 +93,7 @@ final class LargePermanentHTMLFormatter implements PermanentFormatterInterface
      * @param string[] $daysOfWeek
      * @return string
      */
-    protected function getEarliestTime(array $openingHoursData, array $daysOfWeek): string
+    private function getEarliestTime(array $openingHoursData, array $daysOfWeek): string
     {
         $earliest = '';
         foreach ($openingHoursData as $openingHours) {
@@ -115,7 +115,7 @@ final class LargePermanentHTMLFormatter implements PermanentFormatterInterface
      * @param string[] $daysOfWeek
      * @return string
      */
-    protected function getLatestTime(array $openingHoursData, array $daysOfWeek): string
+    private function getLatestTime(array $openingHoursData, array $daysOfWeek): string
     {
         $latest = '';
         foreach ($openingHoursData as $openingHours) {

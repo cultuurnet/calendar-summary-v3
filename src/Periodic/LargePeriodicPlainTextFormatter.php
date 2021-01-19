@@ -77,7 +77,7 @@ final class LargePeriodicPlainTextFormatter implements PeriodicFormatterInterfac
         return $output;
     }
 
-    protected function getFormattedTime(string $time): string
+    private function getFormattedTime(string $time): string
     {
         $formattedShortTime = ltrim($time, '0');
         if ($formattedShortTime == ':00') {
