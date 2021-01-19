@@ -19,7 +19,10 @@ use CultuurNet\CalendarSummaryV3\Periodic\SmallPeriodicHTMLFormatter;
 
 final class CalendarHTMLFormatter implements CalendarFormatterInterface
 {
-    protected $mapping = array();
+    /**
+     * @var array[]
+     */
+    private $mapping;
 
     public function __construct($langCode = 'nl_BE', $hidePastDates = false, $timeZone = 'Europe/Brussels')
     {
