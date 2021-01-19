@@ -12,12 +12,5 @@ use CultuurNet\SearchV3\ValueObjects\Offer;
 
 interface SingleFormatterInterface
 {
-
-    /**
-     * Format the given offer.
-     *
-     * @param \CultuurNet\SearchV3\ValueObjects\Offer $offer
-     * @return string
-     */
-    public function format(Offer $offer);
+    public function format(Offer $offer): string;
 }
