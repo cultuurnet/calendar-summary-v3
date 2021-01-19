@@ -41,7 +41,7 @@ class LargeSingleHTMLFormatter extends LargeSingleFormatter implements SingleFor
             $output .= ' ';
             $output .= '<span class="cf-date">' . $intlDateFrom . '</span>';
             $output .= '</time>';
-        } else if ($intlStartTimeFrom == $intlEndTimeEnd) {
+        } elseif ($intlStartTimeFrom == $intlEndTimeEnd) {
             $output = '<time itemprop="startDate" datetime="' . $dateFrom->format(\DateTime::ATOM) . '">';
             $output .= '<span class="cf-weekday cf-meta">' . $intlWeekDayFrom . '</span>';
             $output .= ' ';

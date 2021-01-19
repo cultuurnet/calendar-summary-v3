@@ -37,7 +37,7 @@ class LargeSinglePlainTextFormatter extends LargeSingleFormatter implements Sing
 
         if ($intlStartTimeFrom === '00:00' && $intlEndTimeEnd === '23:59') {
             $output = $intlWeekDayFrom . ' ' . $intlDateFrom;
-        } else if ($intlStartTimeFrom == $intlEndTimeEnd) {
+        } elseif ($intlStartTimeFrom == $intlEndTimeEnd) {
             $output = $intlWeekDayFrom . ' ' . $intlDateFrom . ' ';
             $output .= $this->trans->getTranslations()->t('at') . ' ' . $intlStartTimeFrom;
         } else {
