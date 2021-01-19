@@ -2,24 +2,18 @@
 
 namespace CultuurNet\CalendarSummaryV3\Periodic;
 
-use CultuurNet\CalendarSummaryV3\IntlDateFormatterFactory;
+use CultuurNet\CalendarSummaryV3\DateFormatter;
 use CultuurNet\CalendarSummaryV3\Translator;
 use CultuurNet\SearchV3\ValueObjects\Offer;
 use CultuurNet\SearchV3\ValueObjects\OpeningHours;
 use DateTime;
-use IntlDateFormatter;
 
 final class LargePeriodicPlainTextFormatter implements PeriodicFormatterInterface
 {
     /**
-     * @var IntlDateFormatter
+     * @var DateFormatter
      */
-    private $fmt;
-
-    /**
-     * @var IntlDateFormatter
-     */
-    private $fmtDays;
+    private $formatter;
 
     /**
      * @var Translator
@@ -28,8 +22,7 @@ final class LargePeriodicPlainTextFormatter implements PeriodicFormatterInterfac
 
     public function __construct(string $langCode)
     {
-        $this->fmt = IntlDateFormatterFactory::createFullDateFormatter($langCode);
-        $this->fmtDays = IntlDateFormatterFactory::createDayOfWeekFormatter($langCode);
+        $this->formatter = new DateFormatter($langCode);
 
         $this->trans = new Translator();
         $this->trans->setLanguage($langCode);
@@ -60,8 +53,8 @@ final class LargePeriodicPlainTextFormatter implements PeriodicFormatterInterfac
 
     private function generateDates(DateTime $dateFrom, DateTime $dateTo): string
     {
-        $intlDateFrom = $this->fmt->format($dateFrom);
-        $intlDateTo = $this->fmt->format($dateTo);
+        $intlDateFrom = $this->formatter->formatAsFullDate($dateFrom);
+        $intlDateTo = $this->formatter->formatAsFullDate($dateTo);
 
         $output_dates =  ucfirst($this->trans->getTranslations()->t('from')) . ' ';
         $output_dates .= $intlDateFrom . ' ' . $this->trans->getTranslations()->t('till') . ' ' . $intlDateTo;
@@ -80,7 +73,7 @@ final class LargePeriodicPlainTextFormatter implements PeriodicFormatterInterfac
         $formattedDays = [];
         foreach ($openingHoursData as $openingHours) {
             foreach ($openingHours->getDaysOfWeek() as $dayOfWeek) {
-                $translatedDay = $this->fmtDays->format(strtotime($dayOfWeek));
+                $translatedDay = $this->formatter->formatAsDayOfWeek(strtotime($dayOfWeek));
 
                 if (!isset($formattedDays[$dayOfWeek])) {
                     $formattedDays[$dayOfWeek] = $translatedDay

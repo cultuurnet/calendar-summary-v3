@@ -2,28 +2,17 @@
 
 namespace CultuurNet\CalendarSummaryV3\Periodic;
 
-use CultuurNet\CalendarSummaryV3\IntlDateFormatterFactory;
+use CultuurNet\CalendarSummaryV3\DateFormatter;
 use CultuurNet\CalendarSummaryV3\Translator;
 use CultuurNet\SearchV3\ValueObjects\Offer;
 use DateTime;
-use IntlDateFormatter;
 
 final class LargePeriodicHTMLFormatter implements PeriodicFormatterInterface
 {
     /**
-     * @var IntlDateFormatter
+     * @var DateFormatter
      */
-    private $fmt;
-
-    /**
-     * @var IntlDateFormatter
-     */
-    private $fmtDays;
-
-    /**
-     * @var IntlDateFormatter
-     */
-    private $fmtShortDays;
+    private $formatter;
 
     /**
      * @var Translator
@@ -32,9 +21,7 @@ final class LargePeriodicHTMLFormatter implements PeriodicFormatterInterface
 
     public function __construct(string $langCode)
     {
-        $this->fmt = IntlDateFormatterFactory::createFullDateFormatter($langCode);
-        $this->fmtDays = IntlDateFormatterFactory::createDayOfWeekFormatter($langCode);
-        $this->fmtShortDays = IntlDateFormatterFactory::createAbbreviatedDayOfWeekFormatter($langCode);
+        $this->formatter = new DateFormatter($langCode);
 
         $this->trans = new Translator();
         $this->trans->setLanguage($langCode);
@@ -129,8 +116,8 @@ final class LargePeriodicHTMLFormatter implements PeriodicFormatterInterface
     private function generateDates(DateTime $dateFrom, DateTime $dateTo)
     {
 
-        $intlDateFrom =$this->fmt->format($dateFrom);
-        $intlDateTo = $this->fmt->format($dateTo);
+        $intlDateFrom =$this->formatter->formatAsFullDate($dateFrom);
+        $intlDateTo = $this->formatter->formatAsFullDate($dateTo);
 
         $outputDates = '<p class="cf-period">';
         $outputDates .= '<time itemprop="startDate" datetime="' . $dateFrom->format("Y-m-d") . '">';
@@ -162,8 +149,8 @@ final class LargePeriodicHTMLFormatter implements PeriodicFormatterInterface
             $closes = $this->getFormattedTime($openingHours->getCloses());
 
             foreach ($daysOfWeek as $dayOfWeek) {
-                $daySpanShort = ucfirst($this->fmtShortDays->format(strtotime($dayOfWeek)));
-                $daySpanLong = ucfirst($this->fmtDays->format(strtotime($dayOfWeek)));
+                $daySpanShort = ucfirst($this->formatter->formatAsAbbreviatedDayOfWeek(strtotime($dayOfWeek)));
+                $daySpanLong = ucfirst($this->formatter->formatAsDayOfWeek(strtotime($dayOfWeek)));
 
                 if (!isset($formattedTimespans[$dayOfWeek])) {
                     $formattedTimespans[$dayOfWeek] =

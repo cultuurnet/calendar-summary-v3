@@ -2,24 +2,18 @@
 
 namespace CultuurNet\CalendarSummaryV3\Periodic;
 
-use CultuurNet\CalendarSummaryV3\IntlDateFormatterFactory;
+use CultuurNet\CalendarSummaryV3\DateFormatter;
 use CultuurNet\CalendarSummaryV3\Translator;
 use CultuurNet\SearchV3\ValueObjects\Offer;
 use \DateTime;
 use \DateTimeInterface;
-use IntlDateFormatter;
 
 final class SmallPeriodicPlainTextFormatter implements PeriodicFormatterInterface
 {
     /**
-     * @var IntlDateFormatter
+     * @var DateFormatter
      */
-    private $fmtDay;
-
-    /**
-     * @var IntlDateFormatter
-     */
-    private $fmtMonth;
+    private $formatter;
 
     /**
      * @var Translator
@@ -28,8 +22,7 @@ final class SmallPeriodicPlainTextFormatter implements PeriodicFormatterInterfac
 
     public function __construct(string $langCode)
     {
-        $this->fmtDay = IntlDateFormatterFactory::createDayNumberFormatter($langCode);
-        $this->fmtMonth = IntlDateFormatterFactory::createAbbreviatedMonthNameFormatter($langCode);
+        $this->formatter = new DateFormatter($langCode);
 
         $this->trans = new Translator();
         $this->trans->setLanguage($langCode);
@@ -61,8 +54,8 @@ final class SmallPeriodicPlainTextFormatter implements PeriodicFormatterInterfac
 
     private function formatDate(DateTimeInterface $date): string
     {
-        $dateFromDay = $this->fmtDay->format($date);
-        $dateFromMonth = $this->fmtMonth->format($date);
+        $dateFromDay = $this->formatter->formatAsDayNumber($date);
+        $dateFromMonth = $this->formatter->formatAsAbbreviatedMonthName($date);
         $dateFromMonth = rtrim($dateFromMonth, ".");
         $dateFromYear = $date->format('Y');
 

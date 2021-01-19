@@ -2,22 +2,16 @@
 
 namespace CultuurNet\CalendarSummaryV3\Periodic;
 
-use CultuurNet\CalendarSummaryV3\IntlDateFormatterFactory;
+use CultuurNet\CalendarSummaryV3\DateFormatter;
 use CultuurNet\CalendarSummaryV3\Translator;
 use CultuurNet\SearchV3\ValueObjects\Offer;
-use IntlDateFormatter;
 
 final class MediumPeriodicHTMLFormatter implements PeriodicFormatterInterface
 {
     /**
-     * @var IntlDateFormatter
+     * @var DateFormatter
      */
-    private $fmt;
-
-    /**
-     * @var IntlDateFormatter
-     */
-    private $fmtDay;
+    private $formatter;
 
     /**
      * @var Translator
@@ -26,8 +20,7 @@ final class MediumPeriodicHTMLFormatter implements PeriodicFormatterInterface
 
     public function __construct(string $langCode)
     {
-        $this->fmt = IntlDateFormatterFactory::createFullDateFormatter($langCode);
-        $this->fmtDay = IntlDateFormatterFactory::createDayOfWeekFormatter($langCode);
+        $this->formatter = new DateFormatter($langCode);
 
         $this->trans = new Translator();
         $this->trans->setLanguage($langCode);
@@ -36,11 +29,11 @@ final class MediumPeriodicHTMLFormatter implements PeriodicFormatterInterface
     public function format(Offer $offer): string
     {
         $dateFrom = $offer->getStartDate()->setTimezone(new \DateTimeZone(date_default_timezone_get()));
-        $intlDateFrom = $this->fmt->format($dateFrom);
-        $intlDateFromDay = $this->fmtDay->format($dateFrom);
+        $intlDateFrom = $this->formatter->formatAsFullDate($dateFrom);
+        $intlDateFromDay = $this->formatter->formatAsDayOfWeek($dateFrom);
 
         $dateTo = $offer->getEndDate()->setTimezone(new \DateTimeZone(date_default_timezone_get()));
-        $intlDateTo = $this->fmt->format($dateTo);
+        $intlDateTo = $this->formatter->formatAsFullDate($dateTo);
 
         if ($intlDateFrom == $intlDateTo) {
             $output = '<span class="cf-weekday cf-meta">' . $intlDateFromDay . '</span>';
