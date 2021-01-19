@@ -19,10 +19,19 @@ abstract class LargePeriodicFormatter
      */
     protected $fmt;
 
+    /**
+     * @var IntlDateFormatter
+     */
     protected $fmtDays;
 
+    /**
+     * @var IntlDateFormatter
+     */
     protected $fmtShortDays;
 
+    /**
+     * @var Translator
+     */
     protected $trans;
 
     /**

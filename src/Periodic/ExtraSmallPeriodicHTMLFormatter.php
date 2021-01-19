@@ -12,10 +12,7 @@ use \DateTimeInterface;
  */
 class ExtraSmallPeriodicHTMLFormatter extends ExtraSmallPeriodicFormatter implements PeriodicFormatterInterface
 {
-    /**
-     * {@inheritdoc}
-     */
-    public function format(Offer $offer)
+    public function format(Offer $offer): string
     {
         $startDate = $offer->getStartDate()->setTimezone(new \DateTimeZone(date_default_timezone_get()));
         $startDate->setTime(0, 0, 1);
@@ -29,33 +26,21 @@ class ExtraSmallPeriodicHTMLFormatter extends ExtraSmallPeriodicFormatter implem
         }
     }
 
-    /**
-     * @param DateTimeInterface $endDate
-     * @return string
-     */
-    private function formatStarted(DateTimeInterface $endDate)
+    private function formatStarted(DateTimeInterface $endDate): string
     {
         return
             '<span class="to meta">' . ucfirst($this->trans->getTranslations()->t('till')) . '</span> ' .
             $this->formatDate($endDate);
     }
 
-    /**
-     * @param DateTimeInterface $startDate
-     * @return string
-     */
-    private function formatNotStarted(DateTimeInterface $startDate)
+    private function formatNotStarted(DateTimeInterface $startDate): string
     {
         return
             '<span class="from meta">' . ucfirst($this->trans->getTranslations()->t('from_period')) . '</span> ' .
             $this->formatDate($startDate);
     }
 
-    /**
-     * @param DateTimeInterface $date
-     * @return string
-     */
-    private function formatDate(DateTimeInterface $date)
+    private function formatDate(DateTimeInterface $date): string
     {
         $dateFromDay = $this->fmtDay->format($date);
         $dateFromMonth = $this->fmtMonth->format($date);

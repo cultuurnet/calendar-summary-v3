@@ -24,12 +24,12 @@ abstract class SmallPeriodicFormatter
      */
     protected $fmtMonth;
 
+    /**
+     * @var Translator
+     */
     protected $trans;
 
-    /**
-     * SmallPeriodicHTMLFormatter constructor.
-     */
-    public function __construct($langCode)
+    public function __construct(string $langCode)
     {
         $this->fmtDay = new IntlDateFormatter(
             $langCode,

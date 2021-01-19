@@ -10,11 +10,7 @@ use CultuurNet\SearchV3\ValueObjects\Offer;
  */
 class MediumPeriodicPlainTextFormatter extends MediumPeriodicFormatter implements PeriodicFormatterInterface
 {
-
-    /**
-     * {@inheritdoc}
-     */
-    public function format(Offer $offer)
+    public function format(Offer $offer): string
     {
         $dateFrom = $offer->getStartDate()->setTimezone(new \DateTimeZone(date_default_timezone_get()));
         $intlDateFrom = $this->fmt->format($dateFrom);

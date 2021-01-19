@@ -26,12 +26,7 @@ abstract class ExtraSmallPeriodicFormatter
 
     protected $trans;
 
-    /**
-     * @var string $langCode
-     *
-     * ExtraSmallPeriodicHTMLFormatter constructor.
-     */
-    public function __construct($langCode)
+    public function __construct(string $langCode)
     {
         $this->fmtDay = new IntlDateFormatter(
             $langCode,

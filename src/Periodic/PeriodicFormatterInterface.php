@@ -9,13 +9,5 @@ use CultuurNet\SearchV3\ValueObjects\Offer;
  */
 interface PeriodicFormatterInterface
 {
-
-    /**
-     * Return formatted period string.
-     *
-     * @param \CultuurNet\SearchV3\ValueObjects\Offer $offer
-     *
-     * @return string
-     */
-    public function format(Offer $offer);
+    public function format(Offer $offer): string;
 }
