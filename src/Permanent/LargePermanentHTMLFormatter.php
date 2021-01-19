@@ -29,11 +29,7 @@ class LargePermanentHTMLFormatter extends LargePermanentFormatter implements Per
         return $formattedShortTime;
     }
 
-    /**
-     * @param $calsum
-     * @return mixed
-     */
-    protected function formatSummary(string $calsum)
+    protected function formatSummary(string $calsum): string
     {
         $calsum = str_replace('><', '> <', $calsum);
         return str_replace('  ', ' ', $calsum);
