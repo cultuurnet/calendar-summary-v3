@@ -186,6 +186,5 @@ class LargePermanentHTMLFormatter extends LargePermanentFormatter implements Per
             $outputWeek .= $sortedTimespan . '</li>';
         }
         return $outputWeek . '</ul>';
-
     }
 }
