@@ -28,15 +28,8 @@ final class ExtraSmallPeriodicPlainTextFormatter implements PeriodicFormatterInt
 
     public function __construct(string $langCode)
     {
-        $this->fmtMonth = new IntlDateFormatter(
-            $langCode,
-            IntlDateFormatter::FULL,
-            IntlDateFormatter::FULL,
-            date_default_timezone_get(),
-            IntlDateFormatter::GREGORIAN,
-            'M'
-        );
         $this->fmtDay = IntlDateFormatterFactory::createDayNumberFormatter($langCode);
+        $this->fmtMonth = IntlDateFormatterFactory::createMonthNumberFormatter($langCode);
 
         $this->trans = new Translator();
         $this->trans->setLanguage($langCode);
