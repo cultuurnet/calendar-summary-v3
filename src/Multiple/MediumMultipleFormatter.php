@@ -16,17 +16,11 @@ abstract class MediumMultipleFormatter
     protected $langCode;
 
     /**
-     * @var boolean $hidepast
+     * @var bool $hidepast
      */
     protected $hidePast;
 
-    /**
-     * @var string $langCode
-     * @var boolean $hidePastDates
-     *
-     * MediumMultipleHTMLFormatter constructor.
-     */
-    public function __construct($langCode, $hidePastDates)
+    public function __construct(string $langCode, bool $hidePastDates)
     {
         $this->langCode = $langCode;
         $this->hidePast = $hidePastDates;

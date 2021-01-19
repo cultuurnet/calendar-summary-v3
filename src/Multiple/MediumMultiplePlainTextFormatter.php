@@ -10,10 +10,7 @@ use CultuurNet\CalendarSummaryV3\Single\MediumSinglePlainTextFormatter;
  */
 class MediumMultiplePlainTextFormatter extends MediumMultipleFormatter implements MultipleFormatterInterface
 {
-    /**
-     * {@inheritdoc}
-     */
-    public function format(Event $event)
+    public function format(Event $event): string
     {
         $subEvents = $event->getSubEvents();
         $count = count($subEvents);

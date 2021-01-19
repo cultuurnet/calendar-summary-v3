@@ -10,10 +10,7 @@ use CultuurNet\SearchV3\ValueObjects\Event;
  */
 class SmallMultipleHTMLFormatter extends SmallMultipleFormatter implements MultipleFormatterInterface
 {
-    /**
-     * {@inheritdoc}
-     */
-    public function format(Event $event)
+    public function format(Event $event): string
     {
         $formatter = new MediumPeriodicHTMLFormatter($this->langCode);
         return $formatter->format($event);

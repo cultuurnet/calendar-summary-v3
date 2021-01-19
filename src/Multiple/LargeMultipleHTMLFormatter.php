@@ -10,10 +10,7 @@ use CultuurNet\CalendarSummaryV3\Single\LargeSingleHTMLFormatter;
  */
 class LargeMultipleHTMLFormatter extends LargeMultipleFormatter implements MultipleFormatterInterface
 {
-    /**
-    * {@inheritdoc}
-    */
-    public function format(Event $event)
+    public function format(Event $event): string
     {
         $subEvents = $event->getSubEvents();
         $output = '<ul class="cnw-event-date-info">';
