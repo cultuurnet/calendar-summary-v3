@@ -1,6 +1,6 @@
 <?php
 
-namespace CultuurNet\CalendarSummaryV3\Tests;
+namespace CultuurNet\CalendarSummaryV3;
 
 use CultuurNet\CalendarSummaryV3\CalendarPlainTextFormatter;
 use CultuurNet\CalendarSummaryV3\FormatterException;

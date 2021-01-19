@@ -1,6 +1,6 @@
 <?php
 
-namespace CultuurNet\CalendarSummaryV3\Tests\Single;
+namespace CultuurNet\CalendarSummaryV3\Single;
 
 use CultuurNet\CalendarSummaryV3\Single\SmallSinglePlainTextFormatter;
 use CultuurNet\SearchV3\ValueObjects\Event;
