@@ -19,6 +19,8 @@ final class IntlDateFormatterFactory
 
     private const PATTERN_MONTH_NAME = 'MMMM'; // Example 'september'
     private const PATTERN_MONTH_NAME_ABBREVIATED = 'MMM'; // Example 'sep'
+
+    private const PATTERN_TIME = 'HH:mm'; // Example '01:05', '12:15'
     /**
      * Used to format days as 1 - 31
      */
@@ -65,6 +67,14 @@ final class IntlDateFormatterFactory
     public static function createAbbreviatedMonthNameFormatter(string $langCode): IntlDateFormatter
     {
         return self::createFromPattern($langCode, self::PATTERN_MONTH_NAME_ABBREVIATED);
+    }
+
+    /**
+     * Used to format time as '01:05', '12:15', ...
+     */
+    public static function createTimeFormatter(string $langCode): IntlDateFormatter
+    {
+        return self::createFromPattern($langCode, self::PATTERN_TIME);
     }
 
     private static function createFromPattern(string $langCode, string $pattern): IntlDateFormatter

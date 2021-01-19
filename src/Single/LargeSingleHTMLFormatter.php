@@ -40,16 +40,8 @@ final class LargeSingleHTMLFormatter implements SingleFormatterInterface
             IntlDateFormatter::GREGORIAN,
             'd MMMM yyyy'
         );
-
-        $this->fmtTime = new IntlDateFormatter(
-            $langCode,
-            IntlDateFormatter::FULL,
-            IntlDateFormatter::FULL,
-            date_default_timezone_get(),
-            IntlDateFormatter::GREGORIAN,
-            'HH:mm'
-        );
         $this->fmtWeekDayLong = IntlDateFormatterFactory::createDayOfWeekFormatter($langCode);
+        $this->fmtTime = IntlDateFormatterFactory::createTimeFormatter($langCode);
 
         $this->trans = new Translator();
         $this->trans->setLanguage($langCode);
