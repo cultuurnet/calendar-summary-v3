@@ -1,10 +1,4 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: stijnswaanen
- * Date: 08/08/2018
- * Time: 11:48
- */
 
 namespace CultuurNet\CalendarSummaryV3\Periodic;
 
