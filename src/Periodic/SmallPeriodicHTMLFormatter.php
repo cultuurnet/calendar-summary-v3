@@ -28,15 +28,8 @@ final class SmallPeriodicHTMLFormatter implements PeriodicFormatterInterface
 
     public function __construct(string $langCode)
     {
-        $this->fmtMonth = new IntlDateFormatter(
-            $langCode,
-            IntlDateFormatter::FULL,
-            IntlDateFormatter::FULL,
-            date_default_timezone_get(),
-            IntlDateFormatter::GREGORIAN,
-            'MMM'
-        );
         $this->fmtDay = IntlDateFormatterFactory::createDayNumberFormatter($langCode);
+        $this->fmtMonth = IntlDateFormatterFactory::createAbbreviatedMonthNameFormatter($langCode);
 
         $this->trans = new Translator();
         $this->trans->setLanguage($langCode);

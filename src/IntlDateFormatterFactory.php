@@ -16,6 +16,9 @@ final class IntlDateFormatterFactory
 
     private const PATTERN_DAY_OF_WEEK = 'EEEE'; // Example 'tuesday'
     private const PATTERN_DAY_OF_WEEK_ABBREVIATED = 'EEE'; // Example 'tue'
+
+    private const PATTERN_MONTH_NAME = 'MMMM'; // Example 'september'
+    private const PATTERN_MONTH_NAME_ABBREVIATED = 'MMM'; // Example 'sep'
     /**
      * Used to format days as 1 - 31
      */
@@ -46,6 +49,22 @@ final class IntlDateFormatterFactory
     public static function createAbbreviatedDayOfWeekFormatter(string $langCode): IntlDateFormatter
     {
         return self::createFromPattern($langCode, self::PATTERN_DAY_OF_WEEK_ABBREVIATED);
+    }
+
+    /**
+     * Used to format months as 'september'
+     */
+    public static function createMonthNameFormatter(string $langCode): IntlDateFormatter
+    {
+        return self::createFromPattern($langCode, self::PATTERN_MONTH_NAME);
+    }
+
+    /**
+     * Used to format months as 'sep'
+     */
+    public static function createAbbreviatedMonthNameFormatter(string $langCode): IntlDateFormatter
+    {
+        return self::createFromPattern($langCode, self::PATTERN_MONTH_NAME_ABBREVIATED);
     }
 
     private static function createFromPattern(string $langCode, string $pattern): IntlDateFormatter
