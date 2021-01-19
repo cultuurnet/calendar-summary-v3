@@ -2,11 +2,52 @@
 
 namespace CultuurNet\CalendarSummaryV3\Single;
 
+use CultuurNet\CalendarSummaryV3\Translator;
 use CultuurNet\SearchV3\ValueObjects\Offer;
 use DateTimeInterface;
+use IntlDateFormatter;
 
-class MediumSingleHTMLFormatter extends MediumSingleFormatter implements SingleFormatterInterface
+class MediumSingleHTMLFormatter implements SingleFormatterInterface
 {
+    /**
+     * @var IntlDateFormatter
+     */
+    protected $fmt;
+
+    /**
+     * @var IntlDateFormatter
+     */
+    protected $fmtDay;
+
+    /**
+     * @var Translator
+     */
+    protected $trans;
+
+    public function __construct(string $langCode)
+    {
+        $this->fmt = new IntlDateFormatter(
+            $langCode,
+            IntlDateFormatter::FULL,
+            IntlDateFormatter::FULL,
+            date_default_timezone_get(),
+            IntlDateFormatter::GREGORIAN,
+            'd MMMM yyyy'
+        );
+
+        $this->fmtDay = new IntlDateFormatter(
+            $langCode,
+            IntlDateFormatter::FULL,
+            IntlDateFormatter::FULL,
+            date_default_timezone_get(),
+            IntlDateFormatter::GREGORIAN,
+            'eeee'
+        );
+
+        $this->trans = new Translator();
+        $this->trans->setLanguage($langCode);
+    }
+
     public function format(Offer $offer): string
     {
         $dateFrom = $offer->getStartDate()->setTimezone(new \DateTimeZone(date_default_timezone_get()));
