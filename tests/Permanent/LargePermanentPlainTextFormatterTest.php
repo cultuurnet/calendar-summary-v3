@@ -2,7 +2,6 @@
 
 namespace CultuurNet\CalendarSummaryV3\Permanent;
 
-use CultuurNet\CalendarSummaryV3\Permanent\LargePermanentPlainTextFormatter;
 use CultuurNet\SearchV3\ValueObjects\OpeningHours;
 use CultuurNet\SearchV3\ValueObjects\Place;
 use PHPUnit\Framework\TestCase;

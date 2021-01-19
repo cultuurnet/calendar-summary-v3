@@ -2,7 +2,6 @@
 
 namespace CultuurNet\CalendarSummaryV3\Periodic;
 
-use CultuurNet\CalendarSummaryV3\Periodic\SmallPeriodicPlainTextFormatter;
 use CultuurNet\SearchV3\ValueObjects\Event;
 use PHPUnit\Framework\TestCase;
 

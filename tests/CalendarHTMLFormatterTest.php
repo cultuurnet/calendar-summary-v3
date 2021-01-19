@@ -2,8 +2,6 @@
 
 namespace CultuurNet\CalendarSummaryV3;
 
-use CultuurNet\CalendarSummaryV3\CalendarHTMLFormatter;
-use CultuurNet\CalendarSummaryV3\FormatterException;
 use CultuurNet\SearchV3\ValueObjects\Event;
 use PHPUnit\Framework\TestCase;
 

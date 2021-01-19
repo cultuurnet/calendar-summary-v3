@@ -2,7 +2,6 @@
 
 namespace CultuurNet\CalendarSummaryV3\Multiple;
 
-use CultuurNet\CalendarSummaryV3\Multiple\SmallMultiplePlainTextFormatter;
 use CultuurNet\SearchV3\ValueObjects\Event;
 use PHPUnit\Framework\TestCase;
 
