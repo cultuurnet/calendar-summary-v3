@@ -26,10 +26,8 @@ final class MediumMultiplePlainTextFormatter implements MultipleFormatterInterfa
     public function format(Event $event): string
     {
         $subEvents = $event->getSubEvents();
-        $count = count($subEvents);
         $now = new \DateTime();
-
-        $output = '';
+        $output = [];
 
         foreach ($subEvents as $key => $subEvent) {
             $formatter = new MediumSinglePlainTextFormatter($this->langCode);
@@ -40,13 +38,10 @@ final class MediumMultiplePlainTextFormatter implements MultipleFormatterInterfa
 
             if (!$this->hidePast ||
                 $subEvent->getEndDate()->setTimezone(new \DateTimeZone(date_default_timezone_get())) > $now) {
-                $output .= $formatter->format($event);
-                if ($key + 1 !== $count) {
-                    $output .= PHP_EOL;
-                }
+                $output[] = $formatter->format($event);
             }
         }
 
-        return $output;
+        return implode(PHP_EOL, $output);
     }
 }
