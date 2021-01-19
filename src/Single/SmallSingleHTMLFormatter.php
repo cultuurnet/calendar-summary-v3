@@ -2,6 +2,7 @@
 
 namespace CultuurNet\CalendarSummaryV3\Single;
 
+use CultuurNet\CalendarSummaryV3\IntlDateFormatterFactory;
 use CultuurNet\CalendarSummaryV3\Translator;
 use CultuurNet\SearchV3\ValueObjects\Offer;
 use DateTimeInterface;
@@ -26,15 +27,6 @@ final class SmallSingleHTMLFormatter implements SingleFormatterInterface
 
     public function __construct(string $langCode)
     {
-        $this->fmtDay = new IntlDateFormatter(
-            $langCode,
-            IntlDateFormatter::FULL,
-            IntlDateFormatter::FULL,
-            date_default_timezone_get(),
-            IntlDateFormatter::GREGORIAN,
-            'd'
-        );
-
         $this->fmtMonth = new IntlDateFormatter(
             $langCode,
             IntlDateFormatter::FULL,
@@ -43,6 +35,7 @@ final class SmallSingleHTMLFormatter implements SingleFormatterInterface
             IntlDateFormatter::GREGORIAN,
             'MMM'
         );
+        $this->fmtDay = IntlDateFormatterFactory::createDayNumberFormatter($langCode);
 
         $this->trans = new Translator();
         $this->trans->setLanguage($langCode);
