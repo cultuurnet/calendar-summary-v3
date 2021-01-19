@@ -7,7 +7,9 @@ use DElfimov\Translate\Loader\PhpArrayLoader;
 
 class Translator
 {
-
+    /**
+     * @var Translate
+     */
     protected $translator;
 
     public function __construct()
@@ -65,12 +67,12 @@ class Translator
         );
     }
 
-    public function setLanguage($langCode)
+    public function setLanguage($langCode): void
     {
         $this->translator->setLanguage(substr($langCode, 0, 2));
     }
 
-    public function getTranslations()
+    public function getTranslations(): Translate
     {
         return $this->translator;
     }
