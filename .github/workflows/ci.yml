@@ -17,7 +17,9 @@ jobs:
               uses: shivammathur/setup-php@v2
               with:
                   php-version: ${{ matrix.php-versions }}
+                  ini-values: xdebug.mode=coverage
                   extensions: intl
+                  tools: composer:v1
 
             - name: Check PHP Version
               run: php -v
