@@ -21,13 +21,22 @@ abstract class LargePermanentFormatter
         'sunday'
     );
 
+    /**
+     * @var IntlDateFormatter
+     */
     protected $fmtDays;
 
+    /**
+     * @var IntlDateFormatter
+     */
     protected $fmtShortDays;
 
+    /**
+     * @var Translator
+     */
     protected $trans;
 
-    public function __construct($langCode)
+    public function __construct(string $langCode)
     {
         $this->fmtDays = new IntlDateFormatter(
             $langCode,

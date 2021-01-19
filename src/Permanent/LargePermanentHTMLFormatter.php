@@ -3,6 +3,7 @@
 namespace CultuurNet\CalendarSummaryV3\Permanent;
 
 use CultuurNet\SearchV3\ValueObjects\Offer;
+use CultuurNet\SearchV3\ValueObjects\OpeningHours;
 
 /**
  * Provide a large HTML formatter for permanent calendar type.
@@ -10,11 +11,7 @@ use CultuurNet\SearchV3\ValueObjects\Offer;
  */
 class LargePermanentHTMLFormatter extends LargePermanentFormatter implements PermanentFormatterInterface
 {
-
-    /**
-     * {@inheritdoc}
-     */
-    public function format(Offer $offer)
+    public function format(Offer $offer): string
     {
         $output = '';
         if ($offer->getOpeningHours()) {
@@ -27,11 +24,7 @@ class LargePermanentHTMLFormatter extends LargePermanentFormatter implements Per
         return $this->formatSummary($output);
     }
 
-    /**
-     * @param $time
-     * @return string
-     */
-    protected function getFormattedTime($time)
+    protected function getFormattedTime(string $time): string
     {
         $formattedShortTime = ltrim($time, '0');
         if ($formattedShortTime == ':00') {
@@ -44,7 +37,7 @@ class LargePermanentHTMLFormatter extends LargePermanentFormatter implements Per
      * @param $calsum
      * @return mixed
      */
-    protected function formatSummary($calsum)
+    protected function formatSummary(string $calsum)
     {
         $calsum = str_replace('><', '> <', $calsum);
         return str_replace('  ', ' ', $calsum);
@@ -53,11 +46,11 @@ class LargePermanentHTMLFormatter extends LargePermanentFormatter implements Per
     /**
      * Retrieve the earliest time for the specified daysOfWeek.
      *
-     * @param $openingHoursData
-     * @param $daysOfWeek
+     * @param OpeningHours[] $openingHoursData
+     * @param string[] $daysOfWeek
      * @return string
      */
-    protected function getEarliestTime($openingHoursData, $daysOfWeek)
+    protected function getEarliestTime(array $openingHoursData, array $daysOfWeek): string
     {
         $earliest = '';
         foreach ($openingHoursData as $openingHours) {
@@ -75,11 +68,11 @@ class LargePermanentHTMLFormatter extends LargePermanentFormatter implements Per
     /**
      * Retrieve the latest time for the specified daysOfWeek.
      *
-     * @param $openingHoursData
-     * @param $daysOfWeek
+     * @param OpeningHours[] $openingHoursData
+     * @param string[] $daysOfWeek
      * @return string
      */
-    protected function getLatestTime($openingHoursData, $daysOfWeek)
+    protected function getLatestTime(array $openingHoursData, array $daysOfWeek): string
     {
         $latest = '';
         foreach ($openingHoursData as $openingHours) {
@@ -94,14 +87,7 @@ class LargePermanentHTMLFormatter extends LargePermanentFormatter implements Per
         return $latest;
     }
 
-    /**
-     * Generate a formatted timespan.
-     *
-     * @param $daysOfWeek
-     * @param bool $long
-     * @return string
-     */
-    protected function generateFormattedTimespan($dayOfWeek, $long = false)
+    protected function generateFormattedTimespan(string $dayOfWeek, bool $long = false): string
     {
         if ($long) {
             return ucfirst($this->trans->getTranslations()->t($dayOfWeek));
@@ -112,12 +98,9 @@ class LargePermanentHTMLFormatter extends LargePermanentFormatter implements Per
     }
 
     /**
-     * Generate a weekscheme based on the given opening hours.
-     *
-     * @param $openingHoursData
-     * @return string
+     * @param OpeningHours[] $openingHoursData
      */
-    protected function generateWeekScheme($openingHoursData)
+    protected function generateWeekScheme(array $openingHoursData): string
     {
         $outputWeek = '<ul class="list-unstyled">';
         // Create an array with formatted timespans.
