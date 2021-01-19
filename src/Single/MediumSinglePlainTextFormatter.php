@@ -7,22 +7,22 @@ use CultuurNet\SearchV3\ValueObjects\Offer;
 use DateTimeInterface;
 use IntlDateFormatter;
 
-class MediumSinglePlainTextFormatter implements SingleFormatterInterface
+final class MediumSinglePlainTextFormatter implements SingleFormatterInterface
 {
     /**
      * @var IntlDateFormatter
      */
-    protected $fmt;
+    private $fmt;
 
     /**
      * @var IntlDateFormatter
      */
-    protected $fmtDay;
+    private $fmtDay;
 
     /**
      * @var Translator
      */
-    protected $trans;
+    private $trans;
 
     public function __construct(string $langCode)
     {
@@ -62,7 +62,7 @@ class MediumSinglePlainTextFormatter implements SingleFormatterInterface
         return $output;
     }
 
-    protected function formatSameDay(DateTimeInterface $dateFrom): string
+    private function formatSameDay(DateTimeInterface $dateFrom): string
     {
         $intlDateFrom = $this->fmt->format($dateFrom);
         $intlDateDayFrom = $this->fmtDay->format($dateFrom);
@@ -72,7 +72,7 @@ class MediumSinglePlainTextFormatter implements SingleFormatterInterface
         return $output;
     }
 
-    protected function formatMoreDays(DateTimeInterface $dateFrom, DateTimeInterface $dateEnd): string
+    private function formatMoreDays(DateTimeInterface $dateFrom, DateTimeInterface $dateEnd): string
     {
         $intlDateFrom = $this->fmt->format($dateFrom);
         $intlDateDayFrom = $this->fmtDay->format($dateFrom);

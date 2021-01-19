@@ -8,22 +8,22 @@ use \DateTime;
 use \DateTimeInterface;
 use IntlDateFormatter;
 
-class SmallPeriodicHTMLFormatter implements PeriodicFormatterInterface
+final class SmallPeriodicHTMLFormatter implements PeriodicFormatterInterface
 {
     /**
      * @var IntlDateFormatter
      */
-    protected $fmtDay;
+    private $fmtDay;
 
     /**
      * @var IntlDateFormatter
      */
-    protected $fmtMonth;
+    private $fmtMonth;
 
     /**
      * @var Translator
      */
-    protected $trans;
+    private $trans;
 
     public function __construct(string $langCode)
     {

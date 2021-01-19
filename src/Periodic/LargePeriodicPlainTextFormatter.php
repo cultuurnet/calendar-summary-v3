@@ -8,27 +8,27 @@ use CultuurNet\SearchV3\ValueObjects\OpeningHours;
 use DateTime;
 use IntlDateFormatter;
 
-class LargePeriodicPlainTextFormatter implements PeriodicFormatterInterface
+final class LargePeriodicPlainTextFormatter implements PeriodicFormatterInterface
 {
     /**
      * @var IntlDateFormatter
      */
-    protected $fmt;
+    private $fmt;
 
     /**
      * @var IntlDateFormatter
      */
-    protected $fmtDays;
+    private $fmtDays;
 
     /**
      * @var IntlDateFormatter
      */
-    protected $fmtShortDays;
+    private $fmtShortDays;
 
     /**
      * @var Translator
      */
-    protected $trans;
+    private $trans;
 
     public function __construct(string $langCode)
     {
@@ -77,7 +77,7 @@ class LargePeriodicPlainTextFormatter implements PeriodicFormatterInterface
         return $output;
     }
 
-    protected function getFormattedTime(string $time): string
+    private function getFormattedTime(string $time): string
     {
         $formattedShortTime = ltrim($time, '0');
         if ($formattedShortTime == ':00') {
@@ -86,7 +86,7 @@ class LargePeriodicPlainTextFormatter implements PeriodicFormatterInterface
         return $formattedShortTime;
     }
 
-    protected function generateDates(DateTime $dateFrom, DateTime $dateTo): string
+    private function generateDates(DateTime $dateFrom, DateTime $dateTo): string
     {
         $intlDateFrom = $this->fmt->format($dateFrom);
         $intlDateTo = $this->fmt->format($dateTo);
@@ -100,7 +100,7 @@ class LargePeriodicPlainTextFormatter implements PeriodicFormatterInterface
      * @param OpeningHours[]
      * @return string
      */
-    protected function generateWeekScheme(array $openingHoursData): string
+    private function generateWeekScheme(array $openingHoursData): string
     {
         $outputWeek = '(';
 

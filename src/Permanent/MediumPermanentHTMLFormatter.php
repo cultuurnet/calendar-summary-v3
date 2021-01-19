@@ -7,22 +7,22 @@ use CultuurNet\SearchV3\ValueObjects\Offer;
 use CultuurNet\SearchV3\ValueObjects\OpeningHours;
 use IntlDateFormatter;
 
-class MediumPermanentHTMLFormatter implements PermanentFormatterInterface
+final class MediumPermanentHTMLFormatter implements PermanentFormatterInterface
 {
     /**
      * @var IntlDateFormatter
      */
-    protected $fmtDays;
+    private $fmtDays;
 
     /**
      * @var IntlDateFormatter
      */
-    protected $fmtShortDays;
+    private $fmtShortDays;
 
     /**
      * @var Translator
      */
-    protected $trans;
+    private $trans;
 
     public function __construct(string $langCode)
     {
@@ -67,7 +67,7 @@ class MediumPermanentHTMLFormatter implements PermanentFormatterInterface
      * @param OpeningHours[] $openingHoursData
      * @return string
      */
-    protected function generateWeekScheme(array $openingHoursData): string
+    private function generateWeekScheme(array $openingHoursData): string
     {
         $outputWeek = '<span>' . ucfirst($this->trans->getTranslations()->t('open')) . ' '
             . '<span class="cf-weekdays">';

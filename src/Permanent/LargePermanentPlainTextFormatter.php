@@ -7,9 +7,9 @@ use CultuurNet\SearchV3\ValueObjects\Offer;
 use CultuurNet\SearchV3\ValueObjects\OpeningHours;
 use IntlDateFormatter;
 
-class LargePermanentPlainTextFormatter implements PermanentFormatterInterface
+final class LargePermanentPlainTextFormatter implements PermanentFormatterInterface
 {
-    protected $daysOfWeek = array(
+    private $daysOfWeek = array(
         'monday',
         'tuesday',
         'wednesday',
@@ -22,17 +22,17 @@ class LargePermanentPlainTextFormatter implements PermanentFormatterInterface
     /**
      * @var IntlDateFormatter
      */
-    protected $fmtDays;
+    private $fmtDays;
 
     /**
      * @var IntlDateFormatter
      */
-    protected $fmtShortDays;
+    private $fmtShortDays;
 
     /**
      * @var Translator
      */
-    protected $trans;
+    private $trans;
 
     public function __construct(string $langCode)
     {
@@ -69,7 +69,7 @@ class LargePermanentPlainTextFormatter implements PermanentFormatterInterface
         return $output;
     }
 
-    protected function getFormattedTime(string $time): string
+    private function getFormattedTime(string $time): string
     {
         $formattedShortTime = ltrim($time, '0');
         if ($formattedShortTime == ':00') {
@@ -82,7 +82,7 @@ class LargePermanentPlainTextFormatter implements PermanentFormatterInterface
      * @param OpeningHours[] $openingHoursData
      * @return string
      */
-    protected function generateWeekScheme(array $openingHoursData): string
+    private function generateWeekScheme(array $openingHoursData): string
     {
         $outputWeek = '';
         // Create an array with formatted days.

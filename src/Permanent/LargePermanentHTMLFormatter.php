@@ -7,9 +7,9 @@ use CultuurNet\SearchV3\ValueObjects\Offer;
 use CultuurNet\SearchV3\ValueObjects\OpeningHours;
 use IntlDateFormatter;
 
-class LargePermanentHTMLFormatter implements PermanentFormatterInterface
+final class LargePermanentHTMLFormatter implements PermanentFormatterInterface
 {
-    protected $daysOfWeek = array(
+    private $daysOfWeek = array(
         'monday',
         'tuesday',
         'wednesday',
@@ -22,17 +22,17 @@ class LargePermanentHTMLFormatter implements PermanentFormatterInterface
     /**
      * @var IntlDateFormatter
      */
-    protected $fmtDays;
+    private $fmtDays;
 
     /**
      * @var IntlDateFormatter
      */
-    protected $fmtShortDays;
+    private $fmtShortDays;
 
     /**
      * @var Translator
      */
-    protected $trans;
+    private $trans;
 
     public function __construct(string $langCode)
     {
@@ -71,7 +71,7 @@ class LargePermanentHTMLFormatter implements PermanentFormatterInterface
         return $this->formatSummary($output);
     }
 
-    protected function getFormattedTime(string $time): string
+    private function getFormattedTime(string $time): string
     {
         $formattedShortTime = ltrim($time, '0');
         if ($formattedShortTime == ':00') {
@@ -80,7 +80,7 @@ class LargePermanentHTMLFormatter implements PermanentFormatterInterface
         return $formattedShortTime;
     }
 
-    protected function formatSummary(string $calsum): string
+    private function formatSummary(string $calsum): string
     {
         $calsum = str_replace('><', '> <', $calsum);
         return str_replace('  ', ' ', $calsum);
@@ -93,7 +93,7 @@ class LargePermanentHTMLFormatter implements PermanentFormatterInterface
      * @param string[] $daysOfWeek
      * @return string
      */
-    protected function getEarliestTime(array $openingHoursData, array $daysOfWeek): string
+    private function getEarliestTime(array $openingHoursData, array $daysOfWeek): string
     {
         $earliest = '';
         foreach ($openingHoursData as $openingHours) {
@@ -115,7 +115,7 @@ class LargePermanentHTMLFormatter implements PermanentFormatterInterface
      * @param string[] $daysOfWeek
      * @return string
      */
-    protected function getLatestTime(array $openingHoursData, array $daysOfWeek): string
+    private function getLatestTime(array $openingHoursData, array $daysOfWeek): string
     {
         $latest = '';
         foreach ($openingHoursData as $openingHours) {
@@ -130,7 +130,7 @@ class LargePermanentHTMLFormatter implements PermanentFormatterInterface
         return $latest;
     }
 
-    protected function generateFormattedTimespan(string $dayOfWeek, bool $long = false): string
+    private function generateFormattedTimespan(string $dayOfWeek, bool $long = false): string
     {
         if ($long) {
             return ucfirst($this->trans->getTranslations()->t($dayOfWeek));
@@ -143,7 +143,7 @@ class LargePermanentHTMLFormatter implements PermanentFormatterInterface
     /**
      * @param OpeningHours[] $openingHoursData
      */
-    protected function generateWeekScheme(array $openingHoursData): string
+    private function generateWeekScheme(array $openingHoursData): string
     {
         $outputWeek = '<ul class="list-unstyled">';
         // Create an array with formatted timespans.

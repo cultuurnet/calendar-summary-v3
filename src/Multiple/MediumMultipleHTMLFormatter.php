@@ -5,17 +5,17 @@ namespace CultuurNet\CalendarSummaryV3\Multiple;
 use CultuurNet\SearchV3\ValueObjects\Event;
 use CultuurNet\CalendarSummaryV3\Single\MediumSingleHTMLFormatter;
 
-class MediumMultipleHTMLFormatter implements MultipleFormatterInterface
+final class MediumMultipleHTMLFormatter implements MultipleFormatterInterface
 {
     /**
      * @var string $langCode
      */
-    protected $langCode;
+    private $langCode;
 
     /**
      * @var bool $hidepast
      */
-    protected $hidePast;
+    private $hidePast;
 
     public function __construct(string $langCode, bool $hidePastDates)
     {

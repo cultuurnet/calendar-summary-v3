@@ -4,7 +4,7 @@ namespace CultuurNet\CalendarSummaryV3;
 
 use Exception;
 
-class FormatterException extends \Exception
+final class FormatterException extends \Exception
 {
 
 }

@@ -6,12 +6,12 @@ use CultuurNet\CalendarSummaryV3\Translator;
 use CultuurNet\SearchV3\ValueObjects\Event;
 use DateTimeZone;
 
-class ExtraSmallMultipleHTMLFormatter implements MultipleFormatterInterface
+final class ExtraSmallMultipleHTMLFormatter implements MultipleFormatterInterface
 {
     /**
      * @var Translator
      */
-    protected $trans;
+    private $trans;
 
     public function __construct(string $langCode)
     {

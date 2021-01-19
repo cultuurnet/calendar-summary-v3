@@ -7,27 +7,27 @@ use CultuurNet\SearchV3\ValueObjects\Offer;
 use DateTime;
 use IntlDateFormatter;
 
-class LargePeriodicHTMLFormatter implements PeriodicFormatterInterface
+final class LargePeriodicHTMLFormatter implements PeriodicFormatterInterface
 {
     /**
      * @var IntlDateFormatter
      */
-    protected $fmt;
+    private $fmt;
 
     /**
      * @var IntlDateFormatter
      */
-    protected $fmtDays;
+    private $fmtDays;
 
     /**
      * @var IntlDateFormatter
      */
-    protected $fmtShortDays;
+    private $fmtShortDays;
 
     /**
      * @var Translator
      */
-    protected $trans;
+    private $trans;
 
     public function __construct(string $langCode)
     {
@@ -80,7 +80,7 @@ class LargePeriodicHTMLFormatter implements PeriodicFormatterInterface
      * @param $calsum
      * @return mixed
      */
-    protected function formatSummary($calsum)
+    private function formatSummary($calsum)
     {
         $calsum = str_replace('><', '> <', $calsum);
         return str_replace('  ', ' ', $calsum);
@@ -90,7 +90,7 @@ class LargePeriodicHTMLFormatter implements PeriodicFormatterInterface
      * @param $time
      * @return string
      */
-    protected function getFormattedTime($time)
+    private function getFormattedTime($time)
     {
         $formattedShortTime = ltrim($time, '0');
         if ($formattedShortTime == ':00') {
@@ -106,7 +106,7 @@ class LargePeriodicHTMLFormatter implements PeriodicFormatterInterface
      * @param $daysOfWeek
      * @return string
      */
-    protected function getEarliestTime($openingHoursData, $daysOfWeek)
+    private function getEarliestTime($openingHoursData, $daysOfWeek)
     {
         $earliest = '';
         foreach ($openingHoursData as $openingHours) {
@@ -128,7 +128,7 @@ class LargePeriodicHTMLFormatter implements PeriodicFormatterInterface
      * @param $daysOfWeek
      * @return string
      */
-    protected function getLatestTime($openingHoursData, $daysOfWeek)
+    private function getLatestTime($openingHoursData, $daysOfWeek)
     {
         $latest = '';
         foreach ($openingHoursData as $openingHours) {
@@ -148,7 +148,7 @@ class LargePeriodicHTMLFormatter implements PeriodicFormatterInterface
      * @param DateTime $dateTo
      * @return string
      */
-    protected function generateDates(DateTime $dateFrom, DateTime $dateTo)
+    private function generateDates(DateTime $dateFrom, DateTime $dateTo)
     {
 
         $intlDateFrom =$this->fmt->format($dateFrom);
@@ -168,7 +168,7 @@ class LargePeriodicHTMLFormatter implements PeriodicFormatterInterface
      * @param $openingHoursData
      * @return string
      */
-    protected function generateWeekScheme($openingHoursData)
+    private function generateWeekScheme($openingHoursData)
     {
         $outputWeek = '<p class="cf-openinghours">' . $this->trans->getTranslations()->t('open') . ':</p>';
         $outputWeek .= '<ul class="list-unstyled">';

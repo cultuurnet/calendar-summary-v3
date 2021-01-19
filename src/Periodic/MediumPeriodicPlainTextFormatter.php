@@ -6,22 +6,22 @@ use CultuurNet\CalendarSummaryV3\Translator;
 use CultuurNet\SearchV3\ValueObjects\Offer;
 use IntlDateFormatter;
 
-class MediumPeriodicPlainTextFormatter implements PeriodicFormatterInterface
+final class MediumPeriodicPlainTextFormatter implements PeriodicFormatterInterface
 {
     /**
      * @var IntlDateFormatter
      */
-    protected $fmt;
+    private $fmt;
 
     /**
      * @var IntlDateFormatter
      */
-    protected $fmtDay;
+    private $fmtDay;
 
     /**
      * @var Translator
      */
-    protected $trans;
+    private $trans;
 
     public function __construct(string $langCode)
     {
