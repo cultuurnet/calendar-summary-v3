@@ -10,7 +10,7 @@ final class Translator
     /**
      * @var Translate
      */
-    protected $translator;
+    private $translator;
 
     public function __construct()
     {
