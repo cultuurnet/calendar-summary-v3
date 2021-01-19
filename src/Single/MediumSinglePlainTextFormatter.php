@@ -27,14 +27,7 @@ final class MediumSinglePlainTextFormatter implements SingleFormatterInterface
 
     public function __construct(string $langCode)
     {
-        $this->fmt = new IntlDateFormatter(
-            $langCode,
-            IntlDateFormatter::FULL,
-            IntlDateFormatter::FULL,
-            date_default_timezone_get(),
-            IntlDateFormatter::GREGORIAN,
-            'd MMMM yyyy'
-        );
+        $this->fmt = IntlDateFormatterFactory::createFullDateFormatter($langCode);
         $this->fmtDay = IntlDateFormatterFactory::createDayOfWeekFormatter($langCode);
 
         $this->trans = new Translator();

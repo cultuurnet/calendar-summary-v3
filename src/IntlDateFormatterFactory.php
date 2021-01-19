@@ -21,6 +21,8 @@ final class IntlDateFormatterFactory
     private const PATTERN_MONTH_NAME_ABBREVIATED = 'MMM'; // Example 'sep'
 
     private const PATTERN_TIME = 'HH:mm'; // Example '01:05', '12:15'
+    private const PATTERN_FULL_DATE = 'd MMMM yyyy'; // Example '1 january 2021'
+
     /**
      * Used to format days as 1 - 31
      */
@@ -75,6 +77,14 @@ final class IntlDateFormatterFactory
     public static function createTimeFormatter(string $langCode): IntlDateFormatter
     {
         return self::createFromPattern($langCode, self::PATTERN_TIME);
+    }
+
+    /**
+     * Used to format dates as '01 november 2021'
+     */
+    public static function createFullDateFormatter(string $langCode): IntlDateFormatter
+    {
+        return self::createFromPattern($langCode, self::PATTERN_FULL_DATE);
     }
 
     private static function createFromPattern(string $langCode, string $pattern): IntlDateFormatter

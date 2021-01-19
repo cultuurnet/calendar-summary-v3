@@ -28,14 +28,7 @@ final class LargePeriodicPlainTextFormatter implements PeriodicFormatterInterfac
 
     public function __construct(string $langCode)
     {
-        $this->fmt = new IntlDateFormatter(
-            $langCode,
-            IntlDateFormatter::FULL,
-            IntlDateFormatter::FULL,
-            date_default_timezone_get(),
-            IntlDateFormatter::GREGORIAN,
-            'd MMMM yyyy'
-        );
+        $this->fmt = IntlDateFormatterFactory::createFullDateFormatter($langCode);
         $this->fmtDays = IntlDateFormatterFactory::createDayOfWeekFormatter($langCode);
 
         $this->trans = new Translator();
