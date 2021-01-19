@@ -2,11 +2,52 @@
 
 namespace CultuurNet\CalendarSummaryV3\Permanent;
 
+use CultuurNet\CalendarSummaryV3\Translator;
 use CultuurNet\SearchV3\ValueObjects\Offer;
 use CultuurNet\SearchV3\ValueObjects\OpeningHours;
+use IntlDateFormatter;
 
-class MediumPermanentHTMLFormatter extends MediumPermanentFormatter implements PermanentFormatterInterface
+class MediumPermanentHTMLFormatter implements PermanentFormatterInterface
 {
+    /**
+     * @var IntlDateFormatter
+     */
+    protected $fmtDays;
+
+    /**
+     * @var IntlDateFormatter
+     */
+    protected $fmtShortDays;
+
+    /**
+     * @var Translator
+     */
+    protected $trans;
+
+    public function __construct(string $langCode)
+    {
+        $this->fmtDays = new IntlDateFormatter(
+            $langCode,
+            IntlDateFormatter::FULL,
+            IntlDateFormatter::FULL,
+            date_default_timezone_get(),
+            IntlDateFormatter::GREGORIAN,
+            'EEEE'
+        );
+
+        $this->fmtShortDays = new IntlDateFormatter(
+            $langCode,
+            IntlDateFormatter::FULL,
+            IntlDateFormatter::FULL,
+            date_default_timezone_get(),
+            IntlDateFormatter::GREGORIAN,
+            'EEE'
+        );
+
+        $this->trans = new Translator();
+        $this->trans->setLanguage($langCode);
+    }
+
     public function format(Offer $offer): string
     {
         $output = '';
