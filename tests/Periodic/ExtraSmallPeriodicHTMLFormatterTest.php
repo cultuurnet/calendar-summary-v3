@@ -27,8 +27,17 @@ class ExtraSmallPeriodicHTMLFormatterTest extends TestCase
         $offer->setStartDate(new \DateTime('25-11-2025'));
         $offer->setEndDate(new \DateTime('30-11-2030'));
 
+        $expected =
+            '<span class="from meta">Vanaf</span>' .
+            ' ' .
+            '<span class="cf-date">25</span>' .
+            '/' .
+            '<span class="cf-month">11</span>' .
+            '/' .
+            '<span class="cf-year">25</span>';
+
         $this->assertEquals(
-            '<span class="from meta">Vanaf</span> <span class="cf-date">25</span>/<span class="cf-month">11</span>/<span class="cf-year">25</span>',
+            $expected,
             $this->formatter->format($offer)
         );
     }
@@ -39,8 +48,17 @@ class ExtraSmallPeriodicHTMLFormatterTest extends TestCase
         $offer->setStartDate(new \DateTime('04-03-2025'));
         $offer->setEndDate(new \DateTime('08-03-2030'));
 
+        $expected =
+            '<span class="from meta">Vanaf</span>' .
+            ' ' .
+            '<span class="cf-date">4</span>' .
+            '/' .
+            '<span class="cf-month">3</span>' .
+            '/' .
+            '<span class="cf-year">25</span>';
+
         $this->assertEquals(
-            '<span class="from meta">Vanaf</span> <span class="cf-date">4</span>/<span class="cf-month">3</span>/<span class="cf-year">25</span>',
+            $expected,
             $this->formatter->format($offer)
         );
     }
@@ -52,8 +70,17 @@ class ExtraSmallPeriodicHTMLFormatterTest extends TestCase
         $offer->setStartDate(new \DateTime('25-03-2025'));
         $offer->setEndDate(new \DateTime('30-03-2030'));
 
+        $expected =
+            '<span class="from meta">Vanaf</span>' .
+            ' ' .
+            '<span class="cf-date">25</span>' .
+            '/' .
+            '<span class="cf-month">3</span>' .
+            '/' .
+            '<span class="cf-year">25</span>';
+
         $this->assertEquals(
-            '<span class="from meta">Vanaf</span> <span class="cf-date">25</span>/<span class="cf-month">3</span>/<span class="cf-year">25</span>',
+            $expected,
             $this->formatter->format($offer)
         );
     }
@@ -64,8 +91,17 @@ class ExtraSmallPeriodicHTMLFormatterTest extends TestCase
         $offer->setStartDate(new \DateTime('04-10-2025'));
         $offer->setEndDate(new \DateTime('08-10-2030'));
 
+        $expected =
+            '<span class="from meta">Vanaf</span>' .
+            ' ' .
+            '<span class="cf-date">4</span>' .
+            '/' .
+            '<span class="cf-month">10</span>' .
+            '/' .
+            '<span class="cf-year">25</span>';
+
         $this->assertEquals(
-            '<span class="from meta">Vanaf</span> <span class="cf-date">4</span>/<span class="cf-month">10</span>/<span class="cf-year">25</span>',
+            $expected,
             $this->formatter->format($offer)
         );
     }
@@ -76,8 +112,17 @@ class ExtraSmallPeriodicHTMLFormatterTest extends TestCase
         $offer->setStartDate(new \DateTime('12-03-2015'));
         $offer->setEndDate(new \DateTime('18-03-2030'));
 
+        $expected =
+            '<span class="to meta">Tot</span>' .
+            ' ' .
+            '<span class="cf-date">18</span>' .
+            '/' .
+            '<span class="cf-month">3</span>' .
+            '/' .
+            '<span class="cf-year">30</span>';
+
         $this->assertEquals(
-            '<span class="to meta">Tot</span> <span class="cf-date">18</span>/<span class="cf-month">3</span>/<span class="cf-year">30</span>',
+            $expected,
             $this->formatter->format($offer)
         );
     }
