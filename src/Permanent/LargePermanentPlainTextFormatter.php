@@ -9,7 +9,7 @@ use IntlDateFormatter;
 
 final class LargePermanentPlainTextFormatter implements PermanentFormatterInterface
 {
-    protected $daysOfWeek = array(
+    private $daysOfWeek = array(
         'monday',
         'tuesday',
         'wednesday',
