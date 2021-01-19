@@ -2,6 +2,7 @@
 
 namespace CultuurNet\CalendarSummaryV3\Permanent;
 
+use CultuurNet\CalendarSummaryV3\IntlDateFormatterFactory;
 use CultuurNet\CalendarSummaryV3\Translator;
 use CultuurNet\SearchV3\ValueObjects\Offer;
 use CultuurNet\SearchV3\ValueObjects\OpeningHours;
@@ -21,14 +22,7 @@ final class MediumPermanentHTMLFormatter implements PermanentFormatterInterface
 
     public function __construct(string $langCode)
     {
-        $this->fmtShortDays = new IntlDateFormatter(
-            $langCode,
-            IntlDateFormatter::FULL,
-            IntlDateFormatter::FULL,
-            date_default_timezone_get(),
-            IntlDateFormatter::GREGORIAN,
-            'EEE'
-        );
+        $this->fmtShortDays = IntlDateFormatterFactory::createAbbreviatedDayOfWeekFormatter($langCode);
 
         $this->trans = new Translator();
         $this->trans->setLanguage($langCode);

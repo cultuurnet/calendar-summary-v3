@@ -2,6 +2,7 @@
 
 namespace CultuurNet\CalendarSummaryV3\Periodic;
 
+use CultuurNet\CalendarSummaryV3\IntlDateFormatterFactory;
 use CultuurNet\CalendarSummaryV3\Translator;
 use CultuurNet\SearchV3\ValueObjects\Offer;
 use DateTime;
@@ -39,24 +40,8 @@ final class LargePeriodicHTMLFormatter implements PeriodicFormatterInterface
             IntlDateFormatter::GREGORIAN,
             'd MMMM yyyy'
         );
-
-        $this->fmtDays = new IntlDateFormatter(
-            $langCode,
-            IntlDateFormatter::FULL,
-            IntlDateFormatter::FULL,
-            date_default_timezone_get(),
-            IntlDateFormatter::GREGORIAN,
-            'EEEE'
-        );
-
-        $this->fmtShortDays = new IntlDateFormatter(
-            $langCode,
-            IntlDateFormatter::FULL,
-            IntlDateFormatter::FULL,
-            date_default_timezone_get(),
-            IntlDateFormatter::GREGORIAN,
-            'EEE'
-        );
+        $this->fmtDays = IntlDateFormatterFactory::createDayOfWeekFormatter($langCode);
+        $this->fmtShortDays = IntlDateFormatterFactory::createAbbreviatedDayOfWeekFormatter($langCode);
 
         $this->trans = new Translator();
         $this->trans->setLanguage($langCode);
