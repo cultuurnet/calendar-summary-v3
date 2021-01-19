@@ -6,10 +6,6 @@ use CultuurNet\SearchV3\ValueObjects\Offer;
 use \DateTime;
 use \DateTimeInterface;
 
-/**
- * Provide a extra small plain text formatter for periodic calendar type.
- * @package CultuurNet\CalendarSummaryV3\Periodic
- */
 class ExtraSmallPeriodicPlainTextFormatter extends ExtraSmallPeriodicFormatter implements PeriodicFormatterInterface
 {
     public function format(Offer $offer): string

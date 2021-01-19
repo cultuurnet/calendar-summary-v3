@@ -5,9 +5,6 @@ namespace CultuurNet\CalendarSummaryV3\Multiple;
 use CultuurNet\SearchV3\ValueObjects\Event;
 use CultuurNet\CalendarSummaryV3\Single\MediumSingleHTMLFormatter;
 
-/**
- * Formatter to format multiple events as html in medium format.
- */
 class MediumMultipleHTMLFormatter extends MediumMultipleFormatter implements MultipleFormatterInterface
 {
     public function format(Event $event): string
