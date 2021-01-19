@@ -23,7 +23,7 @@
     },
     "autoload-dev": {
       "psr-4": {
-        "CultuurNet\\CalendarSummaryV3\\Tests\\": "tests/"
+        "CultuurNet\\CalendarSummaryV3\\": "tests/"
       }
     },
     "require-dev": {

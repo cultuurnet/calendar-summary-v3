@@ -1,8 +1,7 @@
 <?php
 
-namespace CultuurNet\CalendarSummaryV3\Tests\Periodic;
+namespace CultuurNet\CalendarSummaryV3\Periodic;
 
-use CultuurNet\CalendarSummaryV3\Periodic\MediumPeriodicPlainTextFormatter;
 use CultuurNet\SearchV3\ValueObjects\Event;
 use PHPUnit\Framework\TestCase;
 

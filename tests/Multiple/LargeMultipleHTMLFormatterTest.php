@@ -1,8 +1,7 @@
 <?php
 
-namespace CultuurNet\CalendarSummaryV3\Tests\Multiple;
+namespace CultuurNet\CalendarSummaryV3\Multiple;
 
-use CultuurNet\CalendarSummaryV3\Multiple\LargeMultipleHTMLFormatter;
 use CultuurNet\SearchV3\ValueObjects\Event;
 use PHPUnit\Framework\TestCase;
 
