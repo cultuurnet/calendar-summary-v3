@@ -12,11 +12,6 @@ final class MediumPermanentHTMLFormatter implements PermanentFormatterInterface
     /**
      * @var IntlDateFormatter
      */
-    private $fmtDays;
-
-    /**
-     * @var IntlDateFormatter
-     */
     private $fmtShortDays;
 
     /**
@@ -26,15 +21,6 @@ final class MediumPermanentHTMLFormatter implements PermanentFormatterInterface
 
     public function __construct(string $langCode)
     {
-        $this->fmtDays = new IntlDateFormatter(
-            $langCode,
-            IntlDateFormatter::FULL,
-            IntlDateFormatter::FULL,
-            date_default_timezone_get(),
-            IntlDateFormatter::GREGORIAN,
-            'EEEE'
-        );
-
         $this->fmtShortDays = new IntlDateFormatter(
             $langCode,
             IntlDateFormatter::FULL,

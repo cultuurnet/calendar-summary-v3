@@ -22,11 +22,6 @@ final class LargePermanentPlainTextFormatter implements PermanentFormatterInterf
     /**
      * @var IntlDateFormatter
      */
-    private $fmtDays;
-
-    /**
-     * @var IntlDateFormatter
-     */
     private $fmtShortDays;
 
     /**
@@ -36,15 +31,6 @@ final class LargePermanentPlainTextFormatter implements PermanentFormatterInterf
 
     public function __construct(string $langCode)
     {
-        $this->fmtDays = new IntlDateFormatter(
-            $langCode,
-            IntlDateFormatter::FULL,
-            IntlDateFormatter::FULL,
-            date_default_timezone_get(),
-            IntlDateFormatter::GREGORIAN,
-            'EEEE'
-        );
-
         $this->fmtShortDays = new IntlDateFormatter(
             $langCode,
             IntlDateFormatter::FULL,

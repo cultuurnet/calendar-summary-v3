@@ -21,11 +21,6 @@ final class LargePeriodicPlainTextFormatter implements PeriodicFormatterInterfac
     private $fmtDays;
 
     /**
-     * @var IntlDateFormatter
-     */
-    private $fmtShortDays;
-
-    /**
      * @var Translator
      */
     private $trans;
@@ -48,15 +43,6 @@ final class LargePeriodicPlainTextFormatter implements PeriodicFormatterInterfac
             date_default_timezone_get(),
             IntlDateFormatter::GREGORIAN,
             'EEEE'
-        );
-
-        $this->fmtShortDays = new IntlDateFormatter(
-            $langCode,
-            IntlDateFormatter::FULL,
-            IntlDateFormatter::FULL,
-            date_default_timezone_get(),
-            IntlDateFormatter::GREGORIAN,
-            'EEE'
         );
 
         $this->trans = new Translator();
