@@ -19,7 +19,7 @@ jobs:
                   php-version: ${{ matrix.php-versions }}
                   ini-values: xdebug.mode=coverage
                   extensions: intl
-                  tools: composer:v1
+                  tools: composer:v2
 
             - name: Check PHP Version
               run: php -v
