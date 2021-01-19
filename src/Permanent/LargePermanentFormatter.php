@@ -7,10 +7,6 @@ use IntlDateFormatter;
 
 abstract class LargePermanentFormatter
 {
-
-    /**
-     * weekdays
-     */
     protected $daysOfWeek = array(
         'monday',
         'tuesday',
