@@ -7,6 +7,22 @@ use CultuurNet\CalendarSummaryV3\Single\MediumSingleHTMLFormatter;
 
 class MediumMultipleHTMLFormatter extends MediumMultipleFormatter implements MultipleFormatterInterface
 {
+    /**
+     * @var string $langCode
+     */
+    protected $langCode;
+
+    /**
+     * @var bool $hidepast
+     */
+    protected $hidePast;
+
+    public function __construct(string $langCode, bool $hidePastDates)
+    {
+        $this->langCode = $langCode;
+        $this->hidePast = $hidePastDates;
+    }
+
     public function format(Event $event): string
     {
         $subEvents = $event->getSubEvents();
