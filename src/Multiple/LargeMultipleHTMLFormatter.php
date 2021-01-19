@@ -5,8 +5,24 @@ namespace CultuurNet\CalendarSummaryV3\Multiple;
 use CultuurNet\SearchV3\ValueObjects\Event;
 use CultuurNet\CalendarSummaryV3\Single\LargeSingleHTMLFormatter;
 
-class LargeMultipleHTMLFormatter extends LargeMultipleFormatter implements MultipleFormatterInterface
+final class LargeMultipleHTMLFormatter implements MultipleFormatterInterface
 {
+    /**
+     * @var string $langCode
+     */
+    private $langCode;
+
+    /**
+     * @var bool $hidePast
+     */
+    private $hidePast;
+
+    public function __construct(string $langCode, bool $hidePastDates)
+    {
+        $this->langCode = $langCode;
+        $this->hidePast = $hidePastDates;
+    }
+
     public function format(Event $event): string
     {
         $subEvents = $event->getSubEvents();

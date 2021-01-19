@@ -2,11 +2,23 @@
 
 namespace CultuurNet\CalendarSummaryV3\Multiple;
 
+use CultuurNet\CalendarSummaryV3\Translator;
 use CultuurNet\SearchV3\ValueObjects\Event;
 use DateTimeZone;
 
-class ExtraSmallMultipleHTMLFormatter extends ExtraSmallMultipleFormatter implements MultipleFormatterInterface
+final class ExtraSmallMultipleHTMLFormatter implements MultipleFormatterInterface
 {
+    /**
+     * @var Translator
+     */
+    private $trans;
+
+    public function __construct(string $langCode)
+    {
+        $this->trans = new Translator();
+        $this->trans->setLanguage($langCode);
+    }
+
     public function format(Event $event): string
     {
         $dateFrom = $event->getStartDate()->setTimezone(new DateTimeZone(date_default_timezone_get()));

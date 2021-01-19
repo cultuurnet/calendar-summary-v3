@@ -2,11 +2,66 @@
 
 namespace CultuurNet\CalendarSummaryV3\Single;
 
+use CultuurNet\CalendarSummaryV3\Translator;
 use CultuurNet\SearchV3\ValueObjects\Offer;
 use DateTimeInterface;
+use IntlDateFormatter;
 
-class LargeSingleHTMLFormatter extends LargeSingleFormatter implements SingleFormatterInterface
+final class LargeSingleHTMLFormatter implements SingleFormatterInterface
 {
+    /**
+     * @var IntlDateFormatter
+     */
+    private $fmt;
+
+    /**
+     * @var IntlDateFormatter
+     */
+    private $fmtWeekDayLong;
+
+    /**
+     * @var IntlDateFormatter
+     */
+    private $fmtTime;
+
+    /**
+     * @var Translator
+     */
+    private $trans;
+
+    public function __construct(string $langCode)
+    {
+        $this->fmt = new IntlDateFormatter(
+            $langCode,
+            IntlDateFormatter::FULL,
+            IntlDateFormatter::FULL,
+            date_default_timezone_get(),
+            IntlDateFormatter::GREGORIAN,
+            'd MMMM yyyy'
+        );
+
+        $this->fmtWeekDayLong = new IntlDateFormatter(
+            $langCode,
+            IntlDateFormatter::FULL,
+            IntlDateFormatter::FULL,
+            date_default_timezone_get(),
+            IntlDateFormatter::GREGORIAN,
+            'EEEE'
+        );
+
+        $this->fmtTime = new IntlDateFormatter(
+            $langCode,
+            IntlDateFormatter::FULL,
+            IntlDateFormatter::FULL,
+            date_default_timezone_get(),
+            IntlDateFormatter::GREGORIAN,
+            'HH:mm'
+        );
+
+        $this->trans = new Translator();
+        $this->trans->setLanguage($langCode);
+    }
+
     public function format(Offer $offer): string
     {
         $dateFrom = $offer->getStartDate()->setTimezone(new \DateTimeZone(date_default_timezone_get()));
@@ -21,7 +76,7 @@ class LargeSingleHTMLFormatter extends LargeSingleFormatter implements SingleFor
         return $output;
     }
 
-    protected function formatSameDay(DateTimeInterface $dateFrom, DateTimeInterface $dateEnd): string
+    private function formatSameDay(DateTimeInterface $dateFrom, DateTimeInterface $dateEnd): string
     {
         $intlDateFrom = $this->fmt->format($dateFrom);
         $intlWeekDayFrom = $this->fmtWeekDayLong->format($dateFrom);
@@ -66,7 +121,7 @@ class LargeSingleHTMLFormatter extends LargeSingleFormatter implements SingleFor
         return $output;
     }
 
-    protected function formatMoreDays(DateTimeInterface $dateFrom, DateTimeInterface $dateEnd): string
+    private function formatMoreDays(DateTimeInterface $dateFrom, DateTimeInterface $dateEnd): string
     {
         $intlDateFrom = $this->fmt->format($dateFrom);
         $intlWeekDayFrom = $this->fmtWeekDayLong->format($dateFrom);

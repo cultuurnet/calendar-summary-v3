@@ -2,11 +2,62 @@
 
 namespace CultuurNet\CalendarSummaryV3\Permanent;
 
+use CultuurNet\CalendarSummaryV3\Translator;
 use CultuurNet\SearchV3\ValueObjects\Offer;
 use CultuurNet\SearchV3\ValueObjects\OpeningHours;
+use IntlDateFormatter;
 
-class LargePermanentHTMLFormatter extends LargePermanentFormatter implements PermanentFormatterInterface
+final class LargePermanentHTMLFormatter implements PermanentFormatterInterface
 {
+    private $daysOfWeek = array(
+        'monday',
+        'tuesday',
+        'wednesday',
+        'thursday',
+        'friday',
+        'saturday',
+        'sunday'
+    );
+
+    /**
+     * @var IntlDateFormatter
+     */
+    private $fmtDays;
+
+    /**
+     * @var IntlDateFormatter
+     */
+    private $fmtShortDays;
+
+    /**
+     * @var Translator
+     */
+    private $trans;
+
+    public function __construct(string $langCode)
+    {
+        $this->fmtDays = new IntlDateFormatter(
+            $langCode,
+            IntlDateFormatter::FULL,
+            IntlDateFormatter::FULL,
+            date_default_timezone_get(),
+            IntlDateFormatter::GREGORIAN,
+            'EEEE'
+        );
+
+        $this->fmtShortDays = new IntlDateFormatter(
+            $langCode,
+            IntlDateFormatter::FULL,
+            IntlDateFormatter::FULL,
+            date_default_timezone_get(),
+            IntlDateFormatter::GREGORIAN,
+            'EEE'
+        );
+
+        $this->trans = new Translator();
+        $this->trans->setLanguage($langCode);
+    }
+
     public function format(Offer $offer): string
     {
         $output = '';
@@ -20,7 +71,7 @@ class LargePermanentHTMLFormatter extends LargePermanentFormatter implements Per
         return $this->formatSummary($output);
     }
 
-    protected function getFormattedTime(string $time): string
+    private function getFormattedTime(string $time): string
     {
         $formattedShortTime = ltrim($time, '0');
         if ($formattedShortTime == ':00') {
@@ -29,7 +80,7 @@ class LargePermanentHTMLFormatter extends LargePermanentFormatter implements Per
         return $formattedShortTime;
     }
 
-    protected function formatSummary(string $calsum): string
+    private function formatSummary(string $calsum): string
     {
         $calsum = str_replace('><', '> <', $calsum);
         return str_replace('  ', ' ', $calsum);
@@ -42,7 +93,7 @@ class LargePermanentHTMLFormatter extends LargePermanentFormatter implements Per
      * @param string[] $daysOfWeek
      * @return string
      */
-    protected function getEarliestTime(array $openingHoursData, array $daysOfWeek): string
+    private function getEarliestTime(array $openingHoursData, array $daysOfWeek): string
     {
         $earliest = '';
         foreach ($openingHoursData as $openingHours) {
@@ -64,7 +115,7 @@ class LargePermanentHTMLFormatter extends LargePermanentFormatter implements Per
      * @param string[] $daysOfWeek
      * @return string
      */
-    protected function getLatestTime(array $openingHoursData, array $daysOfWeek): string
+    private function getLatestTime(array $openingHoursData, array $daysOfWeek): string
     {
         $latest = '';
         foreach ($openingHoursData as $openingHours) {
@@ -79,7 +130,7 @@ class LargePermanentHTMLFormatter extends LargePermanentFormatter implements Per
         return $latest;
     }
 
-    protected function generateFormattedTimespan(string $dayOfWeek, bool $long = false): string
+    private function generateFormattedTimespan(string $dayOfWeek, bool $long = false): string
     {
         if ($long) {
             return ucfirst($this->trans->getTranslations()->t($dayOfWeek));
@@ -92,7 +143,7 @@ class LargePermanentHTMLFormatter extends LargePermanentFormatter implements Per
     /**
      * @param OpeningHours[] $openingHoursData
      */
-    protected function generateWeekScheme(array $openingHoursData): string
+    private function generateWeekScheme(array $openingHoursData): string
     {
         $outputWeek = '<ul class="list-unstyled">';
         // Create an array with formatted timespans.

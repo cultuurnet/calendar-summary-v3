@@ -2,10 +2,51 @@
 
 namespace CultuurNet\CalendarSummaryV3\Periodic;
 
+use CultuurNet\CalendarSummaryV3\Translator;
 use CultuurNet\SearchV3\ValueObjects\Offer;
+use IntlDateFormatter;
 
-class MediumPeriodicPlainTextFormatter extends MediumPeriodicFormatter implements PeriodicFormatterInterface
+final class MediumPeriodicPlainTextFormatter implements PeriodicFormatterInterface
 {
+    /**
+     * @var IntlDateFormatter
+     */
+    private $fmt;
+
+    /**
+     * @var IntlDateFormatter
+     */
+    private $fmtDay;
+
+    /**
+     * @var Translator
+     */
+    private $trans;
+
+    public function __construct(string $langCode)
+    {
+        $this->fmt = new IntlDateFormatter(
+            $langCode,
+            IntlDateFormatter::FULL,
+            IntlDateFormatter::FULL,
+            date_default_timezone_get(),
+            IntlDateFormatter::GREGORIAN,
+            'd MMMM yyyy'
+        );
+
+        $this->fmtDay = new IntlDateFormatter(
+            $langCode,
+            IntlDateFormatter::FULL,
+            IntlDateFormatter::FULL,
+            date_default_timezone_get(),
+            IntlDateFormatter::GREGORIAN,
+            'eeee'
+        );
+
+        $this->trans = new Translator();
+        $this->trans->setLanguage($langCode);
+    }
+
     public function format(Offer $offer): string
     {
         $dateFrom = $offer->getStartDate()->setTimezone(new \DateTimeZone(date_default_timezone_get()));

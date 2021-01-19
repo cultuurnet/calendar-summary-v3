@@ -2,11 +2,66 @@
 
 namespace CultuurNet\CalendarSummaryV3\Periodic;
 
+use CultuurNet\CalendarSummaryV3\Translator;
 use CultuurNet\SearchV3\ValueObjects\Offer;
 use DateTime;
+use IntlDateFormatter;
 
-class LargePeriodicHTMLFormatter extends LargePeriodicFormatter implements PeriodicFormatterInterface
+final class LargePeriodicHTMLFormatter implements PeriodicFormatterInterface
 {
+    /**
+     * @var IntlDateFormatter
+     */
+    private $fmt;
+
+    /**
+     * @var IntlDateFormatter
+     */
+    private $fmtDays;
+
+    /**
+     * @var IntlDateFormatter
+     */
+    private $fmtShortDays;
+
+    /**
+     * @var Translator
+     */
+    private $trans;
+
+    public function __construct(string $langCode)
+    {
+        $this->fmt = new IntlDateFormatter(
+            $langCode,
+            IntlDateFormatter::FULL,
+            IntlDateFormatter::FULL,
+            date_default_timezone_get(),
+            IntlDateFormatter::GREGORIAN,
+            'd MMMM yyyy'
+        );
+
+        $this->fmtDays = new IntlDateFormatter(
+            $langCode,
+            IntlDateFormatter::FULL,
+            IntlDateFormatter::FULL,
+            date_default_timezone_get(),
+            IntlDateFormatter::GREGORIAN,
+            'EEEE'
+        );
+
+        $this->fmtShortDays = new IntlDateFormatter(
+            $langCode,
+            IntlDateFormatter::FULL,
+            IntlDateFormatter::FULL,
+            date_default_timezone_get(),
+            IntlDateFormatter::GREGORIAN,
+            'EEE'
+        );
+
+        $this->trans = new Translator();
+        $this->trans->setLanguage($langCode);
+    }
+
     public function format(Offer $offer): string
     {
         $output = $this->generateDates(
@@ -25,7 +80,7 @@ class LargePeriodicHTMLFormatter extends LargePeriodicFormatter implements Perio
      * @param $calsum
      * @return mixed
      */
-    protected function formatSummary($calsum)
+    private function formatSummary($calsum)
     {
         $calsum = str_replace('><', '> <', $calsum);
         return str_replace('  ', ' ', $calsum);
@@ -35,7 +90,7 @@ class LargePeriodicHTMLFormatter extends LargePeriodicFormatter implements Perio
      * @param $time
      * @return string
      */
-    protected function getFormattedTime($time)
+    private function getFormattedTime($time)
     {
         $formattedShortTime = ltrim($time, '0');
         if ($formattedShortTime == ':00') {
@@ -51,7 +106,7 @@ class LargePeriodicHTMLFormatter extends LargePeriodicFormatter implements Perio
      * @param $daysOfWeek
      * @return string
      */
-    protected function getEarliestTime($openingHoursData, $daysOfWeek)
+    private function getEarliestTime($openingHoursData, $daysOfWeek)
     {
         $earliest = '';
         foreach ($openingHoursData as $openingHours) {
@@ -73,7 +128,7 @@ class LargePeriodicHTMLFormatter extends LargePeriodicFormatter implements Perio
      * @param $daysOfWeek
      * @return string
      */
-    protected function getLatestTime($openingHoursData, $daysOfWeek)
+    private function getLatestTime($openingHoursData, $daysOfWeek)
     {
         $latest = '';
         foreach ($openingHoursData as $openingHours) {
@@ -93,7 +148,7 @@ class LargePeriodicHTMLFormatter extends LargePeriodicFormatter implements Perio
      * @param DateTime $dateTo
      * @return string
      */
-    protected function generateDates(DateTime $dateFrom, DateTime $dateTo)
+    private function generateDates(DateTime $dateFrom, DateTime $dateTo)
     {
 
         $intlDateFrom =$this->fmt->format($dateFrom);
@@ -113,7 +168,7 @@ class LargePeriodicHTMLFormatter extends LargePeriodicFormatter implements Perio
      * @param $openingHoursData
      * @return string
      */
-    protected function generateWeekScheme($openingHoursData)
+    private function generateWeekScheme($openingHoursData)
     {
         $outputWeek = '<p class="cf-openinghours">' . $this->trans->getTranslations()->t('open') . ':</p>';
         $outputWeek .= '<ul class="list-unstyled">';

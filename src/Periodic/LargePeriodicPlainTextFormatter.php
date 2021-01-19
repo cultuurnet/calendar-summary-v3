@@ -2,13 +2,67 @@
 
 namespace CultuurNet\CalendarSummaryV3\Periodic;
 
+use CultuurNet\CalendarSummaryV3\Translator;
 use CultuurNet\SearchV3\ValueObjects\Offer;
 use CultuurNet\SearchV3\ValueObjects\OpeningHours;
 use DateTime;
 use IntlDateFormatter;
 
-class LargePeriodicPlainTextFormatter extends LargePeriodicFormatter implements PeriodicFormatterInterface
+final class LargePeriodicPlainTextFormatter implements PeriodicFormatterInterface
 {
+    /**
+     * @var IntlDateFormatter
+     */
+    private $fmt;
+
+    /**
+     * @var IntlDateFormatter
+     */
+    private $fmtDays;
+
+    /**
+     * @var IntlDateFormatter
+     */
+    private $fmtShortDays;
+
+    /**
+     * @var Translator
+     */
+    private $trans;
+
+    public function __construct(string $langCode)
+    {
+        $this->fmt = new IntlDateFormatter(
+            $langCode,
+            IntlDateFormatter::FULL,
+            IntlDateFormatter::FULL,
+            date_default_timezone_get(),
+            IntlDateFormatter::GREGORIAN,
+            'd MMMM yyyy'
+        );
+
+        $this->fmtDays = new IntlDateFormatter(
+            $langCode,
+            IntlDateFormatter::FULL,
+            IntlDateFormatter::FULL,
+            date_default_timezone_get(),
+            IntlDateFormatter::GREGORIAN,
+            'EEEE'
+        );
+
+        $this->fmtShortDays = new IntlDateFormatter(
+            $langCode,
+            IntlDateFormatter::FULL,
+            IntlDateFormatter::FULL,
+            date_default_timezone_get(),
+            IntlDateFormatter::GREGORIAN,
+            'EEE'
+        );
+
+        $this->trans = new Translator();
+        $this->trans->setLanguage($langCode);
+    }
+
     public function format(Offer $offer): string
     {
         $output = $this->generateDates(
@@ -23,7 +77,7 @@ class LargePeriodicPlainTextFormatter extends LargePeriodicFormatter implements 
         return $output;
     }
 
-    protected function getFormattedTime(string $time): string
+    private function getFormattedTime(string $time): string
     {
         $formattedShortTime = ltrim($time, '0');
         if ($formattedShortTime == ':00') {
@@ -32,7 +86,7 @@ class LargePeriodicPlainTextFormatter extends LargePeriodicFormatter implements 
         return $formattedShortTime;
     }
 
-    protected function generateDates(DateTime $dateFrom, DateTime $dateTo): string
+    private function generateDates(DateTime $dateFrom, DateTime $dateTo): string
     {
         $intlDateFrom = $this->fmt->format($dateFrom);
         $intlDateTo = $this->fmt->format($dateTo);
@@ -46,7 +100,7 @@ class LargePeriodicPlainTextFormatter extends LargePeriodicFormatter implements 
      * @param OpeningHours[]
      * @return string
      */
-    protected function generateWeekScheme(array $openingHoursData): string
+    private function generateWeekScheme(array $openingHoursData): string
     {
         $outputWeek = '(';
 

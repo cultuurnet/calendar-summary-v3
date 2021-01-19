@@ -2,11 +2,62 @@
 
 namespace CultuurNet\CalendarSummaryV3\Permanent;
 
+use CultuurNet\CalendarSummaryV3\Translator;
 use CultuurNet\SearchV3\ValueObjects\Offer;
 use CultuurNet\SearchV3\ValueObjects\OpeningHours;
+use IntlDateFormatter;
 
-class LargePermanentPlainTextFormatter extends LargePermanentFormatter implements PermanentFormatterInterface
+final class LargePermanentPlainTextFormatter implements PermanentFormatterInterface
 {
+    private $daysOfWeek = array(
+        'monday',
+        'tuesday',
+        'wednesday',
+        'thursday',
+        'friday',
+        'saturday',
+        'sunday'
+    );
+
+    /**
+     * @var IntlDateFormatter
+     */
+    private $fmtDays;
+
+    /**
+     * @var IntlDateFormatter
+     */
+    private $fmtShortDays;
+
+    /**
+     * @var Translator
+     */
+    private $trans;
+
+    public function __construct(string $langCode)
+    {
+        $this->fmtDays = new IntlDateFormatter(
+            $langCode,
+            IntlDateFormatter::FULL,
+            IntlDateFormatter::FULL,
+            date_default_timezone_get(),
+            IntlDateFormatter::GREGORIAN,
+            'EEEE'
+        );
+
+        $this->fmtShortDays = new IntlDateFormatter(
+            $langCode,
+            IntlDateFormatter::FULL,
+            IntlDateFormatter::FULL,
+            date_default_timezone_get(),
+            IntlDateFormatter::GREGORIAN,
+            'EEE'
+        );
+
+        $this->trans = new Translator();
+        $this->trans->setLanguage($langCode);
+    }
+
     public function format(Offer $offer): string
     {
         $output = '';
@@ -18,7 +69,7 @@ class LargePermanentPlainTextFormatter extends LargePermanentFormatter implement
         return $output;
     }
 
-    protected function getFormattedTime(string $time): string
+    private function getFormattedTime(string $time): string
     {
         $formattedShortTime = ltrim($time, '0');
         if ($formattedShortTime == ':00') {
@@ -31,7 +82,7 @@ class LargePermanentPlainTextFormatter extends LargePermanentFormatter implement
      * @param OpeningHours[] $openingHoursData
      * @return string
      */
-    protected function generateWeekScheme(array $openingHoursData): string
+    private function generateWeekScheme(array $openingHoursData): string
     {
         $outputWeek = '';
         // Create an array with formatted days.

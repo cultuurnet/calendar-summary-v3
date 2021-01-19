@@ -2,11 +2,52 @@
 
 namespace CultuurNet\CalendarSummaryV3\Single;
 
+use CultuurNet\CalendarSummaryV3\Translator;
 use CultuurNet\SearchV3\ValueObjects\Offer;
 use DateTimeInterface;
+use IntlDateFormatter;
 
-class SmallSinglePlainTextFormatter extends SmallSingleFormatter implements SingleFormatterInterface
+final class SmallSinglePlainTextFormatter implements SingleFormatterInterface
 {
+    /**
+     * @var IntlDateFormatter
+     */
+    private $fmtDay;
+
+    /**
+     * @var IntlDateFormatter
+     */
+    private $fmtMonth;
+
+    /**
+     * @var Translator
+     */
+    private $trans;
+
+    public function __construct(string $langCode)
+    {
+        $this->fmtDay = new IntlDateFormatter(
+            $langCode,
+            IntlDateFormatter::FULL,
+            IntlDateFormatter::FULL,
+            date_default_timezone_get(),
+            IntlDateFormatter::GREGORIAN,
+            'd'
+        );
+
+        $this->fmtMonth = new IntlDateFormatter(
+            $langCode,
+            IntlDateFormatter::FULL,
+            IntlDateFormatter::FULL,
+            date_default_timezone_get(),
+            IntlDateFormatter::GREGORIAN,
+            'MMM'
+        );
+
+        $this->trans = new Translator();
+        $this->trans->setLanguage($langCode);
+    }
+
     public function format(Offer $offer): string
     {
         $dateFrom = $offer->getStartDate()->setTimezone(new \DateTimeZone(date_default_timezone_get()));
@@ -21,7 +62,7 @@ class SmallSinglePlainTextFormatter extends SmallSingleFormatter implements Sing
         return $output;
     }
 
-    protected function formatSameDay(DateTimeInterface $dateFrom): string
+    private function formatSameDay(DateTimeInterface $dateFrom): string
     {
         $dateFromDay = $this->fmtDay->format($dateFrom);
         $dateFromMonth = rtrim($this->fmtMonth->format($dateFrom), '.');
@@ -31,7 +72,7 @@ class SmallSinglePlainTextFormatter extends SmallSingleFormatter implements Sing
         return $output;
     }
 
-    protected function formatMoreDays(DateTimeInterface $dateFrom, DateTimeInterface $dateEnd): string
+    private function formatMoreDays(DateTimeInterface $dateFrom, DateTimeInterface $dateEnd): string
     {
         $dateFromDay = $this->fmtDay->format($dateFrom);
         $dateFromMonth = rtrim($this->fmtMonth->format($dateFrom), '.');
