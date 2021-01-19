@@ -67,7 +67,7 @@ final class MediumPermanentHTMLFormatter implements PermanentFormatterInterface
      * @param OpeningHours[] $openingHoursData
      * @return string
      */
-    protected function generateWeekScheme(array $openingHoursData): string
+    private function generateWeekScheme(array $openingHoursData): string
     {
         $outputWeek = '<span>' . ucfirst($this->trans->getTranslations()->t('open')) . ' '
             . '<span class="cf-weekdays">';

@@ -130,7 +130,7 @@ final class LargePermanentHTMLFormatter implements PermanentFormatterInterface
         return $latest;
     }
 
-    protected function generateFormattedTimespan(string $dayOfWeek, bool $long = false): string
+    private function generateFormattedTimespan(string $dayOfWeek, bool $long = false): string
     {
         if ($long) {
             return ucfirst($this->trans->getTranslations()->t($dayOfWeek));
@@ -143,7 +143,7 @@ final class LargePermanentHTMLFormatter implements PermanentFormatterInterface
     /**
      * @param OpeningHours[] $openingHoursData
      */
-    protected function generateWeekScheme(array $openingHoursData): string
+    private function generateWeekScheme(array $openingHoursData): string
     {
         $outputWeek = '<ul class="list-unstyled">';
         // Create an array with formatted timespans.

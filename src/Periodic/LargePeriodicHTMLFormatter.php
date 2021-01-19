@@ -148,7 +148,7 @@ final class LargePeriodicHTMLFormatter implements PeriodicFormatterInterface
      * @param DateTime $dateTo
      * @return string
      */
-    protected function generateDates(DateTime $dateFrom, DateTime $dateTo)
+    private function generateDates(DateTime $dateFrom, DateTime $dateTo)
     {
 
         $intlDateFrom =$this->fmt->format($dateFrom);
@@ -168,7 +168,7 @@ final class LargePeriodicHTMLFormatter implements PeriodicFormatterInterface
      * @param $openingHoursData
      * @return string
      */
-    protected function generateWeekScheme($openingHoursData)
+    private function generateWeekScheme($openingHoursData)
     {
         $outputWeek = '<p class="cf-openinghours">' . $this->trans->getTranslations()->t('open') . ':</p>';
         $outputWeek .= '<ul class="list-unstyled">';

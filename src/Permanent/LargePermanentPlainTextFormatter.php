@@ -82,7 +82,7 @@ final class LargePermanentPlainTextFormatter implements PermanentFormatterInterf
      * @param OpeningHours[] $openingHoursData
      * @return string
      */
-    protected function generateWeekScheme(array $openingHoursData): string
+    private function generateWeekScheme(array $openingHoursData): string
     {
         $outputWeek = '';
         // Create an array with formatted days.

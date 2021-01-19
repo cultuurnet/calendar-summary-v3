@@ -86,7 +86,7 @@ final class LargePeriodicPlainTextFormatter implements PeriodicFormatterInterfac
         return $formattedShortTime;
     }
 
-    protected function generateDates(DateTime $dateFrom, DateTime $dateTo): string
+    private function generateDates(DateTime $dateFrom, DateTime $dateTo): string
     {
         $intlDateFrom = $this->fmt->format($dateFrom);
         $intlDateTo = $this->fmt->format($dateTo);
@@ -100,7 +100,7 @@ final class LargePeriodicPlainTextFormatter implements PeriodicFormatterInterfac
      * @param OpeningHours[]
      * @return string
      */
-    protected function generateWeekScheme(array $openingHoursData): string
+    private function generateWeekScheme(array $openingHoursData): string
     {
         $outputWeek = '(';
 

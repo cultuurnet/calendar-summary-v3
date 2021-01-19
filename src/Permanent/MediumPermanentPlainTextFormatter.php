@@ -64,7 +64,7 @@ final class MediumPermanentPlainTextFormatter implements PermanentFormatterInter
      * @param OpeningHours[] $openingHoursData
      * @return string
      */
-    protected function generateWeekScheme(array $openingHoursData): string
+    private function generateWeekScheme(array $openingHoursData): string
     {
         $outputWeek = ucfirst($this->trans->getTranslations()->t('open')) . ' ';
         // Create an array with formatted days.
