@@ -15,7 +15,7 @@ final class MediumMultipleHTMLFormatter implements MultipleFormatterInterface
     /**
      * @var bool $hidepast
      */
-    protected $hidePast;
+    private $hidePast;
 
     public function __construct(string $langCode, bool $hidePastDates)
     {

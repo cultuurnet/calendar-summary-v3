@@ -15,7 +15,7 @@ final class LargeMultiplePlainTextFormatter implements MultipleFormatterInterfac
     /**
      * @var bool $hidePast
      */
-    protected $hidePast;
+    private $hidePast;
 
     public function __construct(string $langCode, bool $hidePastDates)
     {
