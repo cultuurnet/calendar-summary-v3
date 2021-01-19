@@ -3,17 +3,11 @@
 namespace CultuurNet\CalendarSummaryV3\Single;
 
 use CultuurNet\SearchV3\ValueObjects\Offer;
+use DateTimeInterface;
 
-/**
- * Provides a formatter for formatting single events in small plain text format.
- */
 class SmallSinglePlainTextFormatter extends SmallSingleFormatter implements SingleFormatterInterface
 {
-
-    /**
-     * {@inheritdoc}
-     */
-    public function format(Offer $offer)
+    public function format(Offer $offer): string
     {
         $dateFrom = $offer->getStartDate()->setTimezone(new \DateTimeZone(date_default_timezone_get()));
         $dateEnd = $offer->getEndDate()->setTimezone(new \DateTimeZone(date_default_timezone_get()));
@@ -27,7 +21,7 @@ class SmallSinglePlainTextFormatter extends SmallSingleFormatter implements Sing
         return $output;
     }
 
-    protected function formatSameDay($dateFrom)
+    protected function formatSameDay(DateTimeInterface $dateFrom): string
     {
         $dateFromDay = $this->fmtDay->format($dateFrom);
         $dateFromMonth = rtrim($this->fmtMonth->format($dateFrom), '.');
@@ -37,7 +31,7 @@ class SmallSinglePlainTextFormatter extends SmallSingleFormatter implements Sing
         return $output;
     }
 
-    protected function formatMoreDays($dateFrom, $dateEnd)
+    protected function formatMoreDays(DateTimeInterface $dateFrom, DateTimeInterface $dateEnd): string
     {
         $dateFromDay = $this->fmtDay->format($dateFrom);
         $dateFromMonth = rtrim($this->fmtMonth->format($dateFrom), '.');

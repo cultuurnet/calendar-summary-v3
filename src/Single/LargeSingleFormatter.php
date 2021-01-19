@@ -7,15 +7,27 @@ use CultuurNet\CalendarSummaryV3\Translator;
 
 abstract class LargeSingleFormatter
 {
+    /**
+     * @var IntlDateFormatter
+     */
     protected $fmt;
 
+    /**
+     * @var IntlDateFormatter
+     */
     protected $fmtWeekDayLong;
 
+    /**
+     * @var IntlDateFormatter
+     */
     protected $fmtTime;
 
+    /**
+     * @var Translator
+     */
     protected $trans;
 
-    public function __construct($langCode)
+    public function __construct(string $langCode)
     {
         $this->fmt = new IntlDateFormatter(
             $langCode,

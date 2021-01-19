@@ -3,18 +3,11 @@
 namespace CultuurNet\CalendarSummaryV3\Permanent;
 
 use CultuurNet\SearchV3\ValueObjects\Offer;
+use CultuurNet\SearchV3\ValueObjects\OpeningHours;
 
-/**
- * Provide a large plain text formatter for permanent calendar type.
- * @package CultuurNet\CalendarSummaryV3\Permanent
- */
 class LargePermanentPlainTextFormatter extends LargePermanentFormatter implements PermanentFormatterInterface
 {
-
-    /**
-     * {@inheritdoc}
-     */
-    public function format(Offer $offer)
+    public function format(Offer $offer): string
     {
         $output = '';
         if ($offer->getOpeningHours()) {
@@ -25,11 +18,7 @@ class LargePermanentPlainTextFormatter extends LargePermanentFormatter implement
         return $output;
     }
 
-    /**
-     * @param $time
-     * @return string
-     */
-    protected function getFormattedTime($time)
+    protected function getFormattedTime(string $time): string
     {
         $formattedShortTime = ltrim($time, '0');
         if ($formattedShortTime == ':00') {
@@ -39,10 +28,10 @@ class LargePermanentPlainTextFormatter extends LargePermanentFormatter implement
     }
 
     /**
-     * @param $openingHoursData
+     * @param OpeningHours[] $openingHoursData
      * @return string
      */
-    protected function generateWeekScheme($openingHoursData)
+    protected function generateWeekScheme(array $openingHoursData): string
     {
         $outputWeek = '';
         // Create an array with formatted days.

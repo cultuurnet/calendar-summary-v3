@@ -7,10 +7,19 @@ use CultuurNet\CalendarSummaryV3\Translator;
 
 abstract class MediumSingleFormatter
 {
+    /**
+     * @var IntlDateFormatter
+     */
     protected $fmt;
 
+    /**
+     * @var IntlDateFormatter
+     */
     protected $fmtDay;
 
+    /**
+     * @var Translator
+     */
     protected $trans;
 
     public function __construct($langCode)

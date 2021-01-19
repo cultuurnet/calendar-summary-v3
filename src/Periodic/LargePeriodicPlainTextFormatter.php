@@ -3,19 +3,13 @@
 namespace CultuurNet\CalendarSummaryV3\Periodic;
 
 use CultuurNet\SearchV3\ValueObjects\Offer;
+use CultuurNet\SearchV3\ValueObjects\OpeningHours;
 use DateTime;
 use IntlDateFormatter;
 
-/**
- * Provide a large plain text formatter for periodic calendar type.
- * @package CultuurNet\CalendarSummaryV3\Periodic
- */
 class LargePeriodicPlainTextFormatter extends LargePeriodicFormatter implements PeriodicFormatterInterface
 {
-    /**
-     * {@inheritdoc}
-     */
-    public function format(Offer $offer)
+    public function format(Offer $offer): string
     {
         $output = $this->generateDates(
             $offer->getStartDate()->setTimezone(new \DateTimeZone(date_default_timezone_get())),
@@ -29,11 +23,7 @@ class LargePeriodicPlainTextFormatter extends LargePeriodicFormatter implements 
         return $output;
     }
 
-    /**
-     * @param $time
-     * @return string
-     */
-    protected function getFormattedTime($time)
+    protected function getFormattedTime(string $time): string
     {
         $formattedShortTime = ltrim($time, '0');
         if ($formattedShortTime == ':00') {
@@ -42,12 +32,7 @@ class LargePeriodicPlainTextFormatter extends LargePeriodicFormatter implements 
         return $formattedShortTime;
     }
 
-    /**
-     * @param DateTime $dateFrom
-     * @param DateTime $dateTo
-     * @return string
-     */
-    protected function generateDates(DateTime $dateFrom, DateTime $dateTo)
+    protected function generateDates(DateTime $dateFrom, DateTime $dateTo): string
     {
         $intlDateFrom = $this->fmt->format($dateFrom);
         $intlDateTo = $this->fmt->format($dateTo);
@@ -58,10 +43,10 @@ class LargePeriodicPlainTextFormatter extends LargePeriodicFormatter implements 
     }
 
     /**
-     * @param $openingHoursData
+     * @param OpeningHours[]
      * @return string
      */
-    protected function generateWeekScheme($openingHoursData)
+    protected function generateWeekScheme(array $openingHoursData): string
     {
         $outputWeek = '(';
 

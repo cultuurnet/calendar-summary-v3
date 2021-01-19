@@ -5,16 +5,9 @@ namespace CultuurNet\CalendarSummaryV3\Periodic;
 use CultuurNet\SearchV3\ValueObjects\Offer;
 use DateTime;
 
-/**
- * Provide a large HTML formatter for periodic calendar type.
- * @package CultuurNet\CalendarSummaryV3\Periodic
- */
 class LargePeriodicHTMLFormatter extends LargePeriodicFormatter implements PeriodicFormatterInterface
 {
-    /**
-     * {@inheritdoc}
-     */
-    public function format(Offer $offer)
+    public function format(Offer $offer): string
     {
         $output = $this->generateDates(
             $offer->getStartDate()->setTimezone(new \DateTimeZone(date_default_timezone_get())),
@@ -94,7 +87,7 @@ class LargePeriodicHTMLFormatter extends LargePeriodicFormatter implements Perio
         }
         return $latest;
     }
-    
+
     /**
      * @param DateTime $dateFrom
      * @param DateTime $dateTo

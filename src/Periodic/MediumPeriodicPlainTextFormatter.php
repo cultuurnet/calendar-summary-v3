@@ -4,17 +4,9 @@ namespace CultuurNet\CalendarSummaryV3\Periodic;
 
 use CultuurNet\SearchV3\ValueObjects\Offer;
 
-/**
- * Provide a medium plain text formatter for periodic calendar type.
- * @package CultuurNet\CalendarSummaryV3\Periodic
- */
 class MediumPeriodicPlainTextFormatter extends MediumPeriodicFormatter implements PeriodicFormatterInterface
 {
-
-    /**
-     * {@inheritdoc}
-     */
-    public function format(Offer $offer)
+    public function format(Offer $offer): string
     {
         $dateFrom = $offer->getStartDate()->setTimezone(new \DateTimeZone(date_default_timezone_get()));
         $intlDateFrom = $this->fmt->format($dateFrom);

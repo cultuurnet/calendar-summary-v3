@@ -17,9 +17,6 @@ use CultuurNet\CalendarSummaryV3\Permanent\LargePermanentPlainTextFormatter;
 use CultuurNet\CalendarSummaryV3\Multiple\LargeMultiplePlainTextFormatter;
 use CultuurNet\CalendarSummaryV3\Multiple\MediumMultiplePlainTextFormatter;
 
-/**
- * Provides a formatter for calendar info of offers.
- */
 class CalendarPlainTextFormatter implements CalendarFormatterInterface
 {
     protected $mapping = array();
@@ -61,11 +58,9 @@ class CalendarPlainTextFormatter implements CalendarFormatterInterface
     }
 
     /**
-     * {@inheritdoc}
-     *
      * @throws FormatterException
      */
-    public function format(Offer $offer, $format)
+    public function format(Offer $offer, string $format): string
     {
         $calenderType = $offer->getCalendarType();
 

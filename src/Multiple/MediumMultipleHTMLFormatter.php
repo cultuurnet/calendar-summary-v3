@@ -5,15 +5,9 @@ namespace CultuurNet\CalendarSummaryV3\Multiple;
 use CultuurNet\SearchV3\ValueObjects\Event;
 use CultuurNet\CalendarSummaryV3\Single\MediumSingleHTMLFormatter;
 
-/**
- * Formatter to format multiple events as html in medium format.
- */
 class MediumMultipleHTMLFormatter extends MediumMultipleFormatter implements MultipleFormatterInterface
 {
-    /**
-     * {@inheritdoc}
-     */
-    public function format(Event $event)
+    public function format(Event $event): string
     {
         $subEvents = $event->getSubEvents();
         $output = '<ul class="cnw-event-date-info">';

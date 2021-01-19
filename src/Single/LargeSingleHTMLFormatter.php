@@ -3,17 +3,11 @@
 namespace CultuurNet\CalendarSummaryV3\Single;
 
 use CultuurNet\SearchV3\ValueObjects\Offer;
+use DateTimeInterface;
 
-/**
- * Provides a formatter for formatting single events in large html format.
- */
 class LargeSingleHTMLFormatter extends LargeSingleFormatter implements SingleFormatterInterface
 {
-
-    /**
-    * {@inheritdoc}
-    */
-    public function format(Offer $offer)
+    public function format(Offer $offer): string
     {
         $dateFrom = $offer->getStartDate()->setTimezone(new \DateTimeZone(date_default_timezone_get()));
         $dateEnd = $offer->getEndDate()->setTimezone(new \DateTimeZone(date_default_timezone_get()));
@@ -27,7 +21,7 @@ class LargeSingleHTMLFormatter extends LargeSingleFormatter implements SingleFor
         return $output;
     }
 
-    protected function formatSameDay($dateFrom, $dateEnd)
+    protected function formatSameDay(DateTimeInterface $dateFrom, DateTimeInterface $dateEnd): string
     {
         $intlDateFrom = $this->fmt->format($dateFrom);
         $intlWeekDayFrom = $this->fmtWeekDayLong->format($dateFrom);
@@ -72,7 +66,7 @@ class LargeSingleHTMLFormatter extends LargeSingleFormatter implements SingleFor
         return $output;
     }
 
-    protected function formatMoreDays($dateFrom, $dateEnd)
+    protected function formatMoreDays(DateTimeInterface $dateFrom, DateTimeInterface $dateEnd): string
     {
         $intlDateFrom = $this->fmt->format($dateFrom);
         $intlWeekDayFrom = $this->fmtWeekDayLong->format($dateFrom);

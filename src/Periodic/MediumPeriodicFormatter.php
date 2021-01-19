@@ -1,10 +1,4 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: stijnswaanen
- * Date: 08/08/2018
- * Time: 11:52
- */
 
 namespace CultuurNet\CalendarSummaryV3\Periodic;
 
@@ -24,14 +18,12 @@ abstract class MediumPeriodicFormatter
      */
     protected $fmtDay;
 
+    /**
+     * @var Translator
+     */
     protected $trans;
 
-    /**
-     * @var string $langCode
-     *
-     * MediumPeriodicHTMLFormatter constructor.
-     */
-    public function __construct($langCode)
+    public function __construct(string $langCode)
     {
         $this->fmt = new IntlDateFormatter(
             $langCode,

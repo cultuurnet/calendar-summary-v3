@@ -1,10 +1,4 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: stijnswaanen
- * Date: 08/08/2018
- * Time: 11:53
- */
 
 namespace CultuurNet\CalendarSummaryV3\Periodic;
 
@@ -19,10 +13,19 @@ abstract class LargePeriodicFormatter
      */
     protected $fmt;
 
+    /**
+     * @var IntlDateFormatter
+     */
     protected $fmtDays;
 
+    /**
+     * @var IntlDateFormatter
+     */
     protected $fmtShortDays;
 
+    /**
+     * @var Translator
+     */
     protected $trans;
 
     /**
