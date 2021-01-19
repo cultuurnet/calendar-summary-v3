@@ -34,7 +34,7 @@
     </target>
 
     <target name="coding-standards">
-        <exec command="vendor/bin/phpcs --config-set installed_paths vendor/escapestudios/symfony2-coding-standard"
+        <exec command="vendor/bin/phpcs"
               passthru="true"/>
         <phpcodesniffer
                 standard="phpcs-ruleset.xml"
