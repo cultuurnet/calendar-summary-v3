@@ -20,11 +20,8 @@ class MediumMultipleHTMLFormatter extends MediumMultipleFormatter implements Mul
             $event->setStartDate($subEvent->getStartDate());
             $event->setEndDate($subEvent->getEndDate());
 
-            if ($this->hidePast) {
-                if ($subEvent->getEndDate()->setTimezone(new \DateTimeZone(date_default_timezone_get())) > $now) {
-                    $output .= '<li>' . $formatter->format($event) . '</li>';
-                }
-            } else {
+            if (!$this->hidePast ||
+                $subEvent->getEndDate()->setTimezone(new \DateTimeZone(date_default_timezone_get())) > $now) {
                 $output .= '<li>' . $formatter->format($event) . '</li>';
             }
         }

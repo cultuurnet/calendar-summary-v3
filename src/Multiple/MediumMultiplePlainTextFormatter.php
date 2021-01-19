@@ -22,14 +22,8 @@ class MediumMultiplePlainTextFormatter extends MediumMultipleFormatter implement
             $event->setStartDate($subEvent->getStartDate());
             $event->setEndDate($subEvent->getEndDate());
 
-            if ($this->hidePast) {
-                if ($subEvent->getEndDate()->setTimezone(new \DateTimeZone(date_default_timezone_get())) > $now) {
-                    $output .= $formatter->format($event);
-                    if ($key + 1 !== $count) {
-                        $output .= PHP_EOL;
-                    }
-                }
-            } else {
+            if (!$this->hidePast ||
+                $subEvent->getEndDate()->setTimezone(new \DateTimeZone(date_default_timezone_get())) > $now) {
                 $output .= $formatter->format($event);
                 if ($key + 1 !== $count) {
                     $output .= PHP_EOL;
