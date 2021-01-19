@@ -61,11 +61,9 @@ class CalendarPlainTextFormatter implements CalendarFormatterInterface
     }
 
     /**
-     * {@inheritdoc}
-     *
      * @throws FormatterException
      */
-    public function format(Offer $offer, $format)
+    public function format(Offer $offer, string $format): string
     {
         $calenderType = $offer->getCalendarType();
 
