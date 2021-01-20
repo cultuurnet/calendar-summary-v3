@@ -2,12 +2,13 @@
 
 namespace CultuurNet\CalendarSummaryV3\Permanent;
 
+use CultuurNet\CalendarSummaryV3\OfferFormatter;
 use CultuurNet\CalendarSummaryV3\Translator;
 use CultuurNet\SearchV3\ValueObjects\Offer;
 use CultuurNet\SearchV3\ValueObjects\OpeningHours;
 use IntlDateFormatter;
 
-final class MediumPermanentHTMLFormatter implements PermanentFormatterInterface
+final class MediumPermanentHTMLFormatter implements OfferFormatter
 {
     /**
      * @var IntlDateFormatter
