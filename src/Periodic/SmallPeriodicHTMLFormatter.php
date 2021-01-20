@@ -2,23 +2,18 @@
 
 namespace CultuurNet\CalendarSummaryV3\Periodic;
 
+use CultuurNet\CalendarSummaryV3\DateFormatter;
 use CultuurNet\CalendarSummaryV3\Translator;
 use CultuurNet\SearchV3\ValueObjects\Offer;
 use \DateTime;
 use \DateTimeInterface;
-use IntlDateFormatter;
 
 final class SmallPeriodicHTMLFormatter implements PeriodicFormatterInterface
 {
     /**
-     * @var IntlDateFormatter
+     * @var DateFormatter
      */
-    private $fmtDay;
-
-    /**
-     * @var IntlDateFormatter
-     */
-    private $fmtMonth;
+    private $formatter;
 
     /**
      * @var Translator
@@ -27,23 +22,7 @@ final class SmallPeriodicHTMLFormatter implements PeriodicFormatterInterface
 
     public function __construct(string $langCode)
     {
-        $this->fmtDay = new IntlDateFormatter(
-            $langCode,
-            IntlDateFormatter::FULL,
-            IntlDateFormatter::FULL,
-            date_default_timezone_get(),
-            IntlDateFormatter::GREGORIAN,
-            'd'
-        );
-
-        $this->fmtMonth = new IntlDateFormatter(
-            $langCode,
-            IntlDateFormatter::FULL,
-            IntlDateFormatter::FULL,
-            date_default_timezone_get(),
-            IntlDateFormatter::GREGORIAN,
-            'MMM'
-        );
+        $this->formatter = new DateFormatter($langCode);
 
         $this->trans = new Translator();
         $this->trans->setLanguage($langCode);
@@ -79,16 +58,13 @@ final class SmallPeriodicHTMLFormatter implements PeriodicFormatterInterface
 
     private function formatDate(DateTimeInterface $date): string
     {
-        $dateFromDay = $this->fmtDay->format($date);
-        $dateFromMonth = $this->fmtMonth->format($date);
-        $dateFromMonth = rtrim($dateFromMonth, ".");
-        $dateFromYear = $date->format('Y');
+        $dateFromDay = $this->formatter->formatAsDayNumber($date);
+        $dateFromMonth = $this->formatter->formatAsAbbreviatedMonthName($date);
+        $dateFromYear = $this->formatter->formatAsYear($date);
 
-        $output =
+        return
             '<span class="cf-date">' . $dateFromDay . '</span> ' .
-            '<span class="cf-month">' . strtolower($dateFromMonth) . '</span> ' .
+            '<span class="cf-month">' . $dateFromMonth . '</span> ' .
             '<span class="cf-year">' . $dateFromYear . '</span>';
-
-        return $output;
     }
 }

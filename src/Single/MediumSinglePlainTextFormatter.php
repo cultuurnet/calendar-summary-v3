@@ -2,22 +2,18 @@
 
 namespace CultuurNet\CalendarSummaryV3\Single;
 
+use CultuurNet\CalendarSummaryV3\DateComparison;
+use CultuurNet\CalendarSummaryV3\DateFormatter;
 use CultuurNet\CalendarSummaryV3\Translator;
 use CultuurNet\SearchV3\ValueObjects\Offer;
 use DateTimeInterface;
-use IntlDateFormatter;
 
 final class MediumSinglePlainTextFormatter implements SingleFormatterInterface
 {
     /**
-     * @var IntlDateFormatter
+     * @var DateFormatter
      */
-    private $fmt;
-
-    /**
-     * @var IntlDateFormatter
-     */
-    private $fmtDay;
+    private $formatter;
 
     /**
      * @var Translator
@@ -26,23 +22,7 @@ final class MediumSinglePlainTextFormatter implements SingleFormatterInterface
 
     public function __construct(string $langCode)
     {
-        $this->fmt = new IntlDateFormatter(
-            $langCode,
-            IntlDateFormatter::FULL,
-            IntlDateFormatter::FULL,
-            date_default_timezone_get(),
-            IntlDateFormatter::GREGORIAN,
-            'd MMMM yyyy'
-        );
-
-        $this->fmtDay = new IntlDateFormatter(
-            $langCode,
-            IntlDateFormatter::FULL,
-            IntlDateFormatter::FULL,
-            date_default_timezone_get(),
-            IntlDateFormatter::GREGORIAN,
-            'eeee'
-        );
+        $this->formatter = new DateFormatter($langCode);
 
         $this->trans = new Translator();
         $this->trans->setLanguage($langCode);
@@ -50,10 +30,10 @@ final class MediumSinglePlainTextFormatter implements SingleFormatterInterface
 
     public function format(Offer $offer): string
     {
-        $dateFrom = $offer->getStartDate()->setTimezone(new \DateTimeZone(date_default_timezone_get()));
-        $dateEnd = $offer->getEndDate()->setTimezone(new \DateTimeZone(date_default_timezone_get()));
+        $dateFrom = $offer->getStartDate();
+        $dateEnd = $offer->getEndDate();
 
-        if ($dateFrom->format('Y-m-d') == $dateEnd->format('Y-m-d')) {
+        if (DateComparison::onSameDay($dateFrom, $dateEnd)) {
             $output = $this->formatSameDay($dateFrom);
         } else {
             $output = $this->formatMoreDays($dateFrom, $dateEnd);
@@ -64,8 +44,8 @@ final class MediumSinglePlainTextFormatter implements SingleFormatterInterface
 
     private function formatSameDay(DateTimeInterface $dateFrom): string
     {
-        $intlDateFrom = $this->fmt->format($dateFrom);
-        $intlDateDayFrom = $this->fmtDay->format($dateFrom);
+        $intlDateFrom = $this->formatter->formatAsFullDate($dateFrom);
+        $intlDateDayFrom = $this->formatter->formatAsDayOfWeek($dateFrom);
 
         $output = $intlDateDayFrom . ' ' . $intlDateFrom;
 
@@ -74,11 +54,11 @@ final class MediumSinglePlainTextFormatter implements SingleFormatterInterface
 
     private function formatMoreDays(DateTimeInterface $dateFrom, DateTimeInterface $dateEnd): string
     {
-        $intlDateFrom = $this->fmt->format($dateFrom);
-        $intlDateDayFrom = $this->fmtDay->format($dateFrom);
+        $intlDateFrom = $this->formatter->formatAsFullDate($dateFrom);
+        $intlDateDayFrom = $this->formatter->formatAsDayOfWeek($dateFrom);
 
-        $intlDateEnd = $this->fmt->format($dateEnd);
-        $intlDateDayEnd = $this->fmtDay->format($dateEnd);
+        $intlDateEnd = $this->formatter->formatAsFullDate($dateEnd);
+        $intlDateDayEnd = $this->formatter->formatAsDayOfWeek($dateEnd);
 
         $output = $this->trans->getTranslations()->t('from') . ' ' . $intlDateDayFrom . ' '
             . $intlDateFrom . ' ' . $this->trans->getTranslations()->t('till') . ' '
