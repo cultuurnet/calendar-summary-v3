@@ -2,12 +2,13 @@
 
 namespace CultuurNet\CalendarSummaryV3\Single;
 
+use CultuurNet\CalendarSummaryV3\OfferFormatter;
 use CultuurNet\CalendarSummaryV3\Translator;
 use CultuurNet\SearchV3\ValueObjects\Offer;
 use DateTimeInterface;
 use IntlDateFormatter;
 
-final class MediumSinglePlainTextFormatter implements SingleFormatterInterface
+final class MediumSinglePlainTextFormatter implements OfferFormatter
 {
     /**
      * @var IntlDateFormatter
