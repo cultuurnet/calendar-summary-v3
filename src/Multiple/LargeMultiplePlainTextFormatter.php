@@ -32,12 +32,8 @@ final class LargeMultiplePlainTextFormatter implements MultipleFormatterInterfac
         foreach ($subEvents as $key => $subEvent) {
             $formatter = new LargeSinglePlainTextFormatter($this->langCode);
 
-            $event = new Event();
-            $event->setStartDate($subEvent->getStartDate());
-            $event->setEndDate($subEvent->getEndDate());
-
             if (!$this->hidePast || DateComparison::inTheFuture($subEvent->getEndDate())) {
-                $output[] = $formatter->format($event);
+                $output[] = $formatter->format($subEvent);
             }
         }
 
