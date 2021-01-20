@@ -25,7 +25,7 @@ class LargeSingleHTMLFormatterTest extends TestCase
         $event->setEndDate(new \DateTime('2018-01-25T21:30:00+01:00'));
 
         $expectedOutput = '<time itemprop="startDate" datetime="2018-01-25T20:00:00+01:00">';
-        $expectedOutput .= '<span class="cf-weekday cf-meta">donderdag</span>';
+        $expectedOutput .= '<span class="cf-weekday cf-meta">Donderdag</span>';
         $expectedOutput .= ' ';
         $expectedOutput .= '<span class="cf-date">25 januari 2018</span>';
         $expectedOutput .= ' ';
@@ -53,7 +53,7 @@ class LargeSingleHTMLFormatterTest extends TestCase
         $event->setEndDate(new \DateTime('2018-01-08T21:30:00+01:00'));
 
         $expectedOutput = '<time itemprop="startDate" datetime="2018-01-08T20:00:00+01:00">';
-        $expectedOutput .= '<span class="cf-weekday cf-meta">maandag</span>';
+        $expectedOutput .= '<span class="cf-weekday cf-meta">Maandag</span>';
         $expectedOutput .= ' ';
         $expectedOutput .= '<span class="cf-date">8 januari 2018</span>';
         $expectedOutput .= ' ';
@@ -153,7 +153,7 @@ class LargeSingleHTMLFormatterTest extends TestCase
         $event->setEndDate(new \DateTime('2018-01-06T23:59:59+01:00'));
 
         $expectedOutput = '<time itemprop="startDate" datetime="2018-01-06T00:00:00+01:00">';
-        $expectedOutput .= '<span class="cf-weekday cf-meta">zaterdag</span>';
+        $expectedOutput .= '<span class="cf-weekday cf-meta">Zaterdag</span>';
         $expectedOutput .= ' ';
         $expectedOutput .= '<span class="cf-date">6 januari 2018</span>';
         $expectedOutput .= '</time>';
@@ -171,7 +171,7 @@ class LargeSingleHTMLFormatterTest extends TestCase
         $event->setEndDate(new \DateTime('2018-01-06T13:30:00+01:00'));
 
         $expectedOutput = '<time itemprop="startDate" datetime="2018-01-06T13:30:00+01:00">';
-        $expectedOutput .= '<span class="cf-weekday cf-meta">zaterdag</span>';
+        $expectedOutput .= '<span class="cf-weekday cf-meta">Zaterdag</span>';
         $expectedOutput .= ' ';
         $expectedOutput .= '<span class="cf-date">6 januari 2018</span>';
         $expectedOutput .= ' ';

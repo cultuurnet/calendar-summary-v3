@@ -33,7 +33,7 @@ class LargeMultipleHTMLFormatterTest extends TestCase
 
         $expectedOutput = '<ul class="cnw-event-date-info"><li>';
         $expectedOutput .= '<time itemprop="startDate" datetime="2017-11-09T20:00:00+01:00">';
-        $expectedOutput .= '<span class="cf-weekday cf-meta">donderdag</span>';
+        $expectedOutput .= '<span class="cf-weekday cf-meta">Donderdag</span>';
         $expectedOutput .= ' ';
         $expectedOutput .= '<span class="cf-date">9 november 2017</span>';
         $expectedOutput .= ' ';
@@ -48,7 +48,7 @@ class LargeMultipleHTMLFormatterTest extends TestCase
         $expectedOutput .= '<span class="cf-time">22:00</span>';
         $expectedOutput .= '</time></li>';
         $expectedOutput .= '<li><time itemprop="startDate" datetime="2017-11-16T20:00:00+01:00">';
-        $expectedOutput .= '<span class="cf-weekday cf-meta">donderdag</span>';
+        $expectedOutput .= '<span class="cf-weekday cf-meta">Donderdag</span>';
         $expectedOutput .= ' ';
         $expectedOutput .= '<span class="cf-date">16 november 2017</span>';
         $expectedOutput .= ' ';
@@ -63,7 +63,7 @@ class LargeMultipleHTMLFormatterTest extends TestCase
         $expectedOutput .= '<span class="cf-time">22:00</span>';
         $expectedOutput .= '</time></li>';
         $expectedOutput .= '<li><time itemprop="startDate" datetime="2017-11-23T20:00:00+01:00">';
-        $expectedOutput .= '<span class="cf-weekday cf-meta">donderdag</span>';
+        $expectedOutput .= '<span class="cf-weekday cf-meta">Donderdag</span>';
         $expectedOutput .= ' ';
         $expectedOutput .= '<span class="cf-date">23 november 2017</span>';
         $expectedOutput .= ' ';
@@ -78,7 +78,7 @@ class LargeMultipleHTMLFormatterTest extends TestCase
         $expectedOutput .= '<span class="cf-time">22:00</span>';
         $expectedOutput .= '</time></li>';
         $expectedOutput .= '<li><time itemprop="startDate" datetime="2017-11-30T20:00:00+01:00">';
-        $expectedOutput .= '<span class="cf-weekday cf-meta">donderdag</span>';
+        $expectedOutput .= '<span class="cf-weekday cf-meta">Donderdag</span>';
         $expectedOutput .= ' ';
         $expectedOutput .= '<span class="cf-date">30 november 2017</span>';
         $expectedOutput .= ' ';

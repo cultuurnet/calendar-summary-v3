@@ -50,12 +50,12 @@ final class LargeSinglePlainTextFormatter implements SingleFormatterInterface
         $intlEndTimeEnd = $this->formatter->formatAsTime($dateEnd);
 
         if ($intlStartTimeFrom === '00:00' && $intlEndTimeEnd === '23:59') {
-            $output = $intlWeekDayFrom . ' ' . $intlDateFrom;
+            $output = ucfirst($intlWeekDayFrom) . ' ' . $intlDateFrom;
         } elseif ($intlStartTimeFrom == $intlEndTimeEnd) {
-            $output = $intlWeekDayFrom . ' ' . $intlDateFrom . ' ';
+            $output = ucfirst($intlWeekDayFrom) . ' ' . $intlDateFrom . ' ';
             $output .= $this->trans->getTranslations()->t('at') . ' ' . $intlStartTimeFrom;
         } else {
-            $output = $intlWeekDayFrom . ' ' . $intlDateFrom;
+            $output = ucfirst($intlWeekDayFrom) . ' ' . $intlDateFrom;
             $output .= ' ' . $this->trans->getTranslations()->t('from') . ' ';
             $output .= $intlStartTimeFrom;
             $output .= ' ' . $this->trans->getTranslations()->t('till') . ' ' . $intlEndTimeEnd;
