@@ -24,7 +24,7 @@ final class CalendarPlainTextFormatter implements CalendarFormatterInterface
      */
     private $mapping;
 
-    public function __construct($langCode = 'nl_BE', $hidePastDates = false, $timeZone = 'Europe/Brussels')
+    public function __construct(string $langCode = 'nl_BE', bool $hidePastDates = false, string $timeZone = 'Europe/Brussels')
     {
         date_default_timezone_set($timeZone);
 
