@@ -98,7 +98,7 @@ final class LargePeriodicPlainTextFormatter implements OfferFormatter
     }
 
     /**
-     * @param OpeningHours[]
+     * @param OpeningHours[] $openingHoursData
      * @return string
      */
     private function generateWeekScheme(array $openingHoursData): string

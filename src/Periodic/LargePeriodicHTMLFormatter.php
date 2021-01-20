@@ -5,6 +5,7 @@ namespace CultuurNet\CalendarSummaryV3\Periodic;
 use CultuurNet\CalendarSummaryV3\OfferFormatter;
 use CultuurNet\CalendarSummaryV3\Translator;
 use CultuurNet\SearchV3\ValueObjects\Offer;
+use CultuurNet\SearchV3\ValueObjects\OpeningHours;
 use DateTime;
 use IntlDateFormatter;
 
@@ -166,7 +167,7 @@ final class LargePeriodicHTMLFormatter implements OfferFormatter
     }
 
     /**
-     * @param $openingHoursData
+     * @param OpeningHours[] $openingHoursData
      * @return string
      */
     private function generateWeekScheme($openingHoursData)
