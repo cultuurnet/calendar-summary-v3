@@ -74,10 +74,14 @@ final class LargeSinglePlainTextFormatter implements SingleFormatterInterface
         $intlWeekDayEnd = $this->formatter->formatAsDayOfWeek($dateEnd);
         $intlEndTimeEnd = $this->formatter->formatAsTime($dateEnd);
 
-        $output = ucfirst($this->trans->getTranslations()->t('from')) . ' ';
-        $output .= $intlWeekDayFrom . ' ' . $intlDateFrom . ' ' . $intlStartTimeFrom;
-        $output .= ' ' . $this->trans->getTranslations()->t('till') . ' ';
-        $output .= $intlWeekDayEnd . ' ' . $intlDateEnd . ' ' . $intlEndTimeEnd;
+        return ucfirst(
+            $this->trans->getTranslations()->t('from') . ' '
+            . $intlWeekDayFrom . ' ' . $intlDateFrom . ' '
+            . $this->trans->getTranslations()->t('at') . ' ' . $intlStartTimeFrom . ' '
+            . $this->trans->getTranslations()->t('till') . ' '
+            . $intlWeekDayEnd . ' ' . $intlDateEnd . ' '
+            . $this->trans->getTranslations()->t('at') . ' ' . $intlEndTimeEnd
+        );
 
         return $output;
     }

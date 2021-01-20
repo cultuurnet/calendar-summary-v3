@@ -52,7 +52,7 @@ class LargeSinglePlainTextFormatterTest extends TestCase
         $event->setStartDate(new \DateTime('2018-01-25T20:00:00+01:00'));
         $event->setEndDate(new \DateTime('2018-01-28T21:30:00+01:00'));
 
-        $expectedOutput = 'Van donderdag 25 januari 2018 20:00 tot zondag 28 januari 2018 21:30';
+        $expectedOutput = 'Van donderdag 25 januari 2018 om 20:00 tot zondag 28 januari 2018 om 21:30';
 
         $this->assertEquals(
             $expectedOutput,
@@ -66,7 +66,7 @@ class LargeSinglePlainTextFormatterTest extends TestCase
         $event->setStartDate(new \DateTime('2018-01-06T20:00:00+01:00'));
         $event->setEndDate(new \DateTime('2018-01-08T21:30:00+01:00'));
 
-        $expectedOutput = 'Van zaterdag 6 januari 2018 20:00 tot maandag 8 januari 2018 21:30';
+        $expectedOutput = 'Van zaterdag 6 januari 2018 om 20:00 tot maandag 8 januari 2018 om 21:30';
 
         $this->assertEquals(
             $expectedOutput,
