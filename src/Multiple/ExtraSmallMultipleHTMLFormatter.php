@@ -2,6 +2,7 @@
 
 namespace CultuurNet\CalendarSummaryV3\Multiple;
 
+use CultuurNet\CalendarSummaryV3\DateComparison;
 use CultuurNet\CalendarSummaryV3\DateFormatter;
 use CultuurNet\CalendarSummaryV3\Translator;
 use CultuurNet\SearchV3\ValueObjects\Event;
@@ -31,7 +32,7 @@ final class ExtraSmallMultipleHTMLFormatter implements MultipleFormatterInterfac
         $dateFrom = $event->getStartDate()->setTimezone(new DateTimeZone(date_default_timezone_get()));
         $dateTo = $event->getEndDate()->setTimezone(new DateTimeZone(date_default_timezone_get()));
 
-        if ($dateFrom == $dateTo) {
+        if (DateComparison::onSameDay($dateFrom, $dateTo)) {
             return '<span class="cf-date">' . $this->formatter->formatAsShortDate($dateFrom) . '</span>';
         }
 
