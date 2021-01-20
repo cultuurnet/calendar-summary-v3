@@ -21,6 +21,8 @@ final class DateFormatter
     private const PATTERN_MONTH_NAME_ABBREVIATED = 'MMM'; // Example 'sep.'
 
     private const PATTERN_TIME = 'HH:mm'; // Example '01:05', '12:15'
+
+    private const PATTERN_SHORT_DATE = 'd/M/yy'; // Example '4/3/25'
     private const PATTERN_FULL_DATE = 'd MMMM yyyy'; // Example '1 january 2021'
 
     /**
@@ -79,6 +81,14 @@ final class DateFormatter
     public function formatAsTime(DateTimeInterface $dateTime): string
     {
         return $this->format($dateTime, self::PATTERN_TIME);
+    }
+
+    /**
+     * Used to format dates as '4/3/25'
+     */
+    public function formatAsShortDate(DateTimeInterface $dateTime): string
+    {
+        return $this->format($dateTime, self::PATTERN_SHORT_DATE);
     }
 
     /**
