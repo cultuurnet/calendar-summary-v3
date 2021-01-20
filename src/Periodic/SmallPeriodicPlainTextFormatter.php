@@ -56,7 +56,7 @@ final class SmallPeriodicPlainTextFormatter implements PeriodicFormatterInterfac
     {
         $dateFromDay = $this->formatter->formatAsDayNumber($date);
         $dateFromMonth = $this->formatter->formatAsAbbreviatedMonthName($date);
-        $dateFromYear = $date->format('Y');
+        $dateFromYear = $this->formatter->formatAsYear($date);
 
         $output = $dateFromDay . ' ' . strtolower($dateFromMonth) . ' ' . $dateFromYear;
 

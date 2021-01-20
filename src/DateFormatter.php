@@ -20,6 +20,9 @@ final class DateFormatter
 
     private const PATTERN_MONTH_NAME_ABBREVIATED = 'MMM'; // Example 'sep.'
 
+    private const PATTERN_SHORT_YEAR = 'yy'; // Example '21'
+    private const PATTERN_YEAR = 'yyyy'; // Example '2021'
+
     private const PATTERN_TIME = 'HH:mm'; // Example '01:05', '12:15'
 
     private const PATTERN_SHORT_DATE = 'd/M/yy'; // Example '4/3/25'
@@ -73,6 +76,22 @@ final class DateFormatter
     public function formatAsAbbreviatedMonthName(DateTimeInterface $dateTime): string
     {
         return rtrim($this->format($dateTime, self::PATTERN_MONTH_NAME_ABBREVIATED), '.');
+    }
+
+    /**
+     * Used to format years as '21'
+     */
+    public function formatAsShortYear(DateTimeInterface $dateTime): string
+    {
+        return $this->format($dateTime, self::PATTERN_SHORT_YEAR);
+    }
+
+    /**
+     * Used to format years as '2021'
+     */
+    public function formatAsYear(DateTimeInterface $dateTime): string
+    {
+        return $this->format($dateTime, self::PATTERN_YEAR);
     }
 
     /**

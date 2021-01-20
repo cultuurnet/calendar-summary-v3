@@ -54,12 +54,6 @@ final class ExtraSmallPeriodicPlainTextFormatter implements PeriodicFormatterInt
 
     private function formatDate(DateTimeInterface $date): string
     {
-        $dateFromDay = $this->formatter->formatAsDayNumber($date);
-        $dateFromMonth = $this->formatter->formatAsMonthNumber($date);
-        $dateFromYear = $date->format('y');
-
-        $output = $dateFromDay . '/' . $dateFromMonth . '/' . $dateFromYear;
-
-        return $output;
+        return $this->formatter->formatAsShortDate($date);
     }
 }

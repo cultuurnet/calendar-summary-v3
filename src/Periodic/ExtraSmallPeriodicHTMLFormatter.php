@@ -60,7 +60,7 @@ final class ExtraSmallPeriodicHTMLFormatter implements PeriodicFormatterInterfac
     {
         $dateFromDay = $this->formatter->formatAsDayNumber($date);
         $dateFromMonth = $this->formatter->formatAsMonthNumber($date);
-        $dateFromYear = $date->format('y');
+        $dateFromYear = $this->formatter->formatAsShortYear($date);
 
         $output =
             '<span class="cf-date">' . $dateFromDay . '</span>/' .
