@@ -32,12 +32,8 @@ final class MediumMultipleHTMLFormatter implements MultipleFormatterInterface
         foreach ($subEvents as $subEvent) {
             $formatter = new MediumSingleHTMLFormatter($this->langCode);
 
-            $event = new Event();
-            $event->setStartDate($subEvent->getStartDate());
-            $event->setEndDate($subEvent->getEndDate());
-
             if (!$this->hidePast || DateComparison::inTheFuture($subEvent->getEndDate())) {
-                $output .= '<li>' . $formatter->format($event) . '</li>';
+                $output .= '<li>' . $formatter->format($subEvent) . '</li>';
             }
         }
 
