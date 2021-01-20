@@ -48,7 +48,7 @@ class SmallSinglePlainTextFormatterTest extends TestCase
         $event->setEndDate(new \DateTime('2018-01-28T21:30:00+01:00'));
 
         $this->assertEquals(
-            'van 25 jan tot 28 jan',
+            'Van 25 jan tot 28 jan',
             $this->formatter->format($event)
         );
     }
@@ -60,7 +60,7 @@ class SmallSinglePlainTextFormatterTest extends TestCase
         $event->setEndDate(new \DateTime('2018-01-08T21:30:00+01:00'));
 
         $this->assertEquals(
-            'van 6 jan tot 8 jan',
+            'Van 6 jan tot 8 jan',
             $this->formatter->format($event)
         );
     }

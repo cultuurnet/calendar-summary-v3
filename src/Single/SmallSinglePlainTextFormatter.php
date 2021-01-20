@@ -47,9 +47,7 @@ final class SmallSinglePlainTextFormatter implements SingleFormatterInterface
         $dateFromDay = $this->formatter->formatAsDayNumber($dateFrom);
         $dateFromMonth = $this->formatter->formatAsAbbreviatedMonthName($dateFrom);
 
-        $output = $dateFromDay . ' ' . $dateFromMonth;
-
-        return $output;
+        return ucfirst($dateFromDay . ' ' . $dateFromMonth);
     }
 
     private function formatMoreDays(DateTimeInterface $dateFrom, DateTimeInterface $dateEnd): string
@@ -60,10 +58,10 @@ final class SmallSinglePlainTextFormatter implements SingleFormatterInterface
         $dateEndDay = $this->formatter->formatAsDayNumber($dateEnd);
         $dateEndMonth = $this->formatter->formatAsAbbreviatedMonthName($dateEnd);
 
-        $output = $this->trans->getTranslations()->t('from') . ' ' . $dateFromDay . ' '
+        return ucfirst(
+            $this->trans->getTranslations()->t('from') . ' ' . $dateFromDay . ' '
             . $dateFromMonth . ' ' . $this->trans->getTranslations()->t('till') . ' '
-            . $dateEndDay . ' ' . $dateEndMonth;
-
-        return $output;
+            . $dateEndDay . ' ' . $dateEndMonth
+        );
     }
 }

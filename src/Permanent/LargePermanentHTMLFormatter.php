@@ -40,15 +40,15 @@ final class LargePermanentHTMLFormatter implements PermanentFormatterInterface
 
     public function format(Offer $offer): string
     {
-        $output = '';
         if ($offer->getOpeningHours()) {
-            $output .= $this->generateWeekScheme($offer->getOpeningHours());
-        } else {
-            $output .= '<p class="cf-openinghours">'
-                . ucfirst($this->trans->getTranslations()->t('always_open')) . '</p>';
+            return $this->formatSummary($this->generateWeekScheme($offer->getOpeningHours()));
         }
 
-        return $this->formatSummary($output);
+        return $this->formatSummary(
+            '<p class="cf-openinghours">'
+            . ucfirst($this->trans->getTranslations()->t('always_open'))
+            . '</p>'
+        );
     }
 
     private function getFormattedTime(string $time): string

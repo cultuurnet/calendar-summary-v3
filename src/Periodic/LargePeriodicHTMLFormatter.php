@@ -116,18 +116,16 @@ final class LargePeriodicHTMLFormatter implements PeriodicFormatterInterface
      */
     private function generateDates(DateTime $dateFrom, DateTime $dateTo)
     {
-
         $intlDateFrom =$this->formatter->formatAsFullDate($dateFrom);
         $intlDateTo = $this->formatter->formatAsFullDate($dateTo);
 
-        $outputDates = '<p class="cf-period">';
-        $outputDates .= '<time itemprop="startDate" datetime="' . $dateFrom->format("Y-m-d") . '">';
-        $outputDates .= '<span class="cf-date">' . $intlDateFrom . '</span> </time>';
-        $outputDates .= '<span class="cf-to cf-meta">' . $this->trans->getTranslations()->t('till') . '</span>';
-        $outputDates .= '<time itemprop="endDate" datetime="' . $dateTo->format("Y-m-d") . '">';
-        $outputDates .= '<span class="cf-date">' . $intlDateTo . '</span> </time>';
-        $outputDates .= '</p>';
-        return $outputDates;
+        return '<p class="cf-period">'
+            . '<time itemprop="startDate" datetime="' . $dateFrom->format("Y-m-d") . '">'
+            . '<span class="cf-date">' . $intlDateFrom . '</span> </time>'
+            . '<span class="cf-to cf-meta">' . $this->trans->getTranslations()->t('till') . '</span>'
+            . '<time itemprop="endDate" datetime="' . $dateTo->format("Y-m-d") . '">'
+            . '<span class="cf-date">' . $intlDateTo . '</span> </time>'
+            . '</p>';
     }
 
     /**
@@ -136,7 +134,7 @@ final class LargePeriodicHTMLFormatter implements PeriodicFormatterInterface
      */
     private function generateWeekScheme($openingHoursData)
     {
-        $outputWeek = '<p class="cf-openinghours">' . $this->trans->getTranslations()->t('open') . ':</p>';
+        $outputWeek = '<p class="cf-openinghours">' . ucfirst($this->trans->getTranslations()->t('open')) . ':</p>';
         $outputWeek .= '<ul class="list-unstyled">';
 
         // Create an array with formatted timespans.

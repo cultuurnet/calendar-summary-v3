@@ -40,13 +40,11 @@ final class LargePermanentPlainTextFormatter implements PermanentFormatterInterf
 
     public function format(Offer $offer): string
     {
-        $output = '';
         if ($offer->getOpeningHours()) {
-            $output .= $this->generateWeekScheme($offer->getOpeningHours());
-        } else {
-            $output .= ucfirst($this->trans->getTranslations()->t('always_open')) . PHP_EOL;
+            return $this->generateWeekScheme($offer->getOpeningHours());
         }
-        return $output;
+
+        return ucfirst($this->trans->getTranslations()->t('always_open')) . PHP_EOL;
     }
 
     private function getFormattedTime(string $time): string
@@ -74,7 +72,7 @@ final class LargePermanentPlainTextFormatter implements PermanentFormatterInterf
                 $translatedDay = $this->formatter->formatAsAbbreviatedDayOfWeek(new DateTimeImmutable($dayOfWeek));
 
                 if (!isset($formattedDays[$dayOfWeek])) {
-                    $formattedDays[$dayOfWeek] = $translatedDay
+                    $formattedDays[$dayOfWeek] = ucfirst($translatedDay)
                         . ' ' . $this->trans->getTranslations()->t('from') . ' '
                         . $this->getFormattedTime($openingHours->getOpens())
                         . ' ' . $this->trans->getTranslations()->t('till') . ' '
@@ -93,7 +91,8 @@ final class LargePermanentPlainTextFormatter implements PermanentFormatterInterf
         // Create an array with formatted closed days.
         $closedDays = [];
         foreach ($this->daysOfWeek as $day) {
-            $closedDays[$day] = $this->formatter->formatAsAbbreviatedDayOfWeek(new DateTimeImmutable($day)) . ' '
+            $closedDays[$day] = ucfirst($this->formatter->formatAsAbbreviatedDayOfWeek(new DateTimeImmutable($day)))
+                . ' '
                 . $this->trans->getTranslations()->t('closed') . PHP_EOL;
         }
 

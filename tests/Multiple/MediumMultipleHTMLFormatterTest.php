@@ -31,13 +31,13 @@ class MediumMultipleHTMLFormatterTest extends TestCase
         $event->setSubEvents($newEvents);
 
         $expectedOutput = '<ul class="cnw-event-date-info"><li>';
-        $expectedOutput .= '<span class="cf-weekday cf-meta">donderdag</span> ';
+        $expectedOutput .= '<span class="cf-weekday cf-meta">Donderdag</span> ';
         $expectedOutput .= '<span class="cf-date">9 november 2017</span></li>';
-        $expectedOutput .= '<li><span class="cf-weekday cf-meta">donderdag</span> ';
+        $expectedOutput .= '<li><span class="cf-weekday cf-meta">Donderdag</span> ';
         $expectedOutput .= '<span class="cf-date">16 november 2017</span></li>';
-        $expectedOutput .= '<li><span class="cf-weekday cf-meta">donderdag</span> ';
+        $expectedOutput .= '<li><span class="cf-weekday cf-meta">Donderdag</span> ';
         $expectedOutput .= '<span class="cf-date">23 november 2017</span></li>';
-        $expectedOutput .= '<li><span class="cf-weekday cf-meta">donderdag</span> ';
+        $expectedOutput .= '<li><span class="cf-weekday cf-meta">Donderdag</span> ';
         $expectedOutput .= '<span class="cf-date">30 november 2017</span></li></ul>';
 
         $this->assertEquals(

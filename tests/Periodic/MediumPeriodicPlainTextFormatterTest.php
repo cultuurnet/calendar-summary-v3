@@ -77,7 +77,7 @@ class MediumPeriodicPlainTextFormatterTest extends TestCase
         $offer->setEndDate(new \DateTime('08-10-2025'));
 
         $this->assertEquals(
-            'woensdag 8 oktober 2025',
+            'Woensdag 8 oktober 2025',
             $this->formatter->format($offer)
         );
     }

@@ -50,18 +50,18 @@ final class LargeSinglePlainTextFormatter implements SingleFormatterInterface
         $intlEndTimeEnd = $this->formatter->formatAsTime($dateEnd);
 
         if ($intlStartTimeFrom === '00:00' && $intlEndTimeEnd === '23:59') {
-            $output = $intlWeekDayFrom . ' ' . $intlDateFrom;
-        } elseif ($intlStartTimeFrom == $intlEndTimeEnd) {
-            $output = $intlWeekDayFrom . ' ' . $intlDateFrom . ' ';
-            $output .= $this->trans->getTranslations()->t('at') . ' ' . $intlStartTimeFrom;
-        } else {
-            $output = $intlWeekDayFrom . ' ' . $intlDateFrom;
-            $output .= ' ' . $this->trans->getTranslations()->t('from') . ' ';
-            $output .= $intlStartTimeFrom;
-            $output .= ' ' . $this->trans->getTranslations()->t('till') . ' ' . $intlEndTimeEnd;
+            return ucfirst($intlWeekDayFrom) . ' ' . $intlDateFrom;
         }
 
-        return $output;
+        if ($intlStartTimeFrom == $intlEndTimeEnd) {
+            return ucfirst($intlWeekDayFrom) . ' ' . $intlDateFrom . ' '
+                . $this->trans->getTranslations()->t('at') . ' ' . $intlStartTimeFrom;
+        }
+
+        return ucfirst($intlWeekDayFrom) . ' ' . $intlDateFrom
+            . ' ' . $this->trans->getTranslations()->t('from') . ' '
+            . $intlStartTimeFrom
+            . ' ' . $this->trans->getTranslations()->t('till') . ' ' . $intlEndTimeEnd;
     }
 
     private function formatMoreDays(DateTimeInterface $dateFrom, DateTimeInterface $dateEnd): string
@@ -74,10 +74,14 @@ final class LargeSinglePlainTextFormatter implements SingleFormatterInterface
         $intlWeekDayEnd = $this->formatter->formatAsDayOfWeek($dateEnd);
         $intlEndTimeEnd = $this->formatter->formatAsTime($dateEnd);
 
-        $output = ucfirst($this->trans->getTranslations()->t('from')) . ' ';
-        $output .= $intlWeekDayFrom . ' ' . $intlDateFrom . ' ' . $intlStartTimeFrom;
-        $output .= ' ' . $this->trans->getTranslations()->t('till') . ' ';
-        $output .= $intlWeekDayEnd . ' ' . $intlDateEnd . ' ' . $intlEndTimeEnd;
+        return ucfirst(
+            $this->trans->getTranslations()->t('from') . ' '
+            . $intlWeekDayFrom . ' ' . $intlDateFrom . ' '
+            . $this->trans->getTranslations()->t('at') . ' ' . $intlStartTimeFrom . ' '
+            . $this->trans->getTranslations()->t('till') . ' '
+            . $intlWeekDayEnd . ' ' . $intlDateEnd . ' '
+            . $this->trans->getTranslations()->t('at') . ' ' . $intlEndTimeEnd
+        );
 
         return $output;
     }

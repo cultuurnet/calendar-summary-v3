@@ -47,7 +47,7 @@ final class MediumSingleHTMLFormatter implements SingleFormatterInterface
         $intlDateFrom = $this->formatter->formatAsFullDate($dateFrom);
         $intlDateDayFrom = $this->formatter->formatAsDayOfWeek($dateFrom);
 
-        $output = '<span class="cf-weekday cf-meta">' . $intlDateDayFrom . '</span>';
+        $output = '<span class="cf-weekday cf-meta">' . ucfirst($intlDateDayFrom) . '</span>';
         $output .= ' ';
         $output .= '<span class="cf-date">' . $intlDateFrom . '</span>';
 

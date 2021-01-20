@@ -47,11 +47,9 @@ final class SmallSingleHTMLFormatter implements SingleFormatterInterface
         $dateFromDay = $this->formatter->formatAsDayNumber($dateFrom);
         $dateFromMonth = $this->formatter->formatAsAbbreviatedMonthName($dateFrom);
 
-        $output = '<span class="cf-date">' . $dateFromDay . '</span>';
-        $output .= ' ';
-        $output .= '<span class="cf-month">' . $dateFromMonth . '</span>';
-
-        return $output;
+        return '<span class="cf-date">' . ucfirst($dateFromDay) . '</span>'
+            . ' '
+            . '<span class="cf-month">' . $dateFromMonth . '</span>';
     }
 
     private function formatMoreDays(DateTimeInterface $dateFrom, DateTimeInterface $dateEnd): string

@@ -30,14 +30,11 @@ final class MediumPermanentPlainTextFormatter implements PermanentFormatterInter
 
     public function format(Offer $offer): string
     {
-        $output = '';
         if ($offer->getOpeningHours()) {
-            $output .= $this->generateWeekScheme($offer->getOpeningHours());
-        } else {
-            $output .= ucfirst($this->trans->getTranslations()->t('always_open')) . PHP_EOL;
+            return $this->generateWeekScheme($offer->getOpeningHours());
         }
 
-        return $output;
+        return ucfirst($this->trans->getTranslations()->t('always_open')) . PHP_EOL;
     }
 
     /**
