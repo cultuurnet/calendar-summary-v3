@@ -24,7 +24,7 @@ class MediumSinglePlainTextFormatterTest extends TestCase
         $event->setEndDate(new \DateTime('2018-01-25T21:30:00+01:00'));
 
         $this->assertEquals(
-            'donderdag 25 januari 2018',
+            'Donderdag 25 januari 2018',
             $this->formatter->format($event)
         );
     }
@@ -36,7 +36,7 @@ class MediumSinglePlainTextFormatterTest extends TestCase
         $event->setEndDate(new \DateTime('2018-01-08T21:30:00+01:00'));
 
         $this->assertEquals(
-            'maandag 8 januari 2018',
+            'Maandag 8 januari 2018',
             $this->formatter->format($event)
         );
     }
@@ -48,7 +48,7 @@ class MediumSinglePlainTextFormatterTest extends TestCase
         $event->setEndDate(new \DateTime('2018-01-27T21:30:00+01:00'));
 
         $this->assertEquals(
-            'van donderdag 25 januari 2018 tot zaterdag 27 januari 2018',
+            'Van donderdag 25 januari 2018 tot zaterdag 27 januari 2018',
             $this->formatter->format($event)
         );
     }
@@ -60,7 +60,7 @@ class MediumSinglePlainTextFormatterTest extends TestCase
         $event->setEndDate(new \DateTime('2018-01-08T21:30:00+01:00'));
 
         $this->assertEquals(
-            'van zaterdag 6 januari 2018 tot maandag 8 januari 2018',
+            'Van zaterdag 6 januari 2018 tot maandag 8 januari 2018',
             $this->formatter->format($event)
         );
     }

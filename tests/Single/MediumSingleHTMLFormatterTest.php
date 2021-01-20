@@ -24,7 +24,7 @@ class MediumSingleHTMLFormatterTest extends TestCase
         $event->setEndDate(new \DateTime('2018-01-25T21:30:00+01:00'));
 
         $this->assertEquals(
-            '<span class="cf-weekday cf-meta">donderdag</span> <span class="cf-date">25 januari 2018</span>',
+            '<span class="cf-weekday cf-meta">Donderdag</span> <span class="cf-date">25 januari 2018</span>',
             $this->formatter->format($event)
         );
     }
@@ -36,7 +36,7 @@ class MediumSingleHTMLFormatterTest extends TestCase
         $event->setEndDate(new \DateTime('2018-01-08T21:30:00+01:00'));
 
         $this->assertEquals(
-            '<span class="cf-weekday cf-meta">maandag</span> <span class="cf-date">8 januari 2018</span>',
+            '<span class="cf-weekday cf-meta">Maandag</span> <span class="cf-date">8 januari 2018</span>',
             $this->formatter->format($event)
         );
     }

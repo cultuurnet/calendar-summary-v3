@@ -47,7 +47,7 @@ final class MediumSinglePlainTextFormatter implements SingleFormatterInterface
         $intlDateFrom = $this->formatter->formatAsFullDate($dateFrom);
         $intlDateDayFrom = $this->formatter->formatAsDayOfWeek($dateFrom);
 
-        $output = $intlDateDayFrom . ' ' . $intlDateFrom;
+        $output = ucfirst($intlDateDayFrom . ' ' . $intlDateFrom);
 
         return $output;
     }
@@ -60,10 +60,10 @@ final class MediumSinglePlainTextFormatter implements SingleFormatterInterface
         $intlDateEnd = $this->formatter->formatAsFullDate($dateEnd);
         $intlDateDayEnd = $this->formatter->formatAsDayOfWeek($dateEnd);
 
-        $output = $this->trans->getTranslations()->t('from') . ' ' . $intlDateDayFrom . ' '
+        return ucfirst(
+            $this->trans->getTranslations()->t('from') . ' ' . $intlDateDayFrom . ' '
             . $intlDateFrom . ' ' . $this->trans->getTranslations()->t('till') . ' '
-            . $intlDateDayEnd . ' ' . $intlDateEnd;
-
-        return $output;
+            . $intlDateDayEnd . ' ' . $intlDateEnd
+        );
     }
 }
