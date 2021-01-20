@@ -74,7 +74,7 @@ final class LargePermanentPlainTextFormatter implements PermanentFormatterInterf
                 $translatedDay = $this->formatter->formatAsAbbreviatedDayOfWeek(new DateTimeImmutable($dayOfWeek));
 
                 if (!isset($formattedDays[$dayOfWeek])) {
-                    $formattedDays[$dayOfWeek] = $translatedDay
+                    $formattedDays[$dayOfWeek] = ucfirst($translatedDay)
                         . ' ' . $this->trans->getTranslations()->t('from') . ' '
                         . $this->getFormattedTime($openingHours->getOpens())
                         . ' ' . $this->trans->getTranslations()->t('till') . ' '
@@ -93,7 +93,8 @@ final class LargePermanentPlainTextFormatter implements PermanentFormatterInterf
         // Create an array with formatted closed days.
         $closedDays = [];
         foreach ($this->daysOfWeek as $day) {
-            $closedDays[$day] = $this->formatter->formatAsAbbreviatedDayOfWeek(new DateTimeImmutable($day)) . ' '
+            $closedDays[$day] = ucfirst($this->formatter->formatAsAbbreviatedDayOfWeek(new DateTimeImmutable($day)))
+                . ' '
                 . $this->trans->getTranslations()->t('closed') . PHP_EOL;
         }
 
