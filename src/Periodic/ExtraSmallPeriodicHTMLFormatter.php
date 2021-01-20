@@ -62,11 +62,9 @@ final class ExtraSmallPeriodicHTMLFormatter implements PeriodicFormatterInterfac
         $dateFromMonth = $this->formatter->formatAsMonthNumber($date);
         $dateFromYear = $this->formatter->formatAsShortYear($date);
 
-        $output =
+        return
             '<span class="cf-date">' . $dateFromDay . '</span>/' .
             '<span class="cf-month">' . $dateFromMonth . '</span>/' .
             '<span class="cf-year">' . $dateFromYear . '</span>';
-
-        return $output;
     }
 }
