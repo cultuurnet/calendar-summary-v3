@@ -2,11 +2,11 @@
 
 namespace CultuurNet\CalendarSummaryV3\Permanent;
 
-use CultuurNet\CalendarSummaryV3\IntlDateFormatterFactory;
+use CultuurNet\CalendarSummaryV3\DateFormatter;
 use CultuurNet\CalendarSummaryV3\Translator;
 use CultuurNet\SearchV3\ValueObjects\Offer;
 use CultuurNet\SearchV3\ValueObjects\OpeningHours;
-use IntlDateFormatter;
+use DateTimeImmutable;
 
 final class LargePermanentHTMLFormatter implements PermanentFormatterInterface
 {
@@ -21,14 +21,9 @@ final class LargePermanentHTMLFormatter implements PermanentFormatterInterface
     );
 
     /**
-     * @var IntlDateFormatter
+     * @var DateFormatter
      */
-    private $fmtDays;
-
-    /**
-     * @var IntlDateFormatter
-     */
-    private $fmtShortDays;
+    private $formatter;
 
     /**
      * @var Translator
@@ -37,8 +32,7 @@ final class LargePermanentHTMLFormatter implements PermanentFormatterInterface
 
     public function __construct(string $langCode)
     {
-        $this->fmtDays = IntlDateFormatterFactory::createDayOfWeekFormatter($langCode);
-        $this->fmtShortDays = IntlDateFormatterFactory::createAbbreviatedDayOfWeekFormatter($langCode);
+        $this->formatter = new DateFormatter($langCode);
 
         $this->trans = new Translator();
         $this->trans->setLanguage($langCode);
@@ -143,8 +137,10 @@ final class LargePermanentHTMLFormatter implements PermanentFormatterInterface
             $closes = $this->getFormattedTime($openingHours->getCloses());
 
             foreach ($daysOfWeek as $dayOfWeek) {
-                $daySpanShort = ucfirst($this->fmtShortDays->format(strtotime($dayOfWeek)));
-                $daySpanLong = ucfirst($this->fmtDays->format(strtotime($dayOfWeek)));
+                $daySpanShort = ucfirst($this->formatter->formatAsAbbreviatedDayOfWeek(
+                    new DateTimeImmutable($dayOfWeek)
+                ));
+                $daySpanLong = ucfirst($this->formatter->formatAsDayOfWeek(new DateTimeImmutable($dayOfWeek)));
 
                 if (!isset($formattedTimespans[$dayOfWeek])) {
                     $formattedTimespans[$dayOfWeek] =
@@ -173,12 +169,12 @@ final class LargePermanentHTMLFormatter implements PermanentFormatterInterface
         // Create an array with formatted closed days.
         $closedDays = [];
         foreach ($this->daysOfWeek as $day) {
-            $closedDays[$day] = ucfirst($this->fmtDays->format(strtotime($day)));
+            $closedDays[$day] = ucfirst($this->formatter->formatAsDayOfWeek(new DateTimeImmutable($day)));
         }
 
         $sortedTimespans = array();
         foreach ($this->daysOfWeek as $day) {
-            $translatedDay = ucfirst($this->fmtDays->format(strtotime($day)));
+            $translatedDay = ucfirst($this->formatter->formatAsDayOfWeek(new DateTimeImmutable($day)));
 
             if (isset($formattedTimespans[$day])) {
                 $sortedTimespans[$day] = $formattedTimespans[$day];

@@ -2,18 +2,18 @@
 
 namespace CultuurNet\CalendarSummaryV3\Permanent;
 
-use CultuurNet\CalendarSummaryV3\IntlDateFormatterFactory;
+use CultuurNet\CalendarSummaryV3\DateFormatter;
 use CultuurNet\CalendarSummaryV3\Translator;
 use CultuurNet\SearchV3\ValueObjects\Offer;
 use CultuurNet\SearchV3\ValueObjects\OpeningHours;
-use IntlDateFormatter;
+use DateTimeImmutable;
 
 final class MediumPermanentPlainTextFormatter implements PermanentFormatterInterface
 {
     /**
-     * @var IntlDateFormatter
+     * @var DateFormatter
      */
-    private $fmtShortDays;
+    private $formatter;
 
     /**
      * @var Translator
@@ -22,7 +22,7 @@ final class MediumPermanentPlainTextFormatter implements PermanentFormatterInter
 
     public function __construct(string $langCode)
     {
-        $this->fmtShortDays = IntlDateFormatterFactory::createAbbreviatedDayOfWeekFormatter($langCode);
+        $this->formatter = new DateFormatter($langCode);
 
         $this->trans = new Translator();
         $this->trans->setLanguage($langCode);
@@ -53,7 +53,7 @@ final class MediumPermanentPlainTextFormatter implements PermanentFormatterInter
         foreach ($openingHoursData as $openingHours) {
             $daysOfWeek = $openingHours->getDaysOfWeek();
             foreach ($daysOfWeek as $i => $dayOfWeek) {
-                $translatedDay = $this->fmtShortDays->format(strtotime($dayOfWeek));
+                $translatedDay = $this->formatter->formatAsAbbreviatedDayOfWeek(new DateTimeImmutable($dayOfWeek));
 
                 if (!isset($formattedDays[$dayOfWeek])) {
                     $formattedDays[$dayOfWeek] = $translatedDay;
