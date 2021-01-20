@@ -9,16 +9,10 @@ You can install the cultuurnet\calendar-summary-v3 PHP library in different ways
 * Standalone. Clone or download from github and use Composer. Run ``composer install`` from
   the root of the clone to download the necessary dependencies. Standalone usage is probably only useful for testing
   purposes.
-* Inside your project: require the cultuurnet/calendar-summary-v3 package (it is
-  [registered on Packagist](https://packagist.org/packages/cultuurnet/calendar-summary-v3)) package in your project's
-  composer.json file and run ``composer update``.
+* Inside your project: install the dependency using composer
 
-```json
-{
-    "require": {
-        "cultuurnet/calendar-summary-v3": "dev-master"
-    }
-}
+```bash
+composer require cultuurnet/calendar-summary-v3
 ```
 
 ## How it works
