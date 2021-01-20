@@ -7,6 +7,7 @@ use CultuurNet\CalendarSummaryV3\Translator;
 use CultuurNet\SearchV3\ValueObjects\Offer;
 use CultuurNet\SearchV3\ValueObjects\OpeningHours;
 use DateTime;
+use DateTimeImmutable;
 
 final class LargePeriodicPlainTextFormatter implements PeriodicFormatterInterface
 {
@@ -73,7 +74,7 @@ final class LargePeriodicPlainTextFormatter implements PeriodicFormatterInterfac
         $formattedDays = [];
         foreach ($openingHoursData as $openingHours) {
             foreach ($openingHours->getDaysOfWeek() as $dayOfWeek) {
-                $translatedDay = $this->formatter->formatAsDayOfWeek(strtotime($dayOfWeek));
+                $translatedDay = $this->formatter->formatAsDayOfWeek(new DateTimeImmutable($dayOfWeek));
 
                 if (!isset($formattedDays[$dayOfWeek])) {
                     $formattedDays[$dayOfWeek] = $translatedDay

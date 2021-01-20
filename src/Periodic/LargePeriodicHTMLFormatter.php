@@ -6,6 +6,7 @@ use CultuurNet\CalendarSummaryV3\DateFormatter;
 use CultuurNet\CalendarSummaryV3\Translator;
 use CultuurNet\SearchV3\ValueObjects\Offer;
 use DateTime;
+use DateTimeImmutable;
 
 final class LargePeriodicHTMLFormatter implements PeriodicFormatterInterface
 {
@@ -149,8 +150,8 @@ final class LargePeriodicHTMLFormatter implements PeriodicFormatterInterface
             $closes = $this->getFormattedTime($openingHours->getCloses());
 
             foreach ($daysOfWeek as $dayOfWeek) {
-                $daySpanShort = ucfirst($this->formatter->formatAsAbbreviatedDayOfWeek(strtotime($dayOfWeek)));
-                $daySpanLong = ucfirst($this->formatter->formatAsDayOfWeek(strtotime($dayOfWeek)));
+                $daySpanShort = ucfirst($this->formatter->formatAsAbbreviatedDayOfWeek(new DateTimeImmutable($dayOfWeek)));
+                $daySpanLong = ucfirst($this->formatter->formatAsDayOfWeek(new DateTimeImmutable($dayOfWeek)));
 
                 if (!isset($formattedTimespans[$dayOfWeek])) {
                     $formattedTimespans[$dayOfWeek] =
