@@ -20,7 +20,7 @@ use CultuurNet\CalendarSummaryV3\Periodic\SmallPeriodicHTMLFormatter;
 final class CalendarHTMLFormatter implements CalendarFormatterInterface
 {
     /**
-     * @var array<string,array<string,OfferFormatter>>
+     * @var array<string,array<string,OfferFormatter|EventFormatter>>
      */
     private $mapping;
 

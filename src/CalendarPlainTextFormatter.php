@@ -20,7 +20,7 @@ use CultuurNet\CalendarSummaryV3\Multiple\MediumEventPlainTextFormatter;
 final class CalendarPlainTextFormatter implements CalendarFormatterInterface
 {
     /**
-     * @var array<string,array<string,OfferFormatter>>
+     * @var array<string,array<string,OfferFormatter|EventFormatter>>
      */
     private $mapping;
 
