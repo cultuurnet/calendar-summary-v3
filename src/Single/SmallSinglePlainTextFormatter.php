@@ -2,6 +2,7 @@
 
 namespace CultuurNet\CalendarSummaryV3\Single;
 
+use CultuurNet\CalendarSummaryV3\DateComparison;
 use CultuurNet\CalendarSummaryV3\DateFormatter;
 use CultuurNet\CalendarSummaryV3\Translator;
 use CultuurNet\SearchV3\ValueObjects\Offer;
@@ -29,10 +30,10 @@ final class SmallSinglePlainTextFormatter implements SingleFormatterInterface
 
     public function format(Offer $offer): string
     {
-        $dateFrom = $offer->getStartDate()->setTimezone(new \DateTimeZone(date_default_timezone_get()));
-        $dateEnd = $offer->getEndDate()->setTimezone(new \DateTimeZone(date_default_timezone_get()));
+        $dateFrom = $offer->getStartDate();
+        $dateEnd = $offer->getEndDate();
 
-        if ($dateFrom->format('Y-m-d') == $dateEnd->format('Y-m-d')) {
+        if (DateComparison::onSameDay($dateFrom, $dateEnd)) {
             $output = $this->formatSameDay($dateFrom);
         } else {
             $output = $this->formatMoreDays($dateFrom, $dateEnd);
