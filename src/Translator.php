@@ -14,7 +14,6 @@ final class Translator
 
     public function __construct()
     {
-
         $messages = [
             'en' => [
                 'from' => 'from',
@@ -67,7 +66,7 @@ final class Translator
         );
     }
 
-    public function setLanguage($langCode): void
+    public function setLanguage(string $langCode): void
     {
         $this->translator->setLanguage(substr($langCode, 0, 2));
     }
