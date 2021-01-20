@@ -56,11 +56,11 @@ class ExtraSmallMultipleHTMLFormatterTest extends TestCase
         );
     }
 
-    public function testFormatAMultipleWithSameBeginAndEndDate(): void
+    public function testFormatAMultipleWithSameBeginAndEndDay(): void
     {
         $offer = new Event();
-        $offer->setStartDate(new \DateTime('08-10-2025'));
-        $offer->setEndDate(new \DateTime('08-10-2025'));
+        $offer->setStartDate(new \DateTime('08-10-2025 12:00'));
+        $offer->setEndDate(new \DateTime('08-10-2025 14:00'));
 
         $output = '<span class="cf-date">8/10/25</span>';
 
