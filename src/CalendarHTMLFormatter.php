@@ -20,7 +20,7 @@ use CultuurNet\CalendarSummaryV3\Periodic\SmallPeriodicHTMLFormatter;
 final class CalendarHTMLFormatter implements CalendarFormatterInterface
 {
     /**
-     * @var array[]
+     * @var array<string,array<string,OfferFormatter>>
      */
     private $mapping;
 
@@ -70,7 +70,7 @@ final class CalendarHTMLFormatter implements CalendarFormatterInterface
         if (isset($this->mapping[$calenderType][$format])) {
             $formatter = $this->mapping[$calenderType][$format];
         } else {
-            throw new FormatterException($format . ' format not supported for ' . $calenderType);
+            throw new FormatterException($format . ' format not supported for ' . ($calenderType ?: 'null'));
         }
 
         return $formatter->format($offer);

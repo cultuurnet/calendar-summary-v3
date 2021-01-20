@@ -20,7 +20,7 @@ use CultuurNet\CalendarSummaryV3\Multiple\MediumEventPlainTextFormatter;
 final class CalendarPlainTextFormatter implements CalendarFormatterInterface
 {
     /**
-     * @var array[]
+     * @var array<string,array<string,OfferFormatter>>
      */
     private $mapping;
 
@@ -70,7 +70,7 @@ final class CalendarPlainTextFormatter implements CalendarFormatterInterface
         if (isset($this->mapping[$calenderType][$format])) {
             $formatter = $this->mapping[$calenderType][$format];
         } else {
-            throw new FormatterException($format . ' format not supported for ' . $calenderType);
+            throw new FormatterException($format . ' format not supported for ' . ($calenderType ?: 'null'));
         }
 
         return $formatter->format($offer);
