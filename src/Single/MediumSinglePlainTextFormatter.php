@@ -47,9 +47,7 @@ final class MediumSinglePlainTextFormatter implements SingleFormatterInterface
         $intlDateFrom = $this->formatter->formatAsFullDate($dateFrom);
         $intlDateDayFrom = $this->formatter->formatAsDayOfWeek($dateFrom);
 
-        $output = ucfirst($intlDateDayFrom . ' ' . $intlDateFrom);
-
-        return $output;
+        return ucfirst($intlDateDayFrom . ' ' . $intlDateFrom);
     }
 
     private function formatMoreDays(DateTimeInterface $dateFrom, DateTimeInterface $dateEnd): string
