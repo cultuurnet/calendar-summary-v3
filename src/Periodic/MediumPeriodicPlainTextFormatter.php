@@ -2,11 +2,12 @@
 
 namespace CultuurNet\CalendarSummaryV3\Periodic;
 
+use CultuurNet\CalendarSummaryV3\OfferFormatter;
 use CultuurNet\CalendarSummaryV3\Translator;
 use CultuurNet\SearchV3\ValueObjects\Offer;
 use IntlDateFormatter;
 
-final class MediumPeriodicPlainTextFormatter implements PeriodicFormatterInterface
+final class MediumPeriodicPlainTextFormatter implements OfferFormatter
 {
     /**
      * @var IntlDateFormatter
