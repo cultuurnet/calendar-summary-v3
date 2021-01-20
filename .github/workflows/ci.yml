@@ -33,3 +33,23 @@ jobs:
 
             - name: Run Phing
               run: composer run-script phing
+
+    phpstan:
+        runs-on: ubuntu-latest
+        name: Static Analysis
+        steps:
+            - name: 📤 Checkout project
+              uses: actions/checkout@v2
+
+            - name: 🐘 Install PHP
+              uses: shivammathur/setup-php@v2
+              with:
+                  php-version: '7.4'
+                  tools: composer:v2
+
+            - name: 📦 Install dependencies
+              if: steps.composer-cache.outputs.cache-hit != 'true'
+              run: composer update --no-progress
+
+            - name: 🔍 Analyse
+              run: vendor/bin/phpstan analyse
