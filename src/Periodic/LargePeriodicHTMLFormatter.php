@@ -150,8 +150,10 @@ final class LargePeriodicHTMLFormatter implements PeriodicFormatterInterface
             $closes = $this->getFormattedTime($openingHours->getCloses());
 
             foreach ($daysOfWeek as $dayOfWeek) {
-                $daySpanShort = ucfirst($this->formatter->formatAsAbbreviatedDayOfWeek(
-                    new DateTimeImmutable($dayOfWeek))
+                $daySpanShort = ucfirst(
+                    $this->formatter->formatAsAbbreviatedDayOfWeek(
+                        new DateTimeImmutable($dayOfWeek)
+                    )
                 );
                 $daySpanLong = ucfirst($this->formatter->formatAsDayOfWeek(new DateTimeImmutable($dayOfWeek)));
 
