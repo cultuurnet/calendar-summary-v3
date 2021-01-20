@@ -2,23 +2,17 @@
 
 namespace CultuurNet\CalendarSummaryV3\Single;
 
-use CultuurNet\CalendarSummaryV3\IntlDateFormatterFactory;
+use CultuurNet\CalendarSummaryV3\DateFormatter;
 use CultuurNet\CalendarSummaryV3\Translator;
 use CultuurNet\SearchV3\ValueObjects\Offer;
 use DateTimeInterface;
-use IntlDateFormatter;
 
 final class MediumSingleHTMLFormatter implements SingleFormatterInterface
 {
     /**
-     * @var IntlDateFormatter
+     * @var DateFormatter
      */
-    private $fmt;
-
-    /**
-     * @var IntlDateFormatter
-     */
-    private $fmtDay;
+    private $formatter;
 
     /**
      * @var Translator
@@ -27,8 +21,7 @@ final class MediumSingleHTMLFormatter implements SingleFormatterInterface
 
     public function __construct(string $langCode)
     {
-        $this->fmt = IntlDateFormatterFactory::createFullDateFormatter($langCode);
-        $this->fmtDay = IntlDateFormatterFactory::createDayOfWeekFormatter($langCode);
+        $this->formatter = new DateFormatter($langCode);
 
         $this->trans = new Translator();
         $this->trans->setLanguage($langCode);
@@ -50,8 +43,8 @@ final class MediumSingleHTMLFormatter implements SingleFormatterInterface
 
     private function formatSameDay(DateTimeInterface $dateFrom): string
     {
-        $intlDateFrom = $this->fmt->format($dateFrom);
-        $intlDateDayFrom = $this->fmtDay->format($dateFrom);
+        $intlDateFrom = $this->formatter->formatAsFullDate($dateFrom);
+        $intlDateDayFrom = $this->formatter->formatAsDayOfWeek($dateFrom);
 
         $output = '<span class="cf-weekday cf-meta">' . $intlDateDayFrom . '</span>';
         $output .= ' ';
@@ -62,11 +55,11 @@ final class MediumSingleHTMLFormatter implements SingleFormatterInterface
 
     private function formatMoreDays(DateTimeInterface $dateFrom, DateTimeInterface $dateEnd): string
     {
-        $intlDateFrom = $this->fmt->format($dateFrom);
-        $intlDateDayFrom = $this->fmtDay->format($dateFrom);
+        $intlDateFrom = $this->formatter->formatAsFullDate($dateFrom);
+        $intlDateDayFrom = $this->formatter->formatAsDayOfWeek($dateFrom);
 
-        $intlDateEnd = $this->fmt->format($dateEnd);
-        $intlDateDayEnd = $this->fmtDay->format($dateEnd);
+        $intlDateEnd = $this->formatter->formatAsFullDate($dateEnd);
+        $intlDateDayEnd = $this->formatter->formatAsDayOfWeek($dateEnd);
 
         $output = '<span class="cf-from cf-meta">' . ucfirst($this->trans->getTranslations()->t('from')) . '</span>';
         $output .= ' ';
