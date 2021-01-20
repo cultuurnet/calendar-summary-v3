@@ -3,7 +3,6 @@
 
 namespace CultuurNet\CalendarSummaryV3;
 
-
 use CultuurNet\SearchV3\ValueObjects\Event;
 
 interface EventFormatter
