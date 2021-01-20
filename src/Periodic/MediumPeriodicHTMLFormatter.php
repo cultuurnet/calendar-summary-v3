@@ -36,7 +36,7 @@ final class MediumPeriodicHTMLFormatter implements PeriodicFormatterInterface
         $intlDateTo = $this->formatter->formatAsFullDate($dateTo);
 
         if ($intlDateFrom == $intlDateTo) {
-            $output = '<span class="cf-weekday cf-meta">' . $intlDateFromDay . '</span>';
+            $output = '<span class="cf-weekday cf-meta">' . ucfirst($intlDateFromDay) . '</span>';
             $output .= ' ';
             $output .= '<span class="cf-date">' . $intlDateFrom . '</span>';
         } else {

@@ -36,7 +36,7 @@ final class MediumPeriodicPlainTextFormatter implements PeriodicFormatterInterfa
         $intlDateTo = $this->formatter->formatAsFullDate($dateTo);
 
         if ($intlDateFrom == $intlDateTo) {
-            $output = $intlDateFromDay . ' ' . $intlDateFrom;
+            $output = ucfirst($intlDateFromDay . ' ' . $intlDateFrom);
         } else {
             $output = ucfirst($this->trans->getTranslations()->t('from')) . ' '
                 . $intlDateFrom . ' ' . $this->trans->getTranslations()->t('till') . ' '. $intlDateTo;

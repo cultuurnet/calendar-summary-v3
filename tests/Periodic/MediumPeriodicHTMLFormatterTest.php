@@ -80,7 +80,7 @@ class MediumPeriodicHTMLFormatterTest extends TestCase
         $offer->setStartDate(new \DateTime('08-10-2025'));
         $offer->setEndDate(new \DateTime('08-10-2025'));
 
-        $output = '<span class="cf-weekday cf-meta">woensdag</span>';
+        $output = '<span class="cf-weekday cf-meta">Woensdag</span>';
         $output .= ' ';
         $output .= '<span class="cf-date">8 oktober 2025</span>';
 
