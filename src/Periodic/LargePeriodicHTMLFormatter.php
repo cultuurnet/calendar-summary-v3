@@ -136,7 +136,7 @@ final class LargePeriodicHTMLFormatter implements PeriodicFormatterInterface
      */
     private function generateWeekScheme($openingHoursData)
     {
-        $outputWeek = '<p class="cf-openinghours">' . $this->trans->getTranslations()->t('open') . ':</p>';
+        $outputWeek = '<p class="cf-openinghours">' . ucfirst($this->trans->getTranslations()->t('open')) . ':</p>';
         $outputWeek .= '<ul class="list-unstyled">';
 
         // Create an array with formatted timespans.
