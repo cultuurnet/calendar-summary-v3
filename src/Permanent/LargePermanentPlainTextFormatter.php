@@ -40,13 +40,11 @@ final class LargePermanentPlainTextFormatter implements PermanentFormatterInterf
 
     public function format(Offer $offer): string
     {
-        $output = '';
         if ($offer->getOpeningHours()) {
-            $output .= $this->generateWeekScheme($offer->getOpeningHours());
-        } else {
-            $output .= ucfirst($this->trans->getTranslations()->t('always_open')) . PHP_EOL;
+            return $this->generateWeekScheme($offer->getOpeningHours());
         }
-        return $output;
+
+        return ucfirst($this->trans->getTranslations()->t('always_open')) . PHP_EOL;
     }
 
     private function getFormattedTime(string $time): string

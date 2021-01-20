@@ -30,15 +30,12 @@ final class MediumPermanentHTMLFormatter implements PermanentFormatterInterface
 
     public function format(Offer $offer): string
     {
-        $output = '';
         if ($offer->getOpeningHours()) {
-            $output .= $this->generateWeekScheme($offer->getOpeningHours());
-        } else {
-            $output .= '<p class="cf-openinghours">' .
-                ucfirst($this->trans->getTranslations()->t('always_open')) . '</p>';
+            return $this->generateWeekScheme($offer->getOpeningHours());
         }
 
-        return $output;
+        return '<p class="cf-openinghours">' .
+            ucfirst($this->trans->getTranslations()->t('always_open')) . '</p>';
     }
 
     /**

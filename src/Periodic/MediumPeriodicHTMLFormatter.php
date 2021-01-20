@@ -36,16 +36,14 @@ final class MediumPeriodicHTMLFormatter implements PeriodicFormatterInterface
         $intlDateTo = $this->formatter->formatAsFullDate($dateTo);
 
         if ($intlDateFrom == $intlDateTo) {
-            $output = '<span class="cf-weekday cf-meta">' . ucfirst($intlDateFromDay) . '</span>';
-            $output .= ' ';
-            $output .= '<span class="cf-date">' . $intlDateFrom . '</span>';
-        } else {
-            $output = '<span class="cf-from cf-meta">' . ucfirst($this->trans->getTranslations()->t('from'));
-            $output .= '</span> <span class="cf-date">' . $intlDateFrom . '</span> ';
-            $output .= '<span class="cf-to cf-meta">' . $this->trans->getTranslations()->t('till');
-            $output .= '</span> <span class="cf-date">'. $intlDateTo . '</span>';
+            return '<span class="cf-weekday cf-meta">' . ucfirst($intlDateFromDay) . '</span>'
+                . ' '
+                . '<span class="cf-date">' . $intlDateFrom . '</span>';
         }
 
-        return $output;
+        return '<span class="cf-from cf-meta">' . ucfirst($this->trans->getTranslations()->t('from'))
+            . '</span> <span class="cf-date">' . $intlDateFrom . '</span> '
+            . '<span class="cf-to cf-meta">' . $this->trans->getTranslations()->t('till')
+            . '</span> <span class="cf-date">'. $intlDateTo . '</span>';
     }
 }
