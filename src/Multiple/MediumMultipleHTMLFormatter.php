@@ -2,6 +2,7 @@
 
 namespace CultuurNet\CalendarSummaryV3\Multiple;
 
+use CultuurNet\CalendarSummaryV3\DateComparison;
 use CultuurNet\SearchV3\ValueObjects\Event;
 use CultuurNet\CalendarSummaryV3\Single\MediumSingleHTMLFormatter;
 
@@ -27,7 +28,6 @@ final class MediumMultipleHTMLFormatter implements MultipleFormatterInterface
     {
         $subEvents = $event->getSubEvents();
         $output = '<ul class="cnw-event-date-info">';
-        $now = new \DateTime();
 
         foreach ($subEvents as $subEvent) {
             $formatter = new MediumSingleHTMLFormatter($this->langCode);
@@ -36,8 +36,7 @@ final class MediumMultipleHTMLFormatter implements MultipleFormatterInterface
             $event->setStartDate($subEvent->getStartDate());
             $event->setEndDate($subEvent->getEndDate());
 
-            if (!$this->hidePast ||
-                $subEvent->getEndDate()->setTimezone(new \DateTimeZone(date_default_timezone_get())) > $now) {
+            if (!$this->hidePast || DateComparison::inTheFuture($subEvent->getEndDate())) {
                 $output .= '<li>' . $formatter->format($event) . '</li>';
             }
         }
