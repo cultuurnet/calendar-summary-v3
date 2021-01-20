@@ -2,8 +2,8 @@
 
 namespace CultuurNet\CalendarSummaryV3;
 
-use CultuurNet\CalendarSummaryV3\Multiple\ExtraSmallMultiplePlainTextFormatter;
-use CultuurNet\CalendarSummaryV3\Multiple\SmallMultiplePlainTextFormatter;
+use CultuurNet\CalendarSummaryV3\Multiple\ExtraSmallEventPlainTextFormatter;
+use CultuurNet\CalendarSummaryV3\Multiple\SmallEventPlainTextFormatter;
 use CultuurNet\CalendarSummaryV3\Permanent\MediumPermanentPlainTextFormatter;
 use CultuurNet\CalendarSummaryV3\Single\LargeSinglePlainTextFormatter;
 use CultuurNet\CalendarSummaryV3\Single\MediumSinglePlainTextFormatter;
@@ -14,8 +14,8 @@ use CultuurNet\CalendarSummaryV3\Periodic\LargePeriodicPlainTextFormatter;
 use CultuurNet\CalendarSummaryV3\Periodic\MediumPeriodicPlainTextFormatter;
 use CultuurNet\CalendarSummaryV3\Periodic\SmallPeriodicPlainTextFormatter;
 use CultuurNet\CalendarSummaryV3\Permanent\LargePermanentPlainTextFormatter;
-use CultuurNet\CalendarSummaryV3\Multiple\LargeMultiplePlainTextFormatter;
-use CultuurNet\CalendarSummaryV3\Multiple\MediumMultiplePlainTextFormatter;
+use CultuurNet\CalendarSummaryV3\Multiple\LargeEventPlainTextFormatter;
+use CultuurNet\CalendarSummaryV3\Multiple\MediumEventPlainTextFormatter;
 
 final class CalendarPlainTextFormatter implements CalendarFormatterInterface
 {
@@ -38,10 +38,10 @@ final class CalendarPlainTextFormatter implements CalendarFormatterInterface
                 ],
             Offer::CALENDAR_TYPE_MULTIPLE =>
                 [
-                    'lg' => new LargeMultiplePlainTextFormatter($langCode, $hidePastDates),
-                    'md' => new MediumMultiplePlainTextFormatter($langCode, $hidePastDates),
-                    'sm' => new SmallMultiplePlainTextFormatter($langCode),
-                    'xs' => new ExtraSmallMultiplePlainTextFormatter($langCode)
+                    'lg' => new LargeEventPlainTextFormatter($langCode, $hidePastDates),
+                    'md' => new MediumEventPlainTextFormatter($langCode, $hidePastDates),
+                    'sm' => new SmallEventPlainTextFormatter($langCode),
+                    'xs' => new ExtraSmallEventPlainTextFormatter($langCode)
                 ],
             Offer::CALENDAR_TYPE_PERIODIC =>
                 [

@@ -8,14 +8,14 @@ use PHPUnit\Framework\TestCase;
 class LargeMultiplePlainTextFormatterTest extends TestCase
 {
     /**
-     * @var LargeMultiplePlainTextFormatter
+     * @var LargeEventPlainTextFormatter
      */
     protected $formatter;
 
     protected function setUp(): void
     {
         date_default_timezone_set('Europe/Brussels');
-        $this->formatter = new LargeMultiplePlainTextFormatter('nl_NL', false);
+        $this->formatter = new LargeEventPlainTextFormatter('nl_NL', false);
     }
 
     public function testFormatPlainTextMultipleDateLargeOneDay(): void

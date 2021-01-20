@@ -8,13 +8,13 @@ use PHPUnit\Framework\TestCase;
 class ExtraSmallMultipleHTMLFormatterTest extends TestCase
 {
     /**
-     * @var ExtraSmallMultipleHTMLFormatter
+     * @var ExtraSmallEventHTMLFormatter
      */
     protected $formatter;
 
     protected function setUp(): void
     {
-        $this->formatter = new ExtraSmallMultipleHTMLFormatter('nl_NL');
+        $this->formatter = new ExtraSmallEventHTMLFormatter('nl_NL');
     }
 
     public function testFormatMultipleWithoutLeadingZeroes(): void

@@ -2,10 +2,12 @@
 
 namespace CultuurNet\CalendarSummaryV3\Multiple;
 
+use CultuurNet\CalendarSummaryV3\OfferFormatter;
 use CultuurNet\SearchV3\ValueObjects\Event;
-use CultuurNet\CalendarSummaryV3\Single\MediumSingleHTMLFormatter;
+use CultuurNet\CalendarSummaryV3\Single\LargeSingleHTMLFormatter;
+use CultuurNet\SearchV3\ValueObjects\Offer;
 
-final class MediumMultipleHTMLFormatter implements MultipleFormatterInterface
+final class LargeEventHTMLFormatter implements OfferFormatter
 {
     /**
      * @var string $langCode
@@ -13,7 +15,7 @@ final class MediumMultipleHTMLFormatter implements MultipleFormatterInterface
     private $langCode;
 
     /**
-     * @var bool $hidepast
+     * @var bool $hidePast
      */
     private $hidePast;
 
@@ -23,22 +25,22 @@ final class MediumMultipleHTMLFormatter implements MultipleFormatterInterface
         $this->hidePast = $hidePastDates;
     }
 
-    public function format(Event $event): string
+    public function format(Offer $offer): string
     {
-        $subEvents = $event->getSubEvents();
+        $subEvents = $offer->getSubEvents();
         $output = '<ul class="cnw-event-date-info">';
         $now = new \DateTime();
 
         foreach ($subEvents as $subEvent) {
-            $formatter = new MediumSingleHTMLFormatter($this->langCode);
+            $formatter = new LargeSingleHTMLFormatter($this->langCode);
 
-            $event = new Event();
-            $event->setStartDate($subEvent->getStartDate());
-            $event->setEndDate($subEvent->getEndDate());
+            $offer = new Event();
+            $offer->setStartDate($subEvent->getStartDate());
+            $offer->setEndDate($subEvent->getEndDate());
 
             if (!$this->hidePast ||
                 $subEvent->getEndDate()->setTimezone(new \DateTimeZone(date_default_timezone_get())) > $now) {
-                $output .= '<li>' . $formatter->format($event) . '</li>';
+                $output .= '<li>' . $formatter->format($offer) . '</li>';
             }
         }
 

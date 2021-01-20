@@ -8,14 +8,14 @@ use PHPUnit\Framework\TestCase;
 class LargeMultipleHTMLFormatterTest extends TestCase
 {
     /**
-     * @var LargeMultipleHTMLFormatter
+     * @var LargeEventHTMLFormatter
      */
     protected $formatter;
 
     protected function setUp(): void
     {
         date_default_timezone_set('Europe/Brussels');
-        $this->formatter = new LargeMultipleHTMLFormatter('nl_NL', false);
+        $this->formatter = new LargeEventHTMLFormatter('nl_NL', false);
     }
 
     public function testFormatHTMLMultipleDateLargeOneDay(): void

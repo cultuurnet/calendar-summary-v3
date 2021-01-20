@@ -2,11 +2,12 @@
 
 namespace CultuurNet\CalendarSummaryV3\Multiple;
 
+use CultuurNet\CalendarSummaryV3\OfferFormatter;
 use CultuurNet\CalendarSummaryV3\Translator;
-use CultuurNet\SearchV3\ValueObjects\Event;
+use CultuurNet\SearchV3\ValueObjects\Offer;
 use DateTimeZone;
 
-final class ExtraSmallMultiplePlainTextFormatter implements MultipleFormatterInterface
+final class ExtraSmallEventPlainTextFormatter implements OfferFormatter
 {
     /**
      * @var Translator
@@ -19,10 +20,10 @@ final class ExtraSmallMultiplePlainTextFormatter implements MultipleFormatterInt
         $this->trans->setLanguage($langCode);
     }
 
-    public function format(Event $event): string
+    public function format(Offer $offer): string
     {
-        $dateFrom = $event->getStartDate()->setTimezone(new DateTimeZone(date_default_timezone_get()));
-        $dateTo = $event->getEndDate()->setTimezone(new DateTimeZone(date_default_timezone_get()));
+        $dateFrom = $offer->getStartDate()->setTimezone(new DateTimeZone(date_default_timezone_get()));
+        $dateTo = $offer->getEndDate()->setTimezone(new DateTimeZone(date_default_timezone_get()));
 
         if ($dateFrom == $dateTo) {
             return $dateFrom->format('j/n/y');

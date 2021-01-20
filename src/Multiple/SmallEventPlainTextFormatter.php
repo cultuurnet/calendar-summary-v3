@@ -2,10 +2,11 @@
 
 namespace CultuurNet\CalendarSummaryV3\Multiple;
 
+use CultuurNet\CalendarSummaryV3\OfferFormatter;
 use CultuurNet\CalendarSummaryV3\Periodic\MediumPeriodicPlainTextFormatter;
-use CultuurNet\SearchV3\ValueObjects\Event;
+use CultuurNet\SearchV3\ValueObjects\Offer;
 
-final class SmallMultiplePlainTextFormatter implements MultipleFormatterInterface
+final class SmallEventPlainTextFormatter implements OfferFormatter
 {
     /**
      * @var string
@@ -17,9 +18,9 @@ final class SmallMultiplePlainTextFormatter implements MultipleFormatterInterfac
         $this->langCode = $langCode;
     }
 
-    public function format(Event $event): string
+    public function format(Offer $offer): string
     {
         $formatter = new MediumPeriodicPlainTextFormatter($this->langCode);
-        return $formatter->format($event);
+        return $formatter->format($offer);
     }
 }

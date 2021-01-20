@@ -8,13 +8,13 @@ use PHPUnit\Framework\TestCase;
 class MediumMultipleHTMLFormatterTest extends TestCase
 {
     /**
-     * @var MediumMultipleHTMLFormatter
+     * @var MediumEventHTMLFormatter
      */
     protected $formatter;
 
     protected function setUp(): void
     {
-        $this->formatter = new MediumMultipleHTMLFormatter('nl_NL', false);
+        $this->formatter = new MediumEventHTMLFormatter('nl_NL', false);
     }
 
     public function testFormatHTMLMultipleDateMediumOneDay(): void

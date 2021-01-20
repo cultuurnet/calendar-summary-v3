@@ -2,10 +2,10 @@
 
 namespace CultuurNet\CalendarSummaryV3;
 
-use CultuurNet\CalendarSummaryV3\Multiple\ExtraSmallMultipleHTMLFormatter;
-use CultuurNet\CalendarSummaryV3\Multiple\MediumMultipleHTMLFormatter;
-use CultuurNet\CalendarSummaryV3\Multiple\LargeMultipleHTMLFormatter;
-use CultuurNet\CalendarSummaryV3\Multiple\SmallMultipleHTMLFormatter;
+use CultuurNet\CalendarSummaryV3\Multiple\ExtraSmallEventHTMLFormatter;
+use CultuurNet\CalendarSummaryV3\Multiple\MediumEventHTMLFormatter;
+use CultuurNet\CalendarSummaryV3\Multiple\LargeEventHTMLFormatter;
+use CultuurNet\CalendarSummaryV3\Multiple\SmallEventHTMLFormatter;
 use CultuurNet\CalendarSummaryV3\Permanent\MediumPermanentHTMLFormatter;
 use CultuurNet\CalendarSummaryV3\Single\LargeSingleHTMLFormatter;
 use CultuurNet\CalendarSummaryV3\Single\MediumSingleHTMLFormatter;
@@ -38,10 +38,10 @@ final class CalendarHTMLFormatter implements CalendarFormatterInterface
                 ],
             Offer::CALENDAR_TYPE_MULTIPLE =>
                 [
-                    'lg' => new LargeMultipleHTMLFormatter($langCode, $hidePastDates),
-                    'md' => new MediumMultipleHTMLFormatter($langCode, $hidePastDates),
-                    'sm' => new SmallMultipleHTMLFormatter($langCode),
-                    'xs' => new ExtraSmallMultipleHTMLFormatter($langCode)
+                    'lg' => new LargeEventHTMLFormatter($langCode, $hidePastDates),
+                    'md' => new MediumEventHTMLFormatter($langCode, $hidePastDates),
+                    'sm' => new SmallEventHTMLFormatter($langCode),
+                    'xs' => new ExtraSmallEventHTMLFormatter($langCode)
                 ],
             Offer::CALENDAR_TYPE_PERIODIC =>
                 [

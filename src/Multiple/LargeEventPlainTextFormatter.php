@@ -2,10 +2,12 @@
 
 namespace CultuurNet\CalendarSummaryV3\Multiple;
 
+use CultuurNet\CalendarSummaryV3\OfferFormatter;
 use CultuurNet\SearchV3\ValueObjects\Event;
 use CultuurNet\CalendarSummaryV3\Single\LargeSinglePlainTextFormatter;
+use CultuurNet\SearchV3\ValueObjects\Offer;
 
-final class LargeMultiplePlainTextFormatter implements MultipleFormatterInterface
+final class LargeEventPlainTextFormatter implements OfferFormatter
 {
     /**
      * @var string $langCode
@@ -23,22 +25,22 @@ final class LargeMultiplePlainTextFormatter implements MultipleFormatterInterfac
         $this->hidePast = $hidePastDates;
     }
 
-    public function format(Event $event): string
+    public function format(Offer $offer): string
     {
-        $subEvents = $event->getSubEvents();
+        $subEvents = $offer->getSubEvents();
         $now = new \DateTime();
         $output = [];
 
         foreach ($subEvents as $key => $subEvent) {
             $formatter = new LargeSinglePlainTextFormatter($this->langCode);
 
-            $event = new Event();
-            $event->setStartDate($subEvent->getStartDate());
-            $event->setEndDate($subEvent->getEndDate());
+            $offer = new Event();
+            $offer->setStartDate($subEvent->getStartDate());
+            $offer->setEndDate($subEvent->getEndDate());
 
             if (!$this->hidePast ||
                 $subEvent->getEndDate()->setTimezone(new \DateTimeZone(date_default_timezone_get())) > $now) {
-                $output[] = $formatter->format($event);
+                $output[] = $formatter->format($offer);
             }
         }
 
