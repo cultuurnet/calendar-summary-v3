@@ -18,7 +18,6 @@ final class DateFormatter
     private const PATTERN_DAY_OF_WEEK = 'EEEE'; // Example 'tuesday'
     private const PATTERN_DAY_OF_WEEK_ABBREVIATED = 'EEE'; // Example 'tue'
 
-    private const PATTERN_MONTH_NAME = 'MMMM'; // Example 'september'
     private const PATTERN_MONTH_NAME_ABBREVIATED = 'MMM'; // Example 'sep.'
 
     private const PATTERN_TIME = 'HH:mm'; // Example '01:05', '12:15'
@@ -64,14 +63,6 @@ final class DateFormatter
     public function formatAsAbbreviatedDayOfWeek(DateTimeInterface $dateTime): string
     {
         return $this->format($dateTime, self::PATTERN_DAY_OF_WEEK_ABBREVIATED);
-    }
-
-    /**
-     * Used to format months as 'september'
-     */
-    public function formatAsMonthName(DateTimeInterface $dateTime): string
-    {
-        return $this->format($dateTime, self::PATTERN_MONTH_NAME);
     }
 
     /**
