@@ -60,7 +60,6 @@ final class SmallPeriodicHTMLFormatter implements PeriodicFormatterInterface
     {
         $dateFromDay = $this->formatter->formatAsDayNumber($date);
         $dateFromMonth = $this->formatter->formatAsAbbreviatedMonthName($date);
-        $dateFromMonth = rtrim($dateFromMonth, ".");
         $dateFromYear = $date->format('Y');
 
         $output =

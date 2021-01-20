@@ -19,7 +19,7 @@ final class DateFormatter
     private const PATTERN_DAY_OF_WEEK_ABBREVIATED = 'EEE'; // Example 'tue'
 
     private const PATTERN_MONTH_NAME = 'MMMM'; // Example 'september'
-    private const PATTERN_MONTH_NAME_ABBREVIATED = 'MMM'; // Example 'sep'
+    private const PATTERN_MONTH_NAME_ABBREVIATED = 'MMM'; // Example 'sep.'
 
     private const PATTERN_TIME = 'HH:mm'; // Example '01:05', '12:15'
     private const PATTERN_FULL_DATE = 'd MMMM yyyy'; // Example '1 january 2021'
@@ -79,7 +79,7 @@ final class DateFormatter
      */
     public function formatAsAbbreviatedMonthName(DateTimeInterface $dateTime): string
     {
-        return $this->format($dateTime, self::PATTERN_MONTH_NAME_ABBREVIATED);
+        return rtrim($this->format($dateTime, self::PATTERN_MONTH_NAME_ABBREVIATED), '.');
     }
 
     /**

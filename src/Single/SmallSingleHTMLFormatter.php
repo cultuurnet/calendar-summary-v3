@@ -44,7 +44,7 @@ final class SmallSingleHTMLFormatter implements SingleFormatterInterface
     private function formatSameDay(DateTimeInterface $dateFrom): string
     {
         $dateFromDay = $this->formatter->formatAsDayNumber($dateFrom);
-        $dateFromMonth = rtrim($this->formatter->formatAsAbbreviatedMonthName($dateFrom), '.');
+        $dateFromMonth = $this->formatter->formatAsAbbreviatedMonthName($dateFrom);
 
         $output = '<span class="cf-date">' . $dateFromDay . '</span>';
         $output .= ' ';
@@ -56,10 +56,10 @@ final class SmallSingleHTMLFormatter implements SingleFormatterInterface
     private function formatMoreDays(DateTimeInterface $dateFrom, DateTimeInterface $dateEnd): string
     {
         $dateFromDay = $this->formatter->formatAsDayNumber($dateFrom);
-        $dateFromMonth = rtrim($this->formatter->formatAsAbbreviatedMonthName($dateFrom), '.');
+        $dateFromMonth = $this->formatter->formatAsAbbreviatedMonthName($dateFrom);
 
         $dateEndDay = $this->formatter->formatAsDayNumber($dateEnd);
-        $dateEndMonth = rtrim($this->formatter->formatAsAbbreviatedMonthName($dateEnd), '.');
+        $dateEndMonth = $this->formatter->formatAsAbbreviatedMonthName($dateEnd);
 
         $output = '<span class="cf-from cf-meta">' . ucfirst($this->trans->getTranslations()->t('from')) . '</span>';
         $output .= ' ';

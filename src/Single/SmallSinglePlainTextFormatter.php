@@ -44,7 +44,7 @@ final class SmallSinglePlainTextFormatter implements SingleFormatterInterface
     private function formatSameDay(DateTimeInterface $dateFrom): string
     {
         $dateFromDay = $this->formatter->formatAsDayNumber($dateFrom);
-        $dateFromMonth = rtrim($this->formatter->formatAsAbbreviatedMonthName($dateFrom), '.');
+        $dateFromMonth = $this->formatter->formatAsAbbreviatedMonthName($dateFrom);
 
         $output = $dateFromDay . ' ' . $dateFromMonth;
 
@@ -54,10 +54,10 @@ final class SmallSinglePlainTextFormatter implements SingleFormatterInterface
     private function formatMoreDays(DateTimeInterface $dateFrom, DateTimeInterface $dateEnd): string
     {
         $dateFromDay = $this->formatter->formatAsDayNumber($dateFrom);
-        $dateFromMonth = rtrim($this->formatter->formatAsAbbreviatedMonthName($dateFrom), '.');
+        $dateFromMonth = $this->formatter->formatAsAbbreviatedMonthName($dateFrom);
 
         $dateEndDay = $this->formatter->formatAsDayNumber($dateEnd);
-        $dateEndMonth = rtrim($this->formatter->formatAsAbbreviatedMonthName($dateEnd), '.');
+        $dateEndMonth = $this->formatter->formatAsAbbreviatedMonthName($dateEnd);
 
         $output = $this->trans->getTranslations()->t('from') . ' ' . $dateFromDay . ' '
             . $dateFromMonth . ' ' . $this->trans->getTranslations()->t('till') . ' '
