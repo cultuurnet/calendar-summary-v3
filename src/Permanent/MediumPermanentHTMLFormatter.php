@@ -2,23 +2,19 @@
 
 namespace CultuurNet\CalendarSummaryV3\Permanent;
 
+use CultuurNet\CalendarSummaryV3\DateFormatter;
 use CultuurNet\CalendarSummaryV3\OfferFormatter;
 use CultuurNet\CalendarSummaryV3\Translator;
 use CultuurNet\SearchV3\ValueObjects\Offer;
 use CultuurNet\SearchV3\ValueObjects\OpeningHours;
-use IntlDateFormatter;
+use DateTimeImmutable;
 
 final class MediumPermanentHTMLFormatter implements OfferFormatter
 {
     /**
-     * @var IntlDateFormatter
+     * @var DateFormatter
      */
-    private $fmtDays;
-
-    /**
-     * @var IntlDateFormatter
-     */
-    private $fmtShortDays;
+    private $formatter;
 
     /**
      * @var Translator
@@ -27,23 +23,7 @@ final class MediumPermanentHTMLFormatter implements OfferFormatter
 
     public function __construct(string $langCode)
     {
-        $this->fmtDays = new IntlDateFormatter(
-            $langCode,
-            IntlDateFormatter::FULL,
-            IntlDateFormatter::FULL,
-            date_default_timezone_get(),
-            IntlDateFormatter::GREGORIAN,
-            'EEEE'
-        );
-
-        $this->fmtShortDays = new IntlDateFormatter(
-            $langCode,
-            IntlDateFormatter::FULL,
-            IntlDateFormatter::FULL,
-            date_default_timezone_get(),
-            IntlDateFormatter::GREGORIAN,
-            'EEE'
-        );
+        $this->formatter = new DateFormatter($langCode);
 
         $this->trans = new Translator();
         $this->trans->setLanguage($langCode);
@@ -78,7 +58,7 @@ final class MediumPermanentHTMLFormatter implements OfferFormatter
         foreach ($openingHoursData as $openingHours) {
             $daysOfWeek = $openingHours->getDaysOfWeek();
             foreach ($daysOfWeek as $i => $dayOfWeek) {
-                $translatedDay = $this->fmtShortDays->format(strtotime($dayOfWeek));
+                $translatedDay = $this->formatter->formatAsAbbreviatedDayOfWeek(new DateTimeImmutable($dayOfWeek));
 
                 if (!isset($formattedDays[$dayOfWeek])) {
                     $formattedDays[$dayOfWeek] = $translatedDay;

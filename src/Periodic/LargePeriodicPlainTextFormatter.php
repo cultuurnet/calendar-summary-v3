@@ -2,29 +2,20 @@
 
 namespace CultuurNet\CalendarSummaryV3\Periodic;
 
+use CultuurNet\CalendarSummaryV3\DateFormatter;
 use CultuurNet\CalendarSummaryV3\OfferFormatter;
 use CultuurNet\CalendarSummaryV3\Translator;
 use CultuurNet\SearchV3\ValueObjects\Offer;
 use CultuurNet\SearchV3\ValueObjects\OpeningHours;
 use DateTime;
-use IntlDateFormatter;
+use DateTimeImmutable;
 
 final class LargePeriodicPlainTextFormatter implements OfferFormatter
 {
     /**
-     * @var IntlDateFormatter
+     * @var DateFormatter
      */
-    private $fmt;
-
-    /**
-     * @var IntlDateFormatter
-     */
-    private $fmtDays;
-
-    /**
-     * @var IntlDateFormatter
-     */
-    private $fmtShortDays;
+    private $formatter;
 
     /**
      * @var Translator
@@ -33,32 +24,7 @@ final class LargePeriodicPlainTextFormatter implements OfferFormatter
 
     public function __construct(string $langCode)
     {
-        $this->fmt = new IntlDateFormatter(
-            $langCode,
-            IntlDateFormatter::FULL,
-            IntlDateFormatter::FULL,
-            date_default_timezone_get(),
-            IntlDateFormatter::GREGORIAN,
-            'd MMMM yyyy'
-        );
-
-        $this->fmtDays = new IntlDateFormatter(
-            $langCode,
-            IntlDateFormatter::FULL,
-            IntlDateFormatter::FULL,
-            date_default_timezone_get(),
-            IntlDateFormatter::GREGORIAN,
-            'EEEE'
-        );
-
-        $this->fmtShortDays = new IntlDateFormatter(
-            $langCode,
-            IntlDateFormatter::FULL,
-            IntlDateFormatter::FULL,
-            date_default_timezone_get(),
-            IntlDateFormatter::GREGORIAN,
-            'EEE'
-        );
+        $this->formatter = new DateFormatter($langCode);
 
         $this->trans = new Translator();
         $this->trans->setLanguage($langCode);
@@ -89,8 +55,8 @@ final class LargePeriodicPlainTextFormatter implements OfferFormatter
 
     private function generateDates(DateTime $dateFrom, DateTime $dateTo): string
     {
-        $intlDateFrom = $this->fmt->format($dateFrom);
-        $intlDateTo = $this->fmt->format($dateTo);
+        $intlDateFrom = $this->formatter->formatAsFullDate($dateFrom);
+        $intlDateTo = $this->formatter->formatAsFullDate($dateTo);
 
         $output_dates =  ucfirst($this->trans->getTranslations()->t('from')) . ' ';
         $output_dates .= $intlDateFrom . ' ' . $this->trans->getTranslations()->t('till') . ' ' . $intlDateTo;
@@ -109,7 +75,7 @@ final class LargePeriodicPlainTextFormatter implements OfferFormatter
         $formattedDays = [];
         foreach ($openingHoursData as $openingHours) {
             foreach ($openingHours->getDaysOfWeek() as $dayOfWeek) {
-                $translatedDay = $this->fmtDays->format(strtotime($dayOfWeek));
+                $translatedDay = $this->formatter->formatAsDayOfWeek(new DateTimeImmutable($dayOfWeek));
 
                 if (!isset($formattedDays[$dayOfWeek])) {
                     $formattedDays[$dayOfWeek] = $translatedDay

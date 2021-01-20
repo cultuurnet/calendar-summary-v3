@@ -3,6 +3,7 @@
 namespace CultuurNet\CalendarSummaryV3\Multiple;
 
 use CultuurNet\CalendarSummaryV3\EventFormatter;
+use CultuurNet\CalendarSummaryV3\DateFormatter;
 use CultuurNet\CalendarSummaryV3\Translator;
 use CultuurNet\SearchV3\ValueObjects\Event;
 use DateTimeZone;
@@ -10,12 +11,18 @@ use DateTimeZone;
 final class ExtraSmallEventPlainTextFormatter implements EventFormatter
 {
     /**
+     * @var DateFormatter
+     */
+    private $formatter;
+
+    /**
      * @var Translator
      */
     private $trans;
 
     public function __construct(string $langCode)
     {
+        $this->formatter = new DateFormatter($langCode);
         $this->trans = new Translator();
         $this->trans->setLanguage($langCode);
     }
@@ -26,12 +33,12 @@ final class ExtraSmallEventPlainTextFormatter implements EventFormatter
         $dateTo = $event->getEndDate()->setTimezone(new DateTimeZone(date_default_timezone_get()));
 
         if ($dateFrom == $dateTo) {
-            return $dateFrom->format('j/n/y');
+            return $this->formatter->formatAsShortDate($dateFrom);
         }
 
         return ucfirst($this->trans->getTranslations()->t('from')) . ' ' .
-            $dateFrom->format('j/n/y') . ' ' .
+            $this->formatter->formatAsShortDate($dateFrom) . ' ' .
             $this->trans->getTranslations()->t('till') . ' '.
-            $dateTo->format('j/n/y');
+            $this->formatter->formatAsShortDate($dateTo);
     }
 }

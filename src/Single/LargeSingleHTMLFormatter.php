@@ -2,28 +2,19 @@
 
 namespace CultuurNet\CalendarSummaryV3\Single;
 
+use CultuurNet\CalendarSummaryV3\DateComparison;
+use CultuurNet\CalendarSummaryV3\DateFormatter;
 use CultuurNet\CalendarSummaryV3\OfferFormatter;
 use CultuurNet\CalendarSummaryV3\Translator;
 use CultuurNet\SearchV3\ValueObjects\Offer;
 use DateTimeInterface;
-use IntlDateFormatter;
 
 final class LargeSingleHTMLFormatter implements OfferFormatter
 {
     /**
-     * @var IntlDateFormatter
+     * @var DateFormatter
      */
-    private $fmt;
-
-    /**
-     * @var IntlDateFormatter
-     */
-    private $fmtWeekDayLong;
-
-    /**
-     * @var IntlDateFormatter
-     */
-    private $fmtTime;
+    private $formatter;
 
     /**
      * @var Translator
@@ -32,32 +23,7 @@ final class LargeSingleHTMLFormatter implements OfferFormatter
 
     public function __construct(string $langCode)
     {
-        $this->fmt = new IntlDateFormatter(
-            $langCode,
-            IntlDateFormatter::FULL,
-            IntlDateFormatter::FULL,
-            date_default_timezone_get(),
-            IntlDateFormatter::GREGORIAN,
-            'd MMMM yyyy'
-        );
-
-        $this->fmtWeekDayLong = new IntlDateFormatter(
-            $langCode,
-            IntlDateFormatter::FULL,
-            IntlDateFormatter::FULL,
-            date_default_timezone_get(),
-            IntlDateFormatter::GREGORIAN,
-            'EEEE'
-        );
-
-        $this->fmtTime = new IntlDateFormatter(
-            $langCode,
-            IntlDateFormatter::FULL,
-            IntlDateFormatter::FULL,
-            date_default_timezone_get(),
-            IntlDateFormatter::GREGORIAN,
-            'HH:mm'
-        );
+        $this->formatter = new DateFormatter($langCode);
 
         $this->trans = new Translator();
         $this->trans->setLanguage($langCode);
@@ -65,10 +31,10 @@ final class LargeSingleHTMLFormatter implements OfferFormatter
 
     public function format(Offer $offer): string
     {
-        $dateFrom = $offer->getStartDate()->setTimezone(new \DateTimeZone(date_default_timezone_get()));
-        $dateEnd = $offer->getEndDate()->setTimezone(new \DateTimeZone(date_default_timezone_get()));
+        $dateFrom = $offer->getStartDate();
+        $dateEnd = $offer->getEndDate();
 
-        if ($dateFrom->format('Y-m-d') == $dateEnd->format('Y-m-d')) {
+        if (DateComparison::onSameDay($dateFrom, $dateEnd)) {
             $output = $this->formatSameDay($dateFrom, $dateEnd);
         } else {
             $output = $this->formatMoreDays($dateFrom, $dateEnd);
@@ -79,11 +45,10 @@ final class LargeSingleHTMLFormatter implements OfferFormatter
 
     private function formatSameDay(DateTimeInterface $dateFrom, DateTimeInterface $dateEnd): string
     {
-        $intlDateFrom = $this->fmt->format($dateFrom);
-        $intlWeekDayFrom = $this->fmtWeekDayLong->format($dateFrom);
-        $intlStartTimeFrom = $this->fmtTime->format($dateFrom);
-
-        $intlEndTimeEnd = $this->fmtTime->format($dateEnd);
+        $intlDateFrom = $this->formatter->formatAsFullDate($dateFrom);
+        $intlWeekDayFrom = $this->formatter->formatAsDayOfWeek($dateFrom);
+        $intlStartTimeFrom = $this->formatter->formatAsTime($dateFrom);
+        $intlEndTimeEnd = $this->formatter->formatAsTime($dateEnd);
 
         if ($intlStartTimeFrom === '00:00' && $intlEndTimeEnd === '23:59') {
             $output = '<time itemprop="startDate" datetime="' . $dateFrom->format(\DateTime::ATOM) . '">';
@@ -124,13 +89,13 @@ final class LargeSingleHTMLFormatter implements OfferFormatter
 
     private function formatMoreDays(DateTimeInterface $dateFrom, DateTimeInterface $dateEnd): string
     {
-        $intlDateFrom = $this->fmt->format($dateFrom);
-        $intlWeekDayFrom = $this->fmtWeekDayLong->format($dateFrom);
-        $intlStartTimeFrom = $this->fmtTime->format($dateFrom);
+        $intlDateFrom = $this->formatter->formatAsFullDate($dateFrom);
+        $intlWeekDayFrom = $this->formatter->formatAsDayOfWeek($dateFrom);
+        $intlStartTimeFrom = $this->formatter->formatAsTime($dateFrom);
 
-        $intlDateEnd = $this->fmt->format($dateEnd);
-        $intlWeekDayEnd = $this->fmtWeekDayLong->format($dateEnd);
-        $intlEndTimeEnd = $this->fmtTime->format($dateEnd);
+        $intlDateEnd = $this->formatter->formatAsFullDate($dateEnd);
+        $intlWeekDayEnd = $this->formatter->formatAsDayOfWeek($dateEnd);
+        $intlEndTimeEnd = $this->formatter->formatAsTime($dateEnd);
 
         $output = '<time itemprop="startDate" datetime="' . $dateFrom->format(\DateTime::ATOM) . '">';
         $output .= '<span class="cf-from cf-meta">' . ucfirst($this->trans->getTranslations()->t('from')) . '</span>';

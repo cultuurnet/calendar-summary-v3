@@ -2,23 +2,19 @@
 
 namespace CultuurNet\CalendarSummaryV3\Single;
 
+use CultuurNet\CalendarSummaryV3\DateComparison;
+use CultuurNet\CalendarSummaryV3\DateFormatter;
 use CultuurNet\CalendarSummaryV3\OfferFormatter;
 use CultuurNet\CalendarSummaryV3\Translator;
 use CultuurNet\SearchV3\ValueObjects\Offer;
 use DateTimeInterface;
-use IntlDateFormatter;
 
 final class SmallSinglePlainTextFormatter implements OfferFormatter
 {
     /**
-     * @var IntlDateFormatter
+     * @var DateFormatter
      */
-    private $fmtDay;
-
-    /**
-     * @var IntlDateFormatter
-     */
-    private $fmtMonth;
+    private $formatter;
 
     /**
      * @var Translator
@@ -27,23 +23,7 @@ final class SmallSinglePlainTextFormatter implements OfferFormatter
 
     public function __construct(string $langCode)
     {
-        $this->fmtDay = new IntlDateFormatter(
-            $langCode,
-            IntlDateFormatter::FULL,
-            IntlDateFormatter::FULL,
-            date_default_timezone_get(),
-            IntlDateFormatter::GREGORIAN,
-            'd'
-        );
-
-        $this->fmtMonth = new IntlDateFormatter(
-            $langCode,
-            IntlDateFormatter::FULL,
-            IntlDateFormatter::FULL,
-            date_default_timezone_get(),
-            IntlDateFormatter::GREGORIAN,
-            'MMM'
-        );
+        $this->formatter = new DateFormatter($langCode);
 
         $this->trans = new Translator();
         $this->trans->setLanguage($langCode);
@@ -51,10 +31,10 @@ final class SmallSinglePlainTextFormatter implements OfferFormatter
 
     public function format(Offer $offer): string
     {
-        $dateFrom = $offer->getStartDate()->setTimezone(new \DateTimeZone(date_default_timezone_get()));
-        $dateEnd = $offer->getEndDate()->setTimezone(new \DateTimeZone(date_default_timezone_get()));
+        $dateFrom = $offer->getStartDate();
+        $dateEnd = $offer->getEndDate();
 
-        if ($dateFrom->format('Y-m-d') == $dateEnd->format('Y-m-d')) {
+        if (DateComparison::onSameDay($dateFrom, $dateEnd)) {
             $output = $this->formatSameDay($dateFrom);
         } else {
             $output = $this->formatMoreDays($dateFrom, $dateEnd);
@@ -65,8 +45,8 @@ final class SmallSinglePlainTextFormatter implements OfferFormatter
 
     private function formatSameDay(DateTimeInterface $dateFrom): string
     {
-        $dateFromDay = $this->fmtDay->format($dateFrom);
-        $dateFromMonth = rtrim($this->fmtMonth->format($dateFrom), '.');
+        $dateFromDay = $this->formatter->formatAsDayNumber($dateFrom);
+        $dateFromMonth = $this->formatter->formatAsAbbreviatedMonthName($dateFrom);
 
         $output = $dateFromDay . ' ' . $dateFromMonth;
 
@@ -75,11 +55,11 @@ final class SmallSinglePlainTextFormatter implements OfferFormatter
 
     private function formatMoreDays(DateTimeInterface $dateFrom, DateTimeInterface $dateEnd): string
     {
-        $dateFromDay = $this->fmtDay->format($dateFrom);
-        $dateFromMonth = rtrim($this->fmtMonth->format($dateFrom), '.');
+        $dateFromDay = $this->formatter->formatAsDayNumber($dateFrom);
+        $dateFromMonth = $this->formatter->formatAsAbbreviatedMonthName($dateFrom);
 
-        $dateEndDay = $this->fmtDay->format($dateEnd);
-        $dateEndMonth = rtrim($this->fmtMonth->format($dateEnd), '.');
+        $dateEndDay = $this->formatter->formatAsDayNumber($dateEnd);
+        $dateEndMonth = $this->formatter->formatAsAbbreviatedMonthName($dateEnd);
 
         $output = $this->trans->getTranslations()->t('from') . ' ' . $dateFromDay . ' '
             . $dateFromMonth . ' ' . $this->trans->getTranslations()->t('till') . ' '

@@ -2,23 +2,19 @@
 
 namespace CultuurNet\CalendarSummaryV3\Single;
 
+use CultuurNet\CalendarSummaryV3\DateComparison;
+use CultuurNet\CalendarSummaryV3\DateFormatter;
 use CultuurNet\CalendarSummaryV3\OfferFormatter;
 use CultuurNet\CalendarSummaryV3\Translator;
 use CultuurNet\SearchV3\ValueObjects\Offer;
 use DateTimeInterface;
-use IntlDateFormatter;
 
 final class MediumSingleHTMLFormatter implements OfferFormatter
 {
     /**
-     * @var IntlDateFormatter
+     * @var DateFormatter
      */
-    private $fmt;
-
-    /**
-     * @var IntlDateFormatter
-     */
-    private $fmtDay;
+    private $formatter;
 
     /**
      * @var Translator
@@ -27,23 +23,7 @@ final class MediumSingleHTMLFormatter implements OfferFormatter
 
     public function __construct(string $langCode)
     {
-        $this->fmt = new IntlDateFormatter(
-            $langCode,
-            IntlDateFormatter::FULL,
-            IntlDateFormatter::FULL,
-            date_default_timezone_get(),
-            IntlDateFormatter::GREGORIAN,
-            'd MMMM yyyy'
-        );
-
-        $this->fmtDay = new IntlDateFormatter(
-            $langCode,
-            IntlDateFormatter::FULL,
-            IntlDateFormatter::FULL,
-            date_default_timezone_get(),
-            IntlDateFormatter::GREGORIAN,
-            'eeee'
-        );
+        $this->formatter = new DateFormatter($langCode);
 
         $this->trans = new Translator();
         $this->trans->setLanguage($langCode);
@@ -51,10 +31,10 @@ final class MediumSingleHTMLFormatter implements OfferFormatter
 
     public function format(Offer $offer): string
     {
-        $dateFrom = $offer->getStartDate()->setTimezone(new \DateTimeZone(date_default_timezone_get()));
-        $dateEnd = $offer->getEndDate()->setTimezone(new \DateTimeZone(date_default_timezone_get()));
+        $dateFrom = $offer->getStartDate();
+        $dateEnd = $offer->getEndDate();
 
-        if ($dateFrom->format('Y-m-d') == $dateEnd->format('Y-m-d')) {
+        if (DateComparison::onSameDay($dateFrom, $dateEnd)) {
             $output = $this->formatSameDay($dateFrom);
         } else {
             $output = $this->formatMoreDays($dateFrom, $dateEnd);
@@ -65,8 +45,8 @@ final class MediumSingleHTMLFormatter implements OfferFormatter
 
     private function formatSameDay(DateTimeInterface $dateFrom): string
     {
-        $intlDateFrom = $this->fmt->format($dateFrom);
-        $intlDateDayFrom = $this->fmtDay->format($dateFrom);
+        $intlDateFrom = $this->formatter->formatAsFullDate($dateFrom);
+        $intlDateDayFrom = $this->formatter->formatAsDayOfWeek($dateFrom);
 
         $output = '<span class="cf-weekday cf-meta">' . $intlDateDayFrom . '</span>';
         $output .= ' ';
@@ -77,11 +57,11 @@ final class MediumSingleHTMLFormatter implements OfferFormatter
 
     private function formatMoreDays(DateTimeInterface $dateFrom, DateTimeInterface $dateEnd): string
     {
-        $intlDateFrom = $this->fmt->format($dateFrom);
-        $intlDateDayFrom = $this->fmtDay->format($dateFrom);
+        $intlDateFrom = $this->formatter->formatAsFullDate($dateFrom);
+        $intlDateDayFrom = $this->formatter->formatAsDayOfWeek($dateFrom);
 
-        $intlDateEnd = $this->fmt->format($dateEnd);
-        $intlDateDayEnd = $this->fmtDay->format($dateEnd);
+        $intlDateEnd = $this->formatter->formatAsFullDate($dateEnd);
+        $intlDateDayEnd = $this->formatter->formatAsDayOfWeek($dateEnd);
 
         $output = '<span class="cf-from cf-meta">' . ucfirst($this->trans->getTranslations()->t('from')) . '</span>';
         $output .= ' ';
