@@ -3,6 +3,7 @@
 namespace CultuurNet\CalendarSummaryV3\Permanent;
 
 use CultuurNet\CalendarSummaryV3\DateFormatter;
+use CultuurNet\CalendarSummaryV3\OpeningHourFormatter;
 use CultuurNet\CalendarSummaryV3\Translator;
 use CultuurNet\SearchV3\ValueObjects\Offer;
 use CultuurNet\SearchV3\ValueObjects\OpeningHours;
@@ -47,17 +48,6 @@ final class LargePermanentPlainTextFormatter implements PermanentFormatterInterf
         return ucfirst($this->trans->getTranslations()->t('always_open')) . PHP_EOL;
     }
 
-    private function getFormattedTime(string $time): string
-    {
-        $timeParts = explode(':', $time);
-        $hour = ltrim($timeParts[0], '0');
-        if ($hour === '') {
-            $hour = '0';
-        }
-        $timeParts[0] = $hour;
-        return implode(':', $timeParts);
-    }
-
     /**
      * @param OpeningHours[] $openingHoursData
      * @return string
@@ -76,15 +66,15 @@ final class LargePermanentPlainTextFormatter implements PermanentFormatterInterf
                 if (!isset($formattedDays[$dayOfWeek])) {
                     $formattedDays[$dayOfWeek] = ucfirst($translatedDay)
                         . ' ' . $this->trans->getTranslations()->t('from') . ' '
-                        . $this->getFormattedTime($openingHours->getOpens())
+                        . OpeningHourFormatter::format($openingHours->getOpens())
                         . ' ' . $this->trans->getTranslations()->t('till') . ' '
-                        . $this->getFormattedTime($openingHours->getCloses())
+                        . OpeningHourFormatter::format($openingHours->getCloses())
                         . PHP_EOL;
                 } else {
                     $formattedDays[$dayOfWeek] .= '' . $this->trans->getTranslations()->t('from') . ' '
-                        . $this->getFormattedTime($openingHours->getOpens())
+                        . OpeningHourFormatter::format($openingHours->getOpens())
                         . ' ' . $this->trans->getTranslations()->t('till') . ' '
-                        . $this->getFormattedTime($openingHours->getCloses())
+                        . OpeningHourFormatter::format($openingHours->getCloses())
                         . PHP_EOL;
                 }
             }
