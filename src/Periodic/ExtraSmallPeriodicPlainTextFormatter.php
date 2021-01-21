@@ -4,6 +4,7 @@ namespace CultuurNet\CalendarSummaryV3\Periodic;
 
 use CultuurNet\CalendarSummaryV3\DateComparison;
 use CultuurNet\CalendarSummaryV3\DateFormatter;
+use CultuurNet\CalendarSummaryV3\PlainTextSummaryBuilder;
 use CultuurNet\CalendarSummaryV3\Translator;
 use CultuurNet\SearchV3\ValueObjects\Offer;
 use \DateTime;
@@ -44,12 +45,16 @@ final class ExtraSmallPeriodicPlainTextFormatter implements PeriodicFormatterInt
 
     private function formatStarted(DateTimeInterface $endDate): string
     {
-        return ucfirst($this->trans->getTranslations()->t('till')) . ' ' . $this->formatDate($endDate);
+        return (new PlainTextSummaryBuilder($this->trans))
+            ->till($this->formatDate($endDate))
+            ->toString();
     }
 
     private function formatNotStarted(DateTimeInterface $startDate): string
     {
-        return ucfirst($this->trans->getTranslations()->t('from_period')) . ' ' . $this->formatDate($startDate);
+        return (new PlainTextSummaryBuilder($this->trans))
+            ->fromPeriod($this->formatDate($startDate))
+            ->toString();
     }
 
     private function formatDate(DateTimeInterface $date): string
