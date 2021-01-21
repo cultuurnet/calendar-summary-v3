@@ -15,14 +15,10 @@ final class OpeningHourFormatter
      */
     public static function format(string $openingHour): string
     {
-        $timeParts = explode(':', $openingHour);
-
-        $hour = ltrim($timeParts[0], '0');
-        if ($hour === '') {
-            $hour = '0';
+        $firstCharacter = $openingHour[0];
+        if ($firstCharacter === '0') {
+            $openingHour = substr($openingHour, 1);
         }
-
-        $timeParts[0] = $hour;
-        return implode(':', $timeParts);
+        return $openingHour;
     }
 }
