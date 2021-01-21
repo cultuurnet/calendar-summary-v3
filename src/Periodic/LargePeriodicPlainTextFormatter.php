@@ -53,14 +53,14 @@ final class LargePeriodicPlainTextFormatter implements PeriodicFormatterInterfac
         return $formattedShortTime;
     }
 
-    private function generateDates(DateTime $dateFrom, DateTime $dateTo): string
+    private function generateDates(DateTime $startDate, DateTime $endDate): string
     {
-        $intlDateFrom = $this->formatter->formatAsFullDate($dateFrom);
-        $intlDateTo = $this->formatter->formatAsFullDate($dateTo);
+        $formattedStartDate = $this->formatter->formatAsFullDate($startDate);
+        $formattedEndDate = $this->formatter->formatAsFullDate($endDate);
 
         return (new PlainTextSummaryBuilder($this->trans))
-            ->from($intlDateFrom)
-            ->till($intlDateTo)
+            ->from($formattedStartDate)
+            ->till($formattedEndDate)
             ->toString();
     }
 
