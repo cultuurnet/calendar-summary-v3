@@ -3,6 +3,7 @@
 namespace CultuurNet\CalendarSummaryV3\Permanent;
 
 use CultuurNet\CalendarSummaryV3\DateFormatter;
+use CultuurNet\CalendarSummaryV3\PlainTextFormatter;
 use CultuurNet\CalendarSummaryV3\Translator;
 use CultuurNet\SearchV3\ValueObjects\Offer;
 use CultuurNet\SearchV3\ValueObjects\OpeningHours;
@@ -43,30 +44,21 @@ final class MediumPermanentPlainTextFormatter implements PermanentFormatterInter
      */
     private function generateWeekScheme(array $openingHoursData): string
     {
-        $outputWeek = ucfirst($this->trans->getTranslations()->t('open')) . ' ';
-        // Create an array with formatted days.
-        $formattedDays = [];
-
+        // Create a list of all day names that have opening hours, translated
+        $translatedDayNamesWithOpeningHours = [];
         foreach ($openingHoursData as $openingHours) {
-            $daysOfWeek = $openingHours->getDaysOfWeek();
-            foreach ($daysOfWeek as $i => $dayOfWeek) {
-                $translatedDay = $this->formatter->formatAsAbbreviatedDayOfWeek(new DateTimeImmutable($dayOfWeek));
-
-                if (!isset($formattedDays[$dayOfWeek])) {
-                    $formattedDays[$dayOfWeek] = $translatedDay;
-                }
+            foreach ($openingHours->getDaysOfWeek() as $dayName) {
+                $translatedDayName = $this->formatter->formatAsAbbreviatedDayOfWeek(new DateTimeImmutable($dayName));
+                $translatedDayNamesWithOpeningHours[] = $translatedDayName;
             }
         }
+        $translatedDayNamesWithOpeningHours = array_unique($translatedDayNamesWithOpeningHours);
 
-        $i = 0;
-
-        foreach ($formattedDays as $formattedDay) {
-            $outputWeek .= $formattedDay;
-            if (++$i !== count($formattedDays)) {
-                $outputWeek .= ', ';
-            }
-        }
-
-        return $outputWeek;
+        // Put all the day names with opening hours on a single line with 'Open at' (sec) at the beginning.
+        // E.g. 'Open at monday, wednesday, thursday'
+        return (new PlainTextFormatter($this->trans))
+            ->addTranslation('open')
+            ->addMultiple($translatedDayNamesWithOpeningHours, ', ')
+            ->toString();
     }
 }

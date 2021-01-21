@@ -48,6 +48,13 @@ final class PlainTextFormatter
         return $c;
     }
 
+    public function addMultiple(array $text, string $separator = ' '): self
+    {
+        $c = clone $this;
+        $c->workingLine[] = implode($separator, $text);
+        return $c;
+    }
+
     public function startNewLine(): self
     {
         $c = clone $this;
