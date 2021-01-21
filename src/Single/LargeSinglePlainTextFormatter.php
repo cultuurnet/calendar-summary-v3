@@ -66,7 +66,8 @@ final class LargeSinglePlainTextFormatter implements SingleFormatterInterface
 
         return $summaryBuilder
             ->from($formattedStartTime)
-            ->till($formattedEndTime);
+            ->till($formattedEndTime)
+            ->toString();
     }
 
     private function formatMoreDays(DateTimeInterface $startDate, DateTimeInterface $endDate): string
@@ -83,6 +84,7 @@ final class LargeSinglePlainTextFormatter implements SingleFormatterInterface
             ->from($formattedStartDayOfWeek, $formattedStartDate)
             ->at($formattedStartTime)
             ->till($formattedEndDayOfWeek, $formattedEndDate)
-            ->at($formattedEndTime);
+            ->at($formattedEndTime)
+            ->toString();
     }
 }
