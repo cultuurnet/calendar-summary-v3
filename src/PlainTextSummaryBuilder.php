@@ -41,6 +41,21 @@ final class PlainTextSummaryBuilder
         return $c;
     }
 
+    public function openAt(string ...$text): self
+    {
+        return $this->addTranslation('open')->addMultiple($text, ', ');
+    }
+
+    public function alwaysOpen(): self
+    {
+        return $this->addTranslation('always_open');
+    }
+
+    public function closed(): self
+    {
+        return $this->addTranslation('closed');
+    }
+
     public function from(string ...$text): self
     {
         return $this->addTranslation('from')->addMultiple($text);

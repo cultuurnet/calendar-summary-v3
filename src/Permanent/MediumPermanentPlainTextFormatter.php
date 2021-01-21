@@ -36,7 +36,7 @@ final class MediumPermanentPlainTextFormatter implements PermanentFormatterInter
         }
 
         return (new PlainTextSummaryBuilder($this->trans))
-            ->addTranslation('always_open')
+            ->alwaysOpen()
             ->startNewLine()
             ->toString();
     }
@@ -60,8 +60,7 @@ final class MediumPermanentPlainTextFormatter implements PermanentFormatterInter
         // Put all the day names with opening hours on a single line with 'Open at' (sec) at the beginning.
         // E.g. 'Open at monday, wednesday, thursday'
         return (new PlainTextSummaryBuilder($this->trans))
-            ->addTranslation('open')
-            ->addMultiple($translatedDayNamesWithOpeningHours, ', ')
+            ->openAt(...$translatedDayNamesWithOpeningHours)
             ->toString();
     }
 }

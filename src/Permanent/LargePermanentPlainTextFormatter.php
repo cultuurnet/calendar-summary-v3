@@ -36,7 +36,7 @@ final class LargePermanentPlainTextFormatter implements PermanentFormatterInterf
         }
 
         return (new PlainTextSummaryBuilder($this->trans))
-            ->addTranslation('always_open')
+            ->alwaysOpen()
             ->startNewLine()
             ->toString();
     }
@@ -93,7 +93,7 @@ final class LargePermanentPlainTextFormatter implements PermanentFormatterInterf
         $closedDays = array_diff($dayNames, $daysWithOpeningHours);
         foreach ($closedDays as $closedDayName) {
             $formattedDays[$closedDayName] = $formattedDays[$closedDayName]
-                ->addTranslation('closed')
+                ->closed()
                 ->startNewLine();
         }
 
