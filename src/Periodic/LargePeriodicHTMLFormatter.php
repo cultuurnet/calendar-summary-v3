@@ -5,6 +5,7 @@ namespace CultuurNet\CalendarSummaryV3\Periodic;
 use CultuurNet\CalendarSummaryV3\DateFormatter;
 use CultuurNet\CalendarSummaryV3\Translator;
 use CultuurNet\SearchV3\ValueObjects\Offer;
+use CultuurNet\SearchV3\ValueObjects\OpeningHours;
 use DateTime;
 use DateTimeImmutable;
 
@@ -42,21 +43,13 @@ final class LargePeriodicHTMLFormatter implements PeriodicFormatterInterface
         return $this->formatSummary($output);
     }
 
-    /**
-     * @param $calsum
-     * @return mixed
-     */
-    private function formatSummary($calsum)
+    private function formatSummary(string $calsum): string
     {
         $calsum = str_replace('><', '> <', $calsum);
         return str_replace('  ', ' ', $calsum);
     }
 
-    /**
-     * @param $time
-     * @return string
-     */
-    private function getFormattedTime($time)
+    private function getFormattedTime(string $time): string
     {
         $formattedShortTime = ltrim($time, '0');
         if ($formattedShortTime == ':00') {
@@ -68,11 +61,11 @@ final class LargePeriodicHTMLFormatter implements PeriodicFormatterInterface
     /**
      * Retrieve the earliest time for the specified daysOfWeek.
      *
-     * @param $openingHoursData
-     * @param $daysOfWeek
+     * @param OpeningHours[] $openingHoursData
+     * @param string[] $daysOfWeek
      * @return string
      */
-    private function getEarliestTime($openingHoursData, $daysOfWeek)
+    private function getEarliestTime(array $openingHoursData, array $daysOfWeek): string
     {
         $earliest = '';
         foreach ($openingHoursData as $openingHours) {
@@ -90,11 +83,11 @@ final class LargePeriodicHTMLFormatter implements PeriodicFormatterInterface
     /**
      * Retrieve the latest time for the specified daysOfWeek.
      *
-     * @param $openingHoursData
-     * @param $daysOfWeek
+     * @param OpeningHours[] $openingHoursData
+     * @param string[] $daysOfWeek
      * @return string
      */
-    private function getLatestTime($openingHoursData, $daysOfWeek)
+    private function getLatestTime(array $openingHoursData, array $daysOfWeek): string
     {
         $latest = '';
         foreach ($openingHoursData as $openingHours) {
@@ -129,7 +122,7 @@ final class LargePeriodicHTMLFormatter implements PeriodicFormatterInterface
     }
 
     /**
-     * @param $openingHoursData
+     * @param OpeningHours[] $openingHoursData
      * @return string
      */
     private function generateWeekScheme($openingHoursData)

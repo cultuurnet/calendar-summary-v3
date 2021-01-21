@@ -62,7 +62,7 @@ final class LargePeriodicPlainTextFormatter implements PeriodicFormatterInterfac
     }
 
     /**
-     * @param OpeningHours[]
+     * @param OpeningHours[] $openingHoursData
      * @return string
      */
     private function generateWeekScheme(array $openingHoursData): string
