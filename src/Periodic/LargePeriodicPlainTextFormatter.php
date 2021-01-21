@@ -32,16 +32,23 @@ final class LargePeriodicPlainTextFormatter implements PeriodicFormatterInterfac
 
     public function format(Offer $offer): string
     {
-        $output = $this->generateDates(
-            $offer->getStartDate()->setTimezone(new \DateTimeZone(date_default_timezone_get())),
-            $offer->getEndDate()->setTimezone(new \DateTimeZone(date_default_timezone_get()))
-        );
+        $startDate = $offer->getStartDate()->setTimezone(new \DateTimeZone(date_default_timezone_get()));
+        $endDate = $offer->getEndDate()->setTimezone(new \DateTimeZone(date_default_timezone_get()));
+
+        $formattedStartDate = $this->formatter->formatAsFullDate($startDate);
+        $formattedEndDate = $this->formatter->formatAsFullDate($endDate);
+
+        $summary = (new PlainTextSummaryBuilder($this->trans))
+            ->from($formattedStartDate)
+            ->till($formattedEndDate);
 
         if ($offer->getOpeningHours()) {
-            $output .= PHP_EOL . $this->generateWeekScheme($offer->getOpeningHours());
+            $summary = $summary
+                ->startNewLine()
+                ->append($this->generateWeekScheme($offer->getOpeningHours()));
         }
 
-        return $output;
+        return $summary->toString();
     }
 
     private function getFormattedTime(string $time): string
@@ -51,17 +58,6 @@ final class LargePeriodicPlainTextFormatter implements PeriodicFormatterInterfac
             $formattedShortTime = '0:00';
         }
         return $formattedShortTime;
-    }
-
-    private function generateDates(DateTime $startDate, DateTime $endDate): string
-    {
-        $formattedStartDate = $this->formatter->formatAsFullDate($startDate);
-        $formattedEndDate = $this->formatter->formatAsFullDate($endDate);
-
-        return (new PlainTextSummaryBuilder($this->trans))
-            ->from($formattedStartDate)
-            ->till($formattedEndDate)
-            ->toString();
     }
 
     /**
