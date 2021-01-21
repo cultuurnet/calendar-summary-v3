@@ -36,6 +36,9 @@
     "minimum-stability": "dev",
     "prefer-stable": true,
     "scripts": {
-      "phing": "./vendor/bin/phing test"
+      "phing": "./vendor/bin/phing test",
+      "phpcs": "vendor/bin/phpcs",
+      "phpstan": "vendor/bin/phpstan analyse",
+      "test": "vendor/bin/phpunit"
     }
 }
