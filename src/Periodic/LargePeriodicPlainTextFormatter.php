@@ -3,6 +3,7 @@
 namespace CultuurNet\CalendarSummaryV3\Periodic;
 
 use CultuurNet\CalendarSummaryV3\DateFormatter;
+use CultuurNet\CalendarSummaryV3\PlainTextSummaryBuilder;
 use CultuurNet\CalendarSummaryV3\Translator;
 use CultuurNet\SearchV3\ValueObjects\Offer;
 use CultuurNet\SearchV3\ValueObjects\OpeningHours;
@@ -57,8 +58,10 @@ final class LargePeriodicPlainTextFormatter implements PeriodicFormatterInterfac
         $intlDateFrom = $this->formatter->formatAsFullDate($dateFrom);
         $intlDateTo = $this->formatter->formatAsFullDate($dateTo);
 
-        return ucfirst($this->trans->getTranslations()->t('from')) . ' '
-            . $intlDateFrom . ' ' . $this->trans->getTranslations()->t('till') . ' ' . $intlDateTo;
+        return (new PlainTextSummaryBuilder($this->trans))
+            ->from($intlDateFrom)
+            ->till($intlDateTo)
+            ->toString();
     }
 
     /**
@@ -67,35 +70,30 @@ final class LargePeriodicPlainTextFormatter implements PeriodicFormatterInterfac
      */
     private function generateWeekScheme(array $openingHoursData): string
     {
-        $outputWeek = '(';
-
-        // Create an array with formatted days.
+        /** @var PlainTextSummaryBuilder[] $formattedDays */
         $formattedDays = [];
-        foreach ($openingHoursData as $openingHours) {
-            foreach ($openingHours->getDaysOfWeek() as $dayOfWeek) {
-                $translatedDay = $this->formatter->formatAsDayOfWeek(new DateTimeImmutable($dayOfWeek));
 
-                if (!isset($formattedDays[$dayOfWeek])) {
-                    $formattedDays[$dayOfWeek] = $translatedDay
-                        . ' ' . $this->trans->getTranslations()->t('from') . ' '
-                        . $this->getFormattedTime($openingHours->getOpens())
-                        . ' ' . $this->trans->getTranslations()->t('till') . ' '
-                        . $this->getFormattedTime($openingHours->getCloses());
-                } else {
-                    $formattedDays[$dayOfWeek] .= ' ' . $this->trans->getTranslations()->t('and') . ' '
-                        . $this->trans->getTranslations()->t('from') . ' '
-                        . $this->getFormattedTime($openingHours->getOpens())
-                        . ' ' . $this->trans->getTranslations()->t('till') . ' '
-                        . $this->getFormattedTime($openingHours->getCloses());
+        foreach ($openingHoursData as $openingHours) {
+            foreach ($openingHours->getDaysOfWeek() as $dayName) {
+                if (!isset($formattedDays[$dayName])) {
+                    $translatedDay = $this->formatter->formatAsDayOfWeek(new DateTimeImmutable($dayName));
+
+                    $formattedDays[$dayName] = (new PlainTextSummaryBuilder($this->trans))
+                        ->lowercaseNextFirstCharacter()
+                        ->append($translatedDay)
+                        ->from($this->getFormattedTime($openingHours->getOpens()))
+                        ->till($this->getFormattedTime($openingHours->getCloses()));
+
+                    continue;
                 }
+
+                $formattedDays[$dayName] = $formattedDays[$dayName]
+                    ->and()
+                    ->from($this->getFormattedTime($openingHours->getOpens()))
+                    ->till($this->getFormattedTime($openingHours->getCloses()));
             }
         }
 
-        // Render the rest of the week scheme output.
-        foreach ($formattedDays as $formattedDay) {
-            $outputWeek .= $formattedDay . ', ';
-        }
-        $outputWeek = rtrim($outputWeek, ', ' . PHP_EOL);
-        return $outputWeek . ')';
+        return '(' . implode(', ', $formattedDays) . ')';
     }
 }
