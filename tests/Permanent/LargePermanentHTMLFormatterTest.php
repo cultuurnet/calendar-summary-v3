@@ -30,7 +30,7 @@ class LargePermanentHTMLFormatterTest extends TestCase
 
         $openingHours1 = new OpeningHours();
         $openingHours1->setDaysOfWeek(['monday','tuesday', 'wednesday']);
-        $openingHours1->setOpens('00:00');
+        $openingHours1->setOpens('00:01');
         $openingHours1->setCloses('13:00');
 
         $openingHours2 = new OpeningHours();
@@ -49,27 +49,27 @@ class LargePermanentHTMLFormatterTest extends TestCase
 
         $this->assertEquals(
             '<ul class="list-unstyled"> '
-            .'<meta itemprop="openingHours" datetime="Ma 0:00-13:00"> </meta> '
+            .'<meta itemprop="openingHours" datetime="Ma 0:01-13:00"> </meta> '
             .'<li itemprop="openingHoursSpecification"> '
             .'<span class="cf-days">Maandag</span> '
-            .'<span itemprop="opens" content="0:00" class="cf-from cf-meta">van</span> '
-            .'<span class="cf-time">0:00</span> '
+            .'<span itemprop="opens" content="0:01" class="cf-from cf-meta">van</span> '
+            .'<span class="cf-time">0:01</span> '
             .'<span itemprop="closes" content="13:00" class="cf-to cf-meta">tot</span> '
             .'<span class="cf-time">13:00</span> '
             .'</li> '
-            .'<meta itemprop="openingHours" datetime="Di 0:00-13:00"> </meta> '
+            .'<meta itemprop="openingHours" datetime="Di 0:01-13:00"> </meta> '
             .'<li itemprop="openingHoursSpecification"> '
             .'<span class="cf-days">Dinsdag</span> '
-            .'<span itemprop="opens" content="0:00" class="cf-from cf-meta">van</span> '
-            .'<span class="cf-time">0:00</span> '
+            .'<span itemprop="opens" content="0:01" class="cf-from cf-meta">van</span> '
+            .'<span class="cf-time">0:01</span> '
             .'<span itemprop="closes" content="13:00" class="cf-to cf-meta">tot</span> '
             .'<span class="cf-time">13:00</span> '
             .'</li> '
-            .'<meta itemprop="openingHours" datetime="Wo 0:00-13:00"> </meta> '
+            .'<meta itemprop="openingHours" datetime="Wo 0:01-13:00"> </meta> '
             .'<li itemprop="openingHoursSpecification"> '
             .'<span class="cf-days">Woensdag</span> '
-            .'<span itemprop="opens" content="0:00" class="cf-from cf-meta">van</span> '
-            .'<span class="cf-time">0:00</span> '
+            .'<span itemprop="opens" content="0:01" class="cf-from cf-meta">van</span> '
+            .'<span class="cf-time">0:01</span> '
             .'<span itemprop="closes" content="13:00" class="cf-to cf-meta">tot</span> '
             .'<span class="cf-time">13:00</span> '
             .'</li> '
