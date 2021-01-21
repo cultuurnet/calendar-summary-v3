@@ -74,6 +74,11 @@ final class PlainTextFormatter
         return $c->concatenateLines();
     }
 
+    public function __toString(): string
+    {
+        return $this->toString();
+    }
+
     private function concatenateLines(): string
     {
         return implode(PHP_EOL, $this->lines);

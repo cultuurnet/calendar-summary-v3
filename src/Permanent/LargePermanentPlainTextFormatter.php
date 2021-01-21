@@ -96,13 +96,6 @@ final class LargePermanentPlainTextFormatter implements PermanentFormatterInterf
                 ->startNewLine();
         }
 
-        $formattedDaysAsStrings = array_map(
-            function (PlainTextFormatter $plainTextFormatter): string {
-                return $plainTextFormatter->toString();
-            },
-            $formattedDays
-        );
-
-        return implode('', $formattedDaysAsStrings);
+        return implode('', $formattedDays);
     }
 }
