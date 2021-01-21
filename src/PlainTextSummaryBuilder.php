@@ -64,7 +64,7 @@ final class PlainTextSummaryBuilder
         return $this->addTranslation('at')->addMultiple($text, ' ');
     }
 
-    public function add(string $text): self
+    public function append(string $text): self
     {
         $c = clone $this;
         $c->workingLine[] = $text;

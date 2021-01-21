@@ -49,8 +49,8 @@ final class MediumSinglePlainTextFormatter implements SingleFormatterInterface
         $formattedWeekDay = $this->formatter->formatAsDayOfWeek($date);
 
         return (new PlainTextSummaryBuilder($this->trans))
-            ->add($formattedWeekDay)
-            ->add($formattedDate)
+            ->append($formattedWeekDay)
+            ->append($formattedDate)
             ->toString();
     }
 

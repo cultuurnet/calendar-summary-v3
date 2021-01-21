@@ -49,8 +49,8 @@ final class SmallSinglePlainTextFormatter implements SingleFormatterInterface
         $monthName = $this->formatter->formatAsAbbreviatedMonthName($date);
 
         return (new PlainTextSummaryBuilder($this->trans))
-            ->add($dayNumber)
-            ->add($monthName)
+            ->append($dayNumber)
+            ->append($monthName)
             ->toString();
     }
 

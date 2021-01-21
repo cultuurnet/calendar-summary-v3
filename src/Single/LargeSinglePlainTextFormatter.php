@@ -51,8 +51,8 @@ final class LargeSinglePlainTextFormatter implements SingleFormatterInterface
         $formattedEndTime = $this->formatter->formatAsTime($endDate);
 
         $summaryBuilder = (new PlainTextSummaryBuilder($this->trans))
-            ->add($formattedStartDayOfWeek)
-            ->add($formattedStartDate);
+            ->append($formattedStartDayOfWeek)
+            ->append($formattedStartDate);
 
         if ($formattedStartTime === '00:00' && $formattedEndTime === '23:59') {
             return $summaryBuilder->toString();
