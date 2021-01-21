@@ -35,7 +35,11 @@
     "minimum-stability": "dev",
     "prefer-stable": true,
     "scripts": {
-      "phing": "./vendor/bin/phing test",
+      "pre-commit": [
+        "composer phpcs",
+        "composer phpstan",
+        "composer test"
+      ],
       "phpcs": "vendor/bin/phpcs",
       "phpstan": "vendor/bin/phpstan analyse",
       "test": "vendor/bin/phpunit"
