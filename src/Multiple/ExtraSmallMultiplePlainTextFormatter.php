@@ -30,16 +30,16 @@ final class ExtraSmallMultiplePlainTextFormatter implements MultipleFormatterInt
 
     public function format(Event $event): string
     {
-        $dateFrom = $event->getStartDate()->setTimezone(new DateTimeZone(date_default_timezone_get()));
-        $dateTo = $event->getEndDate()->setTimezone(new DateTimeZone(date_default_timezone_get()));
+        $startDate = $event->getStartDate()->setTimezone(new DateTimeZone(date_default_timezone_get()));
+        $endDate = $event->getEndDate()->setTimezone(new DateTimeZone(date_default_timezone_get()));
 
-        if (DateComparison::onSameDay($dateFrom, $dateTo)) {
-            return $this->formatter->formatAsShortDate($dateFrom);
+        if (DateComparison::onSameDay($startDate, $endDate)) {
+            return $this->formatter->formatAsShortDate($startDate);
         }
 
         return (new PlainTextSummaryBuilder($this->trans))
-            ->from($this->formatter->formatAsShortDate($dateFrom))
-            ->till($this->formatter->formatAsShortDate($dateTo))
+            ->from($this->formatter->formatAsShortDate($startDate))
+            ->till($this->formatter->formatAsShortDate($endDate))
             ->toString();
     }
 }
