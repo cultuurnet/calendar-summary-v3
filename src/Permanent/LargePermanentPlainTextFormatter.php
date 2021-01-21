@@ -35,7 +35,10 @@ final class LargePermanentPlainTextFormatter implements PermanentFormatterInterf
             return $this->generateWeekScheme($offer->getOpeningHours());
         }
 
-        return ucfirst($this->trans->getTranslations()->t('always_open')) . PHP_EOL;
+        return (new PlainTextStringBuilder($this->trans))
+            ->addTranslation('always_open')
+            ->startNewLine()
+            ->toString();
     }
 
     private function getFormattedTime(string $time): string

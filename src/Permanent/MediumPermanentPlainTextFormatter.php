@@ -35,7 +35,10 @@ final class MediumPermanentPlainTextFormatter implements PermanentFormatterInter
             return $this->generateWeekScheme($offer->getOpeningHours());
         }
 
-        return ucfirst($this->trans->getTranslations()->t('always_open')) . PHP_EOL;
+        return (new PlainTextStringBuilder($this->trans))
+            ->addTranslation('always_open')
+            ->startNewLine()
+            ->toString();
     }
 
     /**
