@@ -35,7 +35,7 @@ final class LargePermanentPlainTextFormatter implements PermanentFormatterInterf
             return $this->generateWeekScheme($offer->getOpeningHours());
         }
 
-        return (new PlainTextSummaryBuilder($this->trans))
+        return PlainTextSummaryBuilder::start($this->trans)
             ->alwaysOpen()
             ->startNewLine()
             ->toString();
@@ -69,7 +69,7 @@ final class LargePermanentPlainTextFormatter implements PermanentFormatterInterf
         // Add day name to the start of each day's week scheme
         $formattedDays = [];
         foreach ($dayNames as $dayName) {
-            $formattedDays[$dayName] = (new PlainTextSummaryBuilder($this->trans))
+            $formattedDays[$dayName] = PlainTextSummaryBuilder::start($this->trans)
                 ->append($this->formatter->formatAsAbbreviatedDayOfWeek(new DateTimeImmutable($dayName)));
         }
 

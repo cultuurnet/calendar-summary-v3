@@ -40,7 +40,7 @@ final class MediumPeriodicPlainTextFormatter implements PeriodicFormatterInterfa
             return PlainTextSummaryBuilder::singleLine($formattedStartDayOfWeek, $formattedStartDate);
         }
 
-        return (new PlainTextSummaryBuilder($this->trans))
+        return PlainTextSummaryBuilder::start($this->trans)
             ->from($formattedStartDate)
             ->till($formattedEndDate)
             ->toString();

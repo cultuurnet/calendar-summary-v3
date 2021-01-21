@@ -58,7 +58,7 @@ final class MediumSinglePlainTextFormatter implements SingleFormatterInterface
         $formattedEndDate = $this->formatter->formatAsFullDate($endDate);
         $formattedEndDayOfWeek = $this->formatter->formatAsDayOfWeek($endDate);
 
-        return (new PlainTextSummaryBuilder($this->trans))
+        return PlainTextSummaryBuilder::start($this->trans)
             ->from($formattedStartDayOfWeek, $formattedStartDate)
             ->till($formattedEndDayOfWeek, $formattedEndDate)
             ->toString();

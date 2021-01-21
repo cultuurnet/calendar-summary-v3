@@ -50,7 +50,7 @@ final class LargeSinglePlainTextFormatter implements SingleFormatterInterface
         $formattedStartTime = $this->formatter->formatAsTime($startDate);
         $formattedEndTime = $this->formatter->formatAsTime($endDate);
 
-        $summaryBuilder = (new PlainTextSummaryBuilder($this->trans))
+        $summaryBuilder = PlainTextSummaryBuilder::start($this->trans)
             ->append($formattedStartDayOfWeek)
             ->append($formattedStartDate);
 
@@ -80,7 +80,7 @@ final class LargeSinglePlainTextFormatter implements SingleFormatterInterface
         $formattedEndDayOfWeek = $this->formatter->formatAsDayOfWeek($endDate);
         $formattedEndTime = $this->formatter->formatAsTime($endDate);
 
-        return (new PlainTextSummaryBuilder($this->trans))
+        return PlainTextSummaryBuilder::start($this->trans)
             ->from($formattedStartDayOfWeek, $formattedStartDate)
             ->at($formattedStartTime)
             ->till($formattedEndDayOfWeek, $formattedEndDate)

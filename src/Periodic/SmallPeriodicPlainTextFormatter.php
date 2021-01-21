@@ -45,14 +45,14 @@ final class SmallPeriodicPlainTextFormatter implements PeriodicFormatterInterfac
 
     private function formatStarted(DateTimeInterface $endDate): string
     {
-        return (new PlainTextSummaryBuilder($this->trans))
+        return PlainTextSummaryBuilder::start($this->trans)
             ->till($this->formatDate($endDate))
             ->toString();
     }
 
     private function formatNotStarted(DateTimeInterface $startDate): string
     {
-        return (new PlainTextSummaryBuilder($this->trans))
+        return PlainTextSummaryBuilder::start($this->trans)
             ->fromPeriod($this->formatDate($startDate))
             ->toString();
     }

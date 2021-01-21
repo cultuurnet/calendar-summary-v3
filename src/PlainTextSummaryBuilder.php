@@ -26,12 +26,17 @@ final class PlainTextSummaryBuilder
      */
     private $lowercaseNextFirstCharacter;
 
-    public function __construct(Translator $translator)
+    private function __construct(Translator $translator)
     {
         $this->translator = $translator;
         $this->lines = [];
         $this->workingLine = [];
         $this->lowercaseNextFirstCharacter = false;
+    }
+
+    public static function start(Translator $translator): self
+    {
+        return new self($translator);
     }
 
     public function openAt(string ...$text): self

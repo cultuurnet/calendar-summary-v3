@@ -38,7 +38,7 @@ final class LargePeriodicPlainTextFormatter implements PeriodicFormatterInterfac
         $formattedStartDate = $this->formatter->formatAsFullDate($startDate);
         $formattedEndDate = $this->formatter->formatAsFullDate($endDate);
 
-        $summary = (new PlainTextSummaryBuilder($this->trans))
+        $summary = PlainTextSummaryBuilder::start($this->trans)
             ->from($formattedStartDate)
             ->till($formattedEndDate);
 
@@ -74,7 +74,7 @@ final class LargePeriodicPlainTextFormatter implements PeriodicFormatterInterfac
                 if (!isset($formattedDays[$dayName])) {
                     $translatedDay = $this->formatter->formatAsDayOfWeek(new DateTimeImmutable($dayName));
 
-                    $formattedDays[$dayName] = (new PlainTextSummaryBuilder($this->trans))
+                    $formattedDays[$dayName] = PlainTextSummaryBuilder::start($this->trans)
                         ->lowercaseNextFirstCharacter()
                         ->append($translatedDay)
                         ->from($this->getFormattedTime($openingHours->getOpens()))

@@ -37,7 +37,7 @@ final class ExtraSmallMultiplePlainTextFormatter implements MultipleFormatterInt
             return $this->formatter->formatAsShortDate($startDate);
         }
 
-        return (new PlainTextSummaryBuilder($this->trans))
+        return PlainTextSummaryBuilder::start($this->trans)
             ->from($this->formatter->formatAsShortDate($startDate))
             ->till($this->formatter->formatAsShortDate($endDate))
             ->toString();
