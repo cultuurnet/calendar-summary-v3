@@ -4,6 +4,7 @@ namespace CultuurNet\CalendarSummaryV3\Multiple;
 
 use CultuurNet\CalendarSummaryV3\DateComparison;
 use CultuurNet\CalendarSummaryV3\DateFormatter;
+use CultuurNet\CalendarSummaryV3\PlainTextSummaryBuilder;
 use CultuurNet\CalendarSummaryV3\Translator;
 use CultuurNet\SearchV3\ValueObjects\Event;
 use DateTimeZone;
@@ -36,9 +37,9 @@ final class ExtraSmallMultiplePlainTextFormatter implements MultipleFormatterInt
             return $this->formatter->formatAsShortDate($dateFrom);
         }
 
-        return ucfirst($this->trans->getTranslations()->t('from')) . ' ' .
-            $this->formatter->formatAsShortDate($dateFrom) . ' ' .
-            $this->trans->getTranslations()->t('till') . ' '.
-            $this->formatter->formatAsShortDate($dateTo);
+        return (new PlainTextSummaryBuilder($this->trans))
+            ->from($this->formatter->formatAsShortDate($dateFrom))
+            ->till($this->formatter->formatAsShortDate($dateTo))
+            ->toString();
     }
 }
