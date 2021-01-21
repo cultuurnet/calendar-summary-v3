@@ -49,11 +49,13 @@ final class LargePermanentPlainTextFormatter implements PermanentFormatterInterf
 
     private function getFormattedTime(string $time): string
     {
-        $formattedShortTime = ltrim($time, '0');
-        if ($formattedShortTime == ':00') {
-            $formattedShortTime = '0:00';
+        $timeParts = explode(':', $time);
+        $hour = ltrim($timeParts[0], '0');
+        if ($hour === '') {
+            $hour = '0';
         }
-        return $formattedShortTime;
+        $timeParts[0] = $hour;
+        return implode(':', $timeParts);
     }
 
     /**
