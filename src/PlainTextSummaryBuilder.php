@@ -71,13 +71,6 @@ final class PlainTextSummaryBuilder
         return $c;
     }
 
-    public function addMultiple(array $text, string $separator = ' '): self
-    {
-        $c = clone $this;
-        $c->workingLine[] = implode($separator, $text);
-        return $c;
-    }
-
     public function startNewLine(): self
     {
         $c = clone $this;
@@ -113,6 +106,13 @@ final class PlainTextSummaryBuilder
     {
         $c = clone $this;
         $c->workingLine[] = $this->translator->getTranslations()->t($translationKey);
+        return $c;
+    }
+
+    private function addMultiple(array $text, string $separator = ' '): self
+    {
+        $c = clone $this;
+        $c->workingLine[] = implode($separator, $text);
         return $c;
     }
 
