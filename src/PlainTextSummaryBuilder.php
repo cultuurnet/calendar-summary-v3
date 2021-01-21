@@ -24,14 +24,14 @@ final class PlainTextSummaryBuilder
     /**
      * @var bool
      */
-    private $uppercaseNextFirstLineCharacter;
+    private $lowercaseNextFirstCharacter;
 
     public function __construct(Translator $translator)
     {
         $this->translator = $translator;
         $this->lines = [];
         $this->workingLine = [];
-        $this->uppercaseNextFirstLineCharacter = true;
+        $this->lowercaseNextFirstCharacter = false;
     }
 
     public function openAt(string ...$text): self
@@ -80,15 +80,13 @@ final class PlainTextSummaryBuilder
     {
         $c = clone $this;
         $c->completeLine();
-        $c->uppercaseNextFirstLineCharacter = true;
         return $c;
     }
 
-    public function startNewLineWithLowercaseFirstCharacter(): self
+    public function lowercaseNextFirstCharacter(): self
     {
         $c = clone $this;
-        $c->completeLine();
-        $c->uppercaseNextFirstLineCharacter = false;
+        $c->lowercaseNextFirstCharacter = true;
         return $c;
     }
 
@@ -109,7 +107,7 @@ final class PlainTextSummaryBuilder
 
     public static function singleLine(string ...$text): string
     {
-        return self::formatLine($text, true);
+        return self::formatLine($text, false);
     }
 
     private function appendTranslation(string $translationKey): self
@@ -133,13 +131,14 @@ final class PlainTextSummaryBuilder
 
     private function completeLine(): void
     {
-        $this->lines[] = self::formatLine($this->workingLine, $this->uppercaseNextFirstLineCharacter);
+        $this->lines[] = self::formatLine($this->workingLine, $this->lowercaseNextFirstCharacter);
         $this->workingLine = [];
+        $this->lowercaseNextFirstCharacter = false;
     }
 
-    private static function formatLine(array $line, bool $uppercaseFirstCharacter): string
+    private static function formatLine(array $line, bool $lowercaseFirstCharacter): string
     {
         $formatted = implode(' ', $line);
-        return $uppercaseFirstCharacter ? ucfirst($formatted) : lcfirst($formatted);
+        return $lowercaseFirstCharacter ? lcfirst($formatted) : ucfirst($formatted);
     }
 }
