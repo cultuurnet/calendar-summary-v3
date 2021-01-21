@@ -3,7 +3,7 @@
 namespace CultuurNet\CalendarSummaryV3\Permanent;
 
 use CultuurNet\CalendarSummaryV3\DateFormatter;
-use CultuurNet\CalendarSummaryV3\PlainTextFormatter;
+use CultuurNet\CalendarSummaryV3\PlainTextStringBuilder;
 use CultuurNet\CalendarSummaryV3\Translator;
 use CultuurNet\SearchV3\ValueObjects\Offer;
 use CultuurNet\SearchV3\ValueObjects\OpeningHours;
@@ -56,7 +56,7 @@ final class MediumPermanentPlainTextFormatter implements PermanentFormatterInter
 
         // Put all the day names with opening hours on a single line with 'Open at' (sec) at the beginning.
         // E.g. 'Open at monday, wednesday, thursday'
-        return (new PlainTextFormatter($this->trans))
+        return (new PlainTextStringBuilder($this->trans))
             ->addTranslation('open')
             ->addMultiple($translatedDayNamesWithOpeningHours, ', ')
             ->toString();

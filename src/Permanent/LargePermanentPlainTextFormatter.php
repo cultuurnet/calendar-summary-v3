@@ -3,7 +3,7 @@
 namespace CultuurNet\CalendarSummaryV3\Permanent;
 
 use CultuurNet\CalendarSummaryV3\DateFormatter;
-use CultuurNet\CalendarSummaryV3\PlainTextFormatter;
+use CultuurNet\CalendarSummaryV3\PlainTextStringBuilder;
 use CultuurNet\CalendarSummaryV3\Translator;
 use CultuurNet\SearchV3\ValueObjects\Offer;
 use CultuurNet\SearchV3\ValueObjects\OpeningHours;
@@ -66,7 +66,7 @@ final class LargePermanentPlainTextFormatter implements PermanentFormatterInterf
         // Add day name to the start of each day's week scheme
         $formattedDays = [];
         foreach ($dayNames as $dayName) {
-            $formattedDays[$dayName] = (new PlainTextFormatter($this->trans))
+            $formattedDays[$dayName] = (new PlainTextStringBuilder($this->trans))
                 ->add($this->formatter->formatAsAbbreviatedDayOfWeek(new DateTimeImmutable($dayName)));
         }
 

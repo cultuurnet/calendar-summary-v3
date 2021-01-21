@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace CultuurNet\CalendarSummaryV3;
 
-final class PlainTextFormatter
+final class PlainTextStringBuilder
 {
     /**
      * @var Translator
