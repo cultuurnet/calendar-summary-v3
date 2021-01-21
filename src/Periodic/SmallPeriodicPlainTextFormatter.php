@@ -59,14 +59,14 @@ final class SmallPeriodicPlainTextFormatter implements PeriodicFormatterInterfac
 
     private function formatDate(DateTimeInterface $date): string
     {
-        $dateFromDay = $this->formatter->formatAsDayNumber($date);
-        $dateFromMonth = $this->formatter->formatAsAbbreviatedMonthName($date);
-        $dateFromYear = $this->formatter->formatAsYear($date);
+        $dayNumber = $this->formatter->formatAsDayNumber($date);
+        $monthName = $this->formatter->formatAsAbbreviatedMonthName($date);
+        $year = $this->formatter->formatAsYear($date);
 
         return (new PlainTextSummaryBuilder($this->trans))
-            ->append($dateFromDay)
-            ->append($dateFromMonth)
-            ->append($dateFromYear)
+            ->append($dayNumber)
+            ->append($monthName)
+            ->append($year)
             ->toString();
     }
 }
