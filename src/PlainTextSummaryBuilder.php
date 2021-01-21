@@ -36,32 +36,37 @@ final class PlainTextSummaryBuilder
 
     public function openAt(string ...$text): self
     {
-        return $this->addTranslation('open')->addMultiple($text, ', ');
+        return $this->appendTranslation('open')->appendMultiple($text, ', ');
     }
 
     public function alwaysOpen(): self
     {
-        return $this->addTranslation('always_open');
+        return $this->appendTranslation('always_open');
     }
 
     public function closed(): self
     {
-        return $this->addTranslation('closed');
+        return $this->appendTranslation('closed');
     }
 
     public function from(string ...$text): self
     {
-        return $this->addTranslation('from')->addMultiple($text, ' ');
+        return $this->appendTranslation('from')->appendMultiple($text, ' ');
+    }
+
+    public function fromPeriod(string ...$text): self
+    {
+        return $this->appendTranslation('from_period')->appendMultiple($text, ' ');
     }
 
     public function till(string ...$text): self
     {
-        return $this->addTranslation('till')->addMultiple($text, ' ');
+        return $this->appendTranslation('till')->appendMultiple($text, ' ');
     }
 
     public function at(string ...$text): self
     {
-        return $this->addTranslation('at')->addMultiple($text, ' ');
+        return $this->appendTranslation('at')->appendMultiple($text, ' ');
     }
 
     public function append(string $text): self
@@ -102,14 +107,14 @@ final class PlainTextSummaryBuilder
         return $this->toString();
     }
 
-    private function addTranslation(string $translationKey): self
+    private function appendTranslation(string $translationKey): self
     {
         $c = clone $this;
         $c->workingLine[] = $this->translator->getTranslations()->t($translationKey);
         return $c;
     }
 
-    private function addMultiple(array $text, string $separator): self
+    private function appendMultiple(array $text, string $separator): self
     {
         $c = clone $this;
         $c->workingLine[] = implode($separator, $text);
