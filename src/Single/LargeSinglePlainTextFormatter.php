@@ -31,67 +31,67 @@ final class LargeSinglePlainTextFormatter implements SingleFormatterInterface
 
     public function format(Offer $offer): string
     {
-        $dateFrom = $offer->getStartDate();
-        $dateEnd = $offer->getEndDate();
+        $startDate = $offer->getStartDate();
+        $endDate = $offer->getEndDate();
 
-        if (DateComparison::onSameDay($dateFrom, $dateEnd)) {
-            $output = $this->formatSameDay($dateFrom, $dateEnd);
+        if (DateComparison::onSameDay($startDate, $endDate)) {
+            $output = $this->formatSameDay($startDate, $endDate);
         } else {
-            $output = $this->formatMoreDays($dateFrom, $dateEnd);
+            $output = $this->formatMoreDays($startDate, $endDate);
         }
 
         return $output;
     }
 
-    private function formatSameDay(DateTimeInterface $dateFrom, DateTimeInterface $dateEnd): string
+    private function formatSameDay(DateTimeInterface $startDate, DateTimeInterface $endDate): string
     {
-        $intlDateFrom = $this->formatter->formatAsFullDate($dateFrom);
-        $intlWeekDayFrom = $this->formatter->formatAsDayOfWeek($dateFrom);
-        $intlStartTimeFrom = $this->formatter->formatAsTime($dateFrom);
-        $intlEndTimeEnd = $this->formatter->formatAsTime($dateEnd);
+        $formattedStartDate = $this->formatter->formatAsFullDate($startDate);
+        $formattedStartDayOfWeek = $this->formatter->formatAsDayOfWeek($startDate);
+        $formattedStartTime = $this->formatter->formatAsTime($startDate);
+        $formattedEndTime = $this->formatter->formatAsTime($endDate);
 
         $summaryBuilder = (new PlainTextSummaryBuilder($this->trans))
-            ->add($intlWeekDayFrom)
-            ->add($intlDateFrom);
+            ->add($formattedStartDayOfWeek)
+            ->add($formattedStartDate);
 
-        if ($intlStartTimeFrom === '00:00' && $intlEndTimeEnd === '23:59') {
+        if ($formattedStartTime === '00:00' && $formattedEndTime === '23:59') {
             return $summaryBuilder->toString();
         }
 
-        if ($intlStartTimeFrom === $intlEndTimeEnd) {
+        if ($formattedStartTime === $formattedEndTime) {
             return $summaryBuilder
                 ->addTranslation('at')
-                ->add($intlStartTimeFrom)
+                ->add($formattedStartTime)
                 ->toString();
         }
 
         return $summaryBuilder
             ->addTranslation('from')
-            ->add($intlStartTimeFrom)
+            ->add($formattedStartTime)
             ->addTranslation('till')
-            ->add($intlEndTimeEnd);
+            ->add($formattedEndTime);
     }
 
-    private function formatMoreDays(DateTimeInterface $dateFrom, DateTimeInterface $dateEnd): string
+    private function formatMoreDays(DateTimeInterface $startDate, DateTimeInterface $endDate): string
     {
-        $intlDateFrom = $this->formatter->formatAsFullDate($dateFrom);
-        $intlWeekDayFrom = $this->formatter->formatAsDayOfWeek($dateFrom);
-        $intlStartTimeFrom = $this->formatter->formatAsTime($dateFrom);
+        $formattedStartDate = $this->formatter->formatAsFullDate($startDate);
+        $formattedStartDayOfWeek = $this->formatter->formatAsDayOfWeek($startDate);
+        $formattedStartTime = $this->formatter->formatAsTime($startDate);
 
-        $intlDateEnd = $this->formatter->formatAsFullDate($dateEnd);
-        $intlWeekDayEnd = $this->formatter->formatAsDayOfWeek($dateEnd);
-        $intlEndTimeEnd = $this->formatter->formatAsTime($dateEnd);
+        $formattedEndDate = $this->formatter->formatAsFullDate($endDate);
+        $formattedEndDayOfWeek = $this->formatter->formatAsDayOfWeek($endDate);
+        $formattedEndTime = $this->formatter->formatAsTime($endDate);
 
         return (new PlainTextSummaryBuilder($this->trans))
             ->addTranslation('from')
-            ->add($intlWeekDayFrom)
-            ->add($intlDateFrom)
+            ->add($formattedStartDayOfWeek)
+            ->add($formattedStartDate)
             ->addTranslation('at')
-            ->add($intlStartTimeFrom)
+            ->add($formattedStartTime)
             ->addTranslation('till')
-            ->add($intlWeekDayEnd)
-            ->add($intlDateEnd)
+            ->add($formattedEndDayOfWeek)
+            ->add($formattedEndDate)
             ->addTranslation('at')
-            ->add($intlEndTimeEnd);
+            ->add($formattedEndTime);
     }
 }
