@@ -4,6 +4,7 @@ namespace CultuurNet\CalendarSummaryV3\Single;
 
 use CultuurNet\CalendarSummaryV3\DateComparison;
 use CultuurNet\CalendarSummaryV3\DateFormatter;
+use CultuurNet\CalendarSummaryV3\PlainTextSummaryBuilder;
 use CultuurNet\CalendarSummaryV3\Translator;
 use CultuurNet\SearchV3\ValueObjects\Offer;
 use DateTimeInterface;
@@ -47,7 +48,10 @@ final class SmallSinglePlainTextFormatter implements SingleFormatterInterface
         $dateFromDay = $this->formatter->formatAsDayNumber($dateFrom);
         $dateFromMonth = $this->formatter->formatAsAbbreviatedMonthName($dateFrom);
 
-        return ucfirst($dateFromDay . ' ' . $dateFromMonth);
+        return (new PlainTextSummaryBuilder($this->trans))
+            ->add($dateFromDay)
+            ->add($dateFromMonth)
+            ->toString();
     }
 
     private function formatMoreDays(DateTimeInterface $dateFrom, DateTimeInterface $dateEnd): string
@@ -58,10 +62,9 @@ final class SmallSinglePlainTextFormatter implements SingleFormatterInterface
         $dateEndDay = $this->formatter->formatAsDayNumber($dateEnd);
         $dateEndMonth = $this->formatter->formatAsAbbreviatedMonthName($dateEnd);
 
-        return ucfirst(
-            $this->trans->getTranslations()->t('from') . ' ' . $dateFromDay . ' '
-            . $dateFromMonth . ' ' . $this->trans->getTranslations()->t('till') . ' '
-            . $dateEndDay . ' ' . $dateEndMonth
-        );
+        return (new PlainTextSummaryBuilder($this->trans))
+            ->from($dateFromDay, $dateFromMonth)
+            ->till($dateEndDay, $dateEndMonth)
+            ->toString();
     }
 }
