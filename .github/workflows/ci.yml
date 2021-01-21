@@ -22,7 +22,6 @@ jobs:
                   tools: composer:v2
 
             - name: 📦 Install dependencies
-              if: steps.composer-cache.outputs.cache-hit != 'true'
               run: composer update --no-progress
 
             - name: ✅ Run tests
@@ -42,7 +41,6 @@ jobs:
                   tools: composer:v2
 
             - name: 📦 Install dependencies
-              if: steps.composer-cache.outputs.cache-hit != 'true'
               run: composer update --no-progress
 
             - name: ✨ Check code style
@@ -62,7 +60,6 @@ jobs:
                   tools: composer:v2
 
             - name: 📦 Install dependencies
-              if: steps.composer-cache.outputs.cache-hit != 'true'
               run: composer update --no-progress
 
             - name: 🔍 Analyse
