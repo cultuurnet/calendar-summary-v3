@@ -29,23 +29,23 @@ final class MediumPeriodicPlainTextFormatter implements PeriodicFormatterInterfa
 
     public function format(Offer $offer): string
     {
-        $dateFrom = $offer->getStartDate()->setTimezone(new \DateTimeZone(date_default_timezone_get()));
-        $intlDateFrom = $this->formatter->formatAsFullDate($dateFrom);
-        $intlDateFromDay = $this->formatter->formatAsDayOfWeek($dateFrom);
+        $startDate = $offer->getStartDate()->setTimezone(new \DateTimeZone(date_default_timezone_get()));
+        $formattedStartDate = $this->formatter->formatAsFullDate($startDate);
+        $formattedStartDayOfWeek = $this->formatter->formatAsDayOfWeek($startDate);
 
-        $dateTo = $offer->getEndDate()->setTimezone(new \DateTimeZone(date_default_timezone_get()));
-        $intlDateTo = $this->formatter->formatAsFullDate($dateTo);
+        $endDate = $offer->getEndDate()->setTimezone(new \DateTimeZone(date_default_timezone_get()));
+        $formattedEndDate = $this->formatter->formatAsFullDate($endDate);
 
-        if ($intlDateFrom == $intlDateTo) {
+        if ($formattedStartDate == $formattedEndDate) {
             return (new PlainTextSummaryBuilder($this->trans))
-                ->append($intlDateFromDay)
-                ->append($intlDateFrom)
+                ->append($formattedStartDayOfWeek)
+                ->append($formattedStartDate)
                 ->toString();
         }
 
         return (new PlainTextSummaryBuilder($this->trans))
-            ->from($intlDateFrom)
-            ->till($intlDateTo)
+            ->from($formattedStartDate)
+            ->till($formattedEndDate)
             ->toString();
     }
 }
