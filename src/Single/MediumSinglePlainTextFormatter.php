@@ -4,6 +4,7 @@ namespace CultuurNet\CalendarSummaryV3\Single;
 
 use CultuurNet\CalendarSummaryV3\DateComparison;
 use CultuurNet\CalendarSummaryV3\DateFormatter;
+use CultuurNet\CalendarSummaryV3\PlainTextSummaryBuilder;
 use CultuurNet\CalendarSummaryV3\Translator;
 use CultuurNet\SearchV3\ValueObjects\Offer;
 use DateTimeInterface;
@@ -47,7 +48,10 @@ final class MediumSinglePlainTextFormatter implements SingleFormatterInterface
         $intlDateFrom = $this->formatter->formatAsFullDate($dateFrom);
         $intlDateDayFrom = $this->formatter->formatAsDayOfWeek($dateFrom);
 
-        return ucfirst($intlDateDayFrom . ' ' . $intlDateFrom);
+        return (new PlainTextSummaryBuilder($this->trans))
+            ->add($intlDateDayFrom)
+            ->add($intlDateFrom)
+            ->toString();
     }
 
     private function formatMoreDays(DateTimeInterface $dateFrom, DateTimeInterface $dateEnd): string
@@ -58,10 +62,9 @@ final class MediumSinglePlainTextFormatter implements SingleFormatterInterface
         $intlDateEnd = $this->formatter->formatAsFullDate($dateEnd);
         $intlDateDayEnd = $this->formatter->formatAsDayOfWeek($dateEnd);
 
-        return ucfirst(
-            $this->trans->getTranslations()->t('from') . ' ' . $intlDateDayFrom . ' '
-            . $intlDateFrom . ' ' . $this->trans->getTranslations()->t('till') . ' '
-            . $intlDateDayEnd . ' ' . $intlDateEnd
-        );
+        return (new PlainTextSummaryBuilder($this->trans))
+            ->from($intlDateDayFrom, $intlDateFrom)
+            ->till($intlDateDayEnd, $intlDateEnd)
+            ->toString();
     }
 }
