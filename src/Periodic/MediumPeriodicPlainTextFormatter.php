@@ -3,6 +3,7 @@
 namespace CultuurNet\CalendarSummaryV3\Periodic;
 
 use CultuurNet\CalendarSummaryV3\DateFormatter;
+use CultuurNet\CalendarSummaryV3\PlainTextSummaryBuilder;
 use CultuurNet\CalendarSummaryV3\Translator;
 use CultuurNet\SearchV3\ValueObjects\Offer;
 
@@ -36,10 +37,15 @@ final class MediumPeriodicPlainTextFormatter implements PeriodicFormatterInterfa
         $intlDateTo = $this->formatter->formatAsFullDate($dateTo);
 
         if ($intlDateFrom == $intlDateTo) {
-            return ucfirst($intlDateFromDay . ' ' . $intlDateFrom);
+            return (new PlainTextSummaryBuilder($this->trans))
+                ->append($intlDateFromDay)
+                ->append($intlDateFrom)
+                ->toString();
         }
 
-        return ucfirst($this->trans->getTranslations()->t('from')) . ' '
-            . $intlDateFrom . ' ' . $this->trans->getTranslations()->t('till') . ' '. $intlDateTo;
+        return (new PlainTextSummaryBuilder($this->trans))
+            ->from($intlDateFrom)
+            ->till($intlDateTo)
+            ->toString();
     }
 }
