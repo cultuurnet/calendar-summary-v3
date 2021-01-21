@@ -34,13 +34,6 @@ final class PlainTextSummaryBuilder
         $this->uppercaseNextFirstLineCharacter = true;
     }
 
-    public function addTranslation(string $translationKey): self
-    {
-        $c = clone $this;
-        $c->workingLine[] = $this->translator->getTranslations()->t($translationKey);
-        return $c;
-    }
-
     public function openAt(string ...$text): self
     {
         return $this->addTranslation('open')->addMultiple($text, ', ');
@@ -114,6 +107,13 @@ final class PlainTextSummaryBuilder
     public function __toString(): string
     {
         return $this->toString();
+    }
+
+    private function addTranslation(string $translationKey): self
+    {
+        $c = clone $this;
+        $c->workingLine[] = $this->translator->getTranslations()->t($translationKey);
+        return $c;
     }
 
     private function concatenateLines(): string
