@@ -31,40 +31,40 @@ final class MediumSinglePlainTextFormatter implements SingleFormatterInterface
 
     public function format(Offer $offer): string
     {
-        $dateFrom = $offer->getStartDate();
-        $dateEnd = $offer->getEndDate();
+        $startDate = $offer->getStartDate();
+        $endDate = $offer->getEndDate();
 
-        if (DateComparison::onSameDay($dateFrom, $dateEnd)) {
-            $output = $this->formatSameDay($dateFrom);
+        if (DateComparison::onSameDay($startDate, $endDate)) {
+            $output = $this->formatSameDay($startDate);
         } else {
-            $output = $this->formatMoreDays($dateFrom, $dateEnd);
+            $output = $this->formatMoreDays($startDate, $endDate);
         }
 
         return $output;
     }
 
-    private function formatSameDay(DateTimeInterface $dateFrom): string
+    private function formatSameDay(DateTimeInterface $date): string
     {
-        $intlDateFrom = $this->formatter->formatAsFullDate($dateFrom);
-        $intlDateDayFrom = $this->formatter->formatAsDayOfWeek($dateFrom);
+        $formattedDate = $this->formatter->formatAsFullDate($date);
+        $formattedWeekDay = $this->formatter->formatAsDayOfWeek($date);
 
         return (new PlainTextSummaryBuilder($this->trans))
-            ->add($intlDateDayFrom)
-            ->add($intlDateFrom)
+            ->add($formattedWeekDay)
+            ->add($formattedDate)
             ->toString();
     }
 
-    private function formatMoreDays(DateTimeInterface $dateFrom, DateTimeInterface $dateEnd): string
+    private function formatMoreDays(DateTimeInterface $startDate, DateTimeInterface $endDate): string
     {
-        $intlDateFrom = $this->formatter->formatAsFullDate($dateFrom);
-        $intlDateDayFrom = $this->formatter->formatAsDayOfWeek($dateFrom);
+        $formattedStartDate = $this->formatter->formatAsFullDate($startDate);
+        $formattedStartDayOfWeek = $this->formatter->formatAsDayOfWeek($startDate);
 
-        $intlDateEnd = $this->formatter->formatAsFullDate($dateEnd);
-        $intlDateDayEnd = $this->formatter->formatAsDayOfWeek($dateEnd);
+        $formattedEndDate = $this->formatter->formatAsFullDate($endDate);
+        $formattedEndDayOfWeek = $this->formatter->formatAsDayOfWeek($endDate);
 
         return (new PlainTextSummaryBuilder($this->trans))
-            ->from($intlDateDayFrom, $intlDateFrom)
-            ->till($intlDateDayEnd, $intlDateEnd)
+            ->from($formattedStartDayOfWeek, $formattedStartDate)
+            ->till($formattedEndDayOfWeek, $formattedEndDate)
             ->toString();
     }
 }
