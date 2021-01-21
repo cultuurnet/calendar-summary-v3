@@ -96,6 +96,7 @@ final class LargePermanentPlainTextFormatter implements PermanentFormatterInterf
                 ->startNewLine();
         }
 
+        // Combine the opening info of each day together into a single string.
         return implode('', $formattedDays);
     }
 }
