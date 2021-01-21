@@ -60,16 +60,13 @@ final class LargeSinglePlainTextFormatter implements SingleFormatterInterface
 
         if ($formattedStartTime === $formattedEndTime) {
             return $summaryBuilder
-                ->addTranslation('at')
-                ->add($formattedStartTime)
+                ->at($formattedStartTime)
                 ->toString();
         }
 
         return $summaryBuilder
-            ->addTranslation('from')
-            ->add($formattedStartTime)
-            ->addTranslation('till')
-            ->add($formattedEndTime);
+            ->from($formattedStartTime)
+            ->till($formattedEndTime);
     }
 
     private function formatMoreDays(DateTimeInterface $startDate, DateTimeInterface $endDate): string
@@ -83,15 +80,9 @@ final class LargeSinglePlainTextFormatter implements SingleFormatterInterface
         $formattedEndTime = $this->formatter->formatAsTime($endDate);
 
         return (new PlainTextSummaryBuilder($this->trans))
-            ->addTranslation('from')
-            ->add($formattedStartDayOfWeek)
-            ->add($formattedStartDate)
-            ->addTranslation('at')
-            ->add($formattedStartTime)
-            ->addTranslation('till')
-            ->add($formattedEndDayOfWeek)
-            ->add($formattedEndDate)
-            ->addTranslation('at')
-            ->add($formattedEndTime);
+            ->from($formattedStartDayOfWeek, $formattedStartDate)
+            ->at($formattedStartTime)
+            ->till($formattedEndDayOfWeek, $formattedEndDate)
+            ->at($formattedEndTime);
     }
 }

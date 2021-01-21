@@ -41,6 +41,21 @@ final class PlainTextSummaryBuilder
         return $c;
     }
 
+    public function from(string ...$text): self
+    {
+        return $this->addTranslation('from')->addMultiple($text);
+    }
+
+    public function till(string ...$text): self
+    {
+        return $this->addTranslation('till')->addMultiple($text);
+    }
+
+    public function at(string ...$text): self
+    {
+        return $this->addTranslation('at')->addMultiple($text);
+    }
+
     public function add(string $text): self
     {
         $c = clone $this;
