@@ -47,11 +47,7 @@ final class SmallSinglePlainTextFormatter implements SingleFormatterInterface
     {
         $dayNumber = $this->formatter->formatAsDayNumber($date);
         $monthName = $this->formatter->formatAsAbbreviatedMonthName($date);
-
-        return (new PlainTextSummaryBuilder($this->trans))
-            ->append($dayNumber)
-            ->append($monthName)
-            ->toString();
+        return PlainTextSummaryBuilder::singleLine($dayNumber, $monthName);
     }
 
     private function formatMoreDays(DateTimeInterface $startDate, DateTimeInterface $endDate): string

@@ -47,11 +47,7 @@ final class MediumSinglePlainTextFormatter implements SingleFormatterInterface
     {
         $formattedDate = $this->formatter->formatAsFullDate($date);
         $formattedWeekDay = $this->formatter->formatAsDayOfWeek($date);
-
-        return (new PlainTextSummaryBuilder($this->trans))
-            ->append($formattedWeekDay)
-            ->append($formattedDate)
-            ->toString();
+        return PlainTextSummaryBuilder::singleLine($formattedWeekDay, $formattedDate);
     }
 
     private function formatMoreDays(DateTimeInterface $startDate, DateTimeInterface $endDate): string

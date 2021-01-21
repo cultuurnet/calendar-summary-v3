@@ -37,10 +37,7 @@ final class MediumPeriodicPlainTextFormatter implements PeriodicFormatterInterfa
         $formattedEndDate = $this->formatter->formatAsFullDate($endDate);
 
         if ($formattedStartDate === $formattedEndDate) {
-            return (new PlainTextSummaryBuilder($this->trans))
-                ->append($formattedStartDayOfWeek)
-                ->append($formattedStartDate)
-                ->toString();
+            return PlainTextSummaryBuilder::singleLine($formattedStartDayOfWeek, $formattedStartDate);
         }
 
         return (new PlainTextSummaryBuilder($this->trans))

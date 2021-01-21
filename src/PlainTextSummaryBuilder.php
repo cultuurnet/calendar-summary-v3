@@ -107,6 +107,11 @@ final class PlainTextSummaryBuilder
         return $this->toString();
     }
 
+    public static function singleLine(string ...$text): string
+    {
+        return self::formatLine($text, true);
+    }
+
     private function appendTranslation(string $translationKey): self
     {
         $c = clone $this;
@@ -128,10 +133,13 @@ final class PlainTextSummaryBuilder
 
     private function completeLine(): void
     {
-        $completedLine = implode(' ', $this->workingLine);
-        $completedLine = $this->uppercaseNextFirstLineCharacter ? ucfirst($completedLine) : lcfirst($completedLine);
-
-        $this->lines[] = $completedLine;
+        $this->lines[] = self::formatLine($this->workingLine, $this->uppercaseNextFirstLineCharacter);
         $this->workingLine = [];
+    }
+
+    private static function formatLine(array $line, bool $uppercaseFirstCharacter): string
+    {
+        $formatted = implode(' ', $line);
+        return $uppercaseFirstCharacter ? ucfirst($formatted) : lcfirst($formatted);
     }
 }

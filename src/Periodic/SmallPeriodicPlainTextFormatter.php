@@ -62,11 +62,6 @@ final class SmallPeriodicPlainTextFormatter implements PeriodicFormatterInterfac
         $dayNumber = $this->formatter->formatAsDayNumber($date);
         $monthName = $this->formatter->formatAsAbbreviatedMonthName($date);
         $year = $this->formatter->formatAsYear($date);
-
-        return (new PlainTextSummaryBuilder($this->trans))
-            ->append($dayNumber)
-            ->append($monthName)
-            ->append($year)
-            ->toString();
+        return PlainTextSummaryBuilder::singleLine($dayNumber, $monthName, $year);
     }
 }
