@@ -86,8 +86,8 @@ final class LargePeriodicPlainTextFormatter implements PeriodicFormatterInterfac
 
                 $formattedDays[$dayName] = $formattedDays[$dayName]
                     ->and()
-                    ->from($this->getFormattedTime($openingHours->getOpens()))
-                    ->till($this->getFormattedTime($openingHours->getCloses()));
+                    ->from(OpeningHourFormatter::format($openingHours->getOpens()))
+                    ->till(OpeningHourFormatter::format($openingHours->getCloses()));
             }
         }
 
