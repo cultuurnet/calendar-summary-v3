@@ -35,7 +35,7 @@ class LargePermanentPlainTextFormatterTest extends TestCase
 
         $openingHours2 = new OpeningHours();
         $openingHours2->setDaysOfWeek(['friday']);
-        $openingHours2->setOpens('00:00');
+        $openingHours2->setOpens('00:01');
         $openingHours2->setCloses('13:00');
 
         $openingHours3 = new OpeningHours();
@@ -53,7 +53,7 @@ class LargePermanentPlainTextFormatterTest extends TestCase
             . 'Di van 9:00 tot 13:00'. PHP_EOL
             . 'Wo van 9:00 tot 13:00' . PHP_EOL
             . 'Do gesloten'. PHP_EOL
-            . 'Vr van 0:00 tot 13:00' . PHP_EOL
+            . 'Vr van 0:01 tot 13:00' . PHP_EOL
             . 'Za van 9:00 tot 19:00' . PHP_EOL
             . 'Zo van 9:00 tot 19:00' . PHP_EOL,
             $this->formatter->format($place)

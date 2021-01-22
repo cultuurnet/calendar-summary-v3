@@ -222,13 +222,13 @@ class LargePeriodicHTMLFormatterTest extends TestCase
 
         $openingHours3 = new OpeningHours();
         $openingHours3->setDaysOfWeek(['tuesday']);
-        $openingHours3->setOpens('18:00');
+        $openingHours3->setOpens('00:00');
         $openingHours3->setCloses('20:00');
 
         $openingHours4 = new OpeningHours();
         $openingHours4->setDaysOfWeek(['tuesday']);
-        $openingHours4->setOpens('21:00');
-        $openingHours4->setCloses('23:00');
+        $openingHours4->setOpens('00:01');
+        $openingHours4->setCloses('00:59');
 
         $openingHours5 = new OpeningHours();
         $openingHours5->setDaysOfWeek(['friday', 'saturday']);
@@ -270,14 +270,14 @@ class LargePeriodicHTMLFormatterTest extends TestCase
             .'<span class="cf-time">9:30</span> '
             .'<span itemprop="closes" content="13:45" class="cf-to cf-meta">tot</span> '
             .'<span class="cf-time">13:45</span> '
-            .'<span itemprop="opens" content="18:00" class="cf-from cf-meta">en van</span> '
-            .'<span class="cf-time">18:00</span> '
+            .'<span itemprop="opens" content="0:00" class="cf-from cf-meta">en van</span> '
+            .'<span class="cf-time">0:00</span> '
             .'<span itemprop="closes" content="20:00" class="cf-to cf-meta">tot</span> '
             .'<span class="cf-time">20:00</span> '
-            .'<span itemprop="opens" content="21:00" class="cf-from cf-meta">en van</span> '
-            .'<span class="cf-time">21:00</span> '
-            .'<span itemprop="closes" content="23:00" class="cf-to cf-meta">tot</span> '
-            .'<span class="cf-time">23:00</span> '
+            .'<span itemprop="opens" content="0:01" class="cf-from cf-meta">en van</span> '
+            .'<span class="cf-time">0:01</span> '
+            .'<span itemprop="closes" content="0:59" class="cf-to cf-meta">tot</span> '
+            .'<span class="cf-time">0:59</span> '
             .'</li> '
             .'<meta itemprop="openingHours" datetime="Vr 10:00-15:00"> </meta> '
             .'<li itemprop="openingHoursSpecification"> '

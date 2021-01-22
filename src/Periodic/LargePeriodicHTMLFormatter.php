@@ -3,6 +3,7 @@
 namespace CultuurNet\CalendarSummaryV3\Periodic;
 
 use CultuurNet\CalendarSummaryV3\DateFormatter;
+use CultuurNet\CalendarSummaryV3\OpeningHourFormatter;
 use CultuurNet\CalendarSummaryV3\Translator;
 use CultuurNet\SearchV3\ValueObjects\Offer;
 use CultuurNet\SearchV3\ValueObjects\OpeningHours;
@@ -47,15 +48,6 @@ final class LargePeriodicHTMLFormatter implements PeriodicFormatterInterface
     {
         $calsum = str_replace('><', '> <', $calsum);
         return str_replace('  ', ' ', $calsum);
-    }
-
-    private function getFormattedTime(string $time): string
-    {
-        $formattedShortTime = ltrim($time, '0');
-        if ($formattedShortTime == ':00') {
-            $formattedShortTime = '0:00';
-        }
-        return $formattedShortTime;
     }
 
     /**
@@ -135,10 +127,10 @@ final class LargePeriodicHTMLFormatter implements PeriodicFormatterInterface
 
         foreach ($openingHoursData as $openingHours) {
             $daysOfWeek = $openingHours->getDaysOfWeek();
-            $firstOpens = $this->getFormattedTime($this->getEarliestTime($openingHoursData, $daysOfWeek));
-            $lastCloses = $this->getFormattedTime($this->getLatestTime($openingHoursData, $daysOfWeek));
-            $opens = $this->getFormattedTime($openingHours->getOpens());
-            $closes = $this->getFormattedTime($openingHours->getCloses());
+            $firstOpens = OpeningHourFormatter::format($this->getEarliestTime($openingHoursData, $daysOfWeek));
+            $lastCloses = OpeningHourFormatter::format($this->getLatestTime($openingHoursData, $daysOfWeek));
+            $opens = OpeningHourFormatter::format($openingHours->getOpens());
+            $closes = OpeningHourFormatter::format($openingHours->getCloses());
 
             foreach ($daysOfWeek as $dayOfWeek) {
                 $daySpanShort = ucfirst(
