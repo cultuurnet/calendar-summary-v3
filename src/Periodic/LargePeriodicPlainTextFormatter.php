@@ -3,6 +3,7 @@
 namespace CultuurNet\CalendarSummaryV3\Periodic;
 
 use CultuurNet\CalendarSummaryV3\DateFormatter;
+use CultuurNet\CalendarSummaryV3\OpeningHourFormatter;
 use CultuurNet\CalendarSummaryV3\PlainTextSummaryBuilder;
 use CultuurNet\CalendarSummaryV3\Translator;
 use CultuurNet\SearchV3\ValueObjects\Offer;
@@ -51,13 +52,13 @@ final class LargePeriodicPlainTextFormatter implements PeriodicFormatterInterfac
         return $summary->toString();
     }
 
-    private function getFormattedTime(string $time): string
+    private function generateDates(DateTime $dateFrom, DateTime $dateTo): string
     {
-        $formattedShortTime = ltrim($time, '0');
-        if ($formattedShortTime == ':00') {
-            $formattedShortTime = '0:00';
-        }
-        return $formattedShortTime;
+        $intlDateFrom = $this->formatter->formatAsFullDate($dateFrom);
+        $intlDateTo = $this->formatter->formatAsFullDate($dateTo);
+
+        return ucfirst($this->trans->getTranslations()->t('from')) . ' '
+            . $intlDateFrom . ' ' . $this->trans->getTranslations()->t('till') . ' ' . $intlDateTo;
     }
 
     /**
@@ -77,8 +78,8 @@ final class LargePeriodicPlainTextFormatter implements PeriodicFormatterInterfac
                     $formattedDays[$dayName] = PlainTextSummaryBuilder::start($this->trans)
                         ->lowercaseNextFirstCharacter()
                         ->append($translatedDay)
-                        ->from($this->getFormattedTime($openingHours->getOpens()))
-                        ->till($this->getFormattedTime($openingHours->getCloses()));
+                        ->from(OpeningHourFormatter::format($openingHours->getOpens()))
+                        ->till(OpeningHourFormatter::format($openingHours->getCloses()));
 
                     continue;
                 }

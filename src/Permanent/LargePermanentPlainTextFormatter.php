@@ -3,6 +3,7 @@
 namespace CultuurNet\CalendarSummaryV3\Permanent;
 
 use CultuurNet\CalendarSummaryV3\DateFormatter;
+use CultuurNet\CalendarSummaryV3\OpeningHourFormatter;
 use CultuurNet\CalendarSummaryV3\PlainTextSummaryBuilder;
 use CultuurNet\CalendarSummaryV3\Translator;
 use CultuurNet\SearchV3\ValueObjects\Offer;
@@ -41,15 +42,6 @@ final class LargePermanentPlainTextFormatter implements PermanentFormatterInterf
             ->toString();
     }
 
-    private function getFormattedTime(string $time): string
-    {
-        $formattedShortTime = ltrim($time, '0');
-        if ($formattedShortTime === ':00') {
-            $formattedShortTime = '0:00';
-        }
-        return $formattedShortTime;
-    }
-
     /**
      * @param OpeningHours[] $openingHoursData
      * @return string
@@ -82,8 +74,8 @@ final class LargePermanentPlainTextFormatter implements PermanentFormatterInterf
                 $daysWithOpeningHours[] = $dayName;
 
                 $formattedDays[$dayName] = $formattedDays[$dayName]
-                    ->from($this->getFormattedTime($openingHours->getOpens()))
-                    ->till($this->getFormattedTime($openingHours->getCloses()))
+                    ->from(OpeningHourFormatter::format($openingHours->getOpens()))
+                    ->till(OpeningHourFormatter::format($openingHours->getCloses()))
                     ->startNewLine()
                     ->lowercaseNextFirstCharacter();
             }
