@@ -24,6 +24,11 @@ final class CalendarPlainTextFormatter implements CalendarFormatterInterface
      */
     private $mapping;
 
+    /**
+     * @var array
+     */
+    private $middleware;
+
     public function __construct($langCode = 'nl_BE', $hidePastDates = false, $timeZone = 'Europe/Brussels')
     {
         date_default_timezone_set($timeZone);
@@ -58,6 +63,8 @@ final class CalendarPlainTextFormatter implements CalendarFormatterInterface
                     'xs' => new MediumPermanentPlainTextFormatter($langCode)
                 ],
         ];
+
+        $this->middleware = new NonAvailablePlaceFormatter($langCode);
     }
 
     /**
@@ -73,6 +80,11 @@ final class CalendarPlainTextFormatter implements CalendarFormatterInterface
             throw new FormatterException($format . ' format not supported for ' . $calenderType);
         }
 
-        return $formatter->format($offer);
+        return $this->middleware->format(
+            $offer,
+            function($offer) use ($formatter) {
+                return $formatter->format($offer);
+            }
+        );
     }
 }
