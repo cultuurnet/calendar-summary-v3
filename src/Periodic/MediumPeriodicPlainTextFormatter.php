@@ -3,6 +3,7 @@
 namespace CultuurNet\CalendarSummaryV3\Periodic;
 
 use CultuurNet\CalendarSummaryV3\DateFormatter;
+use CultuurNet\CalendarSummaryV3\PlainTextSummaryBuilder;
 use CultuurNet\CalendarSummaryV3\Translator;
 use CultuurNet\SearchV3\ValueObjects\Offer;
 
@@ -28,18 +29,20 @@ final class MediumPeriodicPlainTextFormatter implements PeriodicFormatterInterfa
 
     public function format(Offer $offer): string
     {
-        $dateFrom = $offer->getStartDate()->setTimezone(new \DateTimeZone(date_default_timezone_get()));
-        $intlDateFrom = $this->formatter->formatAsFullDate($dateFrom);
-        $intlDateFromDay = $this->formatter->formatAsDayOfWeek($dateFrom);
+        $startDate = $offer->getStartDate()->setTimezone(new \DateTimeZone(date_default_timezone_get()));
+        $formattedStartDate = $this->formatter->formatAsFullDate($startDate);
+        $formattedStartDayOfWeek = $this->formatter->formatAsDayOfWeek($startDate);
 
-        $dateTo = $offer->getEndDate()->setTimezone(new \DateTimeZone(date_default_timezone_get()));
-        $intlDateTo = $this->formatter->formatAsFullDate($dateTo);
+        $endDate = $offer->getEndDate()->setTimezone(new \DateTimeZone(date_default_timezone_get()));
+        $formattedEndDate = $this->formatter->formatAsFullDate($endDate);
 
-        if ($intlDateFrom == $intlDateTo) {
-            return ucfirst($intlDateFromDay . ' ' . $intlDateFrom);
+        if ($formattedStartDate === $formattedEndDate) {
+            return PlainTextSummaryBuilder::singleLine($formattedStartDayOfWeek, $formattedStartDate);
         }
 
-        return ucfirst($this->trans->getTranslations()->t('from')) . ' '
-            . $intlDateFrom . ' ' . $this->trans->getTranslations()->t('till') . ' '. $intlDateTo;
+        return PlainTextSummaryBuilder::start($this->trans)
+            ->from($formattedStartDate)
+            ->till($formattedEndDate)
+            ->toString();
     }
 }

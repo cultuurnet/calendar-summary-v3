@@ -4,6 +4,7 @@ namespace CultuurNet\CalendarSummaryV3\Single;
 
 use CultuurNet\CalendarSummaryV3\DateComparison;
 use CultuurNet\CalendarSummaryV3\DateFormatter;
+use CultuurNet\CalendarSummaryV3\PlainTextSummaryBuilder;
 use CultuurNet\CalendarSummaryV3\Translator;
 use CultuurNet\SearchV3\ValueObjects\Offer;
 use DateTimeInterface;
@@ -30,38 +31,36 @@ final class MediumSinglePlainTextFormatter implements SingleFormatterInterface
 
     public function format(Offer $offer): string
     {
-        $dateFrom = $offer->getStartDate();
-        $dateEnd = $offer->getEndDate();
+        $startDate = $offer->getStartDate();
+        $endDate = $offer->getEndDate();
 
-        if (DateComparison::onSameDay($dateFrom, $dateEnd)) {
-            $output = $this->formatSameDay($dateFrom);
+        if (DateComparison::onSameDay($startDate, $endDate)) {
+            $output = $this->formatSameDay($startDate);
         } else {
-            $output = $this->formatMoreDays($dateFrom, $dateEnd);
+            $output = $this->formatMoreDays($startDate, $endDate);
         }
 
         return $output;
     }
 
-    private function formatSameDay(DateTimeInterface $dateFrom): string
+    private function formatSameDay(DateTimeInterface $date): string
     {
-        $intlDateFrom = $this->formatter->formatAsFullDate($dateFrom);
-        $intlDateDayFrom = $this->formatter->formatAsDayOfWeek($dateFrom);
-
-        return ucfirst($intlDateDayFrom . ' ' . $intlDateFrom);
+        $formattedDate = $this->formatter->formatAsFullDate($date);
+        $formattedWeekDay = $this->formatter->formatAsDayOfWeek($date);
+        return PlainTextSummaryBuilder::singleLine($formattedWeekDay, $formattedDate);
     }
 
-    private function formatMoreDays(DateTimeInterface $dateFrom, DateTimeInterface $dateEnd): string
+    private function formatMoreDays(DateTimeInterface $startDate, DateTimeInterface $endDate): string
     {
-        $intlDateFrom = $this->formatter->formatAsFullDate($dateFrom);
-        $intlDateDayFrom = $this->formatter->formatAsDayOfWeek($dateFrom);
+        $formattedStartDate = $this->formatter->formatAsFullDate($startDate);
+        $formattedStartDayOfWeek = $this->formatter->formatAsDayOfWeek($startDate);
 
-        $intlDateEnd = $this->formatter->formatAsFullDate($dateEnd);
-        $intlDateDayEnd = $this->formatter->formatAsDayOfWeek($dateEnd);
+        $formattedEndDate = $this->formatter->formatAsFullDate($endDate);
+        $formattedEndDayOfWeek = $this->formatter->formatAsDayOfWeek($endDate);
 
-        return ucfirst(
-            $this->trans->getTranslations()->t('from') . ' ' . $intlDateDayFrom . ' '
-            . $intlDateFrom . ' ' . $this->trans->getTranslations()->t('till') . ' '
-            . $intlDateDayEnd . ' ' . $intlDateEnd
-        );
+        return PlainTextSummaryBuilder::start($this->trans)
+            ->from($formattedStartDayOfWeek, $formattedStartDate)
+            ->till($formattedEndDayOfWeek, $formattedEndDate)
+            ->toString();
     }
 }

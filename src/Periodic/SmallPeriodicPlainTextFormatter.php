@@ -4,6 +4,7 @@ namespace CultuurNet\CalendarSummaryV3\Periodic;
 
 use CultuurNet\CalendarSummaryV3\DateComparison;
 use CultuurNet\CalendarSummaryV3\DateFormatter;
+use CultuurNet\CalendarSummaryV3\PlainTextSummaryBuilder;
 use CultuurNet\CalendarSummaryV3\Translator;
 use CultuurNet\SearchV3\ValueObjects\Offer;
 use \DateTime;
@@ -44,20 +45,23 @@ final class SmallPeriodicPlainTextFormatter implements PeriodicFormatterInterfac
 
     private function formatStarted(DateTimeInterface $endDate): string
     {
-        return ucfirst($this->trans->getTranslations()->t('till')) . ' ' . $this->formatDate($endDate);
+        return PlainTextSummaryBuilder::start($this->trans)
+            ->till($this->formatDate($endDate))
+            ->toString();
     }
 
     private function formatNotStarted(DateTimeInterface $startDate): string
     {
-        return ucfirst($this->trans->getTranslations()->t('from_period')) . ' ' . $this->formatDate($startDate);
+        return PlainTextSummaryBuilder::start($this->trans)
+            ->fromPeriod($this->formatDate($startDate))
+            ->toString();
     }
 
     private function formatDate(DateTimeInterface $date): string
     {
-        $dateFromDay = $this->formatter->formatAsDayNumber($date);
-        $dateFromMonth = $this->formatter->formatAsAbbreviatedMonthName($date);
-        $dateFromYear = $this->formatter->formatAsYear($date);
-
-        return $dateFromDay . ' ' . $dateFromMonth . ' ' . $dateFromYear;
+        $dayNumber = $this->formatter->formatAsDayNumber($date);
+        $monthName = $this->formatter->formatAsAbbreviatedMonthName($date);
+        $year = $this->formatter->formatAsYear($date);
+        return PlainTextSummaryBuilder::singleLine($dayNumber, $monthName, $year);
     }
 }

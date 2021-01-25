@@ -4,6 +4,7 @@ namespace CultuurNet\CalendarSummaryV3\Periodic;
 
 use CultuurNet\CalendarSummaryV3\DateFormatter;
 use CultuurNet\CalendarSummaryV3\OpeningHourFormatter;
+use CultuurNet\CalendarSummaryV3\PlainTextSummaryBuilder;
 use CultuurNet\CalendarSummaryV3\Translator;
 use CultuurNet\SearchV3\ValueObjects\Offer;
 use CultuurNet\SearchV3\ValueObjects\OpeningHours;
@@ -32,16 +33,23 @@ final class LargePeriodicPlainTextFormatter implements PeriodicFormatterInterfac
 
     public function format(Offer $offer): string
     {
-        $output = $this->generateDates(
-            $offer->getStartDate()->setTimezone(new \DateTimeZone(date_default_timezone_get())),
-            $offer->getEndDate()->setTimezone(new \DateTimeZone(date_default_timezone_get()))
-        );
+        $startDate = $offer->getStartDate()->setTimezone(new \DateTimeZone(date_default_timezone_get()));
+        $endDate = $offer->getEndDate()->setTimezone(new \DateTimeZone(date_default_timezone_get()));
+
+        $formattedStartDate = $this->formatter->formatAsFullDate($startDate);
+        $formattedEndDate = $this->formatter->formatAsFullDate($endDate);
+
+        $summary = PlainTextSummaryBuilder::start($this->trans)
+            ->from($formattedStartDate)
+            ->till($formattedEndDate);
 
         if ($offer->getOpeningHours()) {
-            $output .= PHP_EOL . $this->generateWeekScheme($offer->getOpeningHours());
+            $summary = $summary
+                ->startNewLine()
+                ->append($this->generateWeekScheme($offer->getOpeningHours()));
         }
 
-        return $output;
+        return $summary->toString();
     }
 
     private function generateDates(DateTime $dateFrom, DateTime $dateTo): string
@@ -59,35 +67,30 @@ final class LargePeriodicPlainTextFormatter implements PeriodicFormatterInterfac
      */
     private function generateWeekScheme(array $openingHoursData): string
     {
-        $outputWeek = '(';
-
-        // Create an array with formatted days.
+        /** @var PlainTextSummaryBuilder[] $formattedDays */
         $formattedDays = [];
-        foreach ($openingHoursData as $openingHours) {
-            foreach ($openingHours->getDaysOfWeek() as $dayOfWeek) {
-                $translatedDay = $this->formatter->formatAsDayOfWeek(new DateTimeImmutable($dayOfWeek));
 
-                if (!isset($formattedDays[$dayOfWeek])) {
-                    $formattedDays[$dayOfWeek] = $translatedDay
-                        . ' ' . $this->trans->getTranslations()->t('from') . ' '
-                        . OpeningHourFormatter::format($openingHours->getOpens())
-                        . ' ' . $this->trans->getTranslations()->t('till') . ' '
-                        . OpeningHourFormatter::format($openingHours->getCloses());
-                } else {
-                    $formattedDays[$dayOfWeek] .= ' ' . $this->trans->getTranslations()->t('and') . ' '
-                        . $this->trans->getTranslations()->t('from') . ' '
-                        . OpeningHourFormatter::format($openingHours->getOpens())
-                        . ' ' . $this->trans->getTranslations()->t('till') . ' '
-                        . OpeningHourFormatter::format($openingHours->getCloses());
+        foreach ($openingHoursData as $openingHours) {
+            foreach ($openingHours->getDaysOfWeek() as $dayName) {
+                if (!isset($formattedDays[$dayName])) {
+                    $translatedDay = $this->formatter->formatAsDayOfWeek(new DateTimeImmutable($dayName));
+
+                    $formattedDays[$dayName] = PlainTextSummaryBuilder::start($this->trans)
+                        ->lowercaseNextFirstCharacter()
+                        ->append($translatedDay)
+                        ->from(OpeningHourFormatter::format($openingHours->getOpens()))
+                        ->till(OpeningHourFormatter::format($openingHours->getCloses()));
+
+                    continue;
                 }
+
+                $formattedDays[$dayName] = $formattedDays[$dayName]
+                    ->and()
+                    ->from(OpeningHourFormatter::format($openingHours->getOpens()))
+                    ->till(OpeningHourFormatter::format($openingHours->getCloses()));
             }
         }
 
-        // Render the rest of the week scheme output.
-        foreach ($formattedDays as $formattedDay) {
-            $outputWeek .= $formattedDay . ', ';
-        }
-        $outputWeek = rtrim($outputWeek, ', ' . PHP_EOL);
-        return $outputWeek . ')';
+        return '(' . implode(', ', $formattedDays) . ')';
     }
 }

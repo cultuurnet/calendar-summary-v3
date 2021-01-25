@@ -27,16 +27,16 @@ final class MediumMultiplePlainTextFormatter implements MultipleFormatterInterfa
     public function format(Event $event): string
     {
         $subEvents = $event->getSubEvents();
-        $output = [];
+        $subEventSummaries = [];
 
         foreach ($subEvents as $key => $subEvent) {
             $formatter = new MediumSinglePlainTextFormatter($this->langCode);
 
             if (!$this->hidePast || DateComparison::inTheFuture($subEvent->getEndDate())) {
-                $output[] = $formatter->format($subEvent);
+                $subEventSummaries[] = $formatter->format($subEvent);
             }
         }
 
-        return implode(PHP_EOL, $output);
+        return implode(PHP_EOL, $subEventSummaries);
     }
 }

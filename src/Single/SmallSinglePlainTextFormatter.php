@@ -4,6 +4,7 @@ namespace CultuurNet\CalendarSummaryV3\Single;
 
 use CultuurNet\CalendarSummaryV3\DateComparison;
 use CultuurNet\CalendarSummaryV3\DateFormatter;
+use CultuurNet\CalendarSummaryV3\PlainTextSummaryBuilder;
 use CultuurNet\CalendarSummaryV3\Translator;
 use CultuurNet\SearchV3\ValueObjects\Offer;
 use DateTimeInterface;
@@ -30,38 +31,36 @@ final class SmallSinglePlainTextFormatter implements SingleFormatterInterface
 
     public function format(Offer $offer): string
     {
-        $dateFrom = $offer->getStartDate();
-        $dateEnd = $offer->getEndDate();
+        $startDate = $offer->getStartDate();
+        $endDate = $offer->getEndDate();
 
-        if (DateComparison::onSameDay($dateFrom, $dateEnd)) {
-            $output = $this->formatSameDay($dateFrom);
+        if (DateComparison::onSameDay($startDate, $endDate)) {
+            $output = $this->formatSameDay($startDate);
         } else {
-            $output = $this->formatMoreDays($dateFrom, $dateEnd);
+            $output = $this->formatMoreDays($startDate, $endDate);
         }
 
         return $output;
     }
 
-    private function formatSameDay(DateTimeInterface $dateFrom): string
+    private function formatSameDay(DateTimeInterface $date): string
     {
-        $dateFromDay = $this->formatter->formatAsDayNumber($dateFrom);
-        $dateFromMonth = $this->formatter->formatAsAbbreviatedMonthName($dateFrom);
-
-        return ucfirst($dateFromDay . ' ' . $dateFromMonth);
+        $dayNumber = $this->formatter->formatAsDayNumber($date);
+        $monthName = $this->formatter->formatAsAbbreviatedMonthName($date);
+        return PlainTextSummaryBuilder::singleLine($dayNumber, $monthName);
     }
 
-    private function formatMoreDays(DateTimeInterface $dateFrom, DateTimeInterface $dateEnd): string
+    private function formatMoreDays(DateTimeInterface $startDate, DateTimeInterface $endDate): string
     {
-        $dateFromDay = $this->formatter->formatAsDayNumber($dateFrom);
-        $dateFromMonth = $this->formatter->formatAsAbbreviatedMonthName($dateFrom);
+        $startDayNumber = $this->formatter->formatAsDayNumber($startDate);
+        $startMonthName = $this->formatter->formatAsAbbreviatedMonthName($startDate);
 
-        $dateEndDay = $this->formatter->formatAsDayNumber($dateEnd);
-        $dateEndMonth = $this->formatter->formatAsAbbreviatedMonthName($dateEnd);
+        $endDayNumber = $this->formatter->formatAsDayNumber($endDate);
+        $endMonthName = $this->formatter->formatAsAbbreviatedMonthName($endDate);
 
-        return ucfirst(
-            $this->trans->getTranslations()->t('from') . ' ' . $dateFromDay . ' '
-            . $dateFromMonth . ' ' . $this->trans->getTranslations()->t('till') . ' '
-            . $dateEndDay . ' ' . $dateEndMonth
-        );
+        return PlainTextSummaryBuilder::start($this->trans)
+            ->from($startDayNumber, $startMonthName)
+            ->till($endDayNumber, $endMonthName)
+            ->toString();
     }
 }
