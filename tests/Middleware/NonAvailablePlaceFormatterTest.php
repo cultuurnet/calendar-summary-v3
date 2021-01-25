@@ -25,7 +25,7 @@ class NonAvailablePlaceFormatterTest extends TestCase
             }
         );
 
-        $this->assertEquals('permanent gesloten', $result);
+        $this->assertEquals('Permanent gesloten', $result);
     }
 
     public function testWillInterceptTemporarilyUnavailablePlace(): void
@@ -41,7 +41,7 @@ class NonAvailablePlaceFormatterTest extends TestCase
             }
         );
 
-        $this->assertEquals('tijdelijk gesloten', $result);
+        $this->assertEquals('Tijdelijk gesloten', $result);
     }
 
     public function testWillIgnoreAvailablePlaces(): void
