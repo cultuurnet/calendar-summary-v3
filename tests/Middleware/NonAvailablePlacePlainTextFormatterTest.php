@@ -9,14 +9,14 @@ use CultuurNet\SearchV3\ValueObjects\Place;
 use CultuurNet\SearchV3\ValueObjects\Status;
 use PHPUnit\Framework\TestCase;
 
-class NonAvailablePlaceFormatterTest extends TestCase
+class NonAvailablePlacePlainTextFormatterTest extends TestCase
 {
     public function testWillInterceptUnavailablePlace(): void
     {
         $place = new Place();
         $place->setStatus(new Status('Unavailable'));
 
-        $formatter = new NonAvailablePlaceFormatter('nl');
+        $formatter = new NonAvailablePlacePlainTextFormatter('nl');
         $result = $formatter->format(
             $place,
             function () {
@@ -32,7 +32,7 @@ class NonAvailablePlaceFormatterTest extends TestCase
         $place = new Place();
         $place->setStatus(new Status('TemporarilyUnavailable'));
 
-        $formatter = new NonAvailablePlaceFormatter('nl');
+        $formatter = new NonAvailablePlacePlainTextFormatter('nl');
         $result = $formatter->format(
             $place,
             function () {
@@ -48,7 +48,7 @@ class NonAvailablePlaceFormatterTest extends TestCase
         $place = new Place();
         $place->setStatus(new Status('Available'));
 
-        $formatter = new NonAvailablePlaceFormatter('nl');
+        $formatter = new NonAvailablePlacePlainTextFormatter('nl');
         $result = $formatter->format(
             $place,
             function () {
@@ -64,7 +64,7 @@ class NonAvailablePlaceFormatterTest extends TestCase
         $event = new Event();
         $event->setStatus(new Status('Unavailable'));
 
-        $formatter = new NonAvailablePlaceFormatter('nl');
+        $formatter = new NonAvailablePlacePlainTextFormatter('nl');
         $result = $formatter->format(
             $event,
             function () {
@@ -80,7 +80,7 @@ class NonAvailablePlaceFormatterTest extends TestCase
         $event = new Event();
         $event->setStatus(new Status('TemporarilyUnavailable'));
 
-        $formatter = new NonAvailablePlaceFormatter('nl');
+        $formatter = new NonAvailablePlacePlainTextFormatter('nl');
         $result = $formatter->format(
             $event,
             function () {
@@ -96,7 +96,7 @@ class NonAvailablePlaceFormatterTest extends TestCase
         $event = new Event();
         $event->setStatus(new Status('Unavailable'));
 
-        $formatter = new NonAvailablePlaceFormatter('nl');
+        $formatter = new NonAvailablePlacePlainTextFormatter('nl');
         $result = $formatter->format(
             $event,
             function () {

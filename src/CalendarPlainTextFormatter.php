@@ -2,7 +2,7 @@
 
 namespace CultuurNet\CalendarSummaryV3;
 
-use CultuurNet\CalendarSummaryV3\Middleware\NonAvailablePlaceFormatter;
+use CultuurNet\CalendarSummaryV3\Middleware\NonAvailablePlacePlainTextFormatter;
 use CultuurNet\CalendarSummaryV3\Multiple\ExtraSmallMultiplePlainTextFormatter;
 use CultuurNet\CalendarSummaryV3\Multiple\SmallMultiplePlainTextFormatter;
 use CultuurNet\CalendarSummaryV3\Permanent\MediumPermanentPlainTextFormatter;
@@ -65,7 +65,7 @@ final class CalendarPlainTextFormatter implements CalendarFormatterInterface
                 ],
         ];
 
-        $this->middleware = new NonAvailablePlaceFormatter($langCode);
+        $this->middleware = new NonAvailablePlacePlainTextFormatter($langCode);
     }
 
     /**
