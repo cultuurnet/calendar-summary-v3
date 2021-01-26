@@ -13,14 +13,16 @@ use PHPUnit\Framework\TestCase;
 class NonAvailablePlaceHTMLFormatterTest extends TestCase
 {
     /**
-     * @var Translator
+     * @var NonAvailablePlaceHTMLFormatter
      */
-    private $translator;
+    private $formatter;
 
     protected function setUp(): void
     {
-        $this->translator = new Translator();
-        $this->translator->setLanguage('nl');
+        $translator = new Translator();
+        $translator->setLanguage('nl');
+
+        $this->formatter = new NonAvailablePlaceHTMLFormatter($translator);
     }
 
     public function testWillInterceptUnavailablePlace(): void
@@ -28,8 +30,7 @@ class NonAvailablePlaceHTMLFormatterTest extends TestCase
         $place = new Place();
         $place->setStatus(new Status('Unavailable'));
 
-        $formatter = new NonAvailablePlaceHTMLFormatter($this->translator);
-        $result = $formatter->format(
+        $result = $this->formatter->format(
             $place,
             function () {
                 return 'foo';
@@ -44,8 +45,7 @@ class NonAvailablePlaceHTMLFormatterTest extends TestCase
         $place = new Place();
         $place->setStatus(new Status('TemporarilyUnavailable'));
 
-        $formatter = new NonAvailablePlaceHTMLFormatter($this->translator);
-        $result = $formatter->format(
+        $result = $this->formatter->format(
             $place,
             function () {
                 return 'foo';
@@ -60,8 +60,7 @@ class NonAvailablePlaceHTMLFormatterTest extends TestCase
         $place = new Place();
         $place->setStatus(new Status('Available'));
 
-        $formatter = new NonAvailablePlaceHTMLFormatter($this->translator);
-        $result = $formatter->format(
+        $result = $this->formatter->format(
             $place,
             function () {
                 return 'foo';
@@ -76,8 +75,7 @@ class NonAvailablePlaceHTMLFormatterTest extends TestCase
         $event = new Event();
         $event->setStatus(new Status('Unavailable'));
 
-        $formatter = new NonAvailablePlaceHTMLFormatter($this->translator);
-        $result = $formatter->format(
+        $result = $this->formatter->format(
             $event,
             function () {
                 return 'foo';
@@ -92,8 +90,7 @@ class NonAvailablePlaceHTMLFormatterTest extends TestCase
         $event = new Event();
         $event->setStatus(new Status('TemporarilyUnavailable'));
 
-        $formatter = new NonAvailablePlaceHTMLFormatter($this->translator);
-        $result = $formatter->format(
+        $result = $this->formatter->format(
             $event,
             function () {
                 return 'foo';
@@ -108,8 +105,7 @@ class NonAvailablePlaceHTMLFormatterTest extends TestCase
         $event = new Event();
         $event->setStatus(new Status('Unavailable'));
 
-        $formatter = new NonAvailablePlaceHTMLFormatter($this->translator);
-        $result = $formatter->format(
+        $result = $this->formatter->format(
             $event,
             function () {
                 return 'foo';
