@@ -2,6 +2,8 @@
 
 namespace CultuurNet\CalendarSummaryV3;
 
+use CultuurNet\CalendarSummaryV3\Middleware\FormatterMiddleware;
+use CultuurNet\CalendarSummaryV3\Middleware\NonAvailablePlacePlainTextFormatter;
 use CultuurNet\CalendarSummaryV3\Multiple\ExtraSmallMultiplePlainTextFormatter;
 use CultuurNet\CalendarSummaryV3\Multiple\SmallMultiplePlainTextFormatter;
 use CultuurNet\CalendarSummaryV3\Permanent\MediumPermanentPlainTextFormatter;
@@ -23,6 +25,11 @@ final class CalendarPlainTextFormatter implements CalendarFormatterInterface
      * @var array[]
      */
     private $mapping;
+
+    /**
+     * @var FormatterMiddleware
+     */
+    private $middleware;
 
     public function __construct($langCode = 'nl_BE', $hidePastDates = false, $timeZone = 'Europe/Brussels')
     {
@@ -58,6 +65,8 @@ final class CalendarPlainTextFormatter implements CalendarFormatterInterface
                     'xs' => new MediumPermanentPlainTextFormatter($langCode)
                 ],
         ];
+
+        $this->middleware = new NonAvailablePlacePlainTextFormatter($langCode);
     }
 
     /**
@@ -73,6 +82,11 @@ final class CalendarPlainTextFormatter implements CalendarFormatterInterface
             throw new FormatterException($format . ' format not supported for ' . $calenderType);
         }
 
-        return $formatter->format($offer);
+        return $this->middleware->format(
+            $offer,
+            function ($offer) use ($formatter) {
+                return $formatter->format($offer);
+            }
+        );
     }
 }
