@@ -84,7 +84,7 @@ final class CalendarPlainTextFormatter implements CalendarFormatterInterface
 
         return $this->middleware->format(
             $offer,
-            function($offer) use ($formatter) {
+            function ($offer) use ($formatter) {
                 return $formatter->format($offer);
             }
         );
