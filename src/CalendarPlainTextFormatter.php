@@ -2,6 +2,7 @@
 
 namespace CultuurNet\CalendarSummaryV3;
 
+use CultuurNet\CalendarSummaryV3\Middleware\NonAvailablePlaceFormatter;
 use CultuurNet\CalendarSummaryV3\Multiple\ExtraSmallMultiplePlainTextFormatter;
 use CultuurNet\CalendarSummaryV3\Multiple\SmallMultiplePlainTextFormatter;
 use CultuurNet\CalendarSummaryV3\Permanent\MediumPermanentPlainTextFormatter;

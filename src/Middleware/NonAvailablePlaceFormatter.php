@@ -2,9 +2,10 @@
 
 declare(strict_types=1);
 
-namespace CultuurNet\CalendarSummaryV3;
+namespace CultuurNet\CalendarSummaryV3\Middleware;
 
 use Closure;
+use CultuurNet\CalendarSummaryV3\Translator;
 use CultuurNet\SearchV3\ValueObjects\Offer;
 use CultuurNet\SearchV3\ValueObjects\Place;
 
