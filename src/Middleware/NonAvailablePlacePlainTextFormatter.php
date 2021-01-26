@@ -9,7 +9,7 @@ use CultuurNet\CalendarSummaryV3\Translator;
 use CultuurNet\SearchV3\ValueObjects\Offer;
 use CultuurNet\SearchV3\ValueObjects\Place;
 
-class NonAvailablePlacePlainTextFormatter
+class NonAvailablePlacePlainTextFormatter implements FormatterMiddleware
 {
     /**
      * @var Translator
