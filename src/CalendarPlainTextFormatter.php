@@ -2,6 +2,7 @@
 
 namespace CultuurNet\CalendarSummaryV3;
 
+use CultuurNet\CalendarSummaryV3\Middleware\FormatterMiddleware;
 use CultuurNet\CalendarSummaryV3\Middleware\NonAvailablePlacePlainTextFormatter;
 use CultuurNet\CalendarSummaryV3\Multiple\ExtraSmallMultiplePlainTextFormatter;
 use CultuurNet\CalendarSummaryV3\Multiple\SmallMultiplePlainTextFormatter;
@@ -26,7 +27,7 @@ final class CalendarPlainTextFormatter implements CalendarFormatterInterface
     private $mapping;
 
     /**
-     * @var array
+     * @var FormatterMiddleware
      */
     private $middleware;
 
