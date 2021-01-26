@@ -14,27 +14,27 @@ class NonAvailablePlaceHTMLFormatter implements FormatterMiddleware
     /**
      * @var Translator
      */
-    private $trans;
+    private $translator;
 
     public function __construct(
-        string $langCode
+        Translator $translator
     ) {
-        $this->trans = new Translator();
-        $this->trans->setLanguage($langCode);
+        $this->translator = $translator;
     }
+
 
     public function format(Offer $offer, Closure $next): string
     {
         if ($offer instanceof Place) {
             if ($offer->getStatus()->getType() === 'Unavailable') {
                 return $this->wrapInTag(
-                    $this->trans->getTranslations()->t('permanently_closed')
+                    $this->translator->getTranslations()->t('permanently_closed')
                 );
             }
 
             if ($offer->getStatus()->getType() === 'TemporarilyUnavailable') {
                 return $this->wrapInTag(
-                    $this->trans->getTranslations()->t('temporarily_closed')
+                    $this->translator->getTranslations()->t('temporarily_closed')
                 );
             }
         }

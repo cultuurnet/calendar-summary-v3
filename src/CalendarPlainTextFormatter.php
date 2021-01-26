@@ -35,6 +35,9 @@ final class CalendarPlainTextFormatter implements CalendarFormatterInterface
     {
         date_default_timezone_set($timeZone);
 
+        $translator = new Translator();
+        $translator->setLanguage($langCode);
+
         $this->mapping = [
             Offer::CALENDAR_TYPE_SINGLE =>
                 [
@@ -66,7 +69,7 @@ final class CalendarPlainTextFormatter implements CalendarFormatterInterface
                 ],
         ];
 
-        $this->middleware = new NonAvailablePlacePlainTextFormatter($langCode);
+        $this->middleware = new NonAvailablePlacePlainTextFormatter($translator);
     }
 
     /**
