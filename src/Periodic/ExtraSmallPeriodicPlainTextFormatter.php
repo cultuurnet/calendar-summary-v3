@@ -20,13 +20,12 @@ final class ExtraSmallPeriodicPlainTextFormatter implements PeriodicFormatterInt
     /**
      * @var Translator
      */
-    private $trans;
+    private $translator;
 
-    public function __construct(string $langCode)
+    public function __construct(Translator $translator)
     {
-        $this->formatter = new DateFormatter($langCode);
-
-        $this->trans = new Translator($langCode);
+        $this->formatter = new DateFormatter($translator->getLocale());
+        $this->translator = $translator;
     }
 
     public function format(Offer $offer): string
@@ -44,14 +43,14 @@ final class ExtraSmallPeriodicPlainTextFormatter implements PeriodicFormatterInt
 
     private function formatStarted(DateTimeInterface $endDate): string
     {
-        return PlainTextSummaryBuilder::start($this->trans)
+        return PlainTextSummaryBuilder::start($this->translator)
             ->till($this->formatter->formatAsShortDate($endDate))
             ->toString();
     }
 
     private function formatNotStarted(DateTimeInterface $startDate): string
     {
-        return PlainTextSummaryBuilder::start($this->trans)
+        return PlainTextSummaryBuilder::start($this->translator)
             ->fromPeriod($this->formatter->formatAsShortDate($startDate))
             ->toString();
     }
