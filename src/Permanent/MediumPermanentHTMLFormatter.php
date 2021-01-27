@@ -33,7 +33,7 @@ final class MediumPermanentHTMLFormatter implements PermanentFormatterInterface
         }
 
         return '<p class="cf-openinghours">' .
-            ucfirst($this->translator->getTranslations()->t('always_open')) . '</p>';
+            ucfirst($this->translator->translate('always_open')) . '</p>';
     }
 
     /**
@@ -44,7 +44,7 @@ final class MediumPermanentHTMLFormatter implements PermanentFormatterInterface
      */
     private function generateWeekScheme(array $openingHoursData): string
     {
-        $outputWeek = '<span>' . ucfirst($this->translator->getTranslations()->t('open')) . ' '
+        $outputWeek = '<span>' . ucfirst($this->translator->translate('open')) . ' '
             . '<span class="cf-weekdays">';
         // Create an array with formatted days.
         $formattedDays = [];

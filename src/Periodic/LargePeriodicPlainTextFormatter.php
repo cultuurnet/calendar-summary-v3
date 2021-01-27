@@ -55,8 +55,8 @@ final class LargePeriodicPlainTextFormatter implements PeriodicFormatterInterfac
         $intlDateFrom = $this->formatter->formatAsFullDate($dateFrom);
         $intlDateTo = $this->formatter->formatAsFullDate($dateTo);
 
-        return ucfirst($this->translator->getTranslations()->t('from')) . ' '
-            . $intlDateFrom . ' ' . $this->translator->getTranslations()->t('till') . ' ' . $intlDateTo;
+        return ucfirst($this->translator->translate('from')) . ' '
+            . $intlDateFrom . ' ' . $this->translator->translate('till') . ' ' . $intlDateTo;
     }
 
     /**

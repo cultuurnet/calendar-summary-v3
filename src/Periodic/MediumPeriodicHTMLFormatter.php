@@ -39,9 +39,9 @@ final class MediumPeriodicHTMLFormatter implements PeriodicFormatterInterface
                 . '<span class="cf-date">' . $intlDateFrom . '</span>';
         }
 
-        return '<span class="cf-from cf-meta">' . ucfirst($this->translator->getTranslations()->t('from'))
+        return '<span class="cf-from cf-meta">' . ucfirst($this->translator->translate('from'))
             . '</span> <span class="cf-date">' . $intlDateFrom . '</span> '
-            . '<span class="cf-to cf-meta">' . $this->translator->getTranslations()->t('till')
+            . '<span class="cf-to cf-meta">' . $this->translator->translate('till')
             . '</span> <span class="cf-date">'. $intlDateTo . '</span>';
     }
 }

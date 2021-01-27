@@ -60,13 +60,13 @@ final class MediumSingleHTMLFormatter implements SingleFormatterInterface
         $intlDateEnd = $this->formatter->formatAsFullDate($dateEnd);
         $intlDateDayEnd = $this->formatter->formatAsDayOfWeek($dateEnd);
 
-        $output = '<span class="cf-from cf-meta">' . ucfirst($this->translator->getTranslations()->t('from')) . '</span>';
+        $output = '<span class="cf-from cf-meta">' . ucfirst($this->translator->translate('from')) . '</span>';
         $output .= ' ';
         $output .= '<span class="cf-weekday cf-meta">' . $intlDateDayFrom . '</span>';
         $output .= ' ';
         $output .= '<span class="cf-date">' . $intlDateFrom . '</span>';
         $output .= ' ';
-        $output .= '<span class="cf-to cf-meta">' . $this->translator->getTranslations()->t('till') . '</span>';
+        $output .= '<span class="cf-to cf-meta">' . $this->translator->translate('till') . '</span>';
         $output .= ' ';
         $output .= '<span class="cf-weekday cf-meta">' . $intlDateDayEnd . '</span>';
         $output .= ' ';

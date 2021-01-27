@@ -45,7 +45,7 @@ final class LargePermanentHTMLFormatter implements PermanentFormatterInterface
 
         return $this->formatSummary(
             '<p class="cf-openinghours">'
-            . ucfirst($this->translator->getTranslations()->t('always_open'))
+            . ucfirst($this->translator->translate('always_open'))
             . '</p>'
         );
     }
@@ -103,10 +103,10 @@ final class LargePermanentHTMLFormatter implements PermanentFormatterInterface
     private function generateFormattedTimespan(string $dayOfWeek, bool $long = false): string
     {
         if ($long) {
-            return ucfirst($this->translator->getTranslations()->t($dayOfWeek));
+            return ucfirst($this->translator->translate($dayOfWeek));
         } else {
             //return ucfirst($this->mappingShortDays[$dayOfWeek]);
-            return ucfirst($this->translator->getTranslations()->t($dayOfWeek . 'Short'));
+            return ucfirst($this->translator->translate($dayOfWeek . 'Short'));
         }
     }
 
@@ -139,18 +139,18 @@ final class LargePermanentHTMLFormatter implements PermanentFormatterInterface
                         . "<li itemprop=\"openingHoursSpecification\"> "
                         . "<span class=\"cf-days\">$daySpanLong</span> "
                         . "<span itemprop=\"opens\" content=\"$opens\" class=\"cf-from cf-meta\">"
-                        . $this->translator->getTranslations()->t('from') . "</span> "
+                        . $this->translator->translate('from') . "</span> "
                         . "<span class=\"cf-time\">$opens</span> "
                         . "<span itemprop=\"closes\" content=\"$closes\" class=\"cf-to cf-meta\">"
-                        . $this->translator->getTranslations()->t('till') . "</span> "
+                        . $this->translator->translate('till') . "</span> "
                         . "<span class=\"cf-time\">$closes</span>";
                 } else {
                     $formattedTimespans[$dayOfWeek] .=
                         "<span itemprop=\"opens\" content=\"$opens\" class=\"cf-from cf-meta\">"
-                        . $this->translator->getTranslations()->t('from') . "</span> "
+                        . $this->translator->translate('from') . "</span> "
                         . "<span class=\"cf-time\">$opens</span> "
                         . "<span itemprop=\"closes\" content=\"$closes\" class=\"cf-to cf-meta\">"
-                        . $this->translator->getTranslations()->t('till') . "</span> "
+                        . $this->translator->translate('till') . "</span> "
                         . "<span class=\"cf-time\">$closes</span>";
                 }
             }
@@ -175,7 +175,7 @@ final class LargePermanentHTMLFormatter implements PermanentFormatterInterface
                     . "<li itemprop=\"openingHoursSpecification\"> "
                     . "<span class=\"cf-days\">$closedDays[$day]</span> "
                     . "<span itemprop=\"closed\" content=\"closed\" class=\"cf-closed cf-meta\">"
-                    . $this->translator->getTranslations()->t('closed') . "</span> ";
+                    . $this->translator->translate('closed') . "</span> ";
             }
         }
 

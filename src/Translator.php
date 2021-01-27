@@ -82,6 +82,11 @@ final class Translator
         $this->translator->setLanguage($this->getLanguageCode());
     }
 
+    public function translate(string $key): string
+    {
+        return $this->getTranslations()->t($key);
+    }
+
     public function getTranslations(): Translate
     {
         return $this->translator;

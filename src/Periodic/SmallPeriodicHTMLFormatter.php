@@ -43,14 +43,14 @@ final class SmallPeriodicHTMLFormatter implements PeriodicFormatterInterface
     private function formatStarted(DateTimeInterface $endDate): string
     {
         return
-            '<span class="to meta">' . ucfirst($this->translator->getTranslations()->t('till')) . '</span> ' .
+            '<span class="to meta">' . ucfirst($this->translator->translate('till')) . '</span> ' .
             $this->formatDate($endDate);
     }
 
     private function formatNotStarted(DateTimeInterface $startDate): string
     {
         return
-            '<span class="from meta">' . ucfirst($this->translator->getTranslations()->t('from_period')) . '</span> ' .
+            '<span class="from meta">' . ucfirst($this->translator->translate('from_period')) . '</span> ' .
             $this->formatDate($startDate);
     }
 

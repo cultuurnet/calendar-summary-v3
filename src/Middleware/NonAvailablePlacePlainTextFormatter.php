@@ -26,11 +26,11 @@ class NonAvailablePlacePlainTextFormatter implements FormatterMiddleware
     {
         if ($offer instanceof Place) {
             if ($offer->getStatus()->getType() === 'Unavailable') {
-                return $this->translator->getTranslations()->t('permanently_closed');
+                return $this->translator->translate('permanently_closed');
             }
 
             if ($offer->getStatus()->getType() === 'TemporarilyUnavailable') {
-                return $this->translator->getTranslations()->t('temporarily_closed');
+                return $this->translator->translate('temporarily_closed');
             }
         }
 

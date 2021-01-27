@@ -28,13 +28,13 @@ class NonAvailablePlaceHTMLFormatter implements FormatterMiddleware
         if ($offer instanceof Place) {
             if ($offer->getStatus()->getType() === 'Unavailable') {
                 return $this->wrapInTag(
-                    $this->translator->getTranslations()->t('permanently_closed')
+                    $this->translator->translate('permanently_closed')
                 );
             }
 
             if ($offer->getStatus()->getType() === 'TemporarilyUnavailable') {
                 return $this->wrapInTag(
-                    $this->translator->getTranslations()->t('temporarily_closed')
+                    $this->translator->translate('temporarily_closed')
                 );
             }
         }
