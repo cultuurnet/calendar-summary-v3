@@ -17,12 +17,12 @@ final class MediumPeriodicPlainTextFormatter implements PeriodicFormatterInterfa
     /**
      * @var Translator
      */
-    private $trans;
+    private $translator;
 
-    public function __construct(string $langCode)
+    public function __construct(Translator $translator)
     {
-        $this->formatter = new DateFormatter($langCode);
-        $this->trans = new Translator($langCode);
+        $this->formatter = new DateFormatter($translator->getLocale());
+        $this->translator = $translator;
     }
 
     public function format(Offer $offer): string
@@ -38,7 +38,7 @@ final class MediumPeriodicPlainTextFormatter implements PeriodicFormatterInterfa
             return PlainTextSummaryBuilder::singleLine($formattedStartDayOfWeek, $formattedStartDate);
         }
 
-        return PlainTextSummaryBuilder::start($this->trans)
+        return PlainTextSummaryBuilder::start($this->translator)
             ->from($formattedStartDate)
             ->till($formattedEndDate)
             ->toString();
