@@ -3,24 +3,25 @@
 namespace CultuurNet\CalendarSummaryV3\Multiple;
 
 use CultuurNet\CalendarSummaryV3\DateComparison;
+use CultuurNet\CalendarSummaryV3\Translator;
 use CultuurNet\SearchV3\ValueObjects\Event;
 use CultuurNet\CalendarSummaryV3\Single\LargeSingleHTMLFormatter;
 
 final class LargeMultipleHTMLFormatter implements MultipleFormatterInterface
 {
     /**
-     * @var string $langCode
+     * @var Translator
      */
-    private $langCode;
+    private $translator;
 
     /**
      * @var bool $hidePast
      */
     private $hidePast;
 
-    public function __construct(string $langCode, bool $hidePastDates)
+    public function __construct(Translator $translator, bool $hidePastDates)
     {
-        $this->langCode = $langCode;
+        $this->translator = $translator;
         $this->hidePast = $hidePastDates;
     }
 
@@ -30,7 +31,7 @@ final class LargeMultipleHTMLFormatter implements MultipleFormatterInterface
         $output = '<ul class="cnw-event-date-info">';
 
         foreach ($subEvents as $subEvent) {
-            $formatter = new LargeSingleHTMLFormatter($this->langCode);
+            $formatter = new LargeSingleHTMLFormatter($this->translator);
 
             if (!$this->hidePast || DateComparison::inTheFuture($subEvent->getEndDate())) {
                 $output .= '<li>' . $formatter->format($subEvent) . '</li>';

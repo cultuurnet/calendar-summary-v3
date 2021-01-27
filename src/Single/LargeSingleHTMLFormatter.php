@@ -18,12 +18,12 @@ final class LargeSingleHTMLFormatter implements SingleFormatterInterface
     /**
      * @var Translator
      */
-    private $trans;
+    private $translator;
 
-    public function __construct(string $langCode)
+    public function __construct(Translator $translator)
     {
-        $this->formatter = new DateFormatter($langCode);
-        $this->trans = new Translator($langCode);
+        $this->formatter = new DateFormatter($translator->getLocale());
+        $this->translator = $translator;
     }
 
     public function format(Offer $offer): string
@@ -61,7 +61,7 @@ final class LargeSingleHTMLFormatter implements SingleFormatterInterface
                 . ' '
                 . '<span class="cf-date">' . $intlDateFrom . '</span>'
                 . ' '
-                . '<span class="cf-from cf-meta">' . $this->trans->getTranslations()->t('at') . '</span>'
+                . '<span class="cf-from cf-meta">' . $this->translator->getTranslations()->t('at') . '</span>'
                 . ' '
                 . '<span class="cf-time">' . $intlStartTimeFrom . '</span>'
                 . '</time>';
@@ -72,12 +72,12 @@ final class LargeSingleHTMLFormatter implements SingleFormatterInterface
             . ' '
             . '<span class="cf-date">' . $intlDateFrom . '</span>'
             . ' '
-            . '<span class="cf-from cf-meta">' . $this->trans->getTranslations()->t('from') . '</span>'
+            . '<span class="cf-from cf-meta">' . $this->translator->getTranslations()->t('from') . '</span>'
             . ' '
             . '<span class="cf-time">' . $intlStartTimeFrom . '</span>'
             . '</time>'
             . ' '
-            . '<span class="cf-to cf-meta">' . $this->trans->getTranslations()->t('till') . '</span>'
+            . '<span class="cf-to cf-meta">' . $this->translator->getTranslations()->t('till') . '</span>'
             . ' '
             . '<time itemprop="endDate" datetime="' . $dateEnd->format(\DateTime::ATOM) . '">'
             . '<span class="cf-time">' . $intlEndTimeEnd . '</span>'
@@ -95,25 +95,25 @@ final class LargeSingleHTMLFormatter implements SingleFormatterInterface
         $intlEndTimeEnd = $this->formatter->formatAsTime($dateEnd);
 
         $output = '<time itemprop="startDate" datetime="' . $dateFrom->format(\DateTime::ATOM) . '">';
-        $output .= '<span class="cf-from cf-meta">' . ucfirst($this->trans->getTranslations()->t('from')) . '</span>';
+        $output .= '<span class="cf-from cf-meta">' . ucfirst($this->translator->getTranslations()->t('from')) . '</span>';
         $output .= ' ';
         $output .= '<span class="cf-weekday cf-meta">' . $intlWeekDayFrom . '</span>';
         $output .= ' ';
         $output .= '<span class="cf-date">' . $intlDateFrom . '</span>';
         $output .= ' ';
-        $output .= '<span class="cf-at cf-meta">' . $this->trans->getTranslations()->t('at') . '</span>';
+        $output .= '<span class="cf-at cf-meta">' . $this->translator->getTranslations()->t('at') . '</span>';
         $output .= ' ';
         $output .= '<span class="cf-time">' . $intlStartTimeFrom . '</span>';
         $output .= '</time>';
         $output .= ' ';
-        $output .= '<span class="cf-to cf-meta">' . $this->trans->getTranslations()->t('till') . '</span>';
+        $output .= '<span class="cf-to cf-meta">' . $this->translator->getTranslations()->t('till') . '</span>';
         $output .= ' ';
         $output .= '<time itemprop="endDate" datetime="' . $dateEnd->format(\DateTime::ATOM) . '">';
         $output .= '<span class="cf-weekday cf-meta">' . $intlWeekDayEnd . '</span>';
         $output .= ' ';
         $output .= '<span class="cf-date">' . $intlDateEnd . '</span>';
         $output .= ' ';
-        $output .= '<span class="cf-at cf-meta">' . $this->trans->getTranslations()->t('at') . '</span>';
+        $output .= '<span class="cf-at cf-meta">' . $this->translator->getTranslations()->t('at') . '</span>';
         $output .= ' ';
         $output .= '<span class="cf-time">' . $intlEndTimeEnd . '</span>';
         $output .= '</time>';

@@ -2,6 +2,7 @@
 
 namespace CultuurNet\CalendarSummaryV3\Single;
 
+use CultuurNet\CalendarSummaryV3\Translator;
 use CultuurNet\SearchV3\ValueObjects\Event;
 use PHPUnit\Framework\TestCase;
 
@@ -15,7 +16,7 @@ class LargeSingleHTMLFormatterTest extends TestCase
     protected function setUp(): void
     {
         date_default_timezone_set('Europe/Brussels');
-        $this->formatter = new LargeSingleHTMLFormatter('nl_NL');
+        $this->formatter = new LargeSingleHTMLFormatter(new Translator('nl_NL'));
     }
 
     public function testFormatHTMLSingleDateLargeOneDay(): void

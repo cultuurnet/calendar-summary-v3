@@ -43,14 +43,14 @@ final class CalendarHTMLFormatter implements CalendarFormatterInterface
         $this->mapping = [
             Offer::CALENDAR_TYPE_SINGLE =>
                 [
-                    'lg' => new LargeSingleHTMLFormatter($langCode),
+                    'lg' => new LargeSingleHTMLFormatter($translator),
                     'md' => new MediumSingleHTMLFormatter($langCode),
                     'sm' => new SmallSingleHTMLFormatter($langCode),
                     'xs' => new SmallSingleHTMLFormatter($langCode)
                 ],
             Offer::CALENDAR_TYPE_MULTIPLE =>
                 [
-                    'lg' => new LargeMultipleHTMLFormatter($langCode, $hidePastDates),
+                    'lg' => new LargeMultipleHTMLFormatter($translator, $hidePastDates),
                     'md' => new MediumMultipleHTMLFormatter($langCode, $hidePastDates),
                     'sm' => new SmallMultipleHTMLFormatter($langCode),
                     'xs' => new ExtraSmallMultipleHTMLFormatter($langCode)
