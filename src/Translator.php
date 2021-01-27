@@ -84,12 +84,7 @@ final class Translator
 
     public function translate(string $key): string
     {
-        return $this->getTranslations()->t($key);
-    }
-
-    public function getTranslations(): Translate
-    {
-        return $this->translator;
+        return $this->translator->t($key);
     }
 
     /**
