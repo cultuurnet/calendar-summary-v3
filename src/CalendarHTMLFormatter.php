@@ -60,7 +60,7 @@ final class CalendarHTMLFormatter implements CalendarFormatterInterface
                     'lg' => new LargePeriodicHTMLFormatter($translator),
                     'md' => new MediumPeriodicHTMLFormatter($translator),
                     'sm' => new SmallPeriodicHTMLFormatter($translator),
-                    'xs' => new ExtraSmallPeriodicHTMLFormatter($langCode),
+                    'xs' => new ExtraSmallPeriodicHTMLFormatter($translator),
                 ],
             Offer::CALENDAR_TYPE_PERMANENT =>
                 [
