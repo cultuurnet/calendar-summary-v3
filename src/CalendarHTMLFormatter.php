@@ -45,8 +45,8 @@ final class CalendarHTMLFormatter implements CalendarFormatterInterface
                 [
                     'lg' => new LargeSingleHTMLFormatter($translator),
                     'md' => new MediumSingleHTMLFormatter($translator),
-                    'sm' => new SmallSingleHTMLFormatter($langCode),
-                    'xs' => new SmallSingleHTMLFormatter($langCode)
+                    'sm' => new SmallSingleHTMLFormatter($translator),
+                    'xs' => new SmallSingleHTMLFormatter($translator)
                 ],
             Offer::CALENDAR_TYPE_MULTIPLE =>
                 [

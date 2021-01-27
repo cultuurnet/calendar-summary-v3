@@ -18,12 +18,12 @@ final class SmallSingleHTMLFormatter implements SingleFormatterInterface
     /**
      * @var Translator
      */
-    private $trans;
+    private $translator;
 
-    public function __construct(string $langCode)
+    public function __construct(Translator $translator)
     {
-        $this->formatter = new DateFormatter($langCode);
-        $this->trans = new Translator($langCode);
+        $this->formatter = new DateFormatter($translator->getLocale());
+        $this->translator = $translator;
     }
 
     public function format(Offer $offer): string
@@ -58,13 +58,13 @@ final class SmallSingleHTMLFormatter implements SingleFormatterInterface
         $dateEndDay = $this->formatter->formatAsDayNumber($dateEnd);
         $dateEndMonth = $this->formatter->formatAsAbbreviatedMonthName($dateEnd);
 
-        $output = '<span class="cf-from cf-meta">' . ucfirst($this->trans->getTranslations()->t('from')) . '</span>';
+        $output = '<span class="cf-from cf-meta">' . ucfirst($this->translator->getTranslations()->t('from')) . '</span>';
         $output .= ' ';
         $output .= '<span class="cf-date">' . $dateFromDay . '</span>';
         $output .= ' ';
         $output .= '<span class="cf-month">' . $dateFromMonth . '</span>';
         $output .= ' ';
-        $output .= '<span class="cf-to cf-meta">' . $this->trans->getTranslations()->t('till') . '</span>';
+        $output .= '<span class="cf-to cf-meta">' . $this->translator->getTranslations()->t('till') . '</span>';
         $output .= ' ';
         $output .= '<span class="cf-date">' . $dateEndDay . '</span>';
         $output .= ' ';
