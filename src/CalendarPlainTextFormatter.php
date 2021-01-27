@@ -53,7 +53,7 @@ final class CalendarPlainTextFormatter implements CalendarFormatterInterface
                     'lg' => new LargeMultiplePlainTextFormatter($translator, $hidePastDates),
                     'md' => new MediumMultiplePlainTextFormatter($translator, $hidePastDates),
                     'sm' => new SmallMultiplePlainTextFormatter($translator),
-                    'xs' => new ExtraSmallMultiplePlainTextFormatter($langCode)
+                    'xs' => new ExtraSmallMultiplePlainTextFormatter($translator)
                 ],
             Offer::CALENDAR_TYPE_PERIODIC =>
                 [
