@@ -43,14 +43,14 @@ final class CalendarPlainTextFormatter implements CalendarFormatterInterface
         $this->mapping = [
             Offer::CALENDAR_TYPE_SINGLE =>
                 [
-                    'lg' => new LargeSinglePlainTextFormatter($langCode),
+                    'lg' => new LargeSinglePlainTextFormatter($translator),
                     'md' => new MediumSinglePlainTextFormatter($langCode),
                     'sm' => new SmallSinglePlainTextFormatter($langCode),
                     'xs' => new SmallSinglePlainTextFormatter($langCode)
                 ],
             Offer::CALENDAR_TYPE_MULTIPLE =>
                 [
-                    'lg' => new LargeMultiplePlainTextFormatter($langCode, $hidePastDates),
+                    'lg' => new LargeMultiplePlainTextFormatter($translator, $hidePastDates),
                     'md' => new MediumMultiplePlainTextFormatter($langCode, $hidePastDates),
                     'sm' => new SmallMultiplePlainTextFormatter($langCode),
                     'xs' => new ExtraSmallMultiplePlainTextFormatter($langCode)
