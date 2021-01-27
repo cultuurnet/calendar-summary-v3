@@ -19,14 +19,12 @@ final class MediumSinglePlainTextFormatter implements SingleFormatterInterface
     /**
      * @var Translator
      */
-    private $trans;
+    private $translator;
 
-    public function __construct(string $langCode)
+    public function __construct(Translator $translator)
     {
-        $this->formatter = new DateFormatter($langCode);
-
-        $this->trans = new Translator();
-        $this->trans->setLanguage($langCode);
+        $this->formatter = new DateFormatter($translator->getLocale());
+        $this->translator = $translator;
     }
 
     public function format(Offer $offer): string
@@ -58,7 +56,7 @@ final class MediumSinglePlainTextFormatter implements SingleFormatterInterface
         $formattedEndDate = $this->formatter->formatAsFullDate($endDate);
         $formattedEndDayOfWeek = $this->formatter->formatAsDayOfWeek($endDate);
 
-        return PlainTextSummaryBuilder::start($this->trans)
+        return PlainTextSummaryBuilder::start($this->translator)
             ->from($formattedStartDayOfWeek, $formattedStartDate)
             ->till($formattedEndDayOfWeek, $formattedEndDate)
             ->toString();

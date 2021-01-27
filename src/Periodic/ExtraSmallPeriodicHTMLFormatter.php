@@ -19,14 +19,12 @@ final class ExtraSmallPeriodicHTMLFormatter implements PeriodicFormatterInterfac
     /**
      * @var Translator
      */
-    private $trans;
+    private $translator;
 
-    public function __construct(string $langCode)
+    public function __construct(Translator $translator)
     {
-        $this->formatter = new DateFormatter($langCode);
-
-        $this->trans = new Translator();
-        $this->trans->setLanguage($langCode);
+        $this->formatter = new DateFormatter($translator->getLocale());
+        $this->translator = $translator;
     }
 
     public function format(Offer $offer): string
@@ -45,14 +43,14 @@ final class ExtraSmallPeriodicHTMLFormatter implements PeriodicFormatterInterfac
     private function formatStarted(DateTimeInterface $endDate): string
     {
         return
-            '<span class="to meta">' . ucfirst($this->trans->getTranslations()->t('till')) . '</span> ' .
+            '<span class="to meta">' . ucfirst($this->translator->translate('till')) . '</span> ' .
             $this->formatDate($endDate);
     }
 
     private function formatNotStarted(DateTimeInterface $startDate): string
     {
         return
-            '<span class="from meta">' . ucfirst($this->trans->getTranslations()->t('from_period')) . '</span> ' .
+            '<span class="from meta">' . ucfirst($this->translator->translate('from_period')) . '</span> ' .
             $this->formatDate($startDate);
     }
 

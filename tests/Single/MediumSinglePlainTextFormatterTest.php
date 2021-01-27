@@ -2,6 +2,7 @@
 
 namespace CultuurNet\CalendarSummaryV3\Single;
 
+use CultuurNet\CalendarSummaryV3\Translator;
 use CultuurNet\SearchV3\ValueObjects\Event;
 use PHPUnit\Framework\TestCase;
 
@@ -14,7 +15,7 @@ class MediumSinglePlainTextFormatterTest extends TestCase
 
     protected function setUp(): void
     {
-        $this->formatter = new MediumSinglePlainTextFormatter('nl_NL');
+        $this->formatter = new MediumSinglePlainTextFormatter(new Translator('nl_NL'));
     }
 
     public function testFormatHTMLSingleDateMediumOneDay(): void

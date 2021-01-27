@@ -21,14 +21,12 @@ final class LargePeriodicPlainTextFormatter implements PeriodicFormatterInterfac
     /**
      * @var Translator
      */
-    private $trans;
+    private $translator;
 
-    public function __construct(string $langCode)
+    public function __construct(Translator $translator)
     {
-        $this->formatter = new DateFormatter($langCode);
-
-        $this->trans = new Translator();
-        $this->trans->setLanguage($langCode);
+        $this->formatter = new DateFormatter($translator->getLocale());
+        $this->translator = $translator;
     }
 
     public function format(Offer $offer): string
@@ -39,7 +37,7 @@ final class LargePeriodicPlainTextFormatter implements PeriodicFormatterInterfac
         $formattedStartDate = $this->formatter->formatAsFullDate($startDate);
         $formattedEndDate = $this->formatter->formatAsFullDate($endDate);
 
-        $summary = PlainTextSummaryBuilder::start($this->trans)
+        $summary = PlainTextSummaryBuilder::start($this->translator)
             ->from($formattedStartDate)
             ->till($formattedEndDate);
 
@@ -57,8 +55,8 @@ final class LargePeriodicPlainTextFormatter implements PeriodicFormatterInterfac
         $intlDateFrom = $this->formatter->formatAsFullDate($dateFrom);
         $intlDateTo = $this->formatter->formatAsFullDate($dateTo);
 
-        return ucfirst($this->trans->getTranslations()->t('from')) . ' '
-            . $intlDateFrom . ' ' . $this->trans->getTranslations()->t('till') . ' ' . $intlDateTo;
+        return ucfirst($this->translator->translate('from')) . ' '
+            . $intlDateFrom . ' ' . $this->translator->translate('till') . ' ' . $intlDateTo;
     }
 
     /**
@@ -75,7 +73,7 @@ final class LargePeriodicPlainTextFormatter implements PeriodicFormatterInterfac
                 if (!isset($formattedDays[$dayName])) {
                     $translatedDay = $this->formatter->formatAsDayOfWeek(new DateTimeImmutable($dayName));
 
-                    $formattedDays[$dayName] = PlainTextSummaryBuilder::start($this->trans)
+                    $formattedDays[$dayName] = PlainTextSummaryBuilder::start($this->translator)
                         ->lowercaseNextFirstCharacter()
                         ->append($translatedDay)
                         ->from(OpeningHourFormatter::format($openingHours->getOpens()))

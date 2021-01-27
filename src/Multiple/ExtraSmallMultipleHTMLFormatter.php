@@ -18,13 +18,12 @@ final class ExtraSmallMultipleHTMLFormatter implements MultipleFormatterInterfac
     /**
      * @var Translator
      */
-    private $trans;
+    private $translator;
 
-    public function __construct(string $langCode)
+    public function __construct(Translator $translator)
     {
-        $this->formatter = new DateFormatter($langCode);
-        $this->trans = new Translator();
-        $this->trans->setLanguage($langCode);
+        $this->formatter = new DateFormatter($translator->getLocale());
+        $this->translator = $translator;
     }
 
     public function format(Event $event): string
@@ -36,9 +35,9 @@ final class ExtraSmallMultipleHTMLFormatter implements MultipleFormatterInterfac
             return '<span class="cf-date">' . $this->formatter->formatAsShortDate($dateFrom) . '</span>';
         }
 
-        return '<span class="cf-from cf-meta">' . ucfirst($this->trans->getTranslations()->t('from')) . '</span> ' .
+        return '<span class="cf-from cf-meta">' . ucfirst($this->translator->translate('from')) . '</span> ' .
             '<span class="cf-date">' . $this->formatter->formatAsShortDate($dateFrom) . '</span> ' .
-            '<span class="cf-to cf-meta">' . $this->trans->getTranslations()->t('till') . '</span> '.
+            '<span class="cf-to cf-meta">' . $this->translator->translate('till') . '</span> '.
             '<span class="cf-date">' . $this->formatter->formatAsShortDate($dateTo) . '</span>';
     }
 }

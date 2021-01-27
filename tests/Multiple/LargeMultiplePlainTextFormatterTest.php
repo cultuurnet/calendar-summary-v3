@@ -2,6 +2,7 @@
 
 namespace CultuurNet\CalendarSummaryV3\Multiple;
 
+use CultuurNet\CalendarSummaryV3\Translator;
 use CultuurNet\SearchV3\ValueObjects\Event;
 use PHPUnit\Framework\TestCase;
 
@@ -15,7 +16,7 @@ class LargeMultiplePlainTextFormatterTest extends TestCase
     protected function setUp(): void
     {
         date_default_timezone_set('Europe/Brussels');
-        $this->formatter = new LargeMultiplePlainTextFormatter('nl_NL', false);
+        $this->formatter = new LargeMultiplePlainTextFormatter(new Translator('nl_NL'), false);
     }
 
     public function testFormatPlainTextMultipleDateLargeOneDay(): void

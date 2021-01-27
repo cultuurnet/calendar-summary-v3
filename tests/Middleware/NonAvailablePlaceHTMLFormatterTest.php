@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace CultuurNet\CalendarSummaryV3\Middleware;
 
+use CultuurNet\CalendarSummaryV3\Translator;
 use CultuurNet\SearchV3\ValueObjects\Event;
 use CultuurNet\SearchV3\ValueObjects\Place;
 use CultuurNet\SearchV3\ValueObjects\Status;
@@ -11,13 +12,23 @@ use PHPUnit\Framework\TestCase;
 
 class NonAvailablePlaceHTMLFormatterTest extends TestCase
 {
+    /**
+     * @var NonAvailablePlaceHTMLFormatter
+     */
+    private $formatter;
+
+    protected function setUp(): void
+    {
+        $translator = new Translator('nl_BE');
+        $this->formatter = new NonAvailablePlaceHTMLFormatter($translator);
+    }
+
     public function testWillInterceptUnavailablePlace(): void
     {
         $place = new Place();
         $place->setStatus(new Status('Unavailable'));
 
-        $formatter = new NonAvailablePlaceHTMLFormatter('nl');
-        $result = $formatter->format(
+        $result = $this->formatter->format(
             $place,
             function () {
                 return 'foo';
@@ -32,8 +43,7 @@ class NonAvailablePlaceHTMLFormatterTest extends TestCase
         $place = new Place();
         $place->setStatus(new Status('TemporarilyUnavailable'));
 
-        $formatter = new NonAvailablePlaceHTMLFormatter('nl');
-        $result = $formatter->format(
+        $result = $this->formatter->format(
             $place,
             function () {
                 return 'foo';
@@ -48,8 +58,7 @@ class NonAvailablePlaceHTMLFormatterTest extends TestCase
         $place = new Place();
         $place->setStatus(new Status('Available'));
 
-        $formatter = new NonAvailablePlaceHTMLFormatter('nl');
-        $result = $formatter->format(
+        $result = $this->formatter->format(
             $place,
             function () {
                 return 'foo';
@@ -64,8 +73,7 @@ class NonAvailablePlaceHTMLFormatterTest extends TestCase
         $event = new Event();
         $event->setStatus(new Status('Unavailable'));
 
-        $formatter = new NonAvailablePlaceHTMLFormatter('nl');
-        $result = $formatter->format(
+        $result = $this->formatter->format(
             $event,
             function () {
                 return 'foo';
@@ -80,8 +88,7 @@ class NonAvailablePlaceHTMLFormatterTest extends TestCase
         $event = new Event();
         $event->setStatus(new Status('TemporarilyUnavailable'));
 
-        $formatter = new NonAvailablePlaceHTMLFormatter('nl');
-        $result = $formatter->format(
+        $result = $this->formatter->format(
             $event,
             function () {
                 return 'foo';
@@ -96,8 +103,7 @@ class NonAvailablePlaceHTMLFormatterTest extends TestCase
         $event = new Event();
         $event->setStatus(new Status('Unavailable'));
 
-        $formatter = new NonAvailablePlaceHTMLFormatter('nl');
-        $result = $formatter->format(
+        $result = $this->formatter->format(
             $event,
             function () {
                 return 'foo';

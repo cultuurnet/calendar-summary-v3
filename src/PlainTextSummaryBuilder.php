@@ -123,7 +123,7 @@ final class PlainTextSummaryBuilder
     private function appendTranslation(string $translationKey): self
     {
         $c = clone $this;
-        $c->workingLine[] = $this->translator->getTranslations()->t($translationKey);
+        $c->workingLine[] = $this->translator->translate($translationKey);
         return $c;
     }
 

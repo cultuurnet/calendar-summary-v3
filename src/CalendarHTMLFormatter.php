@@ -31,42 +31,47 @@ final class CalendarHTMLFormatter implements CalendarFormatterInterface
      */
     private $middleware;
 
-    public function __construct($langCode = 'nl_BE', $hidePastDates = false, $timeZone = 'Europe/Brussels')
-    {
+    public function __construct(
+        string $langCode = 'nl_BE',
+        bool $hidePastDates = false,
+        string $timeZone = 'Europe/Brussels'
+    ) {
         date_default_timezone_set($timeZone);
+
+        $translator = new Translator($langCode);
 
         $this->mapping = [
             Offer::CALENDAR_TYPE_SINGLE =>
                 [
-                    'lg' => new LargeSingleHTMLFormatter($langCode),
-                    'md' => new MediumSingleHTMLFormatter($langCode),
-                    'sm' => new SmallSingleHTMLFormatter($langCode),
-                    'xs' => new SmallSingleHTMLFormatter($langCode)
+                    'lg' => new LargeSingleHTMLFormatter($translator),
+                    'md' => new MediumSingleHTMLFormatter($translator),
+                    'sm' => new SmallSingleHTMLFormatter($translator),
+                    'xs' => new SmallSingleHTMLFormatter($translator)
                 ],
             Offer::CALENDAR_TYPE_MULTIPLE =>
                 [
-                    'lg' => new LargeMultipleHTMLFormatter($langCode, $hidePastDates),
-                    'md' => new MediumMultipleHTMLFormatter($langCode, $hidePastDates),
-                    'sm' => new SmallMultipleHTMLFormatter($langCode),
-                    'xs' => new ExtraSmallMultipleHTMLFormatter($langCode)
+                    'lg' => new LargeMultipleHTMLFormatter($translator, $hidePastDates),
+                    'md' => new MediumMultipleHTMLFormatter($translator, $hidePastDates),
+                    'sm' => new SmallMultipleHTMLFormatter($translator),
+                    'xs' => new ExtraSmallMultipleHTMLFormatter($translator)
                 ],
             Offer::CALENDAR_TYPE_PERIODIC =>
                 [
-                    'lg' => new LargePeriodicHTMLFormatter($langCode),
-                    'md' => new MediumPeriodicHTMLFormatter($langCode),
-                    'sm' => new SmallPeriodicHTMLFormatter($langCode),
-                    'xs' => new ExtraSmallPeriodicHTMLFormatter($langCode),
+                    'lg' => new LargePeriodicHTMLFormatter($translator),
+                    'md' => new MediumPeriodicHTMLFormatter($translator),
+                    'sm' => new SmallPeriodicHTMLFormatter($translator),
+                    'xs' => new ExtraSmallPeriodicHTMLFormatter($translator),
                 ],
             Offer::CALENDAR_TYPE_PERMANENT =>
                 [
-                    'lg' => new LargePermanentHTMLFormatter($langCode),
-                    'md' => new MediumPermanentHTMLFormatter($langCode),
-                    'sm' => new MediumPermanentHTMLFormatter($langCode),
-                    'xs' => new MediumPermanentHTMLFormatter($langCode)
+                    'lg' => new LargePermanentHTMLFormatter($translator),
+                    'md' => new MediumPermanentHTMLFormatter($translator),
+                    'sm' => new MediumPermanentHTMLFormatter($translator),
+                    'xs' => new MediumPermanentHTMLFormatter($translator)
                 ],
         ];
 
-        $this->middleware = new NonAvailablePlaceHTMLFormatter($langCode);
+        $this->middleware = new NonAvailablePlaceHTMLFormatter($translator);
     }
 
     /**

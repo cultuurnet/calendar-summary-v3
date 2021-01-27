@@ -19,13 +19,12 @@ final class ExtraSmallMultiplePlainTextFormatter implements MultipleFormatterInt
     /**
      * @var Translator
      */
-    private $trans;
+    private $translator;
 
-    public function __construct(string $langCode)
+    public function __construct(Translator $translator)
     {
-        $this->formatter = new DateFormatter($langCode);
-        $this->trans = new Translator();
-        $this->trans->setLanguage($langCode);
+        $this->formatter = new DateFormatter($translator->getLocale());
+        $this->translator = $translator;
     }
 
     public function format(Event $event): string
@@ -37,7 +36,7 @@ final class ExtraSmallMultiplePlainTextFormatter implements MultipleFormatterInt
             return $this->formatter->formatAsShortDate($startDate);
         }
 
-        return PlainTextSummaryBuilder::start($this->trans)
+        return PlainTextSummaryBuilder::start($this->translator)
             ->from($this->formatter->formatAsShortDate($startDate))
             ->till($this->formatter->formatAsShortDate($endDate))
             ->toString();

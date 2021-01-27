@@ -18,14 +18,12 @@ final class MediumSingleHTMLFormatter implements SingleFormatterInterface
     /**
      * @var Translator
      */
-    private $trans;
+    private $translator;
 
-    public function __construct(string $langCode)
+    public function __construct(Translator $translator)
     {
-        $this->formatter = new DateFormatter($langCode);
-
-        $this->trans = new Translator();
-        $this->trans->setLanguage($langCode);
+        $this->formatter = new DateFormatter($translator->getLocale());
+        $this->translator = $translator;
     }
 
     public function format(Offer $offer): string
@@ -62,13 +60,13 @@ final class MediumSingleHTMLFormatter implements SingleFormatterInterface
         $intlDateEnd = $this->formatter->formatAsFullDate($dateEnd);
         $intlDateDayEnd = $this->formatter->formatAsDayOfWeek($dateEnd);
 
-        $output = '<span class="cf-from cf-meta">' . ucfirst($this->trans->getTranslations()->t('from')) . '</span>';
+        $output = '<span class="cf-from cf-meta">' . ucfirst($this->translator->translate('from')) . '</span>';
         $output .= ' ';
         $output .= '<span class="cf-weekday cf-meta">' . $intlDateDayFrom . '</span>';
         $output .= ' ';
         $output .= '<span class="cf-date">' . $intlDateFrom . '</span>';
         $output .= ' ';
-        $output .= '<span class="cf-to cf-meta">' . $this->trans->getTranslations()->t('till') . '</span>';
+        $output .= '<span class="cf-to cf-meta">' . $this->translator->translate('till') . '</span>';
         $output .= ' ';
         $output .= '<span class="cf-weekday cf-meta">' . $intlDateDayEnd . '</span>';
         $output .= ' ';

@@ -2,6 +2,7 @@
 
 namespace CultuurNet\CalendarSummaryV3\Permanent;
 
+use CultuurNet\CalendarSummaryV3\Translator;
 use CultuurNet\SearchV3\ValueObjects\OpeningHours;
 use CultuurNet\SearchV3\ValueObjects\Place;
 use PHPUnit\Framework\TestCase;
@@ -19,7 +20,7 @@ class MediumPermanentHTMLFormatterTest extends TestCase
 
     protected function setUp(): void
     {
-        $this->formatter = new MediumPermanentHTMLFormatter('nl_NL');
+        $this->formatter = new MediumPermanentHTMLFormatter(new Translator('nl_NL'));
     }
 
     public function testFormatASimplePermanent(): void

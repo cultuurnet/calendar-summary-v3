@@ -3,23 +3,24 @@
 namespace CultuurNet\CalendarSummaryV3\Multiple;
 
 use CultuurNet\CalendarSummaryV3\Periodic\MediumPeriodicHTMLFormatter;
+use CultuurNet\CalendarSummaryV3\Translator;
 use CultuurNet\SearchV3\ValueObjects\Event;
 
 final class SmallMultipleHTMLFormatter implements MultipleFormatterInterface
 {
     /**
-     * @var string
+     * @var Translator
      */
-    private $langCode;
+    private $translator;
 
-    public function __construct(string $langCode)
+    public function __construct(Translator $translator)
     {
-        $this->langCode = $langCode;
+        $this->translator = $translator;
     }
 
     public function format(Event $event): string
     {
-        $formatter = new MediumPeriodicHTMLFormatter($this->langCode);
+        $formatter = new MediumPeriodicHTMLFormatter($this->translator);
         return $formatter->format($event);
     }
 }

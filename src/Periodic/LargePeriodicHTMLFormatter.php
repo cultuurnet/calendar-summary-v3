@@ -20,14 +20,12 @@ final class LargePeriodicHTMLFormatter implements PeriodicFormatterInterface
     /**
      * @var Translator
      */
-    private $trans;
+    private $translator;
 
-    public function __construct(string $langCode)
+    public function __construct(Translator $translator)
     {
-        $this->formatter = new DateFormatter($langCode);
-
-        $this->trans = new Translator();
-        $this->trans->setLanguage($langCode);
+        $this->formatter = new DateFormatter($translator->getLocale());
+        $this->translator = $translator;
     }
 
     public function format(Offer $offer): string
@@ -107,7 +105,7 @@ final class LargePeriodicHTMLFormatter implements PeriodicFormatterInterface
         return '<p class="cf-period">'
             . '<time itemprop="startDate" datetime="' . $dateFrom->format("Y-m-d") . '">'
             . '<span class="cf-date">' . $intlDateFrom . '</span> </time>'
-            . '<span class="cf-to cf-meta">' . $this->trans->getTranslations()->t('till') . '</span>'
+            . '<span class="cf-to cf-meta">' . $this->translator->translate('till') . '</span>'
             . '<time itemprop="endDate" datetime="' . $dateTo->format("Y-m-d") . '">'
             . '<span class="cf-date">' . $intlDateTo . '</span> </time>'
             . '</p>';
@@ -119,7 +117,7 @@ final class LargePeriodicHTMLFormatter implements PeriodicFormatterInterface
      */
     private function generateWeekScheme($openingHoursData)
     {
-        $outputWeek = '<p class="cf-openinghours">' . ucfirst($this->trans->getTranslations()->t('open')) . ':</p>';
+        $outputWeek = '<p class="cf-openinghours">' . ucfirst($this->translator->translate('open')) . ':</p>';
         $outputWeek .= '<ul class="list-unstyled">';
 
         // Create an array with formatted timespans.
@@ -147,19 +145,19 @@ final class LargePeriodicHTMLFormatter implements PeriodicFormatterInterface
                         . "<li itemprop=\"openingHoursSpecification\"> "
                         . "<span class=\"cf-days\">$daySpanLong</span> "
                         . "<span itemprop=\"opens\" content=\"$opens\" class=\"cf-from cf-meta\">"
-                        . $this->trans->getTranslations()->t('from') . "</span> "
+                        . $this->translator->translate('from') . "</span> "
                         . "<span class=\"cf-time\">$opens</span> "
                         . "<span itemprop=\"closes\" content=\"$closes\" class=\"cf-to cf-meta\">"
-                        . $this->trans->getTranslations()->t('till') . "</span> "
+                        . $this->translator->translate('till') . "</span> "
                         . "<span class=\"cf-time\">$closes</span>";
                 } else {
                     $formattedTimespans[$dayOfWeek] .=
                         "<span itemprop=\"opens\" content=\"$opens\" class=\"cf-from cf-meta\">"
-                        . $this->trans->getTranslations()->t('and') . ' '
-                        . $this->trans->getTranslations()->t('from') . "</span> "
+                        . $this->translator->translate('and') . ' '
+                        . $this->translator->translate('from') . "</span> "
                         . "<span class=\"cf-time\">$opens</span> "
                         . "<span itemprop=\"closes\" content=\"$closes\" class=\"cf-to cf-meta\">"
-                        . $this->trans->getTranslations()->t('till') . "</span> "
+                        . $this->translator->translate('till') . "</span> "
                         . "<span class=\"cf-time\">$closes</span>";
                 }
             }

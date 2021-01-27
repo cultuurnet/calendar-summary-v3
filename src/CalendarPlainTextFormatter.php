@@ -31,42 +31,47 @@ final class CalendarPlainTextFormatter implements CalendarFormatterInterface
      */
     private $middleware;
 
-    public function __construct($langCode = 'nl_BE', $hidePastDates = false, $timeZone = 'Europe/Brussels')
-    {
+    public function __construct(
+        string $langCode = 'nl_BE',
+        bool $hidePastDates = false,
+        string $timeZone = 'Europe/Brussels'
+    ) {
         date_default_timezone_set($timeZone);
+
+        $translator = new Translator($langCode);
 
         $this->mapping = [
             Offer::CALENDAR_TYPE_SINGLE =>
                 [
-                    'lg' => new LargeSinglePlainTextFormatter($langCode),
-                    'md' => new MediumSinglePlainTextFormatter($langCode),
-                    'sm' => new SmallSinglePlainTextFormatter($langCode),
-                    'xs' => new SmallSinglePlainTextFormatter($langCode)
+                    'lg' => new LargeSinglePlainTextFormatter($translator),
+                    'md' => new MediumSinglePlainTextFormatter($translator),
+                    'sm' => new SmallSinglePlainTextFormatter($translator),
+                    'xs' => new SmallSinglePlainTextFormatter($translator)
                 ],
             Offer::CALENDAR_TYPE_MULTIPLE =>
                 [
-                    'lg' => new LargeMultiplePlainTextFormatter($langCode, $hidePastDates),
-                    'md' => new MediumMultiplePlainTextFormatter($langCode, $hidePastDates),
-                    'sm' => new SmallMultiplePlainTextFormatter($langCode),
-                    'xs' => new ExtraSmallMultiplePlainTextFormatter($langCode)
+                    'lg' => new LargeMultiplePlainTextFormatter($translator, $hidePastDates),
+                    'md' => new MediumMultiplePlainTextFormatter($translator, $hidePastDates),
+                    'sm' => new SmallMultiplePlainTextFormatter($translator),
+                    'xs' => new ExtraSmallMultiplePlainTextFormatter($translator)
                 ],
             Offer::CALENDAR_TYPE_PERIODIC =>
                 [
-                    'lg' => new LargePeriodicPlainTextFormatter($langCode),
-                    'md' => new MediumPeriodicPlainTextFormatter($langCode),
-                    'sm' => new SmallPeriodicPlainTextFormatter($langCode),
-                    'xs' => new ExtraSmallPeriodicPlainTextFormatter($langCode),
+                    'lg' => new LargePeriodicPlainTextFormatter($translator),
+                    'md' => new MediumPeriodicPlainTextFormatter($translator),
+                    'sm' => new SmallPeriodicPlainTextFormatter($translator),
+                    'xs' => new ExtraSmallPeriodicPlainTextFormatter($translator),
                 ],
             Offer::CALENDAR_TYPE_PERMANENT =>
                 [
-                    'lg' => new LargePermanentPlainTextFormatter($langCode),
-                    'md' => new MediumPermanentPlainTextFormatter($langCode),
-                    'sm' => new MediumPermanentPlainTextFormatter($langCode),
-                    'xs' => new MediumPermanentPlainTextFormatter($langCode)
+                    'lg' => new LargePermanentPlainTextFormatter($translator),
+                    'md' => new MediumPermanentPlainTextFormatter($translator),
+                    'sm' => new MediumPermanentPlainTextFormatter($translator),
+                    'xs' => new MediumPermanentPlainTextFormatter($translator)
                 ],
         ];
 
-        $this->middleware = new NonAvailablePlacePlainTextFormatter($langCode);
+        $this->middleware = new NonAvailablePlacePlainTextFormatter($translator);
     }
 
     /**

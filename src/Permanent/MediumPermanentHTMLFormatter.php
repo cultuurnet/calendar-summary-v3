@@ -18,14 +18,12 @@ final class MediumPermanentHTMLFormatter implements PermanentFormatterInterface
     /**
      * @var Translator
      */
-    private $trans;
+    private $translator;
 
-    public function __construct(string $langCode)
+    public function __construct(Translator $translator)
     {
-        $this->formatter = new DateFormatter($langCode);
-
-        $this->trans = new Translator();
-        $this->trans->setLanguage($langCode);
+        $this->formatter = new DateFormatter($translator->getLocale());
+        $this->translator = $translator;
     }
 
     public function format(Offer $offer): string
@@ -35,7 +33,7 @@ final class MediumPermanentHTMLFormatter implements PermanentFormatterInterface
         }
 
         return '<p class="cf-openinghours">' .
-            ucfirst($this->trans->getTranslations()->t('always_open')) . '</p>';
+            ucfirst($this->translator->translate('always_open')) . '</p>';
     }
 
     /**
@@ -46,7 +44,7 @@ final class MediumPermanentHTMLFormatter implements PermanentFormatterInterface
      */
     private function generateWeekScheme(array $openingHoursData): string
     {
-        $outputWeek = '<span>' . ucfirst($this->trans->getTranslations()->t('open')) . ' '
+        $outputWeek = '<span>' . ucfirst($this->translator->translate('open')) . ' '
             . '<span class="cf-weekdays">';
         // Create an array with formatted days.
         $formattedDays = [];

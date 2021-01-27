@@ -2,6 +2,7 @@
 
 namespace CultuurNet\CalendarSummaryV3\Periodic;
 
+use CultuurNet\CalendarSummaryV3\Translator;
 use CultuurNet\SearchV3\ValueObjects\Event;
 use PHPUnit\Framework\TestCase;
 
@@ -18,7 +19,7 @@ class MediumPeriodicPlainTextFormatterTest extends TestCase
 
     protected function setUp(): void
     {
-        $this->formatter = new MediumPeriodicPlainTextFormatter('nl_NL');
+        $this->formatter = new MediumPeriodicPlainTextFormatter(new Translator('nl_NL'));
     }
 
     public function testFormatAPeriodWithoutLeadingZeroes(): void
