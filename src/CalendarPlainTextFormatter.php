@@ -45,8 +45,8 @@ final class CalendarPlainTextFormatter implements CalendarFormatterInterface
                 [
                     'lg' => new LargeSinglePlainTextFormatter($translator),
                     'md' => new MediumSinglePlainTextFormatter($translator),
-                    'sm' => new SmallSinglePlainTextFormatter($langCode),
-                    'xs' => new SmallSinglePlainTextFormatter($langCode)
+                    'sm' => new SmallSinglePlainTextFormatter($translator),
+                    'xs' => new SmallSinglePlainTextFormatter($translator)
                 ],
             Offer::CALENDAR_TYPE_MULTIPLE =>
                 [

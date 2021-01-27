@@ -19,12 +19,12 @@ final class SmallSinglePlainTextFormatter implements SingleFormatterInterface
     /**
      * @var Translator
      */
-    private $trans;
+    private $translator;
 
-    public function __construct(string $langCode)
+    public function __construct(Translator $translator)
     {
-        $this->formatter = new DateFormatter($langCode);
-        $this->trans = new Translator($langCode);
+        $this->formatter = new DateFormatter($translator->getLocale());
+        $this->translator = $translator;
     }
 
     public function format(Offer $offer): string
@@ -56,7 +56,7 @@ final class SmallSinglePlainTextFormatter implements SingleFormatterInterface
         $endDayNumber = $this->formatter->formatAsDayNumber($endDate);
         $endMonthName = $this->formatter->formatAsAbbreviatedMonthName($endDate);
 
-        return PlainTextSummaryBuilder::start($this->trans)
+        return PlainTextSummaryBuilder::start($this->translator)
             ->from($startDayNumber, $startMonthName)
             ->till($endDayNumber, $endMonthName)
             ->toString();
