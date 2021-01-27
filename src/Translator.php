@@ -87,11 +87,17 @@ final class Translator
         return $this->translator;
     }
 
+    /**
+     * e.g. 'nl_BE'
+     */
     public function getLocale(): string
     {
         return $this->locale;
     }
 
+    /**
+     * e.g. 'nl'
+     */
     public function getLanguageCode(): string
     {
         return substr($this->locale, 0, 2);
