@@ -3,24 +3,25 @@
 namespace CultuurNet\CalendarSummaryV3\Multiple;
 
 use CultuurNet\CalendarSummaryV3\DateComparison;
+use CultuurNet\CalendarSummaryV3\Translator;
 use CultuurNet\SearchV3\ValueObjects\Event;
 use CultuurNet\CalendarSummaryV3\Single\MediumSinglePlainTextFormatter;
 
 final class MediumMultiplePlainTextFormatter implements MultipleFormatterInterface
 {
     /**
-     * @var string $langCode
+     * @var Translator
      */
-    private $langCode;
+    private $translator;
 
     /**
      * @var bool $hidepast
      */
     private $hidePast;
 
-    public function __construct(string $langCode, bool $hidePastDates)
+    public function __construct(Translator $translator, bool $hidePastDates)
     {
-        $this->langCode = $langCode;
+        $this->translator = $translator;
         $this->hidePast = $hidePastDates;
     }
 
@@ -30,7 +31,7 @@ final class MediumMultiplePlainTextFormatter implements MultipleFormatterInterfa
         $subEventSummaries = [];
 
         foreach ($subEvents as $key => $subEvent) {
-            $formatter = new MediumSinglePlainTextFormatter($this->langCode);
+            $formatter = new MediumSinglePlainTextFormatter($this->translator);
 
             if (!$this->hidePast || DateComparison::inTheFuture($subEvent->getEndDate())) {
                 $subEventSummaries[] = $formatter->format($subEvent);
