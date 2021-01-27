@@ -19,12 +19,12 @@ final class MediumPermanentPlainTextFormatter implements PermanentFormatterInter
     /**
      * @var Translator
      */
-    private $trans;
+    private $translator;
 
-    public function __construct(string $langCode)
+    public function __construct(Translator $translator)
     {
-        $this->formatter = new DateFormatter($langCode);
-        $this->trans = new Translator($langCode);
+        $this->formatter = new DateFormatter($translator->getLocale());
+        $this->translator = $translator;
     }
 
     public function format(Offer $offer): string
@@ -33,7 +33,7 @@ final class MediumPermanentPlainTextFormatter implements PermanentFormatterInter
             return $this->generateWeekScheme($offer->getOpeningHours());
         }
 
-        return PlainTextSummaryBuilder::start($this->trans)
+        return PlainTextSummaryBuilder::start($this->translator)
             ->alwaysOpen()
             ->startNewLine()
             ->toString();
@@ -57,7 +57,7 @@ final class MediumPermanentPlainTextFormatter implements PermanentFormatterInter
 
         // Put all the day names with opening hours on a single line with 'Open at' (sec) at the beginning.
         // E.g. 'Open at monday, wednesday, thursday'
-        return PlainTextSummaryBuilder::start($this->trans)
+        return PlainTextSummaryBuilder::start($this->translator)
             ->openAt(...$translatedDayNamesWithOpeningHours)
             ->toString();
     }

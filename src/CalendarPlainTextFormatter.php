@@ -65,9 +65,9 @@ final class CalendarPlainTextFormatter implements CalendarFormatterInterface
             Offer::CALENDAR_TYPE_PERMANENT =>
                 [
                     'lg' => new LargePermanentPlainTextFormatter($translator),
-                    'md' => new MediumPermanentPlainTextFormatter($langCode),
-                    'sm' => new MediumPermanentPlainTextFormatter($langCode),
-                    'xs' => new MediumPermanentPlainTextFormatter($langCode)
+                    'md' => new MediumPermanentPlainTextFormatter($translator),
+                    'sm' => new MediumPermanentPlainTextFormatter($translator),
+                    'xs' => new MediumPermanentPlainTextFormatter($translator)
                 ],
         ];
 
