@@ -65,9 +65,9 @@ final class CalendarHTMLFormatter implements CalendarFormatterInterface
             Offer::CALENDAR_TYPE_PERMANENT =>
                 [
                     'lg' => new LargePermanentHTMLFormatter($translator),
-                    'md' => new MediumPermanentHTMLFormatter($langCode),
-                    'sm' => new MediumPermanentHTMLFormatter($langCode),
-                    'xs' => new MediumPermanentHTMLFormatter($langCode)
+                    'md' => new MediumPermanentHTMLFormatter($translator),
+                    'sm' => new MediumPermanentHTMLFormatter($translator),
+                    'xs' => new MediumPermanentHTMLFormatter($translator)
                 ],
         ];
 
