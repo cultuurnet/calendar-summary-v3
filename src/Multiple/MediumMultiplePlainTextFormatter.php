@@ -15,7 +15,7 @@ final class MediumMultiplePlainTextFormatter implements MultipleFormatterInterfa
     private $translator;
 
     /**
-     * @var bool $hidepast
+     * @var bool
      */
     private $hidePast;
 

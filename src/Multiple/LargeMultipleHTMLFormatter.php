@@ -15,7 +15,7 @@ final class LargeMultipleHTMLFormatter implements MultipleFormatterInterface
     private $translator;
 
     /**
-     * @var bool $hidePast
+     * @var bool
      */
     private $hidePast;
 

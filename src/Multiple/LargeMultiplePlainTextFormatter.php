@@ -15,7 +15,7 @@ final class LargeMultiplePlainTextFormatter implements MultipleFormatterInterfac
     private $translator;
 
     /**
-     * @var bool $hidePast
+     * @var bool
      */
     private $hidePast;
 
