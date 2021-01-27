@@ -2,6 +2,7 @@
 
 namespace CultuurNet\CalendarSummaryV3\Multiple;
 
+use CultuurNet\CalendarSummaryV3\Translator;
 use CultuurNet\SearchV3\ValueObjects\Event;
 use PHPUnit\Framework\TestCase;
 
@@ -14,7 +15,7 @@ class ExtraSmallMultipleHTMLFormatterTest extends TestCase
 
     protected function setUp(): void
     {
-        $this->formatter = new ExtraSmallMultipleHTMLFormatter('nl_NL');
+        $this->formatter = new ExtraSmallMultipleHTMLFormatter(new Translator('nl_NL'));
     }
 
     public function testFormatMultipleWithoutLeadingZeroes(): void
