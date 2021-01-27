@@ -2,6 +2,7 @@
 
 namespace CultuurNet\CalendarSummaryV3\Periodic;
 
+use CultuurNet\CalendarSummaryV3\Translator;
 use CultuurNet\SearchV3\ValueObjects\OpeningHours;
 use CultuurNet\SearchV3\ValueObjects\Place;
 use PHPUnit\Framework\TestCase;
@@ -19,7 +20,7 @@ class LargePeriodicPlainTextFormatterTest extends TestCase
 
     protected function setUp(): void
     {
-        $this->formatter = new LargePeriodicPlainTextFormatter('nl_NL');
+        $this->formatter = new LargePeriodicPlainTextFormatter(new Translator('nl_NL'));
     }
 
     public function testFormatAPeriodWithSingleTimeBlocks(): void
