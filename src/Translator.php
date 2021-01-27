@@ -79,11 +79,21 @@ final class Translator
         );
 
         $this->locale = $locale;
-        $this->translator->setLanguage(substr($locale, 0, 2));
+        $this->translator->setLanguage($this->getLanguageCode());
     }
 
     public function getTranslations(): Translate
     {
         return $this->translator;
+    }
+
+    public function getLocale(): string
+    {
+        return $this->locale;
+    }
+
+    public function getLanguageCode(): string
+    {
+        return substr($this->locale, 0, 2);
     }
 }
