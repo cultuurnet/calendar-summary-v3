@@ -23,9 +23,7 @@ final class MediumPermanentHTMLFormatter implements PermanentFormatterInterface
     public function __construct(string $langCode)
     {
         $this->formatter = new DateFormatter($langCode);
-
-        $this->trans = new Translator();
-        $this->trans->setLanguage($langCode);
+        $this->trans = new Translator($langCode);
     }
 
     public function format(Offer $offer): string

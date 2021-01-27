@@ -19,9 +19,7 @@ class NonAvailablePlaceHTMLFormatterTest extends TestCase
 
     protected function setUp(): void
     {
-        $translator = new Translator();
-        $translator->setLanguage('nl');
-
+        $translator = new Translator('nl_BE');
         $this->formatter = new NonAvailablePlaceHTMLFormatter($translator);
     }
 

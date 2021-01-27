@@ -12,9 +12,13 @@ final class Translator
      */
     private $translator;
 
-    public function __construct()
-    {
+    /**
+     * @var string
+     */
+    private $locale;
 
+    public function __construct(string $locale)
+    {
         $messages = [
             'en' => [
                 'from' => 'from',
@@ -73,11 +77,9 @@ final class Translator
                 "available" => ['en', 'nl', 'fr', 'de'],
             ]
         );
-    }
 
-    public function setLanguage($langCode): void
-    {
-        $this->translator->setLanguage(substr($langCode, 0, 2));
+        $this->locale = $locale;
+        $this->translator->setLanguage(substr($locale, 0, 2));
     }
 
     public function getTranslations(): Translate
