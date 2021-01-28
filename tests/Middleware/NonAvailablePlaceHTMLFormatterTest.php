@@ -128,4 +128,19 @@ class NonAvailablePlaceHTMLFormatterTest extends TestCase
 
         $this->assertEquals('<span title="Covid-19" class="cf-meta">Permanent gesloten</span>', $result);
     }
+
+    public function testItWillNotAddTitleAttributeWhenReasonIsNotAvailableInCorrectLanguage(): void
+    {
+        $place = new Place();
+        $place->setStatus(new Status('Unavailable', new TranslatedString(['fr' => "Désolé, c'est annulé!"])));
+
+        $result = $this->formatter->format(
+            $place,
+            function () {
+                return 'foo';
+            }
+        );
+
+        $this->assertEquals('<span class="cf-meta">Permanent gesloten</span>', $result);
+    }
 }
