@@ -28,6 +28,14 @@ final class MediumPermanentHTMLFormatter implements PermanentFormatterInterface
 
     public function format(Offer $offer): string
     {
+        if ($offer->getStatus()->getType() === 'Unavailable') {
+            return '<p class="cf-openinghours">' . $this->translator->translate('cancelled') . '</p>';
+        }
+
+        if ($offer->getStatus()->getType() === 'TemporarilyUnavailable') {
+            return '<p class="cf-openinghours">' . $this->translator->translate('postponed') . '</p>';
+        }
+
         if ($offer->getOpeningHours()) {
             return $this->generateWeekScheme($offer->getOpeningHours());
         }
