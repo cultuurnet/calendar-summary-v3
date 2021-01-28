@@ -31,11 +31,11 @@ final class LargePermanentPlainTextFormatter implements PermanentFormatterInterf
     public function format(Offer $offer): string
     {
         if ($offer->getStatus()->getType() === 'Unavailable') {
-            return $this->translator->translate('cancelled');
+            return ucfirst($this->translator->translate('cancelled'));
         }
 
         if ($offer->getStatus()->getType() === 'TemporarilyUnavailable') {
-            return $this->translator->translate('postponed');
+            return ucfirst($this->translator->translate('postponed'));
         }
 
         if ($offer->getOpeningHours()) {
