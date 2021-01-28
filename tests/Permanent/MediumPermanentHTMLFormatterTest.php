@@ -7,6 +7,7 @@ use CultuurNet\SearchV3\ValueObjects\Event;
 use CultuurNet\SearchV3\ValueObjects\OpeningHours;
 use CultuurNet\SearchV3\ValueObjects\Place;
 use CultuurNet\SearchV3\ValueObjects\Status;
+use CultuurNet\SearchV3\ValueObjects\TranslatedString;
 use PHPUnit\Framework\TestCase;
 
 /**
@@ -167,6 +168,28 @@ class MediumPermanentHTMLFormatterTest extends TestCase
 
         $this->assertEquals(
             '<p class="cf-openinghours">Uitgesteld</p>',
+            $this->formatter->format($event)
+        );
+    }
+
+    public function testItRendersReasonAsTitleAttribute(): void
+    {
+        $event = new Event();
+        $event->setStatus(new Status('Unavailable', new TranslatedString(['nl' => 'Covid-19'])));
+
+        $this->assertEquals(
+            '<p title="Covid-19" class="cf-openinghours">Geannuleerd</p>',
+            $this->formatter->format($event)
+        );
+    }
+
+    public function testItDoesNotRendersReasonWhenTranslationIsUnavailable(): void
+    {
+        $event = new Event();
+        $event->setStatus(new Status('Unavailable', new TranslatedString(['fr' => 'Sacre bleu'])));
+
+        $this->assertEquals(
+            '<p class="cf-openinghours">Geannuleerd</p>',
             $this->formatter->format($event)
         );
     }
