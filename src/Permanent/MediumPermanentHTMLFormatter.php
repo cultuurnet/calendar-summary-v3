@@ -6,6 +6,7 @@ use CultuurNet\CalendarSummaryV3\DateFormatter;
 use CultuurNet\CalendarSummaryV3\Translator;
 use CultuurNet\SearchV3\ValueObjects\Offer;
 use CultuurNet\SearchV3\ValueObjects\OpeningHours;
+use CultuurNet\SearchV3\ValueObjects\Status;
 use DateTimeImmutable;
 
 final class MediumPermanentHTMLFormatter implements PermanentFormatterInterface
@@ -28,12 +29,12 @@ final class MediumPermanentHTMLFormatter implements PermanentFormatterInterface
 
     public function format(Offer $offer): string
     {
-        if ($offer->getStatus()->getType() === 'Unavailable') {
-            return '<p class="cf-openinghours">' . $this->translator->translate('cancelled') . '</p>';
-        }
+        if ($offer->getStatus()->getType() !== 'Available') {
+            $statusText = $offer->getStatus()->getType() === 'Unavailable' ?
+                $this->translator->translate('cancelled') :
+                $this->translator->translate('postponed');
 
-        if ($offer->getStatus()->getType() === 'TemporarilyUnavailable') {
-            return '<p class="cf-openinghours">' . $this->translator->translate('postponed') . '</p>';
+            return '<p class="cf-openinghours">' . $statusText . '</p>';
         }
 
         if ($offer->getOpeningHours()) {

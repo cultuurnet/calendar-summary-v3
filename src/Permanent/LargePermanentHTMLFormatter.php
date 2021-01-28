@@ -39,20 +39,12 @@ final class LargePermanentHTMLFormatter implements PermanentFormatterInterface
 
     public function format(Offer $offer): string
     {
-        if ($offer->getStatus()->getType() === 'Unavailable') {
-            return $this->formatSummary(
-                '<p class="cf-openinghours">'
-                . $this->translator->translate('cancelled')
-                . '</p>'
-            );
-        }
+        if ($offer->getStatus()->getType() !== 'Available') {
+            $statusText = $offer->getStatus()->getType() === 'Unavailable' ?
+                $this->translator->translate('cancelled') :
+                $this->translator->translate('postponed');
 
-        if ($offer->getStatus()->getType() === 'TemporarilyUnavailable') {
-            return $this->formatSummary(
-                '<p class="cf-openinghours">'
-                . $this->translator->translate('postponed')
-                . '</p>'
-            );
+            return '<p class="cf-openinghours">' . $statusText . '</p>';
         }
 
         if ($offer->getOpeningHours()) {
