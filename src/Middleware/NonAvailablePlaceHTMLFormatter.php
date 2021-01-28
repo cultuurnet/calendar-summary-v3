@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace CultuurNet\CalendarSummaryV3\Middleware;
 
 use Closure;
+use CultuurNet\CalendarSummaryV3\TranslatedStatusReasonFormatter;
 use CultuurNet\CalendarSummaryV3\Translator;
 use CultuurNet\SearchV3\ValueObjects\Offer;
 use CultuurNet\SearchV3\ValueObjects\Place;
@@ -26,29 +27,17 @@ class NonAvailablePlaceHTMLFormatter implements FormatterMiddleware
     public function format(Offer $offer, Closure $next): string
     {
         if ($this->appliesToOffer($offer)) {
-            $status = $offer->getStatus()->getType();
-            $reason = $offer->getStatus()->getReason();
+            $statusText = $status = $offer->getStatus()->getType() === 'Unavailable' ?
+                $this->translator->translate('permanently_closed') :
+                $this->translator->translate('temporarily_closed');
 
-            return $this->wrapInTag(
-                $status === 'Unavailable' ?
-                    $this->translator->translate('permanently_closed') :
-                    $this->translator->translate('temporarily_closed'),
-                $reason ? $reason->getValueForLanguage($this->translator->getLanguageCode()) : ''
-            );
+            $reasonFormatter = new TranslatedStatusReasonFormatter($this->translator);
+            $titleAttribute = $reasonFormatter->formatAsTitleAttribute($offer->getStatus());
+
+            return '<span ' . $titleAttribute . 'class="cf-meta">' . $statusText . '</span>';
         }
 
         return $next($offer);
-    }
-
-    private function wrapInTag(string $text, string $reason): string
-    {
-        $titleAttribute = '';
-
-        if (!empty($reason)) {
-            $titleAttribute = 'title="' . $reason . '" ';
-        }
-
-        return '<span ' . $titleAttribute . 'class="cf-meta">' . $text . '</span>';
     }
 
     private function appliesToOffer(Offer $offer): bool
