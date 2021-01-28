@@ -4,6 +4,7 @@ namespace CultuurNet\CalendarSummaryV3\Permanent;
 
 use CultuurNet\CalendarSummaryV3\DateFormatter;
 use CultuurNet\CalendarSummaryV3\OpeningHourFormatter;
+use CultuurNet\CalendarSummaryV3\TranslatedStatusReasonFormatter;
 use CultuurNet\CalendarSummaryV3\Translator;
 use CultuurNet\SearchV3\ValueObjects\Offer;
 use CultuurNet\SearchV3\ValueObjects\OpeningHours;
@@ -39,6 +40,17 @@ final class LargePermanentHTMLFormatter implements PermanentFormatterInterface
 
     public function format(Offer $offer): string
     {
+        if ($offer->getStatus()->getType() !== 'Available') {
+            $statusText = $offer->getStatus()->getType() === 'Unavailable' ?
+                $this->translator->translate('cancelled') :
+                $this->translator->translate('postponed');
+
+            $reasonFormatter = new TranslatedStatusReasonFormatter($this->translator);
+            $titleAttribute = $reasonFormatter->formatAsTitleAttribute($offer->getStatus());
+
+            return '<p ' . $titleAttribute . 'class="cf-openinghours">' . $statusText . '</p>';
+        }
+
         if ($offer->getOpeningHours()) {
             return $this->formatSummary($this->generateWeekScheme($offer->getOpeningHours()));
         }
