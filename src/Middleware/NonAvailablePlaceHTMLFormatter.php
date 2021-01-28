@@ -25,25 +25,38 @@ class NonAvailablePlaceHTMLFormatter implements FormatterMiddleware
 
     public function format(Offer $offer, Closure $next): string
     {
-        if ($offer instanceof Place) {
-            if ($offer->getStatus()->getType() === 'Unavailable') {
-                return $this->wrapInTag(
-                    $this->translator->translate('permanently_closed')
-                );
-            }
+        if ($this->appliesToOffer($offer)) {
+            $status = $offer->getStatus()->getType();
+            $reason = $offer->getStatus()->getReason();
 
-            if ($offer->getStatus()->getType() === 'TemporarilyUnavailable') {
-                return $this->wrapInTag(
-                    $this->translator->translate('temporarily_closed')
-                );
-            }
+            return $this->wrapInTag(
+                $status === 'Unavailable' ?
+                    $this->translator->translate('permanently_closed') :
+                    $this->translator->translate('temporarily_closed'),
+                $reason ? $reason->getValueForLanguage($this->translator->getLanguageCode()) : ''
+            );
         }
 
         return $next($offer);
     }
 
-    private function wrapInTag(string $text): string
+    private function wrapInTag(string $text, string $reason): string
     {
-        return '<span class="cf-meta">' . $text . '</span>';
+        $titleAttribute = '';
+
+        if (!empty($reason)) {
+            $titleAttribute = 'title="' . $reason . '" ';
+        }
+
+        return '<span ' . $titleAttribute . 'class="cf-meta">' . $text . '</span>';
+    }
+
+    private function appliesToOffer(Offer $offer): bool
+    {
+        if (!$offer instanceof Place) {
+            return false;
+        }
+
+        return in_array($offer->getStatus()->getType(), ['Unavailable', 'TemporarilyUnavailable']);
     }
 }
