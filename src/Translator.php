@@ -31,6 +31,8 @@ final class Translator
                 'and' => 'and',
                 'permanently_closed' => 'Permanently closed',
                 'temporarily_closed' => 'Temporarily closed',
+                'cancelled' => 'Cancelled',
+                'postponed' => 'Postponed',
             ],
             'nl' => [
                 'from' => 'van',
@@ -43,6 +45,8 @@ final class Translator
                 'and' => 'en',
                 'permanently_closed' => 'Permanent gesloten',
                 'temporarily_closed' => 'Tijdelijk gesloten',
+                'cancelled' => 'Geannuleerd',
+                'postponed' => 'Uitgesteld',
             ],
             'fr' => [
                 'from' => 'du',
@@ -55,6 +59,8 @@ final class Translator
                 'and' => 'et',
                 'permanently_closed' => 'Fermé définitivement',
                 'temporarily_closed' => 'Fermé temporairement',
+                'cancelled' => 'Annulé',
+                'postponed' => 'Reporté',
             ],
             'de' => [
                 'from' => 'von',
@@ -67,7 +73,9 @@ final class Translator
                 'and' => 'und',
                 'permanently_closed' => 'Dauerhaft geschlossen',
                 'temporarily_closed' => 'Vorübergehend geschlossen',
-            ]
+                'cancelled' => 'Abgesagt',
+                'postponed' => 'Verschoben',
+            ],
         ];
 
         $this->translator = new Translate(
