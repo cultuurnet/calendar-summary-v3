@@ -3,8 +3,10 @@
 namespace CultuurNet\CalendarSummaryV3\Permanent;
 
 use CultuurNet\CalendarSummaryV3\Translator;
+use CultuurNet\SearchV3\ValueObjects\Event;
 use CultuurNet\SearchV3\ValueObjects\OpeningHours;
 use CultuurNet\SearchV3\ValueObjects\Place;
+use CultuurNet\SearchV3\ValueObjects\Status;
 use PHPUnit\Framework\TestCase;
 
 /**
@@ -26,6 +28,8 @@ class LargePermanentHTMLFormatterTest extends TestCase
     public function testFormatASimplePermanent(): void
     {
         $place = new Place();
+        $place->setStatus(new Status('Available'));
+
         $place->setStartDate(new \DateTime('25-11-2025'));
         $place->setEndDate(new \DateTime('30-11-2030'));
 
@@ -110,6 +114,7 @@ class LargePermanentHTMLFormatterTest extends TestCase
     public function testFormatAMixedPermanent(): void
     {
         $place = new Place();
+        $place->setStatus(new Status('Available'));
 
         $openingHours1 = new OpeningHours();
         $openingHours1->setDaysOfWeek(['monday','tuesday', 'wednesday']);
@@ -213,6 +218,7 @@ class LargePermanentHTMLFormatterTest extends TestCase
     public function testFormatAComplexPermanent(): void
     {
         $place = new Place();
+        $place->setStatus(new Status('Available'));
 
         $openingHours1 = new OpeningHours();
         $openingHours1->setDaysOfWeek(['monday','tuesday']);
@@ -304,6 +310,28 @@ class LargePermanentHTMLFormatterTest extends TestCase
             .'<span itemprop="closed" content="closed" class="cf-closed cf-meta">gesloten</span> '
             .'</li> </ul>',
             $this->formatter->format($place)
+        );
+    }
+
+    public function testFormatAnUnavailablePermanent(): void
+    {
+        $event = new Event();
+        $event->setStatus(new Status('Unavailable'));
+
+        $this->assertEquals(
+            '<p class="cf-openinghours">Geannuleerd</p>',
+            $this->formatter->format($event)
+        );
+    }
+
+    public function testFormatATemporarilyUnavailablePermanent(): void
+    {
+        $event = new Event();
+        $event->setStatus(new Status('TemporarilyUnavailable'));
+
+        $this->assertEquals(
+            '<p class="cf-openinghours">Uitgesteld</p>',
+            $this->formatter->format($event)
         );
     }
 }
