@@ -5,7 +5,7 @@
 ## Installation
 
 ```bash
-composer require cultuurnet/search-v3
+composer require cultuurnet/calendar-summary-v3
 ```
 
 ## How it works
