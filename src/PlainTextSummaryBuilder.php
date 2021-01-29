@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace CultuurNet\CalendarSummaryV3;
 
+use CultuurNet\SearchV3\ValueObjects\Status;
+
 final class PlainTextSummaryBuilder
 {
     /**
@@ -150,5 +152,21 @@ final class PlainTextSummaryBuilder
     {
         $formatted = implode(' ', $line);
         return $lowercaseFirstCharacter ? lcfirst($formatted) : ucfirst($formatted);
+    }
+
+    public function appendStatus(Status $status): self
+    {
+        $c = clone $this;
+
+        switch ($status->getType()) {
+            case 'Unavailable':
+                $c->workingLine[] = '(' . $this->translator->translate('cancelled') . ')';
+                return $c;
+            case 'TemporarilyUnavailable':
+                $c->workingLine[] = '(' . $this->translator->translate('postponed') . ')';
+                return $c;
+            default:
+                return $c;
+        }
     }
 }

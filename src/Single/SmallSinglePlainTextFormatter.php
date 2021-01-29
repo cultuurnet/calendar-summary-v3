@@ -39,7 +39,9 @@ final class SmallSinglePlainTextFormatter implements SingleFormatterInterface
             $output = $this->formatMoreDays($startDate, $endDate);
         }
 
-        return $output . $this->appendOptionalStatus($offer->getStatus());
+        return PlainTextSummaryBuilder::start($this->translator)
+            ->append($output)
+            ->appendStatus($offer->getStatus());
     }
 
     private function formatSameDay(DateTimeInterface $date): string
@@ -61,17 +63,5 @@ final class SmallSinglePlainTextFormatter implements SingleFormatterInterface
             ->from($startDayNumber, $startMonthName)
             ->till($endDayNumber, $endMonthName)
             ->toString();
-    }
-
-    private function appendOptionalStatus(Status $status): string
-    {
-        switch ($status->getType()) {
-            case 'Unavailable':
-                return ' (' . $this->translator->translate('cancelled') . ')';
-            case 'TemporarilyUnavailable':
-                return ' (' . $this->translator->translate('postponed') . ')';
-            default:
-                return '';
-        }
     }
 }
