@@ -19,7 +19,7 @@ class MediumSinglePlainTextFormatterTest extends TestCase
         $this->formatter = new MediumSinglePlainTextFormatter(new Translator('nl_NL'));
     }
 
-    public function testFormatHTMLSingleDateMediumOneDay(): void
+    public function testFormatPlainTextSingleDateMediumOneDay(): void
     {
         $event = new Event();
         $event->setStatus(new Status('Available'));
@@ -32,7 +32,7 @@ class MediumSinglePlainTextFormatterTest extends TestCase
         );
     }
 
-    public function testFormatHTMLSingleDateMediumWithLeadingZeroOneDay(): void
+    public function testFormatPlainTextSingleDateMediumWithLeadingZeroOneDay(): void
     {
         $event = new Event();
         $event->setStatus(new Status('Available'));
@@ -45,7 +45,7 @@ class MediumSinglePlainTextFormatterTest extends TestCase
         );
     }
 
-    public function testFormatHTMLSingleDateMediumMoreDays(): void
+    public function testFormatPlainTextSingleDateMediumMoreDays(): void
     {
         $event = new Event();
         $event->setStatus(new Status('Available'));
@@ -58,7 +58,7 @@ class MediumSinglePlainTextFormatterTest extends TestCase
         );
     }
 
-    public function testFormatHTMLSingleDateMediumWithLeadingZeroMoreDays(): void
+    public function testFormatPlainTextSingleDateMediumWithLeadingZeroMoreDays(): void
     {
         $event = new Event();
         $event->setStatus(new Status('Available'));
@@ -71,7 +71,7 @@ class MediumSinglePlainTextFormatterTest extends TestCase
         );
     }
 
-    public function testFormatHTMLSingleDateMediumOneDayWithUnavailableStatus(): void
+    public function testFormatPlainTextSingleDateMediumOneDayWithUnavailableStatus(): void
     {
         $event = new Event();
         $event->setStatus(new Status('Unavailable'));
@@ -84,7 +84,7 @@ class MediumSinglePlainTextFormatterTest extends TestCase
         );
     }
 
-    public function testFormatHTMLSingleDateMediumOneDayWithTemporarilyUnavailableStatus(): void
+    public function testFormatPlainTextSingleDateMediumOneDayWithTemporarilyUnavailableStatus(): void
     {
         $event = new Event();
         $event->setStatus(new Status('TemporarilyUnavailable'));
