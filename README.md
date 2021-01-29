@@ -56,13 +56,15 @@ Using an unsupported format will throw an exception.
 ## Example
 ```php
 <?php
-    $event = new Event();
+
+// Make sure to either deserialize the Event/Place from JSON, or set the necessary properties through setCalendarType() etc.
+$event = new Event();
     
-    // This will format the calendar info of $event in an medium HTML output 
-    $calendarHTML = new CalendarHTMLFormatter('nl_BE', true, 'Europe/Brussels');
-    $calendarHTML->format($event, 'md');
+// This will format the calendar info of $event in an medium HTML output 
+$calendarHTML = new CalendarHTMLFormatter('nl_BE', true, 'Europe/Brussels');
+$calendarHTML->format($event, 'md');
     
-    // This will format the calendar info of $event in a large plain text output
-    $calendarPlainText = new CalendarPlainTextFormatter('fr_BE', true, 'Europe/Paris');
-    $calendarPlainText->format($event, 'lg');
+// This will format the calendar info of $event in a large plain text output
+$calendarPlainText = new CalendarPlainTextFormatter('fr_BE', true, 'Europe/Paris');
+$calendarPlainText->format($event, 'lg');
 ```
