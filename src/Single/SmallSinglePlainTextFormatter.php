@@ -41,7 +41,8 @@ final class SmallSinglePlainTextFormatter implements SingleFormatterInterface
 
         return PlainTextSummaryBuilder::start($this->translator)
             ->append($output)
-            ->appendStatus($offer->getStatus());
+            ->appendStatus($offer->getStatus())
+            ->toString();
     }
 
     private function formatSameDay(DateTimeInterface $date): string
