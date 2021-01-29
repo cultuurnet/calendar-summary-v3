@@ -38,7 +38,10 @@ final class MediumSinglePlainTextFormatter implements SingleFormatterInterface
             $output = $this->formatMoreDays($startDate, $endDate);
         }
 
-        return $output;
+        return PlainTextSummaryBuilder::start($this->translator)
+            ->append($output)
+            ->appendStatus($offer->getStatus())
+            ->toString();
     }
 
     private function formatSameDay(DateTimeInterface $date): string
