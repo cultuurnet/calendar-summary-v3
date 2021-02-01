@@ -33,26 +33,25 @@ final class SmallPeriodicPlainTextFormatter implements PeriodicFormatterInterfac
         $startDate = $offer->getStartDate()->setTimezone(new \DateTimeZone(date_default_timezone_get()));
         $startDate->setTime(0, 0, 1);
 
+
         if (DateComparison::inTheFuture($startDate)) {
-            return $this->formatNotStarted($startDate);
+            return $this->formatNotStarted($startDate)->appendStatus($offer->getStatus())->toString();
         }
 
         $endDate = $offer->getEndDate()->setTimezone(new \DateTimeZone(date_default_timezone_get()));
-        return $this->formatStarted($endDate);
+        return $this->formatStarted($endDate)->appendStatus($offer->getStatus())->toString();
     }
 
-    private function formatStarted(DateTimeInterface $endDate): string
+    private function formatStarted(DateTimeInterface $endDate): PlainTextSummaryBuilder
     {
         return PlainTextSummaryBuilder::start($this->translator)
-            ->till($this->formatDate($endDate))
-            ->toString();
+            ->till($this->formatDate($endDate));
     }
 
-    private function formatNotStarted(DateTimeInterface $startDate): string
+    private function formatNotStarted(DateTimeInterface $startDate): PlainTextSummaryBuilder
     {
         return PlainTextSummaryBuilder::start($this->translator)
-            ->fromPeriod($this->formatDate($startDate))
-            ->toString();
+            ->fromPeriod($this->formatDate($startDate));
     }
 
     private function formatDate(DateTimeInterface $date): string
