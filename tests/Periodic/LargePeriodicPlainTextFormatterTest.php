@@ -7,10 +7,6 @@ use CultuurNet\SearchV3\ValueObjects\OpeningHours;
 use CultuurNet\SearchV3\ValueObjects\Place;
 use PHPUnit\Framework\TestCase;
 
-/**
- * Provide unit tests for large plain text periodic formatter.
- * @package CultuurNet\CalendarSummaryV3\Periodic
- */
 class LargePeriodicPlainTextFormatterTest extends TestCase
 {
     /**
