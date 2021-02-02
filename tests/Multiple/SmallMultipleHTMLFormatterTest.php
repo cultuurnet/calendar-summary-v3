@@ -4,6 +4,7 @@ namespace CultuurNet\CalendarSummaryV3\Multiple;
 
 use CultuurNet\CalendarSummaryV3\Translator;
 use CultuurNet\SearchV3\ValueObjects\Event;
+use CultuurNet\SearchV3\ValueObjects\Status;
 use PHPUnit\Framework\TestCase;
 
 class SmallMultipleHTMLFormatterTest extends TestCase
@@ -21,6 +22,7 @@ class SmallMultipleHTMLFormatterTest extends TestCase
     public function testFormatMultipleWithoutLeadingZeroes(): void
     {
         $offer = new Event();
+        $offer->setStatus(new Status('Available'));
         $offer->setStartDate(new \DateTime('25-11-2025'));
         $offer->setEndDate(new \DateTime('30-11-2030'));
 
@@ -34,6 +36,7 @@ class SmallMultipleHTMLFormatterTest extends TestCase
     public function testFormatMultipleWithLeadingZeroes(): void
     {
         $offer = new Event();
+        $offer->setStatus(new Status('Available'));
         $offer->setStartDate(new \DateTime('04-03-2025'));
         $offer->setEndDate(new \DateTime('08-03-2030'));
 
@@ -47,6 +50,7 @@ class SmallMultipleHTMLFormatterTest extends TestCase
     public function testFormatMultipleMonthWithoutLeadingZero(): void
     {
         $offer = new Event();
+        $offer->setStatus(new Status('Available'));
         $offer->setStartDate(new \DateTime('04-10-2025'));
         $offer->setEndDate(new \DateTime('08-10-2030'));
 
@@ -60,6 +64,7 @@ class SmallMultipleHTMLFormatterTest extends TestCase
     public function testFormatAMultipleWithSameBeginAndEndDate(): void
     {
         $offer = new Event();
+        $offer->setStatus(new Status('Available'));
         $offer->setStartDate(new \DateTime('08-10-2025'));
         $offer->setEndDate(new \DateTime('08-10-2025'));
 
