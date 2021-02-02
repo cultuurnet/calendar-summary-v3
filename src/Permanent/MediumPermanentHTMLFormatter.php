@@ -3,11 +3,10 @@
 namespace CultuurNet\CalendarSummaryV3\Permanent;
 
 use CultuurNet\CalendarSummaryV3\DateFormatter;
-use CultuurNet\CalendarSummaryV3\TranslatedStatusReasonFormatter;
+use CultuurNet\CalendarSummaryV3\HtmlStatusFormatter;
 use CultuurNet\CalendarSummaryV3\Translator;
 use CultuurNet\SearchV3\ValueObjects\Offer;
 use CultuurNet\SearchV3\ValueObjects\OpeningHours;
-use CultuurNet\SearchV3\ValueObjects\Status;
 use DateTimeImmutable;
 
 final class MediumPermanentHTMLFormatter implements PermanentFormatterInterface
@@ -31,14 +30,11 @@ final class MediumPermanentHTMLFormatter implements PermanentFormatterInterface
     public function format(Offer $offer): string
     {
         if ($offer->getStatus()->getType() !== 'Available') {
-            $statusText = $offer->getStatus()->getType() === 'Unavailable' ?
-                $this->translator->translate('cancelled') :
-                $this->translator->translate('postponed');
-
-            $reasonFormatter = new TranslatedStatusReasonFormatter($this->translator);
-            $titleAttribute = $reasonFormatter->formatAsTitleAttribute($offer->getStatus());
-
-            return '<p ' . $titleAttribute . 'class="cf-openinghours">' . ucfirst($statusText) . '</p>';
+            return HtmlStatusFormatter::forOffer($offer, $this->translator)
+                ->withElement('p')
+                ->withoutBraces()
+                ->capitalize()
+                ->toString();
         }
 
         if ($offer->getOpeningHours()) {

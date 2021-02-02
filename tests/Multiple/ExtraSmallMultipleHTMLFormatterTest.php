@@ -4,6 +4,7 @@ namespace CultuurNet\CalendarSummaryV3\Multiple;
 
 use CultuurNet\CalendarSummaryV3\Translator;
 use CultuurNet\SearchV3\ValueObjects\Event;
+use CultuurNet\SearchV3\ValueObjects\Status;
 use PHPUnit\Framework\TestCase;
 
 class ExtraSmallMultipleHTMLFormatterTest extends TestCase
@@ -21,6 +22,7 @@ class ExtraSmallMultipleHTMLFormatterTest extends TestCase
     public function testFormatMultipleWithoutLeadingZeroes(): void
     {
         $offer = new Event();
+        $offer->setStatus(new Status('Available'));
         $offer->setStartDate(new \DateTime('25-11-2025'));
         $offer->setEndDate(new \DateTime('30-11-2030'));
 
@@ -34,6 +36,7 @@ class ExtraSmallMultipleHTMLFormatterTest extends TestCase
     public function testFormatMultipleWithLeadingZeroes(): void
     {
         $offer = new Event();
+        $offer->setStatus(new Status('Available'));
         $offer->setStartDate(new \DateTime('04-03-2025'));
         $offer->setEndDate(new \DateTime('08-03-2030'));
 
@@ -44,9 +47,25 @@ class ExtraSmallMultipleHTMLFormatterTest extends TestCase
         );
     }
 
+    public function testFormatMultipleWithoutLeadingZeroesWithUnavailableStatus(): void
+    {
+        $offer = new Event();
+        $offer->setStatus(new Status('Unavailable'));
+        $offer->setStartDate(new \DateTime('25-11-2025'));
+        $offer->setEndDate(new \DateTime('30-11-2030'));
+
+        $this->assertEquals(
+            '<span class="cf-from cf-meta">Van</span> <span class="cf-date">25/11/25</span> '
+            . '<span class="cf-to cf-meta">tot</span> <span class="cf-date">30/11/30</span>'
+            . ' <span class="cf-status">(geannuleerd)</span>',
+            $this->formatter->format($offer)
+        );
+    }
+
     public function testFormatMultipleMonthWithoutLeadingZero(): void
     {
         $offer = new Event();
+        $offer->setStatus(new Status('Available'));
         $offer->setStartDate(new \DateTime('04-10-2025'));
         $offer->setEndDate(new \DateTime('08-10-2030'));
 
@@ -60,6 +79,7 @@ class ExtraSmallMultipleHTMLFormatterTest extends TestCase
     public function testFormatAMultipleWithSameBeginAndEndDay(): void
     {
         $offer = new Event();
+        $offer->setStatus(new Status('Available'));
         $offer->setStartDate(new \DateTime('08-10-2025 12:00'));
         $offer->setEndDate(new \DateTime('08-10-2025 14:00'));
 

@@ -36,7 +36,7 @@ class NonAvailablePlaceHTMLFormatterTest extends TestCase
             }
         );
 
-        $this->assertEquals('<span class="cf-meta">Permanent gesloten</span>', $result);
+        $this->assertEquals('<span class="cf-status">Permanent gesloten</span>', $result);
     }
 
     public function testWillInterceptTemporarilyUnavailablePlace(): void
@@ -51,7 +51,7 @@ class NonAvailablePlaceHTMLFormatterTest extends TestCase
             }
         );
 
-        $this->assertEquals('<span class="cf-meta">Tijdelijk gesloten</span>', $result);
+        $this->assertEquals('<span class="cf-status">Tijdelijk gesloten</span>', $result);
     }
 
     public function testWillIgnoreAvailablePlaces(): void
@@ -126,7 +126,7 @@ class NonAvailablePlaceHTMLFormatterTest extends TestCase
             }
         );
 
-        $this->assertEquals('<span title="Covid-19" class="cf-meta">Permanent gesloten</span>', $result);
+        $this->assertEquals('<span title="Covid-19" class="cf-status">Permanent gesloten</span>', $result);
     }
 
     public function testItWillNotAddTitleAttributeWhenReasonIsNotAvailableInCorrectLanguage(): void
@@ -141,6 +141,6 @@ class NonAvailablePlaceHTMLFormatterTest extends TestCase
             }
         );
 
-        $this->assertEquals('<span class="cf-meta">Permanent gesloten</span>', $result);
+        $this->assertEquals('<span class="cf-status">Permanent gesloten</span>', $result);
     }
 }
