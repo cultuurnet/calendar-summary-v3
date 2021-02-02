@@ -3,8 +3,10 @@
 namespace CultuurNet\CalendarSummaryV3\Periodic;
 
 use CultuurNet\CalendarSummaryV3\Translator;
+use CultuurNet\SearchV3\ValueObjects\Event;
 use CultuurNet\SearchV3\ValueObjects\OpeningHours;
 use CultuurNet\SearchV3\ValueObjects\Place;
+use CultuurNet\SearchV3\ValueObjects\Status;
 use PHPUnit\Framework\TestCase;
 
 /**
@@ -26,6 +28,7 @@ class LargePeriodicHTMLFormatterTest extends TestCase
     public function testFormatAPeriodWithSingleTimeBlocks(): void
     {
         $place = new Place();
+        $place->setStatus(new Status('Available'));
         $place->setStartDate(new \DateTime('25-11-2025'));
         $place->setEndDate(new \DateTime('30-11-2030'));
 
@@ -99,9 +102,89 @@ class LargePeriodicHTMLFormatterTest extends TestCase
         );
     }
 
+    public function testFormatAPeriodWithSingleTimeBlocksWithUnavailableStatus(): void
+    {
+        $event = new Event();
+        $event->setStatus(new Status('Unavailable'));
+        $event->setStartDate(new \DateTime('25-11-2025'));
+        $event->setEndDate(new \DateTime('30-11-2030'));
+
+        $openingHours1 = new OpeningHours();
+        $openingHours1->setDaysOfWeek(['monday','tuesday', 'wednesday']);
+        $openingHours1->setOpens('00:00');
+        $openingHours1->setCloses('17:00');
+
+        $openingHours2 = new OpeningHours();
+        $openingHours2->setDaysOfWeek(['friday', 'saturday']);
+        $openingHours2->setOpens('10:00');
+        $openingHours2->setCloses('18:00');
+
+        $openingHoursData = [$openingHours1, $openingHours2];
+
+        $event->setOpeningHours($openingHoursData);
+
+        $this->assertEquals(
+            '<p class="cf-period"> '
+            .'<time itemprop="startDate" datetime="2025-11-25"> '
+            .'<span class="cf-date">25 november 2025</span> '
+            .'</time> '
+            .'<span class="cf-to cf-meta">tot</span> '
+            .'<time itemprop="endDate" datetime="2030-11-30"> '
+            .'<span class="cf-date">30 november 2030</span> '
+            .'</time> '
+            .'</p> '
+            .'<p class="cf-openinghours">Open op:</p> '
+            .'<ul class="list-unstyled"> '
+            .'<meta itemprop="openingHours" datetime="Ma 0:00-17:00"> </meta> '
+            .'<li itemprop="openingHoursSpecification"> '
+            .'<span class="cf-days">Maandag</span> '
+            .'<span itemprop="opens" content="0:00" class="cf-from cf-meta">van</span> '
+            .'<span class="cf-time">0:00</span> '
+            .'<span itemprop="closes" content="17:00" class="cf-to cf-meta">tot</span> '
+            .'<span class="cf-time">17:00</span> '
+            .'</li> '
+            .'<meta itemprop="openingHours" datetime="Di 0:00-17:00"> </meta> '
+            .'<li itemprop="openingHoursSpecification"> '
+            .'<span class="cf-days">Dinsdag</span> '
+            .'<span itemprop="opens" content="0:00" class="cf-from cf-meta">van</span> '
+            .'<span class="cf-time">0:00</span> '
+            .'<span itemprop="closes" content="17:00" class="cf-to cf-meta">tot</span> '
+            .'<span class="cf-time">17:00</span> '
+            .'</li> '
+            .'<meta itemprop="openingHours" datetime="Wo 0:00-17:00"> </meta> '
+            .'<li itemprop="openingHoursSpecification"> '
+            .'<span class="cf-days">Woensdag</span> '
+            .'<span itemprop="opens" content="0:00" class="cf-from cf-meta">van</span> '
+            .'<span class="cf-time">0:00</span> '
+            .'<span itemprop="closes" content="17:00" class="cf-to cf-meta">tot</span> '
+            .'<span class="cf-time">17:00</span> '
+            .'</li> '
+            .'<meta itemprop="openingHours" datetime="Vr 10:00-18:00"> </meta> '
+            .'<li itemprop="openingHoursSpecification"> '
+            .'<span class="cf-days">Vrijdag</span> '
+            .'<span itemprop="opens" content="10:00" class="cf-from cf-meta">van</span> '
+            .'<span class="cf-time">10:00</span> '
+            .'<span itemprop="closes" content="18:00" class="cf-to cf-meta">tot</span> '
+            .'<span class="cf-time">18:00</span> '
+            .'</li> '
+            .'<meta itemprop="openingHours" datetime="Za 10:00-18:00"> </meta> '
+            .'<li itemprop="openingHoursSpecification"> '
+            .'<span class="cf-days">Zaterdag</span> '
+            .'<span itemprop="opens" content="10:00" class="cf-from cf-meta">van</span> '
+            .'<span class="cf-time">10:00</span> '
+            .'<span itemprop="closes" content="18:00" class="cf-to cf-meta">tot</span> '
+            .'<span class="cf-time">18:00</span> '
+            .'</li> </ul>'
+            . ' '
+            . '<span class="cf-status">(geannuleerd)</span>',
+            $this->formatter->format($event)
+        );
+    }
+
     public function testFormatAPeriodWithSplitTimeBlocks(): void
     {
         $place = new Place();
+        $place->setStatus(new Status('Available'));
         $place->setStartDate(new \DateTime('25-11-2025'));
         $place->setEndDate(new \DateTime('30-11-2030'));
 
@@ -208,6 +291,7 @@ class LargePeriodicHTMLFormatterTest extends TestCase
     public function testFormatAPeriodWithComplexTimeBlocks(): void
     {
         $place = new Place();
+        $place->setStatus(new Status('Available'));
         $place->setStartDate(new \DateTime('25-11-2025'));
         $place->setEndDate(new \DateTime('30-11-2030'));
 
@@ -303,6 +387,7 @@ class LargePeriodicHTMLFormatterTest extends TestCase
     public function testFormatAPeriodWithoutTimeBlocks(): void
     {
         $place = new Place();
+        $place->setStatus(new Status('Available'));
         $place->setStartDate(new \DateTime('25-11-2025'));
         $place->setEndDate(new \DateTime('30-11-2030'));
 

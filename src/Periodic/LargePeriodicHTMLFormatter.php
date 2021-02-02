@@ -3,6 +3,7 @@
 namespace CultuurNet\CalendarSummaryV3\Periodic;
 
 use CultuurNet\CalendarSummaryV3\DateFormatter;
+use CultuurNet\CalendarSummaryV3\HtmlStatusFormatter;
 use CultuurNet\CalendarSummaryV3\OpeningHourFormatter;
 use CultuurNet\CalendarSummaryV3\Translator;
 use CultuurNet\SearchV3\ValueObjects\Offer;
@@ -39,7 +40,11 @@ final class LargePeriodicHTMLFormatter implements PeriodicFormatterInterface
             $output .= $this->generateWeekScheme($offer->getOpeningHours());
         }
 
-        return $this->formatSummary($output);
+        $optionalStatus = HtmlStatusFormatter::forOffer($offer, $this->translator)
+            ->withBraces()
+            ->toString();
+
+        return trim($this->formatSummary($output) . ' ' . $optionalStatus);
     }
 
     private function formatSummary(string $calsum): string
