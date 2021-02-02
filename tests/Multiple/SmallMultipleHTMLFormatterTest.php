@@ -33,6 +33,21 @@ class SmallMultipleHTMLFormatterTest extends TestCase
         );
     }
 
+    public function testFormatMultipleWithoutLeadingZeroesWithUnavailableStatus(): void
+    {
+        $offer = new Event();
+        $offer->setStatus(new Status('Unavailable'));
+        $offer->setStartDate(new \DateTime('25-11-2025'));
+        $offer->setEndDate(new \DateTime('30-11-2030'));
+
+        $this->assertEquals(
+            '<span class="cf-from cf-meta">Van</span> <span class="cf-date">25 november 2025</span> '
+            . '<span class="cf-to cf-meta">tot</span> <span class="cf-date">30 november 2030</span>'
+            . ' <span class="cf-status">(geannuleerd)</span>',
+            $this->formatter->format($offer)
+        );
+    }
+
     public function testFormatMultipleWithLeadingZeroes(): void
     {
         $offer = new Event();
