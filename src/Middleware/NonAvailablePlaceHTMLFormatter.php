@@ -34,7 +34,7 @@ class NonAvailablePlaceHTMLFormatter implements FormatterMiddleware
             $reasonFormatter = new TranslatedStatusReasonFormatter($this->translator);
             $titleAttribute = $reasonFormatter->formatAsTitleAttribute($offer->getStatus());
 
-            return '<span ' . $titleAttribute . 'class="cf-meta">' . $statusText . '</span>';
+            return '<span ' . $titleAttribute . 'class="cf-status">' . $statusText . '</span>';
         }
 
         return $next($offer);
