@@ -320,7 +320,7 @@ class LargePermanentHTMLFormatterTest extends TestCase
         $event->setStatus(new Status('Unavailable'));
 
         $this->assertEquals(
-            '<p class="cf-openinghours">Geannuleerd</p>',
+            '<p class="cf-status">Geannuleerd</p>',
             $this->formatter->format($event)
         );
     }
@@ -331,7 +331,7 @@ class LargePermanentHTMLFormatterTest extends TestCase
         $event->setStatus(new Status('TemporarilyUnavailable'));
 
         $this->assertEquals(
-            '<p class="cf-openinghours">Uitgesteld</p>',
+            '<p class="cf-status">Uitgesteld</p>',
             $this->formatter->format($event)
         );
     }
@@ -343,7 +343,7 @@ class LargePermanentHTMLFormatterTest extends TestCase
         $event->setStatus(new Status('Unavailable', new TranslatedString(['nl' => 'Covid-19'])));
 
         $this->assertEquals(
-            '<p title="Covid-19" class="cf-openinghours">Geannuleerd</p>',
+            '<p title="Covid-19" class="cf-status">Geannuleerd</p>',
             $this->formatter->format($event)
         );
     }
@@ -354,7 +354,7 @@ class LargePermanentHTMLFormatterTest extends TestCase
         $event->setStatus(new Status('Unavailable', new TranslatedString(['fr' => 'Sacre bleu'])));
 
         $this->assertEquals(
-            '<p class="cf-openinghours">Geannuleerd</p>',
+            '<p class="cf-status">Geannuleerd</p>',
             $this->formatter->format($event)
         );
     }
