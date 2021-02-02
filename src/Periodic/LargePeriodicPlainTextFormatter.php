@@ -47,7 +47,7 @@ final class LargePeriodicPlainTextFormatter implements PeriodicFormatterInterfac
                 ->append($this->generateWeekScheme($offer->getOpeningHours()));
         }
 
-        return $summary->toString();
+        return $summary->appendStatus($offer->getStatus())->toString();
     }
 
     private function generateDates(DateTime $dateFrom, DateTime $dateTo): string

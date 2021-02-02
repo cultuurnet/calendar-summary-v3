@@ -34,13 +34,19 @@ final class MediumPeriodicPlainTextFormatter implements PeriodicFormatterInterfa
         $endDate = $offer->getEndDate()->setTimezone(new \DateTimeZone(date_default_timezone_get()));
         $formattedEndDate = $this->formatter->formatAsFullDate($endDate);
 
+        $summaryBuilder = PlainTextSummaryBuilder::start($this->translator);
+
         if ($formattedStartDate === $formattedEndDate) {
-            return PlainTextSummaryBuilder::singleLine($formattedStartDayOfWeek, $formattedStartDate);
+            return $summaryBuilder->append($formattedStartDayOfWeek)
+                ->append($formattedStartDate)
+                ->appendStatus($offer->getStatus())
+                ->toString();
         }
 
-        return PlainTextSummaryBuilder::start($this->translator)
+        return $summaryBuilder
             ->from($formattedStartDate)
             ->till($formattedEndDate)
+            ->appendStatus($offer->getStatus())
             ->toString();
     }
 }

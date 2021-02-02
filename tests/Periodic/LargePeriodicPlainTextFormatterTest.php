@@ -3,14 +3,12 @@
 namespace CultuurNet\CalendarSummaryV3\Periodic;
 
 use CultuurNet\CalendarSummaryV3\Translator;
+use CultuurNet\SearchV3\ValueObjects\Event;
 use CultuurNet\SearchV3\ValueObjects\OpeningHours;
 use CultuurNet\SearchV3\ValueObjects\Place;
+use CultuurNet\SearchV3\ValueObjects\Status;
 use PHPUnit\Framework\TestCase;
 
-/**
- * Provide unit tests for large plain text periodic formatter.
- * @package CultuurNet\CalendarSummaryV3\Periodic
- */
 class LargePeriodicPlainTextFormatterTest extends TestCase
 {
     /**
@@ -26,6 +24,7 @@ class LargePeriodicPlainTextFormatterTest extends TestCase
     public function testFormatAPeriodWithSingleTimeBlocks(): void
     {
         $place = new Place();
+        $place->setStatus(new Status('Available'));
         $place->setStartDate(new \DateTime('25-11-2025'));
         $place->setEndDate(new \DateTime('30-11-2030'));
 
@@ -54,9 +53,42 @@ class LargePeriodicPlainTextFormatterTest extends TestCase
         );
     }
 
+    public function testFormatAPeriodWithSingleTimeBlocksWithUnavailableStatus(): void
+    {
+        $event = new Event();
+        $event->setStatus(new Status('Unavailable'));
+        $event->setStartDate(new \DateTime('25-11-2025'));
+        $event->setEndDate(new \DateTime('30-11-2030'));
+
+        $openingHours1 = new OpeningHours();
+        $openingHours1->setDaysOfWeek(['monday','tuesday', 'wednesday']);
+        $openingHours1->setOpens('00:01');
+        $openingHours1->setCloses('17:00');
+
+        $openingHours2 = new OpeningHours();
+        $openingHours2->setDaysOfWeek(['friday', 'saturday']);
+        $openingHours2->setOpens('10:00');
+        $openingHours2->setCloses('18:00');
+
+        $openingHoursData = [$openingHours1, $openingHours2];
+
+        $event->setOpeningHours($openingHoursData);
+
+        $this->assertEquals(
+            'Van 25 november 2025 tot 30 november 2030'. PHP_EOL
+            . '(maandag van 0:01 tot 17:00, '
+            . 'dinsdag van 0:01 tot 17:00, '
+            . 'woensdag van 0:01 tot 17:00, '
+            . 'vrijdag van 10:00 tot 18:00, '
+            . 'zaterdag van 10:00 tot 18:00) (geannuleerd)',
+            $this->formatter->format($event)
+        );
+    }
+
     public function testFormatAPeriodWithSplitTimeBlocks(): void
     {
         $place = new Place();
+        $place->setStatus(new Status('Available'));
         $place->setStartDate(new \DateTime('25-11-2025'));
         $place->setEndDate(new \DateTime('30-11-2030'));
 
@@ -98,6 +130,7 @@ class LargePeriodicPlainTextFormatterTest extends TestCase
     public function testFormatAPeriodWithComplexTimeBlocks(): void
     {
         $place = new Place();
+        $place->setStatus(new Status('Available'));
         $place->setStartDate(new \DateTime('25-11-2025'));
         $place->setEndDate(new \DateTime('30-11-2030'));
 
@@ -143,12 +176,26 @@ class LargePeriodicPlainTextFormatterTest extends TestCase
     public function testFormatAPeriodWithoutTimeBlocks(): void
     {
         $place = new Place();
+        $place->setStatus(new Status('Available'));
         $place->setStartDate(new \DateTime('25-11-2025'));
         $place->setEndDate(new \DateTime('30-11-2030'));
 
         $this->assertEquals(
             'Van 25 november 2025 tot 30 november 2030',
             $this->formatter->format($place)
+        );
+    }
+
+    public function testFormatAPeriodWithoutTimeBlocksWithStatusUnavailable(): void
+    {
+        $event = new Event();
+        $event->setStatus(new Status('Unavailable'));
+        $event->setStartDate(new \DateTime('25-11-2025'));
+        $event->setEndDate(new \DateTime('30-11-2030'));
+
+        $this->assertEquals(
+            'Van 25 november 2025 tot 30 november 2030 (geannuleerd)',
+            $this->formatter->format($event)
         );
     }
 }

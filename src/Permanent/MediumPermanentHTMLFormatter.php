@@ -38,7 +38,7 @@ final class MediumPermanentHTMLFormatter implements PermanentFormatterInterface
             $reasonFormatter = new TranslatedStatusReasonFormatter($this->translator);
             $titleAttribute = $reasonFormatter->formatAsTitleAttribute($offer->getStatus());
 
-            return '<p ' . $titleAttribute . 'class="cf-openinghours">' . $statusText . '</p>';
+            return '<p ' . $titleAttribute . 'class="cf-openinghours">' . ucfirst($statusText) . '</p>';
         }
 
         if ($offer->getOpeningHours()) {

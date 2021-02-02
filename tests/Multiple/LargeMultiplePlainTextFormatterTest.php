@@ -4,6 +4,7 @@ namespace CultuurNet\CalendarSummaryV3\Multiple;
 
 use CultuurNet\CalendarSummaryV3\Translator;
 use CultuurNet\SearchV3\ValueObjects\Event;
+use CultuurNet\SearchV3\ValueObjects\Status;
 use PHPUnit\Framework\TestCase;
 
 class LargeMultiplePlainTextFormatterTest extends TestCase
@@ -23,9 +24,11 @@ class LargeMultiplePlainTextFormatterTest extends TestCase
     {
         $subEvents = json_decode(file_get_contents(__DIR__ . '/data/subEvents.json'), true);
         $event = new Event();
+        $event->setStatus(new Status('Available'));
         $newEvents = array();
         foreach ($subEvents as $subEvent) {
             $e = new Event();
+            $e->setStatus(new Status('Available'));
             $e->setStartDate(new \DateTime($subEvent['startDate']));
             $e->setEndDate(new \DateTime($subEvent['endDate']));
             $newEvents[] = $e;
@@ -50,13 +53,48 @@ class LargeMultiplePlainTextFormatterTest extends TestCase
         );
     }
 
+    public function testFormatPlainTextMultipleDateLargeOneDayWithUnavailableStatus(): void
+    {
+        $subEvents = json_decode(file_get_contents(__DIR__ . '/data/subEvents.json'), true);
+        $event = new Event();
+        $event->setStatus(new Status('Unavailable'));
+        $newEvents = array();
+        foreach ($subEvents as $subEvent) {
+            $e = new Event();
+            $e->setStatus(new Status('Unavailable'));
+            $e->setStartDate(new \DateTime($subEvent['startDate']));
+            $e->setEndDate(new \DateTime($subEvent['endDate']));
+            $newEvents[] = $e;
+        }
+        $event->setSubEvents($newEvents);
+
+        $expectedOutput = 'Donderdag 9 november 2017';
+        $expectedOutput .= ' van 20:00 tot 22:00 (geannuleerd)' . PHP_EOL;
+
+        $expectedOutput .= 'Donderdag 16 november 2017';
+        $expectedOutput .= ' van 20:00 tot 22:00 (geannuleerd)' . PHP_EOL;
+
+        $expectedOutput .= 'Donderdag 23 november 2017';
+        $expectedOutput .= ' van 20:00 tot 22:00 (geannuleerd)' . PHP_EOL;
+
+        $expectedOutput .= 'Donderdag 30 november 2017';
+        $expectedOutput .= ' van 20:00 tot 22:00 (geannuleerd)';
+
+        $this->assertEquals(
+            $expectedOutput,
+            $this->formatter->format($event)
+        );
+    }
+
     public function testFormatPlainTextMultipleDateLargeMoreDays(): void
     {
         $subEvents = json_decode(file_get_contents(__DIR__ . '/data/subEventsMoreDays.json'), true);
         $event = new Event();
+        $event->setStatus(new Status('Available'));
         $newEvents = array();
         foreach ($subEvents as $subEvent) {
             $e = new Event();
+            $e->setStatus(new Status('Available'));
             $e->setStartDate(new \DateTime($subEvent['startDate']));
             $e->setEndDate(new \DateTime($subEvent['endDate']));
             $newEvents[] = $e;

@@ -7,7 +7,6 @@ use CultuurNet\CalendarSummaryV3\DateFormatter;
 use CultuurNet\CalendarSummaryV3\PlainTextSummaryBuilder;
 use CultuurNet\CalendarSummaryV3\Translator;
 use CultuurNet\SearchV3\ValueObjects\Offer;
-use \DateTime;
 use \DateTimeInterface;
 
 final class SmallPeriodicPlainTextFormatter implements PeriodicFormatterInterface
@@ -34,24 +33,16 @@ final class SmallPeriodicPlainTextFormatter implements PeriodicFormatterInterfac
         $startDate->setTime(0, 0, 1);
 
         if (DateComparison::inTheFuture($startDate)) {
-            return $this->formatNotStarted($startDate);
+            return PlainTextSummaryBuilder::start($this->translator)
+                ->fromPeriod($this->formatDate($startDate))
+                ->appendStatus($offer->getStatus())
+                ->toString();
         }
 
         $endDate = $offer->getEndDate()->setTimezone(new \DateTimeZone(date_default_timezone_get()));
-        return $this->formatStarted($endDate);
-    }
-
-    private function formatStarted(DateTimeInterface $endDate): string
-    {
         return PlainTextSummaryBuilder::start($this->translator)
             ->till($this->formatDate($endDate))
-            ->toString();
-    }
-
-    private function formatNotStarted(DateTimeInterface $startDate): string
-    {
-        return PlainTextSummaryBuilder::start($this->translator)
-            ->fromPeriod($this->formatDate($startDate))
+            ->appendStatus($offer->getStatus())
             ->toString();
     }
 

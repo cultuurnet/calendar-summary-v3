@@ -4,6 +4,7 @@ namespace CultuurNet\CalendarSummaryV3\Periodic;
 
 use CultuurNet\CalendarSummaryV3\Translator;
 use CultuurNet\SearchV3\ValueObjects\Event;
+use CultuurNet\SearchV3\ValueObjects\Status;
 use PHPUnit\Framework\TestCase;
 
 /**
@@ -25,6 +26,7 @@ class ExtraSmallPeriodicPlainTextFormatterTest extends TestCase
     public function testFormatAPeriodWithoutLeadingZeroes(): void
     {
         $offer = new Event();
+        $offer->setStatus(new Status('Available'));
         $offer->setStartDate(new \DateTime('25-11-2025'));
         $offer->setEndDate(new \DateTime('30-11-2030'));
 
@@ -37,6 +39,7 @@ class ExtraSmallPeriodicPlainTextFormatterTest extends TestCase
     public function testFormatAPeriodWithLeadingZeroes(): void
     {
         $offer = new Event();
+        $offer->setStatus(new Status('Available'));
         $offer->setStartDate(new \DateTime('04-03-2025'));
         $offer->setEndDate(new \DateTime('08-03-2030'));
 
@@ -46,9 +49,23 @@ class ExtraSmallPeriodicPlainTextFormatterTest extends TestCase
         );
     }
 
+    public function testFormatAPeriodWithoutLeadingZeroesWithUnavailableStatus(): void
+    {
+        $offer = new Event();
+        $offer->setStatus(new Status('Unavailable'));
+        $offer->setStartDate(new \DateTime('25-11-2025'));
+        $offer->setEndDate(new \DateTime('30-11-2030'));
+
+        $this->assertEquals(
+            'Vanaf 25/11/25 (geannuleerd)',
+            $this->formatter->format($offer)
+        );
+    }
+
     public function testFormatAPeriodDayWithoutLeadingZero(): void
     {
         $offer = new Event();
+        $offer->setStatus(new Status('Available'));
         $offer->setStartDate(new \DateTime('25-03-2025'));
         $offer->setEndDate(new \DateTime('30-03-2030'));
 
@@ -61,6 +78,7 @@ class ExtraSmallPeriodicPlainTextFormatterTest extends TestCase
     public function testFormatAPeriodMonthWithoutLeadingZero(): void
     {
         $offer = new Event();
+        $offer->setStatus(new Status('Available'));
         $offer->setStartDate(new \DateTime('04-10-2025'));
         $offer->setEndDate(new \DateTime('08-10-2030'));
 
@@ -73,11 +91,25 @@ class ExtraSmallPeriodicPlainTextFormatterTest extends TestCase
     public function testFormatAPeriodThatHasAlreadyStarted(): void
     {
         $offer = new Event();
+        $offer->setStatus(new Status('Available'));
         $offer->setStartDate(new \DateTime('12-03-2015'));
         $offer->setEndDate(new \DateTime('18-03-2030'));
 
         $this->assertEquals(
             'Tot 18/3/30',
+            $this->formatter->format($offer)
+        );
+    }
+
+    public function testFormatAPeriodThatHasAlreadyStartedWithUnavailableStatus(): void
+    {
+        $offer = new Event();
+        $offer->setStatus(new Status('Unavailable'));
+        $offer->setStartDate(new \DateTime('12-03-2015'));
+        $offer->setEndDate(new \DateTime('18-03-2030'));
+
+        $this->assertEquals(
+            'Tot 18/3/30 (geannuleerd)',
             $this->formatter->format($offer)
         );
     }

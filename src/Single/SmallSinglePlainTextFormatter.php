@@ -7,6 +7,7 @@ use CultuurNet\CalendarSummaryV3\DateFormatter;
 use CultuurNet\CalendarSummaryV3\PlainTextSummaryBuilder;
 use CultuurNet\CalendarSummaryV3\Translator;
 use CultuurNet\SearchV3\ValueObjects\Offer;
+use CultuurNet\SearchV3\ValueObjects\Status;
 use DateTimeInterface;
 
 final class SmallSinglePlainTextFormatter implements SingleFormatterInterface
@@ -38,7 +39,10 @@ final class SmallSinglePlainTextFormatter implements SingleFormatterInterface
             $output = $this->formatMoreDays($startDate, $endDate);
         }
 
-        return $output;
+        return PlainTextSummaryBuilder::start($this->translator)
+            ->append($output)
+            ->appendStatus($offer->getStatus())
+            ->toString();
     }
 
     private function formatSameDay(DateTimeInterface $date): string
