@@ -3,6 +3,7 @@
 namespace CultuurNet\CalendarSummaryV3;
 
 use CultuurNet\SearchV3\ValueObjects\Event;
+use CultuurNet\SearchV3\ValueObjects\Status;
 use PHPUnit\Framework\TestCase;
 
 class CalendarHTMLFormatterTest extends TestCase
@@ -20,6 +21,7 @@ class CalendarHTMLFormatterTest extends TestCase
     public function testGeneralFormatMethod(): void
     {
         $offer = new Event();
+        $offer->setStatus(new Status('Available'));
         $offer->setCalendarType(Event::CALENDAR_TYPE_SINGLE);
         $offer->setStartDate(new \DateTime('2018-01-25T20:00:00+01:00'));
         $offer->setEndDate(new \DateTime('2018-01-25T21:30:00+01:00'));
@@ -33,6 +35,7 @@ class CalendarHTMLFormatterTest extends TestCase
     public function testGeneralFormatMethodAndCatchException(): void
     {
         $offer = new Event();
+        $offer->setStatus(new Status('Available'));
         $offer->setCalendarType(Event::CALENDAR_TYPE_SINGLE);
         $offer->setStartDate(new \DateTime('2018-01-25T20:00:00+01:00'));
         $offer->setEndDate(new \DateTime('2018-01-25T21:30:00+01:00'));
