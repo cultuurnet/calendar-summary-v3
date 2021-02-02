@@ -7,7 +7,6 @@ use CultuurNet\CalendarSummaryV3\DateFormatter;
 use CultuurNet\CalendarSummaryV3\HtmlStatusFormatter;
 use CultuurNet\CalendarSummaryV3\Translator;
 use CultuurNet\SearchV3\ValueObjects\Offer;
-use \DateTime;
 use \DateTimeInterface;
 
 final class ExtraSmallPeriodicHTMLFormatter implements PeriodicFormatterInterface
