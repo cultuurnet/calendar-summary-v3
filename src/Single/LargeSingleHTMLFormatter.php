@@ -4,6 +4,7 @@ namespace CultuurNet\CalendarSummaryV3\Single;
 
 use CultuurNet\CalendarSummaryV3\DateComparison;
 use CultuurNet\CalendarSummaryV3\DateFormatter;
+use CultuurNet\CalendarSummaryV3\HtmlStatusFormatter;
 use CultuurNet\CalendarSummaryV3\Translator;
 use CultuurNet\SearchV3\ValueObjects\Offer;
 use DateTimeInterface;
@@ -37,7 +38,11 @@ final class LargeSingleHTMLFormatter implements SingleFormatterInterface
             $output = $this->formatMoreDays($dateFrom, $dateEnd);
         }
 
-        return $output;
+        $optionalStatus = HtmlStatusFormatter::forOffer($offer, $this->translator)
+            ->withBraces()
+            ->toString();
+
+        return trim($output . ' ' . $optionalStatus);
     }
 
     private function formatSameDay(DateTimeInterface $dateFrom, DateTimeInterface $dateEnd): string

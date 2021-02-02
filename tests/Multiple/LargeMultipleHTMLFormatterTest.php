@@ -4,6 +4,7 @@ namespace CultuurNet\CalendarSummaryV3\Multiple;
 
 use CultuurNet\CalendarSummaryV3\Translator;
 use CultuurNet\SearchV3\ValueObjects\Event;
+use CultuurNet\SearchV3\ValueObjects\Status;
 use PHPUnit\Framework\TestCase;
 
 class LargeMultipleHTMLFormatterTest extends TestCase
@@ -23,9 +24,11 @@ class LargeMultipleHTMLFormatterTest extends TestCase
     {
         $subEvents = json_decode(file_get_contents(__DIR__ . '/data/subEvents.json'), true);
         $event = new Event();
+        $event->setStatus(new Status('Available'));
         $newEvents = array();
         foreach ($subEvents as $subEvent) {
             $e = new Event();
+            $e->setStatus(new Status('Available'));
             $e->setStartDate(new \DateTime($subEvent['startDate']));
             $e->setEndDate(new \DateTime($subEvent['endDate']));
             $newEvents[] = $e;
@@ -104,9 +107,11 @@ class LargeMultipleHTMLFormatterTest extends TestCase
     {
         $subEvents = json_decode(file_get_contents(__DIR__ . '/data/subEventsMoreDays.json'), true);
         $event = new Event();
+        $event->setStatus(new Status('Available'));
         $newEvents = array();
         foreach ($subEvents as $subEvent) {
             $e = new Event();
+            $e->setStatus(new Status('Available'));
             $e->setStartDate(new \DateTime($subEvent['startDate']));
             $e->setEndDate(new \DateTime($subEvent['endDate']));
             $newEvents[] = $e;
