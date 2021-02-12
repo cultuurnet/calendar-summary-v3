@@ -33,7 +33,10 @@ final class ExtraSmallMultiplePlainTextFormatter implements MultipleFormatterInt
         $endDate = $event->getEndDate()->setTimezone(new DateTimeZone(date_default_timezone_get()));
 
         if (DateComparison::onSameDay($startDate, $endDate)) {
-            return $this->formatter->formatAsShortDate($startDate);
+            return PlainTextSummaryBuilder::start($this->translator)
+                ->append($this->formatter->formatAsShortDate($startDate))
+                ->appendStatus($event->getStatus())
+                ->toString();
         }
 
         return PlainTextSummaryBuilder::start($this->translator)
