@@ -58,6 +58,19 @@ class ExtraSmallMultiplePlainTextFormatterTest extends TestCase
         );
     }
 
+    public function testFormatMultipleOnSameDayWithUnavailableStatus(): void
+    {
+        $offer = new Event();
+        $offer->setStatus(new Status('Unavailable'));
+        $offer->setStartDate(new \DateTime('30-11-2030'));
+        $offer->setEndDate(new \DateTime('30-11-2030'));
+
+        $this->assertEquals(
+            '30/11/30 (geannuleerd)',
+            $this->formatter->format($offer)
+        );
+    }
+
     public function testFormatMultipleDayWithoutLeadingZero(): void
     {
         $offer = new Event();
