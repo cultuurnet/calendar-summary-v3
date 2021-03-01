@@ -14,7 +14,6 @@ final class OfferTest extends TestCase
         $jsonLd = file_get_contents(__DIR__ . '/data/offer.json');
         $expected = new Offer(
             OfferType::event(),
-            CalendarType::single(),
             new Status(
                 'TemporarilyUnavailable',
                 [
@@ -22,6 +21,7 @@ final class OfferTest extends TestCase
                     'en' => 'Postponed',
                 ]
             ),
+            CalendarType::single(),
             new DateTimeImmutable('2021-03-01T23:00:00+00:00'),
             new DateTimeImmutable('2021-03-28T22:59:59+00:00')
         );
@@ -34,8 +34,8 @@ final class OfferTest extends TestCase
         $jsonLd = file_get_contents(__DIR__ . '/data/permanent.json');
         $expected = new Offer(
             OfferType::event(),
-            CalendarType::permanent(),
-            new Status('Available', [])
+            new Status('Available', []),
+            CalendarType::permanent()
         );
 
         $this->assertEquals($expected, Offer::fromJsonLd($jsonLd));

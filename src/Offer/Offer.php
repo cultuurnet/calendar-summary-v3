@@ -14,14 +14,14 @@ final class Offer
     private $offerType;
 
     /**
-     * @var CalendarType
-     */
-    private $calendarType;
-
-    /**
      * @var Status
      */
     private $status;
+
+    /**
+     * @var CalendarType|null
+     */
+    private $calendarType;
 
     /**
      * @var DateTimeImmutable|null
@@ -33,16 +33,21 @@ final class Offer
      */
     private $endDate;
 
+    /**
+     * @var Offer[]
+     */
+    private $subEvents = [];
+
     public function __construct(
         OfferType $offerType,
-        CalendarType $calendarType,
         Status $status,
+        ?CalendarType $calendarType = null,
         ?DateTimeImmutable $startDate = null,
         ?DateTimeImmutable $endDate = null
     ) {
         $this->offerType = $offerType;
-        $this->calendarType = $calendarType;
         $this->status = $status;
+        $this->calendarType = $calendarType;
         $this->startDate = $startDate;
         $this->endDate = $endDate;
     }
@@ -53,8 +58,8 @@ final class Offer
 
         return new self(
             new OfferType(mb_strtolower($data['@type'])),
-            new CalendarType($data['calendarType']),
             Status::fromArray($data['status']),
+            new CalendarType($data['calendarType']),
             isset($data['startDate']) ? new DateTimeImmutable($data['startDate']) : null,
             isset($data['endDate']) ? new DateTimeImmutable($data['endDate']) : null
         );
