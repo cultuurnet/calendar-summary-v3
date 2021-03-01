@@ -36,11 +36,12 @@
     "prefer-stable": true,
     "scripts": {
       "ci": [
-        "composer phpcs",
+        "composer cs",
         "composer phpstan",
         "composer test"
       ],
-      "phpcs": "vendor/bin/phpcs",
+      "cs": "php-cs-fixer fix -v --diff --dry-run",
+      "cs-fix": "php-cs-fixer fix -v --diff",
       "phpstan": "vendor/bin/phpstan analyse",
       "test": "vendor/bin/phpunit"
     }
