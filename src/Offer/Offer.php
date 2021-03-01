@@ -19,11 +19,6 @@ final class Offer
     private $status;
 
     /**
-     * @var CalendarType|null
-     */
-    private $calendarType;
-
-    /**
      * @var DateTimeImmutable|null
      */
     private $startDate;
@@ -34,6 +29,11 @@ final class Offer
     private $endDate;
 
     /**
+     * @var CalendarType|null
+     */
+    private $calendarType;
+
+    /**
      * @var Offer[]
      */
     private $subEvents = [];
@@ -41,15 +41,15 @@ final class Offer
     public function __construct(
         OfferType $offerType,
         Status $status,
-        ?CalendarType $calendarType = null,
         ?DateTimeImmutable $startDate = null,
-        ?DateTimeImmutable $endDate = null
+        ?DateTimeImmutable $endDate = null,
+        ?CalendarType $calendarType = null
     ) {
         $this->offerType = $offerType;
         $this->status = $status;
-        $this->calendarType = $calendarType;
         $this->startDate = $startDate;
         $this->endDate = $endDate;
+        $this->calendarType = $calendarType;
     }
 
     public static function fromJsonLd(string $json): self
@@ -59,13 +59,24 @@ final class Offer
         return new self(
             new OfferType(mb_strtolower($data['@type'])),
             Status::fromArray($data['status']),
-            new CalendarType($data['calendarType']),
             isset($data['startDate']) ? new DateTimeImmutable($data['startDate']) : null,
-            isset($data['endDate']) ? new DateTimeImmutable($data['endDate']) : null
+            isset($data['endDate']) ? new DateTimeImmutable($data['endDate']) : null,
+            new CalendarType($data['calendarType'])
         );
     }
 
-    public function getCalendarType(): CalendarType
+    /**
+     * @param Offer[] $subEvents
+     */
+    public function withSubEvents(array $subEvents): self
+    {
+        $clone = clone $this;
+        $clone->subEvents = $subEvents;
+
+        return $clone;
+    }
+
+    public function getCalendarType(): ?CalendarType
     {
         return $this->calendarType;
     }
@@ -88,5 +99,13 @@ final class Offer
     public function isPlace(): bool
     {
         return $this->offerType->equals(OfferType::place());
+    }
+
+    /**
+     * @return Offer[]
+     */
+    public function getSubEvents(): array
+    {
+        return $this->subEvents;
     }
 }
