@@ -44,7 +44,7 @@ jobs:
               run: composer update --no-progress
 
             - name: ✨ Check code style
-              run: composer phpcs
+              run: composer cs
 
     phpstan:
         runs-on: ubuntu-latest
