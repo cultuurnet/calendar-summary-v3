@@ -56,13 +56,37 @@ final class Offer
     {
         $data = json_decode($json, true);
 
-        return new self(
+        $offer = new self(
             new OfferType(mb_strtolower($data['@type'])),
             Status::fromArray($data['status']),
             isset($data['startDate']) ? new DateTimeImmutable($data['startDate']) : null,
             isset($data['endDate']) ? new DateTimeImmutable($data['endDate']) : null,
             new CalendarType($data['calendarType'])
         );
+
+        if (isset($data['subEvent'])) {
+            $offer = $offer->withSubEvents(self::parseSubEvents($data['subEvent']));
+        }
+
+        return $offer;
+    }
+
+    /**
+     * @return Offer[]
+     */
+    private static function parseSubEvents(array $data): array
+    {
+        $subEvents = [];
+        foreach ($data as $subEventData) {
+            $subEvents[] = new self(
+                OfferType::event(),
+                Status::fromArray($subEventData['status']),
+                new DateTimeImmutable($subEventData['startDate']),
+                new DateTimeImmutable($subEventData['endDate'])
+            );
+        }
+
+        return $subEvents;
     }
 
     /**
