@@ -10,8 +10,10 @@ final class OfferTest extends TestCase
 {
     public function testCanCreateFromJsonLd(): void
     {
-        $jsonLd = '';
-        $expected = new Offer();
+        $jsonLd = '{"calendarType":"single"}';
+        $expected = new Offer(
+            CalendarType::single()
+        );
 
         $this->assertEquals($expected, Offer::fromJsonLd($jsonLd));
     }
