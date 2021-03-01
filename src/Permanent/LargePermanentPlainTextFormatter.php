@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace CultuurNet\CalendarSummaryV3\Permanent;
 
 use CultuurNet\CalendarSummaryV3\DateFormatter;
@@ -50,7 +52,6 @@ final class LargePermanentPlainTextFormatter implements PermanentFormatterInterf
 
     /**
      * @param OpeningHours[] $openingHoursData
-     * @return string
      */
     private function generateWeekScheme(array $openingHoursData): string
     {

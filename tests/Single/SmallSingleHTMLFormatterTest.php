@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace CultuurNet\CalendarSummaryV3\Single;
 
 use CultuurNet\CalendarSummaryV3\Translator;
@@ -8,7 +10,7 @@ use CultuurNet\SearchV3\ValueObjects\Status;
 use CultuurNet\SearchV3\ValueObjects\TranslatedString;
 use PHPUnit\Framework\TestCase;
 
-class SmallSingleHTMLFormatterTest extends TestCase
+final class SmallSingleHTMLFormatterTest extends TestCase
 {
     /**
      * @var SmallSingleHTMLFormatter

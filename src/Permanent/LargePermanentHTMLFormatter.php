@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace CultuurNet\CalendarSummaryV3\Permanent;
 
 use CultuurNet\CalendarSummaryV3\DateFormatter;
@@ -12,15 +14,15 @@ use DateTimeImmutable;
 
 final class LargePermanentHTMLFormatter implements PermanentFormatterInterface
 {
-    private $daysOfWeek = array(
+    private $daysOfWeek = [
         'monday',
         'tuesday',
         'wednesday',
         'thursday',
         'friday',
         'saturday',
-        'sunday'
-    );
+        'sunday',
+    ];
 
     /**
      * @var DateFormatter
@@ -70,7 +72,6 @@ final class LargePermanentHTMLFormatter implements PermanentFormatterInterface
      *
      * @param OpeningHours[] $openingHoursData
      * @param string[] $daysOfWeek
-     * @return string
      */
     private function getEarliestTime(array $openingHoursData, array $daysOfWeek): string
     {
@@ -92,7 +93,6 @@ final class LargePermanentHTMLFormatter implements PermanentFormatterInterface
      *
      * @param OpeningHours[] $openingHoursData
      * @param string[] $daysOfWeek
-     * @return string
      */
     private function getLatestTime(array $openingHoursData, array $daysOfWeek): string
     {
@@ -144,22 +144,22 @@ final class LargePermanentHTMLFormatter implements PermanentFormatterInterface
                 if (!isset($formattedTimespans[$dayOfWeek])) {
                     $formattedTimespans[$dayOfWeek] =
                         "<meta itemprop=\"openingHours\" datetime=\"$daySpanShort $firstOpens-$lastCloses\"> "
-                        . "</meta> "
-                        . "<li itemprop=\"openingHoursSpecification\"> "
+                        . '</meta> '
+                        . '<li itemprop="openingHoursSpecification"> '
                         . "<span class=\"cf-days\">$daySpanLong</span> "
                         . "<span itemprop=\"opens\" content=\"$opens\" class=\"cf-from cf-meta\">"
-                        . $this->translator->translate('from') . "</span> "
+                        . $this->translator->translate('from') . '</span> '
                         . "<span class=\"cf-time\">$opens</span> "
                         . "<span itemprop=\"closes\" content=\"$closes\" class=\"cf-to cf-meta\">"
-                        . $this->translator->translate('till') . "</span> "
+                        . $this->translator->translate('till') . '</span> '
                         . "<span class=\"cf-time\">$closes</span>";
                 } else {
                     $formattedTimespans[$dayOfWeek] .=
                         "<span itemprop=\"opens\" content=\"$opens\" class=\"cf-from cf-meta\">"
-                        . $this->translator->translate('from') . "</span> "
+                        . $this->translator->translate('from') . '</span> '
                         . "<span class=\"cf-time\">$opens</span> "
                         . "<span itemprop=\"closes\" content=\"$closes\" class=\"cf-to cf-meta\">"
-                        . $this->translator->translate('till') . "</span> "
+                        . $this->translator->translate('till') . '</span> '
                         . "<span class=\"cf-time\">$closes</span>";
                 }
             }
@@ -171,7 +171,7 @@ final class LargePermanentHTMLFormatter implements PermanentFormatterInterface
             $closedDays[$day] = ucfirst($this->formatter->formatAsDayOfWeek(new DateTimeImmutable($day)));
         }
 
-        $sortedTimespans = array();
+        $sortedTimespans = [];
         foreach ($this->daysOfWeek as $day) {
             $translatedDay = ucfirst($this->formatter->formatAsDayOfWeek(new DateTimeImmutable($day)));
 
@@ -180,11 +180,11 @@ final class LargePermanentHTMLFormatter implements PermanentFormatterInterface
             } else {
                 $sortedTimespans[$day] =
                     "<meta itemprop=\"openingHours\" datetime=\"$translatedDay\"> "
-                    . "</meta> "
-                    . "<li itemprop=\"openingHoursSpecification\"> "
+                    . '</meta> '
+                    . '<li itemprop="openingHoursSpecification"> '
                     . "<span class=\"cf-days\">$closedDays[$day]</span> "
-                    . "<span itemprop=\"closed\" content=\"closed\" class=\"cf-closed cf-meta\">"
-                    . $this->translator->translate('closed') . "</span> ";
+                    . '<span itemprop="closed" content="closed" class="cf-closed cf-meta">'
+                    . $this->translator->translate('closed') . '</span> ';
             }
         }
 

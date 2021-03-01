@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace CultuurNet\CalendarSummaryV3;
 
 use DElfimov\Translate\Translate;
@@ -81,8 +83,8 @@ final class Translator
         $this->translator = new Translate(
             new PhpArrayLoader($messages),
             [
-                "default" => 'en',
-                "available" => ['en', 'nl', 'fr', 'de'],
+                'default' => 'en',
+                'available' => ['en', 'nl', 'fr', 'de'],
             ]
         );
 

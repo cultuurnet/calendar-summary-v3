@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace CultuurNet\CalendarSummaryV3\Periodic;
 
 use CultuurNet\CalendarSummaryV3\DateFormatter;
@@ -58,7 +60,6 @@ final class LargePeriodicHTMLFormatter implements PeriodicFormatterInterface
      *
      * @param OpeningHours[] $openingHoursData
      * @param string[] $daysOfWeek
-     * @return string
      */
     private function getEarliestTime(array $openingHoursData, array $daysOfWeek): string
     {
@@ -80,7 +81,6 @@ final class LargePeriodicHTMLFormatter implements PeriodicFormatterInterface
      *
      * @param OpeningHours[] $openingHoursData
      * @param string[] $daysOfWeek
-     * @return string
      */
     private function getLatestTime(array $openingHoursData, array $daysOfWeek): string
     {
@@ -98,8 +98,6 @@ final class LargePeriodicHTMLFormatter implements PeriodicFormatterInterface
     }
 
     /**
-     * @param DateTime $dateFrom
-     * @param DateTime $dateTo
      * @return string
      */
     private function generateDates(DateTime $dateFrom, DateTime $dateTo)
@@ -108,10 +106,10 @@ final class LargePeriodicHTMLFormatter implements PeriodicFormatterInterface
         $intlDateTo = $this->formatter->formatAsFullDate($dateTo);
 
         return '<p class="cf-period">'
-            . '<time itemprop="startDate" datetime="' . $dateFrom->format("Y-m-d") . '">'
+            . '<time itemprop="startDate" datetime="' . $dateFrom->format('Y-m-d') . '">'
             . '<span class="cf-date">' . $intlDateFrom . '</span> </time>'
             . '<span class="cf-to cf-meta">' . $this->translator->translate('till') . '</span>'
-            . '<time itemprop="endDate" datetime="' . $dateTo->format("Y-m-d") . '">'
+            . '<time itemprop="endDate" datetime="' . $dateTo->format('Y-m-d') . '">'
             . '<span class="cf-date">' . $intlDateTo . '</span> </time>'
             . '</p>';
     }
@@ -146,23 +144,23 @@ final class LargePeriodicHTMLFormatter implements PeriodicFormatterInterface
                 if (!isset($formattedTimespans[$dayOfWeek])) {
                     $formattedTimespans[$dayOfWeek] =
                         "<meta itemprop=\"openingHours\" datetime=\"$daySpanShort $firstOpens-$lastCloses\"> "
-                        . "</meta> "
-                        . "<li itemprop=\"openingHoursSpecification\"> "
+                        . '</meta> '
+                        . '<li itemprop="openingHoursSpecification"> '
                         . "<span class=\"cf-days\">$daySpanLong</span> "
                         . "<span itemprop=\"opens\" content=\"$opens\" class=\"cf-from cf-meta\">"
-                        . $this->translator->translate('from') . "</span> "
+                        . $this->translator->translate('from') . '</span> '
                         . "<span class=\"cf-time\">$opens</span> "
                         . "<span itemprop=\"closes\" content=\"$closes\" class=\"cf-to cf-meta\">"
-                        . $this->translator->translate('till') . "</span> "
+                        . $this->translator->translate('till') . '</span> '
                         . "<span class=\"cf-time\">$closes</span>";
                 } else {
                     $formattedTimespans[$dayOfWeek] .=
                         "<span itemprop=\"opens\" content=\"$opens\" class=\"cf-from cf-meta\">"
                         . $this->translator->translate('and') . ' '
-                        . $this->translator->translate('from') . "</span> "
+                        . $this->translator->translate('from') . '</span> '
                         . "<span class=\"cf-time\">$opens</span> "
                         . "<span itemprop=\"closes\" content=\"$closes\" class=\"cf-to cf-meta\">"
-                        . $this->translator->translate('till') . "</span> "
+                        . $this->translator->translate('till') . '</span> '
                         . "<span class=\"cf-time\">$closes</span>";
                 }
             }

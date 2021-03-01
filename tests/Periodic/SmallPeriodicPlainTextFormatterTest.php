@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace CultuurNet\CalendarSummaryV3\Periodic;
 
 use CultuurNet\CalendarSummaryV3\Translator;
@@ -11,7 +13,7 @@ use PHPUnit\Framework\TestCase;
  * Provide unit tests for small plain text periodic formatter.
  * @package CultuurNet\CalendarSummaryV3\Periodic
  */
-class SmallPeriodicPlainTextFormatterTest extends TestCase
+final class SmallPeriodicPlainTextFormatterTest extends TestCase
 {
     /**
      * @var SmallPeriodicPlainTextFormatter

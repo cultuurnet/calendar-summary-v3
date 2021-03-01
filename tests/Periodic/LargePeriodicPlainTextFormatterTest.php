@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace CultuurNet\CalendarSummaryV3\Periodic;
 
 use CultuurNet\CalendarSummaryV3\Translator;
@@ -9,7 +11,7 @@ use CultuurNet\SearchV3\ValueObjects\Place;
 use CultuurNet\SearchV3\ValueObjects\Status;
 use PHPUnit\Framework\TestCase;
 
-class LargePeriodicPlainTextFormatterTest extends TestCase
+final class LargePeriodicPlainTextFormatterTest extends TestCase
 {
     /**
      * @var LargePeriodicPlainTextFormatter
@@ -43,7 +45,7 @@ class LargePeriodicPlainTextFormatterTest extends TestCase
         $place->setOpeningHours($openingHoursData);
 
         $this->assertEquals(
-            'Van 25 november 2025 tot 30 november 2030'. PHP_EOL
+            'Van 25 november 2025 tot 30 november 2030' . PHP_EOL
             . '(maandag van 0:01 tot 17:00, '
             . 'dinsdag van 0:01 tot 17:00, '
             . 'woensdag van 0:01 tot 17:00, '
@@ -75,7 +77,7 @@ class LargePeriodicPlainTextFormatterTest extends TestCase
         $event->setOpeningHours($openingHoursData);
 
         $this->assertEquals(
-            'Van 25 november 2025 tot 30 november 2030'. PHP_EOL
+            'Van 25 november 2025 tot 30 november 2030' . PHP_EOL
             . '(maandag van 0:01 tot 17:00, '
             . 'dinsdag van 0:01 tot 17:00, '
             . 'woensdag van 0:01 tot 17:00, '
@@ -117,7 +119,7 @@ class LargePeriodicPlainTextFormatterTest extends TestCase
         $place->setOpeningHours($openingHoursData);
 
         $this->assertEquals(
-            'Van 25 november 2025 tot 30 november 2030'. PHP_EOL
+            'Van 25 november 2025 tot 30 november 2030' . PHP_EOL
             . '(maandag van 9:00 tot 13:00 en van 17:00 tot 20:00, '
             . 'dinsdag van 9:00 tot 13:00 en van 17:00 tot 20:00, '
             . 'woensdag van 9:00 tot 13:00 en van 17:00 tot 20:00, '
@@ -164,7 +166,7 @@ class LargePeriodicPlainTextFormatterTest extends TestCase
         $place->setOpeningHours($openingHoursData);
 
         $this->assertEquals(
-            'Van 25 november 2025 tot 30 november 2030'. PHP_EOL
+            'Van 25 november 2025 tot 30 november 2030' . PHP_EOL
             . '(maandag van 9:30 tot 13:45 en van 17:00 tot 20:00, '
             . 'dinsdag van 9:30 tot 13:45 en van 18:00 tot 20:00 en van 21:00 tot 23:00, '
             . 'vrijdag van 10:00 tot 15:00, '
