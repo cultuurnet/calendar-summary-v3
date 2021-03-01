@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace CultuurNet\CalendarSummaryV3\Multiple;
 
 use CultuurNet\CalendarSummaryV3\Translator;
@@ -7,7 +9,7 @@ use CultuurNet\SearchV3\ValueObjects\Event;
 use CultuurNet\SearchV3\ValueObjects\Status;
 use PHPUnit\Framework\TestCase;
 
-class LargeMultipleHTMLFormatterTest extends TestCase
+final class LargeMultipleHTMLFormatterTest extends TestCase
 {
     /**
      * @var LargeMultipleHTMLFormatter
@@ -25,7 +27,7 @@ class LargeMultipleHTMLFormatterTest extends TestCase
         $subEvents = json_decode(file_get_contents(__DIR__ . '/data/subEvents.json'), true);
         $event = new Event();
         $event->setStatus(new Status('Available'));
-        $newEvents = array();
+        $newEvents = [];
         foreach ($subEvents as $subEvent) {
             $e = new Event();
             $e->setStatus(new Status('Available'));
@@ -108,7 +110,7 @@ class LargeMultipleHTMLFormatterTest extends TestCase
         $subEvents = json_decode(file_get_contents(__DIR__ . '/data/subEvents.json'), true);
         $event = new Event();
         $event->setStatus(new Status('Available'));
-        $newEvents = array();
+        $newEvents = [];
         foreach ($subEvents as $subEvent) {
             $e = new Event();
             $e->setStatus(new Status('Available'));
@@ -193,7 +195,7 @@ class LargeMultipleHTMLFormatterTest extends TestCase
         $subEvents = json_decode(file_get_contents(__DIR__ . '/data/subEventsMoreDays.json'), true);
         $event = new Event();
         $event->setStatus(new Status('Available'));
-        $newEvents = array();
+        $newEvents = [];
         foreach ($subEvents as $subEvent) {
             $e = new Event();
             $e->setStatus(new Status('Available'));

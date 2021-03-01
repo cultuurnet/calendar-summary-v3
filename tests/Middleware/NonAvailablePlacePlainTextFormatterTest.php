@@ -10,7 +10,7 @@ use CultuurNet\SearchV3\ValueObjects\Place;
 use CultuurNet\SearchV3\ValueObjects\Status;
 use PHPUnit\Framework\TestCase;
 
-class NonAvailablePlacePlainTextFormatterTest extends TestCase
+final class NonAvailablePlacePlainTextFormatterTest extends TestCase
 {
     /**
      * @var NonAvailablePlacePlainTextFormatter

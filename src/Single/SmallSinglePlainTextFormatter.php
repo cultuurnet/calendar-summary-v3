@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace CultuurNet\CalendarSummaryV3\Single;
 
 use CultuurNet\CalendarSummaryV3\DateComparison;
@@ -7,7 +9,6 @@ use CultuurNet\CalendarSummaryV3\DateFormatter;
 use CultuurNet\CalendarSummaryV3\PlainTextSummaryBuilder;
 use CultuurNet\CalendarSummaryV3\Translator;
 use CultuurNet\SearchV3\ValueObjects\Offer;
-use CultuurNet\SearchV3\ValueObjects\Status;
 use DateTimeInterface;
 
 final class SmallSinglePlainTextFormatter implements SingleFormatterInterface

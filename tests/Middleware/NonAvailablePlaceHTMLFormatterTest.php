@@ -11,7 +11,7 @@ use CultuurNet\SearchV3\ValueObjects\Status;
 use CultuurNet\SearchV3\ValueObjects\TranslatedString;
 use PHPUnit\Framework\TestCase;
 
-class NonAvailablePlaceHTMLFormatterTest extends TestCase
+final class NonAvailablePlaceHTMLFormatterTest extends TestCase
 {
     /**
      * @var NonAvailablePlaceHTMLFormatter

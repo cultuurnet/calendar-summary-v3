@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 error_reporting(E_ALL | E_STRICT);
 
 // Ensure that composer has installed all dependencies

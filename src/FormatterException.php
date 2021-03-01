@@ -1,10 +1,9 @@
 <?php
 
-namespace CultuurNet\CalendarSummaryV3;
+declare(strict_types=1);
 
-use Exception;
+namespace CultuurNet\CalendarSummaryV3;
 
 final class FormatterException extends \Exception
 {
-
 }

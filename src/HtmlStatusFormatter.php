@@ -8,7 +8,7 @@ use CultuurNet\SearchV3\ValueObjects\Offer;
 use CultuurNet\SearchV3\ValueObjects\Place;
 use CultuurNet\SearchV3\ValueObjects\Status;
 
-class HtmlStatusFormatter
+final class HtmlStatusFormatter
 {
     /**
      * @var Translator

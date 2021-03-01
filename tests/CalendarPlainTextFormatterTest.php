@@ -1,12 +1,14 @@
 <?php
 
+declare(strict_types=1);
+
 namespace CultuurNet\CalendarSummaryV3;
 
 use CultuurNet\SearchV3\ValueObjects\Event;
 use CultuurNet\SearchV3\ValueObjects\Status;
 use PHPUnit\Framework\TestCase;
 
-class CalendarPlainTextFormatterTest extends TestCase
+final class CalendarPlainTextFormatterTest extends TestCase
 {
     /**
      * @var CalendarPlainTextFormatter

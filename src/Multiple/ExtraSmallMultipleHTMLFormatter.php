@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace CultuurNet\CalendarSummaryV3\Multiple;
 
 use CultuurNet\CalendarSummaryV3\DateComparison;
@@ -37,7 +39,7 @@ final class ExtraSmallMultipleHTMLFormatter implements MultipleFormatterInterfac
         } else {
             $output = '<span class="cf-from cf-meta">' . ucfirst($this->translator->translate('from')) . '</span> ' .
                 '<span class="cf-date">' . $this->formatter->formatAsShortDate($dateFrom) . '</span> ' .
-                '<span class="cf-to cf-meta">' . $this->translator->translate('till') . '</span> '.
+                '<span class="cf-to cf-meta">' . $this->translator->translate('till') . '</span> ' .
                 '<span class="cf-date">' . $this->formatter->formatAsShortDate($dateTo) . '</span>';
         }
 

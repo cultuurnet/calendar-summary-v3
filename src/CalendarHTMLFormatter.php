@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace CultuurNet\CalendarSummaryV3;
 
 use CultuurNet\CalendarSummaryV3\Middleware\FormatterMiddleware;
@@ -46,14 +48,14 @@ final class CalendarHTMLFormatter implements CalendarFormatterInterface
                     'lg' => new LargeSingleHTMLFormatter($translator),
                     'md' => new MediumSingleHTMLFormatter($translator),
                     'sm' => new SmallSingleHTMLFormatter($translator),
-                    'xs' => new SmallSingleHTMLFormatter($translator)
+                    'xs' => new SmallSingleHTMLFormatter($translator),
                 ],
             Offer::CALENDAR_TYPE_MULTIPLE =>
                 [
                     'lg' => new LargeMultipleHTMLFormatter($translator, $hidePastDates),
                     'md' => new MediumMultipleHTMLFormatter($translator, $hidePastDates),
                     'sm' => new SmallMultipleHTMLFormatter($translator),
-                    'xs' => new ExtraSmallMultipleHTMLFormatter($translator)
+                    'xs' => new ExtraSmallMultipleHTMLFormatter($translator),
                 ],
             Offer::CALENDAR_TYPE_PERIODIC =>
                 [
@@ -67,7 +69,7 @@ final class CalendarHTMLFormatter implements CalendarFormatterInterface
                     'lg' => new LargePermanentHTMLFormatter($translator),
                     'md' => new MediumPermanentHTMLFormatter($translator),
                     'sm' => new MediumPermanentHTMLFormatter($translator),
-                    'xs' => new MediumPermanentHTMLFormatter($translator)
+                    'xs' => new MediumPermanentHTMLFormatter($translator),
                 ],
         ];
 

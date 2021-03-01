@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace CultuurNet\CalendarSummaryV3\Permanent;
 
 use CultuurNet\CalendarSummaryV3\Translator;
@@ -14,7 +16,7 @@ use PHPUnit\Framework\TestCase;
  * Provide unit tests for large HTML permanent formatter.
  * @package CultuurNet\CalendarSummaryV3\Permanent
  */
-class MediumPermanentHTMLFormatterTest extends TestCase
+final class MediumPermanentHTMLFormatterTest extends TestCase
 {
     /**
      * @var MediumPermanentHTMLFormatter
