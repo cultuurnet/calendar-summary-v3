@@ -13,6 +13,7 @@ final class OfferTest extends TestCase
     {
         $jsonLd = file_get_contents(__DIR__ . '/data/offer.json');
         $expected = new Offer(
+            OfferType::event(),
             CalendarType::single(),
             new DateTimeImmutable('2021-03-01T23:00:00+00:00'),
             new DateTimeImmutable('2021-03-28T22:59:59+00:00')
