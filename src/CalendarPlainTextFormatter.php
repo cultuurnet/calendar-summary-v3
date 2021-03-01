@@ -8,6 +8,7 @@ use CultuurNet\CalendarSummaryV3\Middleware\FormatterMiddleware;
 use CultuurNet\CalendarSummaryV3\Middleware\NonAvailablePlacePlainTextFormatter;
 use CultuurNet\CalendarSummaryV3\Multiple\ExtraSmallMultiplePlainTextFormatter;
 use CultuurNet\CalendarSummaryV3\Multiple\SmallMultiplePlainTextFormatter;
+use CultuurNet\CalendarSummaryV3\Offer\CalendarType;
 use CultuurNet\CalendarSummaryV3\Permanent\MediumPermanentPlainTextFormatter;
 use CultuurNet\CalendarSummaryV3\Single\LargeSinglePlainTextFormatter;
 use CultuurNet\CalendarSummaryV3\Single\MediumSinglePlainTextFormatter;
@@ -43,28 +44,28 @@ final class CalendarPlainTextFormatter implements CalendarFormatterInterface
         $translator = new Translator($langCode);
 
         $this->mapping = [
-            Offer::CALENDAR_TYPE_SINGLE =>
+            CalendarType::single()->toString() =>
                 [
                     'lg' => new LargeSinglePlainTextFormatter($translator),
                     'md' => new MediumSinglePlainTextFormatter($translator),
                     'sm' => new SmallSinglePlainTextFormatter($translator),
                     'xs' => new SmallSinglePlainTextFormatter($translator),
                 ],
-            Offer::CALENDAR_TYPE_MULTIPLE =>
+            CalendarType::multiple()->toString() =>
                 [
                     'lg' => new LargeMultiplePlainTextFormatter($translator, $hidePastDates),
                     'md' => new MediumMultiplePlainTextFormatter($translator, $hidePastDates),
                     'sm' => new SmallMultiplePlainTextFormatter($translator),
                     'xs' => new ExtraSmallMultiplePlainTextFormatter($translator),
                 ],
-            Offer::CALENDAR_TYPE_PERIODIC =>
+            CalendarType::periodic()->toString() =>
                 [
                     'lg' => new LargePeriodicPlainTextFormatter($translator),
                     'md' => new MediumPeriodicPlainTextFormatter($translator),
                     'sm' => new SmallPeriodicPlainTextFormatter($translator),
                     'xs' => new ExtraSmallPeriodicPlainTextFormatter($translator),
                 ],
-            Offer::CALENDAR_TYPE_PERMANENT =>
+            CalendarType::permanent()->toString() =>
                 [
                     'lg' => new LargePermanentPlainTextFormatter($translator),
                     'md' => new MediumPermanentPlainTextFormatter($translator),
