@@ -19,20 +19,20 @@ final class Offer
     private $calendarType;
 
     /**
-     * @var DateTimeImmutable
+     * @var DateTimeImmutable|null
      */
     private $startDate;
 
     /**
-     * @var DateTimeImmutable
+     * @var DateTimeImmutable|null
      */
     private $endDate;
 
     public function __construct(
         OfferType $offerType,
         CalendarType $calendarType,
-        DateTimeImmutable $startDate,
-        DateTimeImmutable $endDate
+        ?DateTimeImmutable $startDate = null,
+        ?DateTimeImmutable $endDate = null
     ) {
         $this->offerType = $offerType;
         $this->calendarType = $calendarType;
@@ -47,8 +47,8 @@ final class Offer
         return new self(
             new OfferType(mb_strtolower($data['@type'])),
             new CalendarType($data['calendarType']),
-            new DateTimeImmutable($data['startDate']),
-            new DateTimeImmutable($data['endDate'])
+            isset($data['startDate']) ? new DateTimeImmutable($data['startDate']) : null,
+            isset($data['endDate']) ? new DateTimeImmutable($data['endDate']) : null
         );
     }
 

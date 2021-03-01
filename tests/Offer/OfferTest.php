@@ -21,4 +21,15 @@ final class OfferTest extends TestCase
 
         $this->assertEquals($expected, Offer::fromJsonLd($jsonLd));
     }
+
+    public function testCanParsPermanentOffer(): void
+    {
+        $jsonLd = file_get_contents(__DIR__ . '/data/permanent.json');
+        $expected = new Offer(
+            OfferType::event(),
+            CalendarType::permanent()
+        );
+
+        $this->assertEquals($expected, Offer::fromJsonLd($jsonLd));
+    }
 }
