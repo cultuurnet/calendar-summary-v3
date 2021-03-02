@@ -73,4 +73,39 @@ final class OfferTest extends TestCase
 
         $this->assertEquals($expected, Offer::fromJsonLd($jsonLd));
     }
+
+    public function testCanParseOpeningHours(): void
+    {
+        $jsonLd = file_get_contents(__DIR__ . '/data/offer-with-opening-hours.json');
+        $expected = new Offer(
+            OfferType::place(),
+            new Status('Available', []),
+            new DateTimeImmutable('2021-03-01T23:00:00+00:00'),
+            new DateTimeImmutable('2021-03-28T22:59:59+00:00'),
+            CalendarType::periodic()
+        );
+
+        $expected = $expected->withOpeningHours(
+            [
+                new OpeningHour(
+                    [
+                        "monday",
+                        "friday",
+                        "saturday"
+                    ],
+                    '08:00',
+                    '10:00'
+                ),
+                new OpeningHour(
+                    [
+                        "wednesday",
+                    ],
+                    '20:00',
+                    '21:00'
+                ),
+            ]
+        );
+
+        $this->assertEquals($expected, Offer::fromJsonLd($jsonLd));
+    }
 }

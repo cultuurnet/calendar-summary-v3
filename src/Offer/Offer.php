@@ -38,6 +38,11 @@ final class Offer
      */
     private $subEvents = [];
 
+    /**
+     * @var OpeningHour[]
+     */
+    private $openingHours = [];
+
     public function __construct(
         OfferType $offerType,
         Status $status,
@@ -68,6 +73,10 @@ final class Offer
             $offer = $offer->withSubEvents(self::parseSubEvents($data['subEvent']));
         }
 
+        if (isset($data['openingHours'])) {
+            $offer = $offer->withOpeningHours(self::parseOpeningHours($data['openingHours']));
+        }
+
         return $offer;
     }
 
@@ -90,12 +99,40 @@ final class Offer
     }
 
     /**
+     * @return OpeningHour[]
+     */
+    private static function parseOpeningHours(array $data): array
+    {
+        $openingHours = [];
+        foreach ($data as $openingHourData) {
+            $openingHours[] = new OpeningHour(
+                $openingHourData['dayOfWeek'],
+                $openingHourData['opens'],
+                $openingHourData['closes']
+            );
+        }
+
+        return $openingHours;
+    }
+
+    /**
      * @param Offer[] $subEvents
      */
     public function withSubEvents(array $subEvents): self
     {
         $clone = clone $this;
         $clone->subEvents = $subEvents;
+
+        return $clone;
+    }
+
+    /**
+     * @param OpeningHour[] $openingHours
+     */
+    public function withOpeningHours(array $openingHours): self
+    {
+        $clone = clone $this;
+        $clone->openingHours = $openingHours;
 
         return $clone;
     }
@@ -131,5 +168,13 @@ final class Offer
     public function getSubEvents(): array
     {
         return $this->subEvents;
+    }
+
+    /**
+     * @return OpeningHour[]
+     */
+    public function getOpeningHours(): array
+    {
+        return $this->openingHours;
     }
 }
