@@ -4,15 +4,14 @@ declare(strict_types=1);
 
 namespace CultuurNet\CalendarSummaryV3\Periodic;
 
+use CultuurNet\CalendarSummaryV3\Offer\CalendarType;
+use CultuurNet\CalendarSummaryV3\Offer\Offer;
+use CultuurNet\CalendarSummaryV3\Offer\OfferType;
+use CultuurNet\CalendarSummaryV3\Offer\Status;
 use CultuurNet\CalendarSummaryV3\Translator;
-use CultuurNet\SearchV3\ValueObjects\Event;
-use CultuurNet\SearchV3\ValueObjects\Status;
+use DateTimeImmutable;
 use PHPUnit\Framework\TestCase;
 
-/**
- * Provide unit tests for extra small HTML periodic formatter.
- * @package CultuurNet\CalendarSummaryV3\Periodic
- */
 final class ExtraSmallPeriodicHTMLFormatterTest extends TestCase
 {
     /**
@@ -27,10 +26,13 @@ final class ExtraSmallPeriodicHTMLFormatterTest extends TestCase
 
     public function testFormatAPeriodWithoutLeadingZeroes(): void
     {
-        $offer = new Event();
-        $offer->setStatus(new Status('Available'));
-        $offer->setStartDate(new \DateTime('25-11-2025'));
-        $offer->setEndDate(new \DateTime('30-11-2030'));
+        $offer = new Offer(
+            OfferType::event(),
+            new Status('Available', []),
+            new DateTimeImmutable('25-11-2025'),
+            new DateTimeImmutable('30-11-2030'),
+            CalendarType::periodic()
+        );
 
         $expected =
             '<span class="from meta">Vanaf</span>' .
@@ -49,10 +51,13 @@ final class ExtraSmallPeriodicHTMLFormatterTest extends TestCase
 
     public function testFormatAPeriodWithLeadingZeroes(): void
     {
-        $offer = new Event();
-        $offer->setStatus(new Status('Available'));
-        $offer->setStartDate(new \DateTime('04-03-2025'));
-        $offer->setEndDate(new \DateTime('08-03-2030'));
+        $offer = new Offer(
+            OfferType::event(),
+            new Status('Available', []),
+            new DateTimeImmutable('04-03-2025'),
+            new DateTimeImmutable('08-03-2030'),
+            CalendarType::periodic()
+        );
 
         $expected =
             '<span class="from meta">Vanaf</span>' .
@@ -71,10 +76,13 @@ final class ExtraSmallPeriodicHTMLFormatterTest extends TestCase
 
     public function testFormatAPeriodWithoutLeadingZeroesWithUnavailableStatus(): void
     {
-        $offer = new Event();
-        $offer->setStatus(new Status('Unavailable'));
-        $offer->setStartDate(new \DateTime('25-11-2025'));
-        $offer->setEndDate(new \DateTime('30-11-2030'));
+        $offer = new Offer(
+            OfferType::event(),
+            new Status('Unavailable', []),
+            new DateTimeImmutable('25-11-2025'),
+            new DateTimeImmutable('30-11-2030'),
+            CalendarType::periodic()
+        );
 
         $expected =
             '<span class="from meta">Vanaf</span>' .
@@ -95,10 +103,13 @@ final class ExtraSmallPeriodicHTMLFormatterTest extends TestCase
 
     public function testFormatAPeriodDayWithoutLeadingZero(): void
     {
-        $offer = new Event();
-        $offer->setStatus(new Status('Available'));
-        $offer->setStartDate(new \DateTime('25-03-2025'));
-        $offer->setEndDate(new \DateTime('30-03-2030'));
+        $offer = new Offer(
+            OfferType::event(),
+            new Status('Available', []),
+            new DateTimeImmutable('25-03-2025'),
+            new DateTimeImmutable('30-03-2030'),
+            CalendarType::periodic()
+        );
 
         $expected =
             '<span class="from meta">Vanaf</span>' .
@@ -117,10 +128,13 @@ final class ExtraSmallPeriodicHTMLFormatterTest extends TestCase
 
     public function testFormatAPeriodMonthWithoutLeadingZero(): void
     {
-        $offer = new Event();
-        $offer->setStatus(new Status('Available'));
-        $offer->setStartDate(new \DateTime('04-10-2025'));
-        $offer->setEndDate(new \DateTime('08-10-2030'));
+        $offer = new Offer(
+            OfferType::event(),
+            new Status('Available', []),
+            new DateTimeImmutable('04-10-2025'),
+            new DateTimeImmutable('08-10-2030'),
+            CalendarType::periodic()
+        );
 
         $expected =
             '<span class="from meta">Vanaf</span>' .
@@ -139,10 +153,13 @@ final class ExtraSmallPeriodicHTMLFormatterTest extends TestCase
 
     public function testFormatAPeriodThatHasAlreadyStarted(): void
     {
-        $offer = new Event();
-        $offer->setStatus(new Status('Available'));
-        $offer->setStartDate(new \DateTime('12-03-2015'));
-        $offer->setEndDate(new \DateTime('18-03-2030'));
+        $offer = new Offer(
+            OfferType::event(),
+            new Status('Available', []),
+            new DateTimeImmutable('12-03-2015'),
+            new DateTimeImmutable('18-03-2030'),
+            CalendarType::periodic()
+        );
 
         $expected =
             '<span class="to meta">Tot</span>' .
