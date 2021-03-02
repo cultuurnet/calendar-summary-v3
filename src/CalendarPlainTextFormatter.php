@@ -87,7 +87,7 @@ final class CalendarPlainTextFormatter implements CalendarFormatterInterface
         if (isset($this->mapping[$calenderType][$format])) {
             $formatter = $this->mapping[$calenderType][$format];
         } else {
-            throw new FormatterException($format . ' format not supported for ' . $calenderType);
+            throw new FormatterException($format . ' format not supported for ' . $calenderType->toString());
         }
 
         return $this->middleware->format(
