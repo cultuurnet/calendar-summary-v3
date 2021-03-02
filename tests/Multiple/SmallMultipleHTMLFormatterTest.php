@@ -4,9 +4,12 @@ declare(strict_types=1);
 
 namespace CultuurNet\CalendarSummaryV3\Multiple;
 
+use CultuurNet\CalendarSummaryV3\Offer\CalendarType;
+use CultuurNet\CalendarSummaryV3\Offer\Offer;
+use CultuurNet\CalendarSummaryV3\Offer\OfferType;
+use CultuurNet\CalendarSummaryV3\Offer\Status;
 use CultuurNet\CalendarSummaryV3\Translator;
-use CultuurNet\SearchV3\ValueObjects\Event;
-use CultuurNet\SearchV3\ValueObjects\Status;
+use DateTimeImmutable;
 use PHPUnit\Framework\TestCase;
 
 final class SmallMultipleHTMLFormatterTest extends TestCase
@@ -23,10 +26,13 @@ final class SmallMultipleHTMLFormatterTest extends TestCase
 
     public function testFormatMultipleWithoutLeadingZeroes(): void
     {
-        $offer = new Event();
-        $offer->setStatus(new Status('Available'));
-        $offer->setStartDate(new \DateTime('25-11-2025'));
-        $offer->setEndDate(new \DateTime('30-11-2030'));
+        $offer = new Offer(
+            OfferType::event(),
+            new Status('Available', []),
+            new DateTimeImmutable('25-11-2025'),
+            new DateTimeImmutable('30-11-2030'),
+            CalendarType::multiple()
+        );
 
         $this->assertEquals(
             '<span class="cf-from cf-meta">Van</span> <span class="cf-date">25 november 2025</span> '
@@ -37,10 +43,13 @@ final class SmallMultipleHTMLFormatterTest extends TestCase
 
     public function testFormatMultipleWithoutLeadingZeroesWithUnavailableStatus(): void
     {
-        $offer = new Event();
-        $offer->setStatus(new Status('Unavailable'));
-        $offer->setStartDate(new \DateTime('25-11-2025'));
-        $offer->setEndDate(new \DateTime('30-11-2030'));
+        $offer = new Offer(
+            OfferType::event(),
+            new Status('Unavailable', []),
+            new DateTimeImmutable('25-11-2025'),
+            new DateTimeImmutable('30-11-2030'),
+            CalendarType::multiple()
+        );
 
         $this->assertEquals(
             '<span class="cf-from cf-meta">Van</span> <span class="cf-date">25 november 2025</span> '
@@ -52,10 +61,13 @@ final class SmallMultipleHTMLFormatterTest extends TestCase
 
     public function testFormatMultipleWithLeadingZeroes(): void
     {
-        $offer = new Event();
-        $offer->setStatus(new Status('Available'));
-        $offer->setStartDate(new \DateTime('04-03-2025'));
-        $offer->setEndDate(new \DateTime('08-03-2030'));
+        $offer = new Offer(
+            OfferType::event(),
+            new Status('Available', []),
+            new DateTimeImmutable('04-03-2025'),
+            new DateTimeImmutable('08-03-2030'),
+            CalendarType::multiple()
+        );
 
         $this->assertEquals(
             '<span class="cf-from cf-meta">Van</span> <span class="cf-date">4 maart 2025</span> '
@@ -66,10 +78,13 @@ final class SmallMultipleHTMLFormatterTest extends TestCase
 
     public function testFormatMultipleMonthWithoutLeadingZero(): void
     {
-        $offer = new Event();
-        $offer->setStatus(new Status('Available'));
-        $offer->setStartDate(new \DateTime('04-10-2025'));
-        $offer->setEndDate(new \DateTime('08-10-2030'));
+        $offer = new Offer(
+            OfferType::event(),
+            new Status('Available', []),
+            new DateTimeImmutable('04-10-2025'),
+            new DateTimeImmutable('08-10-2030'),
+            CalendarType::multiple()
+        );
 
         $this->assertEquals(
             '<span class="cf-from cf-meta">Van</span> <span class="cf-date">4 oktober 2025</span> '
@@ -80,10 +95,13 @@ final class SmallMultipleHTMLFormatterTest extends TestCase
 
     public function testFormatAMultipleWithSameBeginAndEndDate(): void
     {
-        $offer = new Event();
-        $offer->setStatus(new Status('Available'));
-        $offer->setStartDate(new \DateTime('08-10-2025'));
-        $offer->setEndDate(new \DateTime('08-10-2025'));
+        $offer = new Offer(
+            OfferType::event(),
+            new Status('Available', []),
+            new DateTimeImmutable('08-10-2025'),
+            new DateTimeImmutable('08-10-2025'),
+            CalendarType::multiple()
+        );
 
         $output = '<span class="cf-weekday cf-meta">Woensdag</span>';
         $output .= ' ';

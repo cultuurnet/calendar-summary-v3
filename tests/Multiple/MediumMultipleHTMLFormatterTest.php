@@ -4,9 +4,12 @@ declare(strict_types=1);
 
 namespace CultuurNet\CalendarSummaryV3\Multiple;
 
+use CultuurNet\CalendarSummaryV3\Offer\CalendarType;
+use CultuurNet\CalendarSummaryV3\Offer\Offer;
+use CultuurNet\CalendarSummaryV3\Offer\OfferType;
+use CultuurNet\CalendarSummaryV3\Offer\Status;
 use CultuurNet\CalendarSummaryV3\Translator;
-use CultuurNet\SearchV3\ValueObjects\Event;
-use CultuurNet\SearchV3\ValueObjects\Status;
+use DateTimeImmutable;
 use PHPUnit\Framework\TestCase;
 
 final class MediumMultipleHTMLFormatterTest extends TestCase
@@ -24,17 +27,25 @@ final class MediumMultipleHTMLFormatterTest extends TestCase
     public function testFormatHTMLMultipleDateMediumOneDay(): void
     {
         $subEvents = json_decode(file_get_contents(__DIR__ . '/data/subEvents.json'), true);
-        $event = new Event();
-        $event->setStatus(new Status('Available'));
+        $event = new Offer(
+            OfferType::event(),
+            new Status('Available', []),
+            null,
+            null,
+            CalendarType::multiple()
+        );
+
         $newEvents = [];
         foreach ($subEvents as $subEvent) {
-            $e = new Event();
-            $e->setStatus(new Status('Available'));
-            $e->setStartDate(new \DateTime($subEvent['startDate']));
-            $e->setEndDate(new \DateTime($subEvent['endDate']));
-            $newEvents[] = $e;
+            $newEvents[] = new Offer(
+                OfferType::event(),
+                new Status('Available', []),
+                new DateTimeImmutable($subEvent['startDate']),
+                new DateTimeImmutable($subEvent['endDate'])
+            );
         }
-        $event->setSubEvents($newEvents);
+
+        $event = $event->withSubEvents($newEvents);
 
         $expectedOutput = '<ul class="cnw-event-date-info"><li>';
         $expectedOutput .= '<span class="cf-weekday cf-meta">Donderdag</span> ';
@@ -55,19 +66,25 @@ final class MediumMultipleHTMLFormatterTest extends TestCase
     public function testFormatHTMLMultipleDateMediumOneDayWithUnavailableStatus(): void
     {
         $subEvents = json_decode(file_get_contents(__DIR__ . '/data/subEvents.json'), true);
-        $event = new Event();
-        $event->setStatus(new Status('Available'));
+        $event = new Offer(
+            OfferType::event(),
+            new Status('Available', []),
+            null,
+            null,
+            CalendarType::multiple()
+        );
+
         $newEvents = [];
         foreach ($subEvents as $subEvent) {
-            $e = new Event();
-            $e->setStatus(new Status('Available'));
-            $e->setStartDate(new \DateTime($subEvent['startDate']));
-            $e->setEndDate(new \DateTime($subEvent['endDate']));
-            $newEvents[] = $e;
+            $newEvents[] = new Offer(
+                OfferType::event(),
+                new Status('Available', []),
+                new DateTimeImmutable($subEvent['startDate']),
+                new DateTimeImmutable($subEvent['endDate'])
+            );
         }
 
-        $newEvents[1]->setStatus(new Status('Unavailable'));
-        $event->setSubEvents($newEvents);
+        $event = $event->withSubEvents($newEvents);
 
         $expectedOutput = '<ul class="cnw-event-date-info"><li>';
         $expectedOutput .= '<span class="cf-weekday cf-meta">Donderdag</span> ';
@@ -88,17 +105,25 @@ final class MediumMultipleHTMLFormatterTest extends TestCase
     public function testFormatHTMLMultipleDateMediumMoreDays(): void
     {
         $subEvents = json_decode(file_get_contents(__DIR__ . '/data/subEventsMoreDays.json'), true);
-        $event = new Event();
-        $event->setStatus(new Status('Available'));
+        $event = new Offer(
+            OfferType::event(),
+            new Status('Available', []),
+            null,
+            null,
+            CalendarType::multiple()
+        );
+
         $newEvents = [];
         foreach ($subEvents as $subEvent) {
-            $e = new Event();
-            $e->setStatus(new Status('Available'));
-            $e->setStartDate(new \DateTime($subEvent['startDate']));
-            $e->setEndDate(new \DateTime($subEvent['endDate']));
-            $newEvents[] = $e;
+            $newEvents[] = new Offer(
+                OfferType::event(),
+                new Status('Available', []),
+                new DateTimeImmutable($subEvent['startDate']),
+                new DateTimeImmutable($subEvent['endDate'])
+            );
         }
-        $event->setSubEvents($newEvents);
+
+        $event = $event->withSubEvents($newEvents);
 
         $expectedOutput = '<ul class="cnw-event-date-info"><li>';
         $expectedOutput .= '<span class="cf-from cf-meta">Van</span> ';

@@ -4,9 +4,12 @@ declare(strict_types=1);
 
 namespace CultuurNet\CalendarSummaryV3\Multiple;
 
+use CultuurNet\CalendarSummaryV3\Offer\CalendarType;
+use CultuurNet\CalendarSummaryV3\Offer\Offer;
+use CultuurNet\CalendarSummaryV3\Offer\OfferType;
+use CultuurNet\CalendarSummaryV3\Offer\Status;
 use CultuurNet\CalendarSummaryV3\Translator;
-use CultuurNet\SearchV3\ValueObjects\Event;
-use CultuurNet\SearchV3\ValueObjects\Status;
+use DateTimeImmutable;
 use PHPUnit\Framework\TestCase;
 
 final class ExtraSmallMultiplePlainTextFormatterTest extends TestCase
@@ -23,10 +26,13 @@ final class ExtraSmallMultiplePlainTextFormatterTest extends TestCase
 
     public function testFormatMultipleWithoutLeadingZeroes(): void
     {
-        $offer = new Event();
-        $offer->setStatus(new Status('Available'));
-        $offer->setStartDate(new \DateTime('25-11-2025'));
-        $offer->setEndDate(new \DateTime('30-11-2030'));
+        $offer = new Offer(
+            OfferType::event(),
+            new Status('Available', []),
+            new DateTimeImmutable('25-11-2025'),
+            new DateTimeImmutable('30-11-2030'),
+            CalendarType::multiple()
+        );
 
         $this->assertEquals(
             'Van 25/11/25 tot 30/11/30',
@@ -36,10 +42,13 @@ final class ExtraSmallMultiplePlainTextFormatterTest extends TestCase
 
     public function testFormatMultipleWithLeadingZeroes(): void
     {
-        $offer = new Event();
-        $offer->setStatus(new Status('Available'));
-        $offer->setStartDate(new \DateTime('04-03-2025'));
-        $offer->setEndDate(new \DateTime('08-03-2030'));
+        $offer = new Offer(
+            OfferType::event(),
+            new Status('Available', []),
+            new DateTimeImmutable('04-03-2025'),
+            new DateTimeImmutable('08-03-2030'),
+            CalendarType::multiple()
+        );
 
         $this->assertEquals(
             'Van 4/3/25 tot 8/3/30',
@@ -49,10 +58,13 @@ final class ExtraSmallMultiplePlainTextFormatterTest extends TestCase
 
     public function testFormatMultipleWithUnavailableStatus(): void
     {
-        $offer = new Event();
-        $offer->setStatus(new Status('Unavailable'));
-        $offer->setStartDate(new \DateTime('25-11-2025'));
-        $offer->setEndDate(new \DateTime('30-11-2030'));
+        $offer = new Offer(
+            OfferType::event(),
+            new Status('Unavailable', []),
+            new DateTimeImmutable('25-11-2025'),
+            new DateTimeImmutable('30-11-2030'),
+            CalendarType::multiple()
+        );
 
         $this->assertEquals(
             'Van 25/11/25 tot 30/11/30 (geannuleerd)',
@@ -62,10 +74,13 @@ final class ExtraSmallMultiplePlainTextFormatterTest extends TestCase
 
     public function testFormatMultipleOnSameDayWithUnavailableStatus(): void
     {
-        $offer = new Event();
-        $offer->setStatus(new Status('Unavailable'));
-        $offer->setStartDate(new \DateTime('30-11-2030'));
-        $offer->setEndDate(new \DateTime('30-11-2030'));
+        $offer = new Offer(
+            OfferType::event(),
+            new Status('Unavailable', []),
+            new DateTimeImmutable('30-11-2030'),
+            new DateTimeImmutable('30-11-2030'),
+            CalendarType::multiple()
+        );
 
         $this->assertEquals(
             '30/11/30 (geannuleerd)',
@@ -75,10 +90,13 @@ final class ExtraSmallMultiplePlainTextFormatterTest extends TestCase
 
     public function testFormatMultipleDayWithoutLeadingZero(): void
     {
-        $offer = new Event();
-        $offer->setStatus(new Status('Available'));
-        $offer->setStartDate(new \DateTime('25-03-2025'));
-        $offer->setEndDate(new \DateTime('30-03-2030'));
+        $offer = new Offer(
+            OfferType::event(),
+            new Status('Available', []),
+            new DateTimeImmutable('25-03-2025'),
+            new DateTimeImmutable('30-03-2030'),
+            CalendarType::multiple()
+        );
 
         $this->assertEquals(
             'Van 25/3/25 tot 30/3/30',
@@ -88,10 +106,13 @@ final class ExtraSmallMultiplePlainTextFormatterTest extends TestCase
 
     public function testFormatMultipleMonthWithoutLeadingZero(): void
     {
-        $offer = new Event();
-        $offer->setStatus(new Status('Available'));
-        $offer->setStartDate(new \DateTime('04-10-2025'));
-        $offer->setEndDate(new \DateTime('08-10-2030'));
+        $offer = new Offer(
+            OfferType::event(),
+            new Status('Available', []),
+            new DateTimeImmutable('04-10-2025'),
+            new DateTimeImmutable('08-10-2030'),
+            CalendarType::multiple()
+        );
 
         $this->assertEquals(
             'Van 4/10/25 tot 8/10/30',
@@ -101,10 +122,13 @@ final class ExtraSmallMultiplePlainTextFormatterTest extends TestCase
 
     public function testFormatAPeriodWithSameBeginAndEndDate(): void
     {
-        $offer = new Event();
-        $offer->setStatus(new Status('Available'));
-        $offer->setStartDate(new \DateTime('08-03-2025'));
-        $offer->setEndDate(new \DateTime('08-03-2025'));
+        $offer = new Offer(
+            OfferType::event(),
+            new Status('Available', []),
+            new DateTimeImmutable('08-03-2025'),
+            new DateTimeImmutable('08-03-2025'),
+            CalendarType::multiple()
+        );
 
         $this->assertEquals(
             '8/3/25',
@@ -114,10 +138,13 @@ final class ExtraSmallMultiplePlainTextFormatterTest extends TestCase
 
     public function testFormatMultipleMonthWithUnavailableStatus(): void
     {
-        $offer = new Event();
-        $offer->setStatus(new Status('Unavailable'));
-        $offer->setStartDate(new \DateTime('04-10-2025'));
-        $offer->setEndDate(new \DateTime('08-10-2030'));
+        $offer = new Offer(
+            OfferType::event(),
+            new Status('Unavailable', []),
+            new DateTimeImmutable('04-10-2025'),
+            new DateTimeImmutable('08-10-2030'),
+            CalendarType::multiple()
+        );
 
         $this->assertEquals(
             'Van 4/10/25 tot 8/10/30 (geannuleerd)',
