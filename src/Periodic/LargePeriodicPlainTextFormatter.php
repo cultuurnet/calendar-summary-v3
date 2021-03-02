@@ -51,15 +51,6 @@ final class LargePeriodicPlainTextFormatter implements PeriodicFormatterInterfac
         return $summary->appendStatus($offer->getStatus())->toString();
     }
 
-    private function generateDates(DateTimeImmutable $dateFrom, DateTimeImmutable $dateTo): string
-    {
-        $intlDateFrom = $this->formatter->formatAsFullDate($dateFrom);
-        $intlDateTo = $this->formatter->formatAsFullDate($dateTo);
-
-        return ucfirst($this->translator->translate('from')) . ' '
-            . $intlDateFrom . ' ' . $this->translator->translate('till') . ' ' . $intlDateTo;
-    }
-
     /**
      * @param OpeningHour[] $openingHoursData
      */
