@@ -87,7 +87,7 @@ final class SmallSinglePlainTextFormatterTest extends TestCase
     {
         $event = new Offer(
             OfferType::event(),
-            new Status('Available', []),
+            new Status('Unavailable', []),
             new DateTimeImmutable('2018-01-25T20:00:00+01:00'),
             new DateTimeImmutable('2018-01-25T21:30:00+01:00')
         );
@@ -134,7 +134,7 @@ final class SmallSinglePlainTextFormatterTest extends TestCase
             OfferType::event(),
             new Status('TemporarilyUnavailable', []),
             new DateTimeImmutable('2018-01-25T20:00:00+01:00'),
-            new DateTimeImmutable('2018-01-25T21:30:00+01:00')
+            new DateTimeImmutable('2018-01-28T21:30:00+01:00')
         );
 
         $this->assertEquals(

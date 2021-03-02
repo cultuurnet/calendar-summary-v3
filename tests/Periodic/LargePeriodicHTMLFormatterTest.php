@@ -39,7 +39,7 @@ final class LargePeriodicHTMLFormatterTest extends TestCase
             [
                 new OpeningHour(
                     ['monday','tuesday', 'wednesday'],
-                    '00:01',
+                    '00:00',
                     '17:00'
                 ),
                 new OpeningHour(
@@ -120,7 +120,7 @@ final class LargePeriodicHTMLFormatterTest extends TestCase
             [
                 new OpeningHour(
                     ['monday','tuesday', 'wednesday'],
-                    '00:01',
+                    '00:00',
                     '17:00'
                 ),
                 new OpeningHour(
@@ -324,13 +324,13 @@ final class LargePeriodicHTMLFormatterTest extends TestCase
                 ),
                 new OpeningHour(
                     ['tuesday'],
-                    '18:00',
+                    '00:00',
                     '20:00'
                 ),
                 new OpeningHour(
                     ['tuesday'],
-                    '21:00',
-                    '23:00'
+                    '00:01',
+                    '00:59'
                 ),
                 new OpeningHour(
                     ['friday', 'saturday'],

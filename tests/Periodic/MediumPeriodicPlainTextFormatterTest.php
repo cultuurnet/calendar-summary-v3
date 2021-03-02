@@ -108,7 +108,7 @@ final class MediumPeriodicPlainTextFormatterTest extends TestCase
     {
         $offer = new Offer(
             OfferType::event(),
-            new Status('Available', []),
+            new Status('Unavailable', []),
             new DateTimeImmutable('25-03-2025'),
             new DateTimeImmutable('30-03-2030'),
             CalendarType::periodic()

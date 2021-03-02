@@ -137,7 +137,7 @@ final class LargePermanentHTMLFormatterTest extends TestCase
         $openingHours2 = new OpeningHour(
             ['monday','tuesday', 'wednesday'],
             '17:00',
-            '19:00'
+            '20:00'
         );
 
         $openingHours3 = new OpeningHour(
