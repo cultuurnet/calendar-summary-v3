@@ -116,13 +116,7 @@ final class HtmlStatusFormatter
 
     private function getReasonAsTitleAttribute(): string
     {
-        $reason = $this->status->getReason();
-
-        if (!$reason) {
-            return '';
-        }
-
-        $translatedReason = $reason->getValueForLanguage($this->translator->getLanguageCode());
+        $translatedReason = $this->status->getReasonForLanguage($this->translator->getLanguageCode());
 
         if (empty($translatedReason)) {
             return '';
