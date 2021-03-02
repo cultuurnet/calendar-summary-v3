@@ -18,7 +18,6 @@ jobs:
               with:
                   php-version: ${{ matrix.php-versions }}
                   ini-values: xdebug.mode=coverage
-                  extensions: intl
                   tools: composer:v2
 
             - name: 📦 Install dependencies
