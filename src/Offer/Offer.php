@@ -137,6 +137,14 @@ final class Offer
         return $clone;
     }
 
+    public function withStatus(Status $status): self
+    {
+        $clone = clone $this;
+        $clone->status = $status;
+
+        return $clone;
+    }
+
     public function getCalendarType(): ?CalendarType
     {
         return $this->calendarType;

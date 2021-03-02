@@ -147,7 +147,7 @@ final class MediumMultiplePlainTextFormatterTest extends TestCase
             );
         }
 
-        $newEvents[1]->setStatus(new Status('Unavailable', []));
+        $newEvents[1] = $newEvents[1]->withStatus(new Status('Unavailable', []));
 
         $event = $event->withSubEvents($newEvents);
 
