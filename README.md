@@ -1,7 +1,5 @@
 # calendar-summary-v3
 
-[![Build Status](https://travis-ci.org/cultuurnet/calendar-summary-v3.svg?branch=master)](https://travis-ci.org/cultuurnet/calendar-summary-v3) [![Coverage Status](https://coveralls.io/repos/cultuurnet/calendar-summary-v3/badge.svg?branch=master&service=github)](https://coveralls.io/github/cultuurnet/calendar-summary-v3?branch=master)
-
 ## Installation
 
 ```bash
