@@ -63,8 +63,8 @@ final class LargeSinglePlainTextFormatterTest extends TestCase
         $event = new Offer(
             OfferType::event(),
             new Status('Unavailable', []),
-            new DateTimeImmutable('2018-01-08T20:00:00+01:00'),
-            new DateTimeImmutable('2018-01-08T21:30:00+01:00')
+            new DateTimeImmutable('2018-01-25T20:00:00+01:00'),
+            new DateTimeImmutable('2018-01-25T21:30:00+01:00')
         );
 
         $expectedOutput = 'Donderdag 25 januari 2018 van 20:00 tot 21:30 (geannuleerd)';
