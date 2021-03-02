@@ -4,10 +4,11 @@ declare(strict_types=1);
 
 namespace CultuurNet\CalendarSummaryV3\Single;
 
+use CultuurNet\CalendarSummaryV3\Offer\Offer;
+use CultuurNet\CalendarSummaryV3\Offer\OfferType;
+use CultuurNet\CalendarSummaryV3\Offer\Status;
 use CultuurNet\CalendarSummaryV3\Translator;
-use CultuurNet\SearchV3\ValueObjects\Event;
-use CultuurNet\SearchV3\ValueObjects\Status;
-use CultuurNet\SearchV3\ValueObjects\TranslatedString;
+use DateTimeImmutable;
 use PHPUnit\Framework\TestCase;
 
 final class SmallSingleHTMLFormatterTest extends TestCase
@@ -24,10 +25,12 @@ final class SmallSingleHTMLFormatterTest extends TestCase
 
     public function testFormatHTMLSingleDateXsOneDay(): void
     {
-        $event = new Event();
-        $event->setStatus(new Status('Available'));
-        $event->setStartDate(new \DateTime('2018-01-25T20:00:00+01:00'));
-        $event->setEndDate(new \DateTime('2018-01-25T21:30:00+01:00'));
+        $event = new Offer(
+            OfferType::event(),
+            new Status('Available', []),
+            new DateTimeImmutable('2018-01-25T20:00:00+01:00'),
+            new DateTimeImmutable('2018-01-25T21:30:00+01:00')
+        );
 
         $this->assertEquals(
             '<span class="cf-date">25</span> <span class="cf-month">jan</span>',
@@ -37,10 +40,12 @@ final class SmallSingleHTMLFormatterTest extends TestCase
 
     public function testFormatHTMLSingleDateXsOneDayWithStatusUnavailable(): void
     {
-        $event = new Event();
-        $event->setStatus(new Status('Unavailable'));
-        $event->setStartDate(new \DateTime('2018-01-25T20:00:00+01:00'));
-        $event->setEndDate(new \DateTime('2018-01-25T21:30:00+01:00'));
+        $event = new Offer(
+            OfferType::event(),
+            new Status('Available', []),
+            new DateTimeImmutable('2018-01-25T20:00:00+01:00'),
+            new DateTimeImmutable('2018-01-25T21:30:00+01:00')
+        );
 
         $this->assertEquals(
             '<span class="cf-date">25</span> <span class="cf-month">jan</span> <span class="cf-status">(geannuleerd)</span>',
@@ -50,10 +55,12 @@ final class SmallSingleHTMLFormatterTest extends TestCase
 
     public function testFormatHTMLSingleDateXsOneDayWithStatusUnavailableAndReason(): void
     {
-        $event = new Event();
-        $event->setStatus(new Status('Unavailable', new TranslatedString(['nl' => 'Covid-19'])));
-        $event->setStartDate(new \DateTime('2018-01-25T20:00:00+01:00'));
-        $event->setEndDate(new \DateTime('2018-01-25T21:30:00+01:00'));
+        $event = new Offer(
+            OfferType::event(),
+            new Status('Unavailable', ['nl' => 'Covid-19']),
+            new DateTimeImmutable('2018-01-25T20:00:00+01:00'),
+            new DateTimeImmutable('2018-01-25T21:30:00+01:00')
+        );
 
         $this->assertEquals(
             '<span class="cf-date">25</span> <span class="cf-month">jan</span> <span title="Covid-19" class="cf-status">(geannuleerd)</span>',
@@ -63,10 +70,12 @@ final class SmallSingleHTMLFormatterTest extends TestCase
 
     public function testFormatHTMLSingleDateXsWithLeadingZeroOneDay(): void
     {
-        $event = new Event();
-        $event->setStatus(new Status('Available'));
-        $event->setStartDate(new \DateTime('2018-01-08T20:00:00+01:00'));
-        $event->setEndDate(new \DateTime('2018-01-08T21:30:00+01:00'));
+        $event = new Offer(
+            OfferType::event(),
+            new Status('Available', []),
+            new DateTimeImmutable('2018-01-08T20:00:00+01:00'),
+            new DateTimeImmutable('2018-01-08T21:30:00+01:00')
+        );
 
         $this->assertEquals(
             '<span class="cf-date">8</span> <span class="cf-month">jan</span>',
@@ -76,10 +85,12 @@ final class SmallSingleHTMLFormatterTest extends TestCase
 
     public function testFormatHTMLSingleDateXsMoreDays(): void
     {
-        $event = new Event();
-        $event->setStatus(new Status('Available'));
-        $event->setStartDate(new \DateTime('2018-01-25T20:00:00+01:00'));
-        $event->setEndDate(new \DateTime('2018-01-27T21:30:00+01:00'));
+        $event = new Offer(
+            OfferType::event(),
+            new Status('Available', []),
+            new DateTimeImmutable('2018-01-25T20:00:00+01:00'),
+            new DateTimeImmutable('2018-01-27T21:30:00+01:00')
+        );
 
         $expectedOutput = '<span class="cf-from cf-meta">Van</span>';
         $expectedOutput .= ' ';
@@ -101,10 +112,12 @@ final class SmallSingleHTMLFormatterTest extends TestCase
 
     public function testFormatHTMLSingleDateXsMoreDaysWithUnavailableStatus(): void
     {
-        $event = new Event();
-        $event->setStatus(new Status('Unavailable'));
-        $event->setStartDate(new \DateTime('2018-01-25T20:00:00+01:00'));
-        $event->setEndDate(new \DateTime('2018-01-27T21:30:00+01:00'));
+        $event = new Offer(
+            OfferType::event(),
+            new Status('Available', []),
+            new DateTimeImmutable('2018-01-25T20:00:00+01:00'),
+            new DateTimeImmutable('2018-01-27T21:30:00+01:00')
+        );
 
         $expectedOutput = '<span class="cf-from cf-meta">Van</span>';
         $expectedOutput .= ' ';
@@ -128,10 +141,12 @@ final class SmallSingleHTMLFormatterTest extends TestCase
 
     public function testFormatHTMLSingleDateXsWithLeadingZeroMoreDays(): void
     {
-        $event = new Event();
-        $event->setStatus(new Status('Available'));
-        $event->setStartDate(new \DateTime('2018-01-06T20:00:00+01:00'));
-        $event->setEndDate(new \DateTime('2018-01-08T21:30:00+01:00'));
+        $event = new Offer(
+            OfferType::event(),
+            new Status('Available', []),
+            new DateTimeImmutable('2018-01-06T20:00:00+01:00'),
+            new DateTimeImmutable('2018-01-08T21:30:00+01:00')
+        );
 
         $expectedOutput = '<span class="cf-from cf-meta">Van</span>';
         $expectedOutput .= ' ';
