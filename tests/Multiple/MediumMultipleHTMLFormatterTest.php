@@ -83,7 +83,7 @@ final class MediumMultipleHTMLFormatterTest extends TestCase
                 new DateTimeImmutable($subEvent['endDate'])
             );
         }
-
+        $newEvents[1] = $newEvents[1]->withStatus(new Status('Unavailable', []));
         $event = $event->withSubEvents($newEvents);
 
         $expectedOutput = '<ul class="cnw-event-date-info"><li>';
