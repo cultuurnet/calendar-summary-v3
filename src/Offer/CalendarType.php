@@ -6,7 +6,7 @@ namespace CultuurNet\CalendarSummaryV3\Offer;
 
 use InvalidArgumentException;
 
-class CalendarType
+final class CalendarType
 {
     private const SINGLE = 'single';
     private const MULTIPLE = 'multiple';

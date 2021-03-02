@@ -67,7 +67,7 @@ final class OfferTest extends TestCase
                     new Status('Available', []),
                     new DateTimeImmutable('2021-03-15T23:00:00+00:00'),
                     new DateTimeImmutable('2021-03-28T22:59:59+00:00')
-                )
+                ),
             ]
         );
 
@@ -89,16 +89,16 @@ final class OfferTest extends TestCase
             [
                 new OpeningHour(
                     [
-                        "monday",
-                        "friday",
-                        "saturday"
+                        'monday',
+                        'friday',
+                        'saturday',
                     ],
                     '08:00',
                     '10:00'
                 ),
                 new OpeningHour(
                     [
-                        "wednesday",
+                        'wednesday',
                     ],
                     '20:00',
                     '21:00'

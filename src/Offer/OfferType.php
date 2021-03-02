@@ -6,7 +6,7 @@ namespace CultuurNet\CalendarSummaryV3\Offer;
 
 use InvalidArgumentException;
 
-class OfferType
+final class OfferType
 {
     private const EVENT = 'event';
     private const PLACE = 'place';

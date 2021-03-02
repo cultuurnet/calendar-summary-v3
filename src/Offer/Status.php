@@ -6,7 +6,7 @@ namespace CultuurNet\CalendarSummaryV3\Offer;
 
 use InvalidArgumentException;
 
-class Status
+final class Status
 {
     private const AVAILABLE = 'Available';
     private const UNAVAILABLE = 'Unavailable';
