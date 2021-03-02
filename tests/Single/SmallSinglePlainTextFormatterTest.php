@@ -132,7 +132,7 @@ final class SmallSinglePlainTextFormatterTest extends TestCase
     {
         $event = new Offer(
             OfferType::event(),
-            new Status('TemporarilyAvailable', []),
+            new Status('TemporarilyUnavailable', []),
             new DateTimeImmutable('2018-01-25T20:00:00+01:00'),
             new DateTimeImmutable('2018-01-25T21:30:00+01:00')
         );
