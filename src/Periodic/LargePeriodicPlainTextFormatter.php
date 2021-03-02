@@ -10,7 +10,6 @@ use CultuurNet\CalendarSummaryV3\OpeningHourFormatter;
 use CultuurNet\CalendarSummaryV3\PlainTextSummaryBuilder;
 use CultuurNet\CalendarSummaryV3\Translator;
 use CultuurNet\CalendarSummaryV3\Offer\Offer;
-use DateTime;
 use DateTimeImmutable;
 
 final class LargePeriodicPlainTextFormatter implements PeriodicFormatterInterface
@@ -52,7 +51,7 @@ final class LargePeriodicPlainTextFormatter implements PeriodicFormatterInterfac
         return $summary->appendStatus($offer->getStatus())->toString();
     }
 
-    private function generateDates(DateTime $dateFrom, DateTime $dateTo): string
+    private function generateDates(DateTimeImmutable $dateFrom, DateTimeImmutable $dateTo): string
     {
         $intlDateFrom = $this->formatter->formatAsFullDate($dateFrom);
         $intlDateTo = $this->formatter->formatAsFullDate($dateTo);
