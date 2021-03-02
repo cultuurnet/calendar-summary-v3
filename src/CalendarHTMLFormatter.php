@@ -82,12 +82,12 @@ final class CalendarHTMLFormatter implements CalendarFormatterInterface
      */
     public function format(Offer $offer, string $format): string
     {
-        $calenderType = $offer->getCalendarType();
+        $calenderType = $offer->getCalendarType()->toString();
 
         if (isset($this->mapping[$calenderType][$format])) {
             $formatter = $this->mapping[$calenderType][$format];
         } else {
-            throw new FormatterException($format . ' format not supported for ' . $calenderType->toString());
+            throw new FormatterException($format . ' format not supported for ' . $calenderType);
         }
 
         return $this->middleware->format(
