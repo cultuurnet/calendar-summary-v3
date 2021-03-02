@@ -4,10 +4,10 @@ declare(strict_types=1);
 
 namespace CultuurNet\CalendarSummaryV3\Middleware;
 
+use CultuurNet\CalendarSummaryV3\Offer\Offer;
+use CultuurNet\CalendarSummaryV3\Offer\OfferType;
+use CultuurNet\CalendarSummaryV3\Offer\Status;
 use CultuurNet\CalendarSummaryV3\Translator;
-use CultuurNet\SearchV3\ValueObjects\Event;
-use CultuurNet\SearchV3\ValueObjects\Place;
-use CultuurNet\SearchV3\ValueObjects\Status;
 use PHPUnit\Framework\TestCase;
 
 final class NonAvailablePlacePlainTextFormatterTest extends TestCase
@@ -25,8 +25,10 @@ final class NonAvailablePlacePlainTextFormatterTest extends TestCase
 
     public function testWillInterceptUnavailablePlace(): void
     {
-        $place = new Place();
-        $place->setStatus(new Status('Unavailable'));
+        $place = new Offer(
+            OfferType::place(),
+            new Status('Unavailable', [])
+        );
 
         $result = $this->formatter->format(
             $place,
@@ -40,8 +42,10 @@ final class NonAvailablePlacePlainTextFormatterTest extends TestCase
 
     public function testWillInterceptTemporarilyUnavailablePlace(): void
     {
-        $place = new Place();
-        $place->setStatus(new Status('TemporarilyUnavailable'));
+        $place = new Offer(
+            OfferType::place(),
+            new Status('TemporarilyUnavailable', [])
+        );
 
         $result = $this->formatter->format(
             $place,
@@ -55,8 +59,10 @@ final class NonAvailablePlacePlainTextFormatterTest extends TestCase
 
     public function testWillIgnoreAvailablePlaces(): void
     {
-        $place = new Place();
-        $place->setStatus(new Status('Available'));
+        $place = new Offer(
+            OfferType::place(),
+            new Status('Available', [])
+        );
 
         $result = $this->formatter->format(
             $place,
@@ -70,8 +76,10 @@ final class NonAvailablePlacePlainTextFormatterTest extends TestCase
 
     public function testWillIgnoreUnavailableEvents(): void
     {
-        $event = new Event();
-        $event->setStatus(new Status('Unavailable'));
+        $event = new Offer(
+            OfferType::event(),
+            new Status('Unavailable', [])
+        );
 
         $result = $this->formatter->format(
             $event,
@@ -85,8 +93,10 @@ final class NonAvailablePlacePlainTextFormatterTest extends TestCase
 
     public function testWillIgnoreTemporarilyUnavailableEvents(): void
     {
-        $event = new Event();
-        $event->setStatus(new Status('TemporarilyUnavailable'));
+        $event = new Offer(
+            OfferType::event(),
+            new Status('TemporarilyUnavailable', [])
+        );
 
         $result = $this->formatter->format(
             $event,
@@ -100,8 +110,10 @@ final class NonAvailablePlacePlainTextFormatterTest extends TestCase
 
     public function testWillIgnoreAvailableEvents(): void
     {
-        $event = new Event();
-        $event->setStatus(new Status('Unavailable'));
+        $event = new Offer(
+            OfferType::event(),
+            new Status('Available', [])
+        );
 
         $result = $this->formatter->format(
             $event,
