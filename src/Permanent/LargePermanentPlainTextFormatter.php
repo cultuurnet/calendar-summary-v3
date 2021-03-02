@@ -5,11 +5,11 @@ declare(strict_types=1);
 namespace CultuurNet\CalendarSummaryV3\Permanent;
 
 use CultuurNet\CalendarSummaryV3\DateFormatter;
+use CultuurNet\CalendarSummaryV3\Offer\OpeningHour;
 use CultuurNet\CalendarSummaryV3\OpeningHourFormatter;
 use CultuurNet\CalendarSummaryV3\PlainTextSummaryBuilder;
 use CultuurNet\CalendarSummaryV3\Translator;
-use CultuurNet\SearchV3\ValueObjects\Offer;
-use CultuurNet\SearchV3\ValueObjects\OpeningHours;
+use CultuurNet\CalendarSummaryV3\Offer\Offer;
 use DateTimeImmutable;
 
 final class LargePermanentPlainTextFormatter implements PermanentFormatterInterface
@@ -51,7 +51,7 @@ final class LargePermanentPlainTextFormatter implements PermanentFormatterInterf
     }
 
     /**
-     * @param OpeningHours[] $openingHoursData
+     * @param OpeningHour[] $openingHoursData
      */
     private function generateWeekScheme(array $openingHoursData): string
     {

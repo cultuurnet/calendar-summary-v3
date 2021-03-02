@@ -142,6 +142,11 @@ final class Offer
         return $this->calendarType;
     }
 
+    public function getStatus(): Status
+    {
+        return $this->status;
+    }
+
     public function getStartDate(): DateTimeImmutable
     {
         return $this->startDate;

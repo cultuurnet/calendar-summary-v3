@@ -4,9 +4,8 @@ declare(strict_types=1);
 
 namespace CultuurNet\CalendarSummaryV3;
 
-use CultuurNet\SearchV3\ValueObjects\Offer;
-use CultuurNet\SearchV3\ValueObjects\Place;
-use CultuurNet\SearchV3\ValueObjects\Status;
+use CultuurNet\CalendarSummaryV3\Offer\Offer;
+use CultuurNet\CalendarSummaryV3\Offer\Status;
 
 final class HtmlStatusFormatter
 {
@@ -49,7 +48,7 @@ final class HtmlStatusFormatter
     {
         $formatter = new self($translator);
         $formatter->status = $offer->getStatus();
-        $formatter->isPlace = $offer instanceof Place;
+        $formatter->isPlace = $offer->isPlace();
         return $formatter;
     }
 

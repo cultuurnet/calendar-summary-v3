@@ -8,7 +8,7 @@ use CultuurNet\CalendarSummaryV3\DateComparison;
 use CultuurNet\CalendarSummaryV3\DateFormatter;
 use CultuurNet\CalendarSummaryV3\PlainTextSummaryBuilder;
 use CultuurNet\CalendarSummaryV3\Translator;
-use CultuurNet\SearchV3\ValueObjects\Offer;
+use CultuurNet\CalendarSummaryV3\Offer\Offer;
 use DateTimeInterface;
 
 final class LargeSinglePlainTextFormatter implements SingleFormatterInterface

@@ -4,9 +4,9 @@ declare(strict_types=1);
 
 namespace CultuurNet\CalendarSummaryV3\Multiple;
 
+use CultuurNet\CalendarSummaryV3\Offer\Offer;
 use CultuurNet\CalendarSummaryV3\Periodic\MediumPeriodicHTMLFormatter;
 use CultuurNet\CalendarSummaryV3\Translator;
-use CultuurNet\SearchV3\ValueObjects\Event;
 
 final class SmallMultipleHTMLFormatter implements MultipleFormatterInterface
 {
@@ -20,9 +20,9 @@ final class SmallMultipleHTMLFormatter implements MultipleFormatterInterface
         $this->translator = $translator;
     }
 
-    public function format(Event $event): string
+    public function format(Offer $offer): string
     {
         $formatter = new MediumPeriodicHTMLFormatter($this->translator);
-        return $formatter->format($event);
+        return $formatter->format($offer);
     }
 }

@@ -6,9 +6,9 @@ namespace CultuurNet\CalendarSummaryV3\Permanent;
 
 use CultuurNet\CalendarSummaryV3\DateFormatter;
 use CultuurNet\CalendarSummaryV3\HtmlStatusFormatter;
+use CultuurNet\CalendarSummaryV3\Offer\OpeningHour;
 use CultuurNet\CalendarSummaryV3\Translator;
-use CultuurNet\SearchV3\ValueObjects\Offer;
-use CultuurNet\SearchV3\ValueObjects\OpeningHours;
+use CultuurNet\CalendarSummaryV3\Offer\Offer;
 use DateTimeImmutable;
 
 final class MediumPermanentHTMLFormatter implements PermanentFormatterInterface
@@ -50,7 +50,7 @@ final class MediumPermanentHTMLFormatter implements PermanentFormatterInterface
     /**
      * Generate a weekscheme based on the given opening hours.
      *
-     * @param OpeningHours[] $openingHoursData
+     * @param OpeningHour[] $openingHoursData
      */
     private function generateWeekScheme(array $openingHoursData): string
     {

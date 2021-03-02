@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace CultuurNet\CalendarSummaryV3;
 
-use CultuurNet\SearchV3\ValueObjects\Offer;
+use CultuurNet\CalendarSummaryV3\Offer\Offer;
 
 interface CalendarFormatterInterface
 {

@@ -6,8 +6,7 @@ namespace CultuurNet\CalendarSummaryV3\Middleware;
 
 use Closure;
 use CultuurNet\CalendarSummaryV3\Translator;
-use CultuurNet\SearchV3\ValueObjects\Offer;
-use CultuurNet\SearchV3\ValueObjects\Place;
+use CultuurNet\CalendarSummaryV3\Offer\Offer;
 
 final class NonAvailablePlacePlainTextFormatter implements FormatterMiddleware
 {
@@ -24,7 +23,7 @@ final class NonAvailablePlacePlainTextFormatter implements FormatterMiddleware
 
     public function format(Offer $offer, Closure $next): string
     {
-        if ($offer instanceof Place) {
+        if ($offer->isPlace()) {
             if ($offer->getStatus()->getType() === 'Unavailable') {
                 return $this->translator->translate('permanently_closed');
             }

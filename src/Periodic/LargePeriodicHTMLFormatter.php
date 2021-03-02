@@ -6,10 +6,10 @@ namespace CultuurNet\CalendarSummaryV3\Periodic;
 
 use CultuurNet\CalendarSummaryV3\DateFormatter;
 use CultuurNet\CalendarSummaryV3\HtmlStatusFormatter;
+use CultuurNet\CalendarSummaryV3\Offer\OpeningHour;
 use CultuurNet\CalendarSummaryV3\OpeningHourFormatter;
 use CultuurNet\CalendarSummaryV3\Translator;
-use CultuurNet\SearchV3\ValueObjects\Offer;
-use CultuurNet\SearchV3\ValueObjects\OpeningHours;
+use CultuurNet\CalendarSummaryV3\Offer\Offer;
 use DateTime;
 use DateTimeImmutable;
 
@@ -58,7 +58,7 @@ final class LargePeriodicHTMLFormatter implements PeriodicFormatterInterface
     /**
      * Retrieve the earliest time for the specified daysOfWeek.
      *
-     * @param OpeningHours[] $openingHoursData
+     * @param OpeningHour[] $openingHoursData
      * @param string[] $daysOfWeek
      */
     private function getEarliestTime(array $openingHoursData, array $daysOfWeek): string
@@ -79,7 +79,7 @@ final class LargePeriodicHTMLFormatter implements PeriodicFormatterInterface
     /**
      * Retrieve the latest time for the specified daysOfWeek.
      *
-     * @param OpeningHours[] $openingHoursData
+     * @param OpeningHour[] $openingHoursData
      * @param string[] $daysOfWeek
      */
     private function getLatestTime(array $openingHoursData, array $daysOfWeek): string
@@ -115,7 +115,7 @@ final class LargePeriodicHTMLFormatter implements PeriodicFormatterInterface
     }
 
     /**
-     * @param OpeningHours[] $openingHoursData
+     * @param OpeningHour[] $openingHoursData
      * @return string
      */
     private function generateWeekScheme($openingHoursData)

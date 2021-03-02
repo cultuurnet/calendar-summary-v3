@@ -5,8 +5,8 @@ declare(strict_types=1);
 namespace CultuurNet\CalendarSummaryV3\Multiple;
 
 use CultuurNet\CalendarSummaryV3\DateComparison;
+use CultuurNet\CalendarSummaryV3\Offer\Offer;
 use CultuurNet\CalendarSummaryV3\Translator;
-use CultuurNet\SearchV3\ValueObjects\Event;
 use CultuurNet\CalendarSummaryV3\Single\MediumSingleHTMLFormatter;
 
 final class MediumMultipleHTMLFormatter implements MultipleFormatterInterface
@@ -27,9 +27,9 @@ final class MediumMultipleHTMLFormatter implements MultipleFormatterInterface
         $this->hidePast = $hidePastDates;
     }
 
-    public function format(Event $event): string
+    public function format(Offer $offer): string
     {
-        $subEvents = $event->getSubEvents();
+        $subEvents = $offer->getSubEvents();
         $output = '<ul class="cnw-event-date-info">';
 
         foreach ($subEvents as $subEvent) {

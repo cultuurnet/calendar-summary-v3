@@ -13,7 +13,7 @@ use CultuurNet\CalendarSummaryV3\Permanent\MediumPermanentPlainTextFormatter;
 use CultuurNet\CalendarSummaryV3\Single\LargeSinglePlainTextFormatter;
 use CultuurNet\CalendarSummaryV3\Single\MediumSinglePlainTextFormatter;
 use CultuurNet\CalendarSummaryV3\Single\SmallSinglePlainTextFormatter;
-use CultuurNet\SearchV3\ValueObjects\Offer;
+use CultuurNet\CalendarSummaryV3\Offer\Offer;
 use CultuurNet\CalendarSummaryV3\Periodic\ExtraSmallPeriodicPlainTextFormatter;
 use CultuurNet\CalendarSummaryV3\Periodic\LargePeriodicPlainTextFormatter;
 use CultuurNet\CalendarSummaryV3\Periodic\MediumPeriodicPlainTextFormatter;

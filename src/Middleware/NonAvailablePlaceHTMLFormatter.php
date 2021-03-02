@@ -7,8 +7,7 @@ namespace CultuurNet\CalendarSummaryV3\Middleware;
 use Closure;
 use CultuurNet\CalendarSummaryV3\HtmlStatusFormatter;
 use CultuurNet\CalendarSummaryV3\Translator;
-use CultuurNet\SearchV3\ValueObjects\Offer;
-use CultuurNet\SearchV3\ValueObjects\Place;
+use CultuurNet\CalendarSummaryV3\Offer\Offer;
 
 final class NonAvailablePlaceHTMLFormatter implements FormatterMiddleware
 {
@@ -39,7 +38,7 @@ final class NonAvailablePlaceHTMLFormatter implements FormatterMiddleware
 
     private function appliesToOffer(Offer $offer): bool
     {
-        if (!$offer instanceof Place) {
+        if (!$offer->isPlace()) {
             return false;
         }
 
