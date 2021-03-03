@@ -4,9 +4,12 @@ declare(strict_types=1);
 
 namespace CultuurNet\CalendarSummaryV3\Multiple;
 
+use CultuurNet\CalendarSummaryV3\Offer\CalendarType;
+use CultuurNet\CalendarSummaryV3\Offer\Offer;
+use CultuurNet\CalendarSummaryV3\Offer\OfferType;
+use CultuurNet\CalendarSummaryV3\Offer\Status;
 use CultuurNet\CalendarSummaryV3\Translator;
-use CultuurNet\SearchV3\ValueObjects\Event;
-use CultuurNet\SearchV3\ValueObjects\Status;
+use DateTimeImmutable;
 use PHPUnit\Framework\TestCase;
 
 final class MediumMultiplePlainTextFormatterTest extends TestCase
@@ -24,17 +27,25 @@ final class MediumMultiplePlainTextFormatterTest extends TestCase
     public function testFormatPlainTextMultipleDateMediumOneDay(): void
     {
         $subEvents = json_decode(file_get_contents(__DIR__ . '/data/subEvents.json'), true);
-        $event = new Event();
-        $event->setStatus(new Status('Available'));
+        $event = new Offer(
+            OfferType::event(),
+            new Status('Available', []),
+            null,
+            null,
+            CalendarType::multiple()
+        );
+
         $newEvents = [];
         foreach ($subEvents as $subEvent) {
-            $e = new Event();
-            $e->setStatus(new Status('Available'));
-            $e->setStartDate(new \DateTime($subEvent['startDate']));
-            $e->setEndDate(new \DateTime($subEvent['endDate']));
-            $newEvents[] = $e;
+            $newEvents[] = new Offer(
+                OfferType::event(),
+                new Status('Available', []),
+                new DateTimeImmutable($subEvent['startDate']),
+                new DateTimeImmutable($subEvent['endDate'])
+            );
         }
-        $event->setSubEvents($newEvents);
+
+        $event = $event->withSubEvents($newEvents);
 
         $expectedOutput = 'Donderdag 9 november 2017' . PHP_EOL;
         $expectedOutput .= 'Donderdag 16 november 2017' . PHP_EOL;
@@ -50,17 +61,25 @@ final class MediumMultiplePlainTextFormatterTest extends TestCase
     public function testFormatPlainTextMultipleDateMediumMoreDays(): void
     {
         $subEvents = json_decode(file_get_contents(__DIR__ . '/data/subEventsMoreDays.json'), true);
-        $event = new Event();
-        $event->setStatus(new Status('Available'));
+        $event = new Offer(
+            OfferType::event(),
+            new Status('Available', []),
+            null,
+            null,
+            CalendarType::multiple()
+        );
+
         $newEvents = [];
         foreach ($subEvents as $subEvent) {
-            $e = new Event();
-            $e->setStatus(new Status('Available'));
-            $e->setStartDate(new \DateTime($subEvent['startDate']));
-            $e->setEndDate(new \DateTime($subEvent['endDate']));
-            $newEvents[] = $e;
+            $newEvents[] = new Offer(
+                OfferType::event(),
+                new Status('Available', []),
+                new DateTimeImmutable($subEvent['startDate']),
+                new DateTimeImmutable($subEvent['endDate'])
+            );
         }
-        $event->setSubEvents($newEvents);
+
+        $event = $event->withSubEvents($newEvents);
 
         $expectedOutput = 'Van maandag 6 november 2017 tot donderdag 9 november 2017' . PHP_EOL;
         $expectedOutput .= 'Van dinsdag 14 november 2017 tot donderdag 16 november 2017' . PHP_EOL;
@@ -76,17 +95,25 @@ final class MediumMultiplePlainTextFormatterTest extends TestCase
     public function testFormatPlainTextMultipleDateMediumOneDayWithUnavailableStatus(): void
     {
         $subEvents = json_decode(file_get_contents(__DIR__ . '/data/subEvents.json'), true);
-        $event = new Event();
-        $event->setStatus(new Status('Unavailable'));
+        $event = new Offer(
+            OfferType::event(),
+            new Status('Unavailable', []),
+            null,
+            null,
+            CalendarType::multiple()
+        );
+
         $newEvents = [];
         foreach ($subEvents as $subEvent) {
-            $e = new Event();
-            $e->setStatus(new Status('Unavailable'));
-            $e->setStartDate(new \DateTime($subEvent['startDate']));
-            $e->setEndDate(new \DateTime($subEvent['endDate']));
-            $newEvents[] = $e;
+            $newEvents[] = new Offer(
+                OfferType::event(),
+                new Status('Unavailable', []),
+                new DateTimeImmutable($subEvent['startDate']),
+                new DateTimeImmutable($subEvent['endDate'])
+            );
         }
-        $event->setSubEvents($newEvents);
+
+        $event = $event->withSubEvents($newEvents);
 
         $expectedOutput = 'Donderdag 9 november 2017 (geannuleerd)' . PHP_EOL;
         $expectedOutput .= 'Donderdag 16 november 2017 (geannuleerd)' . PHP_EOL;
@@ -102,20 +129,27 @@ final class MediumMultiplePlainTextFormatterTest extends TestCase
     public function testFormatPlainTextMultipleDateMediumOneDayWithUnavailableStatusForSingleSubEvent(): void
     {
         $subEvents = json_decode(file_get_contents(__DIR__ . '/data/subEvents.json'), true);
-        $event = new Event();
-        $event->setStatus(new Status('Available'));
+        $event = new Offer(
+            OfferType::event(),
+            new Status('Available', []),
+            null,
+            null,
+            CalendarType::multiple()
+        );
+
         $newEvents = [];
         foreach ($subEvents as $subEvent) {
-            $e = new Event();
-            $e->setStatus(new Status('Available'));
-            $e->setStartDate(new \DateTime($subEvent['startDate']));
-            $e->setEndDate(new \DateTime($subEvent['endDate']));
-            $newEvents[] = $e;
+            $newEvents[] = new Offer(
+                OfferType::event(),
+                new Status('Available', []),
+                new DateTimeImmutable($subEvent['startDate']),
+                new DateTimeImmutable($subEvent['endDate'])
+            );
         }
 
-        $newEvents[1]->setStatus(new Status('Unavailable'));
+        $newEvents[1] = $newEvents[1]->withStatus(new Status('Unavailable', []));
 
-        $event->setSubEvents($newEvents);
+        $event = $event->withSubEvents($newEvents);
 
         $expectedOutput = 'Donderdag 9 november 2017' . PHP_EOL;
         $expectedOutput .= 'Donderdag 16 november 2017 (geannuleerd)' . PHP_EOL;

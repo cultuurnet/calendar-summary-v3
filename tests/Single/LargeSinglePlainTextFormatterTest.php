@@ -4,9 +4,11 @@ declare(strict_types=1);
 
 namespace CultuurNet\CalendarSummaryV3\Single;
 
+use CultuurNet\CalendarSummaryV3\Offer\Offer;
+use CultuurNet\CalendarSummaryV3\Offer\OfferType;
+use CultuurNet\CalendarSummaryV3\Offer\Status;
 use CultuurNet\CalendarSummaryV3\Translator;
-use CultuurNet\SearchV3\ValueObjects\Event;
-use CultuurNet\SearchV3\ValueObjects\Status;
+use DateTimeImmutable;
 use PHPUnit\Framework\TestCase;
 
 final class LargeSinglePlainTextFormatterTest extends TestCase
@@ -24,10 +26,12 @@ final class LargeSinglePlainTextFormatterTest extends TestCase
 
     public function testFormatPlainTextSingleDateLargeOneDay(): void
     {
-        $event = new Event();
-        $event->setStatus(new Status('Available'));
-        $event->setStartDate(new \DateTime('2018-01-25T20:00:00+01:00'));
-        $event->setEndDate(new \DateTime('2018-01-25T21:30:00+01:00'));
+        $event = new Offer(
+            OfferType::event(),
+            new Status('Available', []),
+            new DateTimeImmutable('2018-01-25T20:00:00+01:00'),
+            new DateTimeImmutable('2018-01-25T21:30:00+01:00')
+        );
 
         $expectedOutput = 'Donderdag 25 januari 2018 van 20:00 tot 21:30';
 
@@ -39,10 +43,12 @@ final class LargeSinglePlainTextFormatterTest extends TestCase
 
     public function testFormatPlainTextSingleDateLargeWithLeadingZeroOneDay(): void
     {
-        $event = new Event();
-        $event->setStatus(new Status('Available'));
-        $event->setStartDate(new \DateTime('2018-01-08T20:00:00+01:00'));
-        $event->setEndDate(new \DateTime('2018-01-08T21:30:00+01:00'));
+        $event = new Offer(
+            OfferType::event(),
+            new Status('Available', []),
+            new DateTimeImmutable('2018-01-08T20:00:00+01:00'),
+            new DateTimeImmutable('2018-01-08T21:30:00+01:00')
+        );
 
         $expectedOutput = 'Maandag 8 januari 2018 van 20:00 tot 21:30';
 
@@ -54,10 +60,12 @@ final class LargeSinglePlainTextFormatterTest extends TestCase
 
     public function testFormatPlainTextSingleDateLargeOneDayWithUnavailableStatus(): void
     {
-        $event = new Event();
-        $event->setStatus(new Status('Unavailable'));
-        $event->setStartDate(new \DateTime('2018-01-25T20:00:00+01:00'));
-        $event->setEndDate(new \DateTime('2018-01-25T21:30:00+01:00'));
+        $event = new Offer(
+            OfferType::event(),
+            new Status('Unavailable', []),
+            new DateTimeImmutable('2018-01-25T20:00:00+01:00'),
+            new DateTimeImmutable('2018-01-25T21:30:00+01:00')
+        );
 
         $expectedOutput = 'Donderdag 25 januari 2018 van 20:00 tot 21:30 (geannuleerd)';
 
@@ -69,10 +77,12 @@ final class LargeSinglePlainTextFormatterTest extends TestCase
 
     public function testFormatPlainTextSingleDateLargeMoreDays(): void
     {
-        $event = new Event();
-        $event->setStatus(new Status('Available'));
-        $event->setStartDate(new \DateTime('2018-01-25T20:00:00+01:00'));
-        $event->setEndDate(new \DateTime('2018-01-28T21:30:00+01:00'));
+        $event = new Offer(
+            OfferType::event(),
+            new Status('Available', []),
+            new DateTimeImmutable('2018-01-25T20:00:00+01:00'),
+            new DateTimeImmutable('2018-01-28T21:30:00+01:00')
+        );
 
         $expectedOutput = 'Van donderdag 25 januari 2018 om 20:00 tot zondag 28 januari 2018 om 21:30';
 
@@ -84,10 +94,12 @@ final class LargeSinglePlainTextFormatterTest extends TestCase
 
     public function testFormatPlainTextSingleDateLargeWithLeadingZeroMoreDays(): void
     {
-        $event = new Event();
-        $event->setStatus(new Status('Available'));
-        $event->setStartDate(new \DateTime('2018-01-06T20:00:00+01:00'));
-        $event->setEndDate(new \DateTime('2018-01-08T21:30:00+01:00'));
+        $event = new Offer(
+            OfferType::event(),
+            new Status('Available', []),
+            new DateTimeImmutable('2018-01-06T20:00:00+01:00'),
+            new DateTimeImmutable('2018-01-08T21:30:00+01:00')
+        );
 
         $expectedOutput = 'Van zaterdag 6 januari 2018 om 20:00 tot maandag 8 januari 2018 om 21:30';
 
@@ -99,10 +111,12 @@ final class LargeSinglePlainTextFormatterTest extends TestCase
 
     public function testFormatPlainTextSingleDateLargeWholeDay(): void
     {
-        $event = new Event();
-        $event->setStatus(new Status('Available'));
-        $event->setStartDate(new \DateTime('2018-01-06T00:00:00+01:00'));
-        $event->setEndDate(new \DateTime('2018-01-06T23:59:59+01:00'));
+        $event = new Offer(
+            OfferType::event(),
+            new Status('Available', []),
+            new DateTimeImmutable('2018-01-06T00:00:00+01:00'),
+            new DateTimeImmutable('2018-01-06T23:59:59+01:00')
+        );
 
         $expectedOutput = 'Zaterdag 6 januari 2018';
 
@@ -114,10 +128,12 @@ final class LargeSinglePlainTextFormatterTest extends TestCase
 
     public function testFormatPlainTextSingleDateLargeSameTime(): void
     {
-        $event = new Event();
-        $event->setStatus(new Status('Available'));
-        $event->setStartDate(new \DateTime('2018-01-06T13:30:00+01:00'));
-        $event->setEndDate(new \DateTime('2018-01-06T13:30:00+01:00'));
+        $event = new Offer(
+            OfferType::event(),
+            new Status('Available', []),
+            new DateTimeImmutable('2018-01-06T13:30:00+01:00'),
+            new DateTimeImmutable('2018-01-06T13:30:00+01:00')
+        );
 
         $expectedOutput = 'Zaterdag 6 januari 2018 om 13:30';
 

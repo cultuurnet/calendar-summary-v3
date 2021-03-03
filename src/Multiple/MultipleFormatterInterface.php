@@ -4,9 +4,9 @@ declare(strict_types=1);
 
 namespace CultuurNet\CalendarSummaryV3\Multiple;
 
-use CultuurNet\SearchV3\ValueObjects\Event;
+use CultuurNet\CalendarSummaryV3\Offer\Offer;
 
 interface MultipleFormatterInterface
 {
-    public function format(Event $event): string;
+    public function format(Offer $offer): string;
 }

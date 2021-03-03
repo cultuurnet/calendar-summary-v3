@@ -10,11 +10,12 @@ use CultuurNet\CalendarSummaryV3\Multiple\ExtraSmallMultipleHTMLFormatter;
 use CultuurNet\CalendarSummaryV3\Multiple\MediumMultipleHTMLFormatter;
 use CultuurNet\CalendarSummaryV3\Multiple\LargeMultipleHTMLFormatter;
 use CultuurNet\CalendarSummaryV3\Multiple\SmallMultipleHTMLFormatter;
+use CultuurNet\CalendarSummaryV3\Offer\CalendarType;
+use CultuurNet\CalendarSummaryV3\Offer\Offer;
 use CultuurNet\CalendarSummaryV3\Permanent\MediumPermanentHTMLFormatter;
 use CultuurNet\CalendarSummaryV3\Single\LargeSingleHTMLFormatter;
 use CultuurNet\CalendarSummaryV3\Single\MediumSingleHTMLFormatter;
 use CultuurNet\CalendarSummaryV3\Single\SmallSingleHTMLFormatter;
-use CultuurNet\SearchV3\ValueObjects\Offer;
 use CultuurNet\CalendarSummaryV3\Permanent\LargePermanentHTMLFormatter;
 use CultuurNet\CalendarSummaryV3\Periodic\ExtraSmallPeriodicHTMLFormatter;
 use CultuurNet\CalendarSummaryV3\Periodic\LargePeriodicHTMLFormatter;
@@ -43,28 +44,28 @@ final class CalendarHTMLFormatter implements CalendarFormatterInterface
         $translator = new Translator($langCode);
 
         $this->mapping = [
-            Offer::CALENDAR_TYPE_SINGLE =>
+            CalendarType::single()->toString() =>
                 [
                     'lg' => new LargeSingleHTMLFormatter($translator),
                     'md' => new MediumSingleHTMLFormatter($translator),
                     'sm' => new SmallSingleHTMLFormatter($translator),
                     'xs' => new SmallSingleHTMLFormatter($translator),
                 ],
-            Offer::CALENDAR_TYPE_MULTIPLE =>
+            CalendarType::multiple()->toString() =>
                 [
                     'lg' => new LargeMultipleHTMLFormatter($translator, $hidePastDates),
                     'md' => new MediumMultipleHTMLFormatter($translator, $hidePastDates),
                     'sm' => new SmallMultipleHTMLFormatter($translator),
                     'xs' => new ExtraSmallMultipleHTMLFormatter($translator),
                 ],
-            Offer::CALENDAR_TYPE_PERIODIC =>
+            CalendarType::periodic()->toString() =>
                 [
                     'lg' => new LargePeriodicHTMLFormatter($translator),
                     'md' => new MediumPeriodicHTMLFormatter($translator),
                     'sm' => new SmallPeriodicHTMLFormatter($translator),
                     'xs' => new ExtraSmallPeriodicHTMLFormatter($translator),
                 ],
-            Offer::CALENDAR_TYPE_PERMANENT =>
+            CalendarType::permanent()->toString() =>
                 [
                     'lg' => new LargePermanentHTMLFormatter($translator),
                     'md' => new MediumPermanentHTMLFormatter($translator),
@@ -81,7 +82,7 @@ final class CalendarHTMLFormatter implements CalendarFormatterInterface
      */
     public function format(Offer $offer, string $format): string
     {
-        $calenderType = $offer->getCalendarType();
+        $calenderType = $offer->getCalendarType()->toString();
 
         if (isset($this->mapping[$calenderType][$format])) {
             $formatter = $this->mapping[$calenderType][$format];

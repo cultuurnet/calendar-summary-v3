@@ -1,0 +1,7 @@
+{
+  "@type": "Event",
+  "calendarType":"permanent",
+  "status": {
+    "type": "Available"
+  }
+}

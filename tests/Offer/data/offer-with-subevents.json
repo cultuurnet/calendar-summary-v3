@@ -1,0 +1,25 @@
+{
+  "@type": "Event",
+  "calendarType":"multiple",
+  "startDate": "2021-03-01T23:00:00+00:00",
+  "endDate": "2021-03-28T22:59:59+00:00",
+  "status": {
+    "type": "Available"
+  },
+  "subEvent": [
+    {
+      "startDate": "2021-03-01T23:00:00+00:00",
+      "endDate": "2021-03-14T22:59:59+00:00",
+      "status": {
+        "type": "Available"
+      }
+    },
+    {
+      "startDate": "2021-03-15T23:00:00+00:00",
+      "endDate": "2021-03-28T22:59:59+00:00",
+      "status": {
+        "type": "Available"
+      }
+    }
+  ]
+}

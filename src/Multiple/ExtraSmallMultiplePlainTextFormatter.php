@@ -6,9 +6,9 @@ namespace CultuurNet\CalendarSummaryV3\Multiple;
 
 use CultuurNet\CalendarSummaryV3\DateComparison;
 use CultuurNet\CalendarSummaryV3\DateFormatter;
+use CultuurNet\CalendarSummaryV3\Offer\Offer;
 use CultuurNet\CalendarSummaryV3\PlainTextSummaryBuilder;
 use CultuurNet\CalendarSummaryV3\Translator;
-use CultuurNet\SearchV3\ValueObjects\Event;
 use DateTimeZone;
 
 final class ExtraSmallMultiplePlainTextFormatter implements MultipleFormatterInterface
@@ -29,22 +29,22 @@ final class ExtraSmallMultiplePlainTextFormatter implements MultipleFormatterInt
         $this->translator = $translator;
     }
 
-    public function format(Event $event): string
+    public function format(Offer $offer): string
     {
-        $startDate = $event->getStartDate()->setTimezone(new DateTimeZone(date_default_timezone_get()));
-        $endDate = $event->getEndDate()->setTimezone(new DateTimeZone(date_default_timezone_get()));
+        $startDate = $offer->getStartDate()->setTimezone(new DateTimeZone(date_default_timezone_get()));
+        $endDate = $offer->getEndDate()->setTimezone(new DateTimeZone(date_default_timezone_get()));
 
         if (DateComparison::onSameDay($startDate, $endDate)) {
             return PlainTextSummaryBuilder::start($this->translator)
                 ->append($this->formatter->formatAsShortDate($startDate))
-                ->appendStatus($event->getStatus())
+                ->appendStatus($offer->getStatus())
                 ->toString();
         }
 
         return PlainTextSummaryBuilder::start($this->translator)
             ->from($this->formatter->formatAsShortDate($startDate))
             ->till($this->formatter->formatAsShortDate($endDate))
-            ->appendStatus($event->getStatus())
+            ->appendStatus($offer->getStatus())
             ->toString();
     }
 }

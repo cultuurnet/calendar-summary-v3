@@ -7,8 +7,8 @@ namespace CultuurNet\CalendarSummaryV3\Multiple;
 use CultuurNet\CalendarSummaryV3\DateComparison;
 use CultuurNet\CalendarSummaryV3\DateFormatter;
 use CultuurNet\CalendarSummaryV3\HtmlStatusFormatter;
+use CultuurNet\CalendarSummaryV3\Offer\Offer;
 use CultuurNet\CalendarSummaryV3\Translator;
-use CultuurNet\SearchV3\ValueObjects\Event;
 use DateTimeZone;
 
 final class ExtraSmallMultipleHTMLFormatter implements MultipleFormatterInterface
@@ -29,10 +29,10 @@ final class ExtraSmallMultipleHTMLFormatter implements MultipleFormatterInterfac
         $this->translator = $translator;
     }
 
-    public function format(Event $event): string
+    public function format(Offer $offer): string
     {
-        $dateFrom = $event->getStartDate()->setTimezone(new DateTimeZone(date_default_timezone_get()));
-        $dateTo = $event->getEndDate()->setTimezone(new DateTimeZone(date_default_timezone_get()));
+        $dateFrom = $offer->getStartDate()->setTimezone(new DateTimeZone(date_default_timezone_get()));
+        $dateTo = $offer->getEndDate()->setTimezone(new DateTimeZone(date_default_timezone_get()));
 
         if (DateComparison::onSameDay($dateFrom, $dateTo)) {
             $output = '<span class="cf-date">' . $this->formatter->formatAsShortDate($dateFrom) . '</span>';
@@ -43,7 +43,7 @@ final class ExtraSmallMultipleHTMLFormatter implements MultipleFormatterInterfac
                 '<span class="cf-date">' . $this->formatter->formatAsShortDate($dateTo) . '</span>';
         }
 
-        $optionalStatus = HtmlStatusFormatter::forOffer($event, $this->translator)
+        $optionalStatus = HtmlStatusFormatter::forOffer($offer, $this->translator)
             ->withBraces()
             ->toString();
 

@@ -6,11 +6,10 @@ namespace CultuurNet\CalendarSummaryV3\Periodic;
 
 use CultuurNet\CalendarSummaryV3\DateFormatter;
 use CultuurNet\CalendarSummaryV3\HtmlStatusFormatter;
+use CultuurNet\CalendarSummaryV3\Offer\OpeningHour;
 use CultuurNet\CalendarSummaryV3\OpeningHourFormatter;
 use CultuurNet\CalendarSummaryV3\Translator;
-use CultuurNet\SearchV3\ValueObjects\Offer;
-use CultuurNet\SearchV3\ValueObjects\OpeningHours;
-use DateTime;
+use CultuurNet\CalendarSummaryV3\Offer\Offer;
 use DateTimeImmutable;
 
 final class LargePeriodicHTMLFormatter implements PeriodicFormatterInterface
@@ -58,7 +57,7 @@ final class LargePeriodicHTMLFormatter implements PeriodicFormatterInterface
     /**
      * Retrieve the earliest time for the specified daysOfWeek.
      *
-     * @param OpeningHours[] $openingHoursData
+     * @param OpeningHour[] $openingHoursData
      * @param string[] $daysOfWeek
      */
     private function getEarliestTime(array $openingHoursData, array $daysOfWeek): string
@@ -79,7 +78,7 @@ final class LargePeriodicHTMLFormatter implements PeriodicFormatterInterface
     /**
      * Retrieve the latest time for the specified daysOfWeek.
      *
-     * @param OpeningHours[] $openingHoursData
+     * @param OpeningHour[] $openingHoursData
      * @param string[] $daysOfWeek
      */
     private function getLatestTime(array $openingHoursData, array $daysOfWeek): string
@@ -100,7 +99,7 @@ final class LargePeriodicHTMLFormatter implements PeriodicFormatterInterface
     /**
      * @return string
      */
-    private function generateDates(DateTime $dateFrom, DateTime $dateTo)
+    private function generateDates(DateTimeImmutable $dateFrom, DateTimeImmutable $dateTo)
     {
         $intlDateFrom =$this->formatter->formatAsFullDate($dateFrom);
         $intlDateTo = $this->formatter->formatAsFullDate($dateTo);
@@ -115,7 +114,7 @@ final class LargePeriodicHTMLFormatter implements PeriodicFormatterInterface
     }
 
     /**
-     * @param OpeningHours[] $openingHoursData
+     * @param OpeningHour[] $openingHoursData
      * @return string
      */
     private function generateWeekScheme($openingHoursData)

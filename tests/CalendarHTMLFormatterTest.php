@@ -4,8 +4,11 @@ declare(strict_types=1);
 
 namespace CultuurNet\CalendarSummaryV3;
 
-use CultuurNet\SearchV3\ValueObjects\Event;
-use CultuurNet\SearchV3\ValueObjects\Status;
+use CultuurNet\CalendarSummaryV3\Offer\CalendarType;
+use CultuurNet\CalendarSummaryV3\Offer\Offer;
+use CultuurNet\CalendarSummaryV3\Offer\OfferType;
+use CultuurNet\CalendarSummaryV3\Offer\Status;
+use DateTimeImmutable;
 use PHPUnit\Framework\TestCase;
 
 final class CalendarHTMLFormatterTest extends TestCase
@@ -22,11 +25,13 @@ final class CalendarHTMLFormatterTest extends TestCase
 
     public function testGeneralFormatMethod(): void
     {
-        $offer = new Event();
-        $offer->setStatus(new Status('Available'));
-        $offer->setCalendarType(Event::CALENDAR_TYPE_SINGLE);
-        $offer->setStartDate(new \DateTime('2018-01-25T20:00:00+01:00'));
-        $offer->setEndDate(new \DateTime('2018-01-25T21:30:00+01:00'));
+        $offer = new Offer(
+            OfferType::event(),
+            new Status('Available', []),
+            new DateTimeImmutable('2018-01-25T20:00:00+01:00'),
+            new DateTimeImmutable('2018-01-25T21:30:00+01:00'),
+            CalendarType::single()
+        );
 
         $this->assertSame(
             '<span class="cf-date">25</span> <span class="cf-month">jan</span>',
@@ -36,11 +41,13 @@ final class CalendarHTMLFormatterTest extends TestCase
 
     public function testGeneralFormatMethodAndCatchException(): void
     {
-        $offer = new Event();
-        $offer->setStatus(new Status('Available'));
-        $offer->setCalendarType(Event::CALENDAR_TYPE_SINGLE);
-        $offer->setStartDate(new \DateTime('2018-01-25T20:00:00+01:00'));
-        $offer->setEndDate(new \DateTime('2018-01-25T21:30:00+01:00'));
+        $offer = new Offer(
+            OfferType::event(),
+            new Status('Available', []),
+            new DateTimeImmutable('2018-01-25T20:00:00+01:00'),
+            new DateTimeImmutable('2018-01-25T21:30:00+01:00'),
+            CalendarType::single()
+        );
 
         $this->expectException(FormatterException::class);
         $this->formatter->format($offer, 'sx');

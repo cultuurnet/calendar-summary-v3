@@ -7,7 +7,7 @@ namespace CultuurNet\CalendarSummaryV3\Periodic;
 use CultuurNet\CalendarSummaryV3\DateFormatter;
 use CultuurNet\CalendarSummaryV3\PlainTextSummaryBuilder;
 use CultuurNet\CalendarSummaryV3\Translator;
-use CultuurNet\SearchV3\ValueObjects\Offer;
+use CultuurNet\CalendarSummaryV3\Offer\Offer;
 
 final class MediumPeriodicPlainTextFormatter implements PeriodicFormatterInterface
 {

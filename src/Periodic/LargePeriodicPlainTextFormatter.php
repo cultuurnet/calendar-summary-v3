@@ -5,12 +5,11 @@ declare(strict_types=1);
 namespace CultuurNet\CalendarSummaryV3\Periodic;
 
 use CultuurNet\CalendarSummaryV3\DateFormatter;
+use CultuurNet\CalendarSummaryV3\Offer\OpeningHour;
 use CultuurNet\CalendarSummaryV3\OpeningHourFormatter;
 use CultuurNet\CalendarSummaryV3\PlainTextSummaryBuilder;
 use CultuurNet\CalendarSummaryV3\Translator;
-use CultuurNet\SearchV3\ValueObjects\Offer;
-use CultuurNet\SearchV3\ValueObjects\OpeningHours;
-use DateTime;
+use CultuurNet\CalendarSummaryV3\Offer\Offer;
 use DateTimeImmutable;
 
 final class LargePeriodicPlainTextFormatter implements PeriodicFormatterInterface
@@ -52,17 +51,8 @@ final class LargePeriodicPlainTextFormatter implements PeriodicFormatterInterfac
         return $summary->appendStatus($offer->getStatus())->toString();
     }
 
-    private function generateDates(DateTime $dateFrom, DateTime $dateTo): string
-    {
-        $intlDateFrom = $this->formatter->formatAsFullDate($dateFrom);
-        $intlDateTo = $this->formatter->formatAsFullDate($dateTo);
-
-        return ucfirst($this->translator->translate('from')) . ' '
-            . $intlDateFrom . ' ' . $this->translator->translate('till') . ' ' . $intlDateTo;
-    }
-
     /**
-     * @param OpeningHours[] $openingHoursData
+     * @param OpeningHour[] $openingHoursData
      */
     private function generateWeekScheme(array $openingHoursData): string
     {
