@@ -62,7 +62,7 @@ final class Offer
         $data = json_decode($json, true);
 
         $offer = new self(
-            new OfferType(mb_strtolower($data['@type'])),
+            new OfferType(strtolower($data['@type'])),
             Status::fromArray($data['status']),
             isset($data['startDate']) ? new DateTimeImmutable($data['startDate']) : null,
             isset($data['endDate']) ? new DateTimeImmutable($data['endDate']) : null,
