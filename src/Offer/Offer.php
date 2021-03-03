@@ -155,12 +155,12 @@ final class Offer
         return $this->status;
     }
 
-    public function getStartDate(): DateTimeImmutable
+    public function getStartDate(): ?DateTimeImmutable
     {
         return $this->startDate;
     }
 
-    public function getEndDate(): DateTimeImmutable
+    public function getEndDate(): ?DateTimeImmutable
     {
         return $this->endDate;
     }
