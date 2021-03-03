@@ -12,6 +12,7 @@
     "require": {
       "php": "^7.1",
       "ext-intl": "*",
+      "ext-json": "*",
       "delfimov/translate": "^2.4",
       "psr/container": "^1.0"
     },
