@@ -29,6 +29,19 @@ final class OfferType
         $this->value = $value;
     }
 
+    public static function fromContext(string $context): self
+    {
+        if ($context === '/contexts/place') {
+            return self::place();
+        }
+
+        if ($context === '/contexts/event') {
+            return self::event();
+        }
+
+        throw new InvalidArgumentException('Unknown context: ' . $context);
+    }
+
     public static function event(): self
     {
         return new self(self::EVENT);
