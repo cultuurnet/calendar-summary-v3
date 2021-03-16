@@ -187,7 +187,7 @@ final class MediumMultiplePlainTextFormatterTest extends TestCase
 
         $event = $event->withSubEvents($newEvents);
 
-        $expectedOutput = 'evenement afgelopen';
+        $expectedOutput = 'Evenement afgelopen';
 
         $this->assertEquals(
             $expectedOutput,

@@ -181,7 +181,7 @@ final class MediumMultipleHTMLFormatterTest extends TestCase
 
         $event = $event->withSubEvents($newEvents);
         $this->assertEquals(
-            '<span>evenement afgelopen</span>',
+            '<span>Evenement afgelopen</span>',
             $formatter->format($event)
         );
     }

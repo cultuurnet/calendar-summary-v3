@@ -35,7 +35,7 @@ final class Translator
                 'temporarily_closed' => 'Temporarily closed',
                 'cancelled' => 'cancelled',
                 'postponed' => 'postponed',
-                'event_concluded' => 'event ended',
+                'event_concluded' => 'Event ended',
             ],
             'nl' => [
                 'from' => 'van',
@@ -50,7 +50,7 @@ final class Translator
                 'temporarily_closed' => 'Tijdelijk gesloten',
                 'cancelled' => 'geannuleerd',
                 'postponed' => 'uitgesteld',
-                'event_concluded' => 'evenement afgelopen',
+                'event_concluded' => 'Evenement afgelopen',
             ],
             'fr' => [
                 'from' => 'du',
@@ -65,7 +65,7 @@ final class Translator
                 'temporarily_closed' => 'Fermé temporairement',
                 'cancelled' => 'annulé',
                 'postponed' => 'reporté',
-                'event_concluded' => 'fin de l’événement',
+                'event_concluded' => 'Fin de l’événement',
             ],
             'de' => [
                 'from' => 'von',
@@ -80,7 +80,7 @@ final class Translator
                 'temporarily_closed' => 'Vorübergehend geschlossen',
                 'cancelled' => 'abgesagt',
                 'postponed' => 'verschoben',
-                'event_concluded' => 'event abgeschlossen',
+                'event_concluded' => 'Event abgeschlossen',
             ],
         ];
 
