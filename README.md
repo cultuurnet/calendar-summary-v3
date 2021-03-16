@@ -51,11 +51,11 @@ Using an unsupported format will throw an exception.
 // Make sure to either deserialize the Event/Place from JSON, or set the necessary properties through setCalendarType() etc.
 $offer = new \CultuurNet\CalendarSummaryV3\Offer\Offer::fromJsonLd('JSONLD_STRING');
     
-// This will format the calendar info of $event in an medium HTML output 
+// This will format the calendar info of `$offer` in a medium HTML output 
 $calendarHTML = new \CultuurNet\CalendarSummaryV3\CalendarHTMLFormatter('nl_BE', true, 'Europe/Brussels');
 $calendarHTML->format($offer, 'md');
     
-// This will format the calendar info of $event in a large plain text output
+// This will format the calendar info of `$offer` in a large plain text output
 $calendarPlainText = new \CultuurNet\CalendarSummaryV3\CalendarPlainTextFormatter('fr_BE', true, 'Europe/Paris');
 $calendarPlainText->format($offer, 'lg');
 ```
