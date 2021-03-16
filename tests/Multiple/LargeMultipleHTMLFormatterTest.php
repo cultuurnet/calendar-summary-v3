@@ -333,4 +333,33 @@ final class LargeMultipleHTMLFormatterTest extends TestCase
             $this->formatter->format($event)
         );
     }
+
+    public function testItWillShowEventHasConcludedWhenAllPastDatesAreHidden(): void
+    {
+        $formatter = new LargeMultipleHTMLFormatter(new Translator('nl_NL'), true);
+        $subEvents = json_decode(file_get_contents(__DIR__ . '/data/subEvents.json'), true);
+        $event = new Offer(
+            OfferType::event(),
+            new Status('Available', []),
+            null,
+            null,
+            CalendarType::multiple()
+        );
+
+        $newEvents = [];
+        foreach ($subEvents as $subEvent) {
+            $newEvents[] = new Offer(
+                OfferType::event(),
+                new Status('Available', []),
+                new DateTimeImmutable($subEvent['startDate']),
+                new DateTimeImmutable($subEvent['endDate'])
+            );
+        }
+
+        $event = $event->withSubEvents($newEvents);
+        $this->assertEquals(
+            '<span>Evenement afgelopen</span>',
+            $formatter->format($event)
+        );
+    }
 }

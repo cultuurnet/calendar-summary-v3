@@ -40,6 +40,10 @@ final class LargeMultiplePlainTextFormatter implements MultipleFormatterInterfac
             }
         }
 
+        if (empty($subEventSummaries)) {
+            return $this->translator->translate('event_concluded');
+        }
+
         return implode(PHP_EOL, $subEventSummaries);
     }
 }
