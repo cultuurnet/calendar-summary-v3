@@ -30,16 +30,23 @@ final class LargeMultipleHTMLFormatter implements MultipleFormatterInterface
     public function format(Offer $offer): string
     {
         $subEvents = $offer->getSubEvents();
-        $output = '<ul class="cnw-event-date-info">';
+        $formatter = new LargeSingleHTMLFormatter($this->translator);
 
+        $subEventSummaries = [];
         foreach ($subEvents as $subEvent) {
-            $formatter = new LargeSingleHTMLFormatter($this->translator);
-
             if (!$this->hidePast || DateComparison::inTheFuture($subEvent->getEndDate())) {
-                $output .= '<li>' . $formatter->format($subEvent) . '</li>';
+                $subEventSummaries[] = $formatter->format($subEvent);
             }
         }
 
+        if (empty($subEventSummaries)) {
+            return '<span>' . $this->translator->translate('event_concluded') . '</span>';
+        }
+
+        $output = '<ul class="cnw-event-date-info">';
+        foreach ($subEventSummaries as $subEventSummary) {
+            $output .= '<li>' . $subEventSummary . '</li>';
+        }
         $output .= '</ul>';
 
         return $output;
