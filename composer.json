@@ -27,7 +27,6 @@
       }
     },
     "require-dev": {
-      "satooshi/php-coveralls": "~0.7",
       "phpstan/phpstan": "^0.12.68",
       "phpunit/phpunit": "^7.5",
       "publiq/php-cs-fixer-config": "^v1.3"
