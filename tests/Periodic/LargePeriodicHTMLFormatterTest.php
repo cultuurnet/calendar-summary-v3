@@ -140,6 +140,7 @@ final class LargePeriodicHTMLFormatterTest extends TestCase
             . '<time itemprop="endDate" datetime="2030-11-30"> '
             . '<span class="cf-date">30 november 2030</span> '
             . '</time> '
+            . '<span class="cf-status">(geannuleerd)</span> '
             . '</p> '
             . '<p class="cf-openinghours">Open op:</p> '
             . '<ul class="list-unstyled"> '
@@ -182,9 +183,7 @@ final class LargePeriodicHTMLFormatterTest extends TestCase
             . '<span class="cf-time">10:00</span> '
             . '<span itemprop="closes" content="18:00" class="cf-to cf-meta">tot</span> '
             . '<span class="cf-time">18:00</span> '
-            . '</li> </ul>'
-            . ' '
-            . '<span class="cf-status">(geannuleerd)</span>',
+            . '</li> </ul>',
             $this->formatter->format($event)
         );
     }

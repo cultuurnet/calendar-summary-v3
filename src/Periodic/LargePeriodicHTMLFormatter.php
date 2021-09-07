@@ -32,20 +32,21 @@ final class LargePeriodicHTMLFormatter implements PeriodicFormatterInterface
 
     public function format(Offer $offer): string
     {
+        $optionalStatus = HtmlStatusFormatter::forOffer($offer, $this->translator)
+            ->withBraces()
+            ->toString();
+
         $output = $this->generateDates(
             $offer->getStartDate()->setTimezone(new \DateTimeZone(date_default_timezone_get())),
-            $offer->getEndDate()->setTimezone(new \DateTimeZone(date_default_timezone_get()))
+            $offer->getEndDate()->setTimezone(new \DateTimeZone(date_default_timezone_get())),
+            $optionalStatus
         );
 
         if ($offer->getOpeningHours()) {
             $output .= $this->generateWeekScheme($offer->getOpeningHours());
         }
 
-        $optionalStatus = HtmlStatusFormatter::forOffer($offer, $this->translator)
-            ->withBraces()
-            ->toString();
-
-        return trim($this->formatSummary($output) . ' ' . $optionalStatus);
+        return trim($this->formatSummary($output));
     }
 
     private function formatSummary(string $calsum): string
@@ -99,7 +100,7 @@ final class LargePeriodicHTMLFormatter implements PeriodicFormatterInterface
     /**
      * @return string
      */
-    private function generateDates(DateTimeImmutable $dateFrom, DateTimeImmutable $dateTo)
+    private function generateDates(DateTimeImmutable $dateFrom, DateTimeImmutable $dateTo, string $optionalStatus)
     {
         $intlDateFrom =$this->formatter->formatAsFullDate($dateFrom);
         $intlDateTo = $this->formatter->formatAsFullDate($dateTo);
@@ -110,6 +111,7 @@ final class LargePeriodicHTMLFormatter implements PeriodicFormatterInterface
             . '<span class="cf-to cf-meta">' . $this->translator->translate('till') . '</span>'
             . '<time itemprop="endDate" datetime="' . $dateTo->format('Y-m-d') . '">'
             . '<span class="cf-date">' . $intlDateTo . '</span> </time>'
+            . $optionalStatus
             . '</p>';
     }
 
