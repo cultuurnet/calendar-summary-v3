@@ -9,6 +9,9 @@ use PHPUnit\Framework\TestCase;
 
 final class OfferTypeTest extends TestCase
 {
+    /**
+     * @test
+     */
     public function it_can_create_place_offer_type_from_context(): void
     {
         $this->assertEquals(
@@ -17,6 +20,9 @@ final class OfferTypeTest extends TestCase
         );
     }
 
+    /**
+     * @test
+     */
     public function it_can_create_event_offer_type_from_context(): void
     {
         $this->assertEquals(
@@ -25,6 +31,9 @@ final class OfferTypeTest extends TestCase
         );
     }
 
+    /**
+     * @test
+     */
     public function it_cannot_create_offer_type_from_invalid_context(): void
     {
         $this->expectException(InvalidArgumentException::class);
