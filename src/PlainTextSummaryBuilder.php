@@ -167,6 +167,9 @@ final class PlainTextSummaryBuilder
                 $c->workingLine[] = '(' . $this->translator->translate('postponed') . ')';
                 return $c;
             default:
+                if ($bookingAvailability->getType() === 'Unavailable') {
+                    $c->workingLine[] = '(' . $this->translator->translate('sold_out') . ')';
+                }
                 return $c;
         }
     }
