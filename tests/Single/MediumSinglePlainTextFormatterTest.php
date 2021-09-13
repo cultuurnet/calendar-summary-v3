@@ -104,6 +104,38 @@ final class MediumSinglePlainTextFormatterTest extends TestCase
         );
     }
 
+    public function testFormatPlainTextSingleDateMediumOneDayWithUnavailableStatusAndUnavailableBooking(): void
+    {
+        $event = new Offer(
+            OfferType::event(),
+            new Status('Unavailable', []),
+            new BookingAvailability('Unavailable'),
+            new DateTimeImmutable('2018-01-25T20:00:00+01:00'),
+            new DateTimeImmutable('2018-01-25T21:30:00+01:00')
+        );
+
+        $this->assertEquals(
+            'Donderdag 25 januari 2018 (geannuleerd)',
+            $this->formatter->format($event)
+        );
+    }
+
+    public function testFormatPlainTextSingleDateMediumOneDayWithAvailableStatusAndUnavailableBooking(): void
+    {
+        $event = new Offer(
+            OfferType::event(),
+            new Status('Available', []),
+            new BookingAvailability('Unavailable'),
+            new DateTimeImmutable('2018-01-25T20:00:00+01:00'),
+            new DateTimeImmutable('2018-01-25T21:30:00+01:00')
+        );
+
+        $this->assertEquals(
+            'Donderdag 25 januari 2018 (Volzet of uitverkocht)',
+            $this->formatter->format($event)
+        );
+    }
+
     public function testFormatPlainTextSingleDateMediumOneDayWithTemporarilyUnavailableStatus(): void
     {
         $event = new Offer(

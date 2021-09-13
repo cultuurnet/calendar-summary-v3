@@ -79,6 +79,42 @@ final class LargeSinglePlainTextFormatterTest extends TestCase
         );
     }
 
+    public function testFormatPlainTextSingleDateLargeOneDayWithUnavailableStatusAndUnavailableBooking(): void
+    {
+        $event = new Offer(
+            OfferType::event(),
+            new Status('Unavailable', []),
+            new BookingAvailability('Unavailable'),
+            new DateTimeImmutable('2018-01-25T20:00:00+01:00'),
+            new DateTimeImmutable('2018-01-25T21:30:00+01:00')
+        );
+
+        $expectedOutput = 'Donderdag 25 januari 2018 van 20:00 tot 21:30 (geannuleerd)';
+
+        $this->assertEquals(
+            $expectedOutput,
+            $this->formatter->format($event)
+        );
+    }
+
+    public function testFormatPlainTextSingleDateLargeOneDayWithAvailableStatusAndUnavailableBooking(): void
+    {
+        $event = new Offer(
+            OfferType::event(),
+            new Status('Available', []),
+            new BookingAvailability('Unavailable'),
+            new DateTimeImmutable('2018-01-25T20:00:00+01:00'),
+            new DateTimeImmutable('2018-01-25T21:30:00+01:00')
+        );
+
+        $expectedOutput = 'Donderdag 25 januari 2018 van 20:00 tot 21:30 (Volzet of uitverkocht)';
+
+        $this->assertEquals(
+            $expectedOutput,
+            $this->formatter->format($event)
+        );
+    }
+
     public function testFormatPlainTextSingleDateLargeMoreDays(): void
     {
         $event = new Offer(

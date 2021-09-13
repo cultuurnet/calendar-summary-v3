@@ -136,6 +136,38 @@ final class SmallSinglePlainTextFormatterTest extends TestCase
         );
     }
 
+    public function testFormatPlainTextSingleDateXsMoreDaysWithStatusUnavailableAndBookingUnavailable(): void
+    {
+        $event = new Offer(
+            OfferType::event(),
+            new Status('Unavailable', []),
+            new BookingAvailability('Unavailable'),
+            new DateTimeImmutable('2018-01-25T20:00:00+01:00'),
+            new DateTimeImmutable('2018-01-28T21:30:00+01:00')
+        );
+
+        $this->assertEquals(
+            'Van 25 jan tot 28 jan (geannuleerd)',
+            $this->formatter->format($event)
+        );
+    }
+
+    public function testFormatPlainTextSingleDateXsMoreDaysWithStatusAvailableAndBookingUnavailable(): void
+    {
+        $event = new Offer(
+            OfferType::event(),
+            new Status('Available', []),
+            new BookingAvailability('Unavailable'),
+            new DateTimeImmutable('2018-01-25T20:00:00+01:00'),
+            new DateTimeImmutable('2018-01-28T21:30:00+01:00')
+        );
+
+        $this->assertEquals(
+            'Van 25 jan tot 28 jan (Volzet of uitverkocht)',
+            $this->formatter->format($event)
+        );
+    }
+
     public function testFormatPlainTextSingleDateXsMoreDaysWithStatusTemporarilyUnavailable(): void
     {
         $event = new Offer(

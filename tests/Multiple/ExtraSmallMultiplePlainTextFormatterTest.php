@@ -160,4 +160,38 @@ final class ExtraSmallMultiplePlainTextFormatterTest extends TestCase
             $this->formatter->format($offer)
         );
     }
+
+    public function testFormatMultipleWithUnavailableStatusAndUnavailableBooking(): void
+    {
+        $offer = new Offer(
+            OfferType::event(),
+            new Status('Unavailable', []),
+            new BookingAvailability('Unavailable'),
+            new DateTimeImmutable('04-10-2025'),
+            new DateTimeImmutable('08-10-2030'),
+            CalendarType::multiple()
+        );
+
+        $this->assertEquals(
+            'Van 4/10/25 tot 8/10/30 (geannuleerd)',
+            $this->formatter->format($offer)
+        );
+    }
+
+    public function testFormatMultipleAvailableStatusAndUnavailableBooking(): void
+    {
+        $offer = new Offer(
+            OfferType::event(),
+            new Status('Available', []),
+            new BookingAvailability('Unavailable'),
+            new DateTimeImmutable('04-10-2025'),
+            new DateTimeImmutable('08-10-2030'),
+            CalendarType::multiple()
+        );
+
+        $this->assertEquals(
+            'Van 4/10/25 tot 8/10/30 (Volzet of uitverkocht)',
+            $this->formatter->format($offer)
+        );
+    }
 }
