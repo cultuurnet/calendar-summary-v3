@@ -9,5 +9,8 @@
       "nl": "Uitgesteld",
       "en": "Postponed"
     }
+  },
+  "bookingAvailability": {
+    "type": "Unavailable"
   }
 }

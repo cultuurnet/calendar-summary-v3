@@ -21,6 +21,7 @@ final class OfferTest extends TestCase
                     'en' => 'Postponed',
                 ]
             ),
+            new BookingAvailability('Unavailable'),
             new DateTimeImmutable('2021-03-01T23:00:00+00:00'),
             new DateTimeImmutable('2021-03-28T22:59:59+00:00'),
             CalendarType::single()
@@ -35,6 +36,7 @@ final class OfferTest extends TestCase
         $expected = new Offer(
             OfferType::event(),
             new Status('Available', []),
+            new BookingAvailability('Available'),
             null,
             null,
             CalendarType::permanent()
@@ -49,6 +51,7 @@ final class OfferTest extends TestCase
         $expected = new Offer(
             OfferType::event(),
             new Status('Available', []),
+            new BookingAvailability('Available'),
             new DateTimeImmutable('2021-03-01T23:00:00+00:00'),
             new DateTimeImmutable('2021-03-28T22:59:59+00:00'),
             CalendarType::multiple()
@@ -59,12 +62,14 @@ final class OfferTest extends TestCase
                 new Offer(
                     OfferType::event(),
                     new Status('Available', []),
+                    new BookingAvailability('Unavailable'),
                     new DateTimeImmutable('2021-03-01T23:00:00+00:00'),
                     new DateTimeImmutable('2021-03-14T22:59:59+00:00')
                 ),
                 new Offer(
                     OfferType::event(),
                     new Status('Available', []),
+                    new BookingAvailability('Available'),
                     new DateTimeImmutable('2021-03-15T23:00:00+00:00'),
                     new DateTimeImmutable('2021-03-28T22:59:59+00:00')
                 ),
@@ -80,6 +85,7 @@ final class OfferTest extends TestCase
         $expected = new Offer(
             OfferType::place(),
             new Status('Available', []),
+            new BookingAvailability('Available'),
             new DateTimeImmutable('2021-03-01T23:00:00+00:00'),
             new DateTimeImmutable('2021-03-28T22:59:59+00:00'),
             CalendarType::periodic()
