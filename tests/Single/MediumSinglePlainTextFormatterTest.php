@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace CultuurNet\CalendarSummaryV3\Single;
 
+use CultuurNet\CalendarSummaryV3\Offer\BookingAvailability;
 use CultuurNet\CalendarSummaryV3\Offer\Offer;
 use CultuurNet\CalendarSummaryV3\Offer\OfferType;
 use CultuurNet\CalendarSummaryV3\Offer\Status;
@@ -28,6 +29,7 @@ final class MediumSinglePlainTextFormatterTest extends TestCase
         $event = new Offer(
             OfferType::event(),
             new Status('Available', []),
+            new BookingAvailability('Available'),
             new DateTimeImmutable('2018-01-25T20:00:00+01:00'),
             new DateTimeImmutable('2018-01-25T21:30:00+01:00')
         );
@@ -43,6 +45,7 @@ final class MediumSinglePlainTextFormatterTest extends TestCase
         $event = new Offer(
             OfferType::event(),
             new Status('Available', []),
+            new BookingAvailability('Available'),
             new DateTimeImmutable('2018-01-08T20:00:00+01:00'),
             new DateTimeImmutable('2018-01-08T21:30:00+01:00')
         );
@@ -58,6 +61,7 @@ final class MediumSinglePlainTextFormatterTest extends TestCase
         $event = new Offer(
             OfferType::event(),
             new Status('Available', []),
+            new BookingAvailability('Available'),
             new DateTimeImmutable('2018-01-25T20:00:00+01:00'),
             new DateTimeImmutable('2018-01-27T21:30:00+01:00')
         );
@@ -73,6 +77,7 @@ final class MediumSinglePlainTextFormatterTest extends TestCase
         $event = new Offer(
             OfferType::event(),
             new Status('Available', []),
+            new BookingAvailability('Available'),
             new DateTimeImmutable('2018-01-06T20:00:00+01:00'),
             new DateTimeImmutable('2018-01-08T21:30:00+01:00')
         );
@@ -88,6 +93,7 @@ final class MediumSinglePlainTextFormatterTest extends TestCase
         $event = new Offer(
             OfferType::event(),
             new Status('Unavailable', []),
+            new BookingAvailability('Available'),
             new DateTimeImmutable('2018-01-25T20:00:00+01:00'),
             new DateTimeImmutable('2018-01-25T21:30:00+01:00')
         );
@@ -103,6 +109,7 @@ final class MediumSinglePlainTextFormatterTest extends TestCase
         $event = new Offer(
             OfferType::event(),
             new Status('TemporarilyUnavailable', []),
+            new BookingAvailability('Available'),
             new DateTimeImmutable('2018-01-25T20:00:00+01:00'),
             new DateTimeImmutable('2018-01-25T21:30:00+01:00')
         );

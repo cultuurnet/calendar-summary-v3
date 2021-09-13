@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace CultuurNet\CalendarSummaryV3\Periodic;
 
+use CultuurNet\CalendarSummaryV3\Offer\BookingAvailability;
 use CultuurNet\CalendarSummaryV3\Offer\CalendarType;
 use CultuurNet\CalendarSummaryV3\Offer\Offer;
 use CultuurNet\CalendarSummaryV3\Offer\OfferType;
@@ -29,6 +30,7 @@ final class SmallPeriodicHTMLFormatterTest extends TestCase
         $offer = new Offer(
             OfferType::event(),
             new Status('Available', []),
+            new BookingAvailability('Available'),
             new DateTimeImmutable('25-11-2025'),
             new DateTimeImmutable('30-11-2030'),
             CalendarType::periodic()
@@ -54,6 +56,7 @@ final class SmallPeriodicHTMLFormatterTest extends TestCase
         $offer = new Offer(
             OfferType::event(),
             new Status('Available', []),
+            new BookingAvailability('Available'),
             new DateTimeImmutable('04-03-2025'),
             new DateTimeImmutable('08-03-2030'),
             CalendarType::periodic()
@@ -79,6 +82,7 @@ final class SmallPeriodicHTMLFormatterTest extends TestCase
         $offer = new Offer(
             OfferType::event(),
             new Status('Unavailable', []),
+            new BookingAvailability('Available'),
             new DateTimeImmutable('25-11-2025'),
             new DateTimeImmutable('30-11-2030'),
             CalendarType::periodic()
@@ -106,6 +110,7 @@ final class SmallPeriodicHTMLFormatterTest extends TestCase
         $offer = new Offer(
             OfferType::event(),
             new Status('Available', []),
+            new BookingAvailability('Available'),
             new DateTimeImmutable('25-03-2025'),
             new DateTimeImmutable('30-03-2030'),
             CalendarType::periodic()
@@ -131,6 +136,7 @@ final class SmallPeriodicHTMLFormatterTest extends TestCase
         $offer = new Offer(
             OfferType::event(),
             new Status('Available', []),
+            new BookingAvailability('Available'),
             new DateTimeImmutable('04-10-2025'),
             new DateTimeImmutable('08-10-2030'),
             CalendarType::periodic()
@@ -156,6 +162,7 @@ final class SmallPeriodicHTMLFormatterTest extends TestCase
         $offer = new Offer(
             OfferType::event(),
             new Status('Available', []),
+            new BookingAvailability('Available'),
             new DateTimeImmutable('12-03-2015'),
             new DateTimeImmutable('18-03-2030'),
             CalendarType::periodic()

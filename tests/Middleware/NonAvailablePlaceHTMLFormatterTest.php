@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace CultuurNet\CalendarSummaryV3\Middleware;
 
+use CultuurNet\CalendarSummaryV3\Offer\BookingAvailability;
 use CultuurNet\CalendarSummaryV3\Offer\Offer;
 use CultuurNet\CalendarSummaryV3\Offer\OfferType;
 use CultuurNet\CalendarSummaryV3\Offer\Status;
@@ -27,7 +28,8 @@ final class NonAvailablePlaceHTMLFormatterTest extends TestCase
     {
         $place = new Offer(
             OfferType::place(),
-            new Status('Unavailable', [])
+            new Status('Unavailable', []),
+            new BookingAvailability('Available')
         );
 
         $result = $this->formatter->format(
@@ -44,7 +46,8 @@ final class NonAvailablePlaceHTMLFormatterTest extends TestCase
     {
         $place = new Offer(
             OfferType::place(),
-            new Status('TemporarilyUnavailable', [])
+            new Status('TemporarilyUnavailable', []),
+            new BookingAvailability('Available')
         );
 
         $result = $this->formatter->format(
@@ -61,7 +64,8 @@ final class NonAvailablePlaceHTMLFormatterTest extends TestCase
     {
         $place = new Offer(
             OfferType::place(),
-            new Status('Available', [])
+            new Status('Available', []),
+            new BookingAvailability('Available')
         );
 
         $result = $this->formatter->format(
@@ -78,7 +82,8 @@ final class NonAvailablePlaceHTMLFormatterTest extends TestCase
     {
         $event = new Offer(
             OfferType::event(),
-            new Status('TemporarilyUnavailable', [])
+            new Status('TemporarilyUnavailable', []),
+            new BookingAvailability('Available')
         );
 
         $result = $this->formatter->format(
@@ -95,7 +100,8 @@ final class NonAvailablePlaceHTMLFormatterTest extends TestCase
     {
         $event = new Offer(
             OfferType::event(),
-            new Status('TemporarilyUnavailable', [])
+            new Status('TemporarilyUnavailable', []),
+            new BookingAvailability('Available')
         );
 
         $result = $this->formatter->format(
@@ -112,7 +118,8 @@ final class NonAvailablePlaceHTMLFormatterTest extends TestCase
     {
         $event = new Offer(
             OfferType::event(),
-            new Status('Available', [])
+            new Status('Available', []),
+            new BookingAvailability('Available')
         );
 
         $result = $this->formatter->format(
@@ -129,7 +136,8 @@ final class NonAvailablePlaceHTMLFormatterTest extends TestCase
     {
         $place = new Offer(
             OfferType::place(),
-            new Status('Unavailable', ['nl' => 'Covid-19'])
+            new Status('Unavailable', ['nl' => 'Covid-19']),
+            new BookingAvailability('Available')
         );
 
         $result = $this->formatter->format(
@@ -146,7 +154,8 @@ final class NonAvailablePlaceHTMLFormatterTest extends TestCase
     {
         $place = new Offer(
             OfferType::place(),
-            new Status('Unavailable', ['fr' => "Désolé, c'est annulé!"])
+            new Status('Unavailable', ['fr' => "Désolé, c'est annulé!"]),
+            new BookingAvailability('Available')
         );
 
         $result = $this->formatter->format(

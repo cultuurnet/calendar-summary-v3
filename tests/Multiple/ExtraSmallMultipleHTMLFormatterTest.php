@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace CultuurNet\CalendarSummaryV3\Multiple;
 
+use CultuurNet\CalendarSummaryV3\Offer\BookingAvailability;
 use CultuurNet\CalendarSummaryV3\Offer\CalendarType;
 use CultuurNet\CalendarSummaryV3\Offer\Offer;
 use CultuurNet\CalendarSummaryV3\Offer\OfferType;
@@ -29,6 +30,7 @@ final class ExtraSmallMultipleHTMLFormatterTest extends TestCase
         $offer = new Offer(
             OfferType::event(),
             new Status('Available', []),
+            new BookingAvailability('Available'),
             new DateTimeImmutable('25-11-2025'),
             new DateTimeImmutable('30-11-2030'),
             CalendarType::multiple()
@@ -46,6 +48,7 @@ final class ExtraSmallMultipleHTMLFormatterTest extends TestCase
         $offer = new Offer(
             OfferType::event(),
             new Status('Available', []),
+            new BookingAvailability('Available'),
             new DateTimeImmutable('04-03-2025'),
             new DateTimeImmutable('08-03-2030'),
             CalendarType::multiple()
@@ -63,6 +66,7 @@ final class ExtraSmallMultipleHTMLFormatterTest extends TestCase
         $offer = new Offer(
             OfferType::event(),
             new Status('Unavailable', []),
+            new BookingAvailability('Available'),
             new DateTimeImmutable('25-11-2025'),
             new DateTimeImmutable('30-11-2030'),
             CalendarType::multiple()
@@ -81,6 +85,7 @@ final class ExtraSmallMultipleHTMLFormatterTest extends TestCase
         $offer = new Offer(
             OfferType::event(),
             new Status('Available', []),
+            new BookingAvailability('Available'),
             new DateTimeImmutable('04-10-2025'),
             new DateTimeImmutable('08-10-2030'),
             CalendarType::multiple()
@@ -98,6 +103,7 @@ final class ExtraSmallMultipleHTMLFormatterTest extends TestCase
         $offer = new Offer(
             OfferType::event(),
             new Status('Available', []),
+            new BookingAvailability('Available'),
             new DateTimeImmutable('08-10-2025 12:00'),
             new DateTimeImmutable('08-10-2025 14:00'),
             CalendarType::multiple()

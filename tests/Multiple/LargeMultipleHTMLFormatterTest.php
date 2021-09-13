@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace CultuurNet\CalendarSummaryV3\Multiple;
 
+use CultuurNet\CalendarSummaryV3\Offer\BookingAvailability;
 use CultuurNet\CalendarSummaryV3\Offer\CalendarType;
 use CultuurNet\CalendarSummaryV3\Offer\Offer;
 use CultuurNet\CalendarSummaryV3\Offer\OfferType;
@@ -32,6 +33,7 @@ final class LargeMultipleHTMLFormatterTest extends TestCase
         $event = new Offer(
             OfferType::event(),
             new Status('Available', []),
+            new BookingAvailability('Available'),
             null,
             null,
             CalendarType::multiple()
@@ -42,6 +44,7 @@ final class LargeMultipleHTMLFormatterTest extends TestCase
             $newEvents[] = new Offer(
                 OfferType::event(),
                 new Status('Available', []),
+                new BookingAvailability('Available'),
                 new DateTimeImmutable($subEvent['startDate']),
                 new DateTimeImmutable($subEvent['endDate'])
             );
@@ -123,6 +126,7 @@ final class LargeMultipleHTMLFormatterTest extends TestCase
         $event = new Offer(
             OfferType::event(),
             new Status('Available', []),
+            new BookingAvailability('Available'),
             null,
             null,
             CalendarType::multiple()
@@ -133,6 +137,7 @@ final class LargeMultipleHTMLFormatterTest extends TestCase
             $newEvents[] = new Offer(
                 OfferType::event(),
                 new Status('Available', []),
+                new BookingAvailability('Available'),
                 new DateTimeImmutable($subEvent['startDate']),
                 new DateTimeImmutable($subEvent['endDate'])
             );
@@ -214,6 +219,7 @@ final class LargeMultipleHTMLFormatterTest extends TestCase
         $event = new Offer(
             OfferType::event(),
             new Status('Available', []),
+            new BookingAvailability('Available'),
             null,
             null,
             CalendarType::multiple()
@@ -224,6 +230,7 @@ final class LargeMultipleHTMLFormatterTest extends TestCase
             $newEvents[] = new Offer(
                 OfferType::event(),
                 new Status('Available', []),
+                new BookingAvailability('Available'),
                 new DateTimeImmutable($subEvent['startDate']),
                 new DateTimeImmutable($subEvent['endDate'])
             );
@@ -341,6 +348,7 @@ final class LargeMultipleHTMLFormatterTest extends TestCase
         $event = new Offer(
             OfferType::event(),
             new Status('Available', []),
+            new BookingAvailability('Available'),
             null,
             null,
             CalendarType::multiple()
@@ -351,6 +359,7 @@ final class LargeMultipleHTMLFormatterTest extends TestCase
             $newEvents[] = new Offer(
                 OfferType::event(),
                 new Status('Available', []),
+                new BookingAvailability('Available'),
                 new DateTimeImmutable($subEvent['startDate']),
                 new DateTimeImmutable($subEvent['endDate'])
             );
