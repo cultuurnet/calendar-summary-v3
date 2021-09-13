@@ -62,6 +62,25 @@ final class SmallMultipleHTMLFormatterTest extends TestCase
         );
     }
 
+    public function testFormatMultipleWithoutLeadingZeroesWithAvailableStatusAndUnavailableBooking(): void
+    {
+        $offer = new Offer(
+            OfferType::event(),
+            new Status('Available', []),
+            new BookingAvailability('Unavailable'),
+            new DateTimeImmutable('25-11-2025'),
+            new DateTimeImmutable('30-11-2030'),
+            CalendarType::multiple()
+        );
+
+        $this->assertEquals(
+            '<span class="cf-from cf-meta">Van</span> <span class="cf-date">25 november 2025</span> '
+            . '<span class="cf-to cf-meta">tot</span> <span class="cf-date">30 november 2030</span>'
+            . ' <span class="cf-status">(Volzet of uitverkocht)</span>',
+            $this->formatter->format($offer)
+        );
+    }
+
     public function testFormatMultipleWithLeadingZeroes(): void
     {
         $offer = new Offer(

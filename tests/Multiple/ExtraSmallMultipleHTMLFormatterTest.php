@@ -80,6 +80,44 @@ final class ExtraSmallMultipleHTMLFormatterTest extends TestCase
         );
     }
 
+    public function testFormatMultipleWithoutLeadingZeroesWithUnavailableStatusAndUnavailableBooking(): void
+    {
+        $offer = new Offer(
+            OfferType::event(),
+            new Status('Unavailable', []),
+            new BookingAvailability('Unavailable'),
+            new DateTimeImmutable('25-11-2025'),
+            new DateTimeImmutable('30-11-2030'),
+            CalendarType::multiple()
+        );
+
+        $this->assertEquals(
+            '<span class="cf-from cf-meta">Van</span> <span class="cf-date">25/11/25</span> '
+            . '<span class="cf-to cf-meta">tot</span> <span class="cf-date">30/11/30</span>'
+            . ' <span class="cf-status">(geannuleerd)</span>',
+            $this->formatter->format($offer)
+        );
+    }
+
+    public function testFormatMultipleWithoutLeadingZeroesWithAvailableStatusAndUnavailableBooking(): void
+    {
+        $offer = new Offer(
+            OfferType::event(),
+            new Status('Available', []),
+            new BookingAvailability('Unavailable'),
+            new DateTimeImmutable('25-11-2025'),
+            new DateTimeImmutable('30-11-2030'),
+            CalendarType::multiple()
+        );
+
+        $this->assertEquals(
+            '<span class="cf-from cf-meta">Van</span> <span class="cf-date">25/11/25</span> '
+            . '<span class="cf-to cf-meta">tot</span> <span class="cf-date">30/11/30</span>'
+            . ' <span class="cf-status">(Volzet of uitverkocht)</span>',
+            $this->formatter->format($offer)
+        );
+    }
+
     public function testFormatMultipleMonthWithoutLeadingZero(): void
     {
         $offer = new Offer(

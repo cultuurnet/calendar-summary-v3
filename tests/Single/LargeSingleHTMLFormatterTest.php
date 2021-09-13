@@ -215,6 +215,54 @@ final class LargeSingleHTMLFormatterTest extends TestCase
         );
     }
 
+    public function testFormatHTMLSingleDateLargeWholeDayWithStatusUnavailableAndBookingUnavailable(): void
+    {
+        $event = new Offer(
+            OfferType::event(),
+            new Status('Unavailable', []),
+            new BookingAvailability('Unavailable'),
+            new DateTimeImmutable('2018-01-06T00:00:00+01:00'),
+            new DateTimeImmutable('2018-01-06T23:59:59+01:00')
+        );
+
+        $expectedOutput = '<time itemprop="startDate" datetime="2018-01-06T00:00:00+01:00">';
+        $expectedOutput .= '<span class="cf-weekday cf-meta">Zaterdag</span>';
+        $expectedOutput .= ' ';
+        $expectedOutput .= '<span class="cf-date">6 januari 2018</span>';
+        $expectedOutput .= '</time>';
+        $expectedOutput .= ' ';
+        $expectedOutput .= '<span class="cf-status">(geannuleerd)</span>';
+
+        $this->assertEquals(
+            $expectedOutput,
+            $this->formatter->format($event)
+        );
+    }
+
+    public function testFormatHTMLSingleDateLargeWholeDayWithStatusAvailableAndBookingUnavailable(): void
+    {
+        $event = new Offer(
+            OfferType::event(),
+            new Status('Available', []),
+            new BookingAvailability('Unavailable'),
+            new DateTimeImmutable('2018-01-06T00:00:00+01:00'),
+            new DateTimeImmutable('2018-01-06T23:59:59+01:00')
+        );
+
+        $expectedOutput = '<time itemprop="startDate" datetime="2018-01-06T00:00:00+01:00">';
+        $expectedOutput .= '<span class="cf-weekday cf-meta">Zaterdag</span>';
+        $expectedOutput .= ' ';
+        $expectedOutput .= '<span class="cf-date">6 januari 2018</span>';
+        $expectedOutput .= '</time>';
+        $expectedOutput .= ' ';
+        $expectedOutput .= '<span class="cf-status">(Volzet of uitverkocht)</span>';
+
+        $this->assertEquals(
+            $expectedOutput,
+            $this->formatter->format($event)
+        );
+    }
+
     public function testFormatHTMLSingleDateSameTime(): void
     {
         $event = new Offer(
