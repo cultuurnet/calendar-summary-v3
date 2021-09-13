@@ -42,7 +42,7 @@ final class MediumSinglePlainTextFormatter implements SingleFormatterInterface
 
         return PlainTextSummaryBuilder::start($this->translator)
             ->append($output)
-            ->appendAvailability($offer->getStatus())
+            ->appendAvailability($offer->getStatus(), $offer->getBookingAvailability())
             ->toString();
     }
 

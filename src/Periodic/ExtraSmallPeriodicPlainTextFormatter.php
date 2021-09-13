@@ -36,14 +36,14 @@ final class ExtraSmallPeriodicPlainTextFormatter implements PeriodicFormatterInt
         if (DateComparison::inTheFuture($startDate)) {
             return PlainTextSummaryBuilder::start($this->translator)
                 ->fromPeriod($this->formatter->formatAsShortDate($startDate))
-                ->appendAvailability($offer->getStatus())
+                ->appendAvailability($offer->getStatus(), $offer->getBookingAvailability())
                 ->toString();
         }
 
         $endDate = $offer->getEndDate();
         return PlainTextSummaryBuilder::start($this->translator)
             ->till($this->formatter->formatAsShortDate($endDate))
-            ->appendAvailability($offer->getStatus())
+            ->appendAvailability($offer->getStatus(), $offer->getBookingAvailability())
             ->toString();
     }
 }
