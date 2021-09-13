@@ -81,8 +81,8 @@ final class LargePermanentPlainTextFormatter implements PermanentFormatterInterf
                 $daysWithOpeningHours[] = $dayName;
 
                 $formattedDays[$dayName] = $formattedDays[$dayName]
-                    ->from(OpeningHourFormatter::format($openingHours->getOpens()))
-                    ->till(OpeningHourFormatter::format($openingHours->getCloses()))
+                    ->fromHour(OpeningHourFormatter::format($openingHours->getOpens()))
+                    ->tillHour(OpeningHourFormatter::format($openingHours->getCloses()))
                     ->startNewLine()
                     ->lowercaseNextFirstCharacter();
             }
