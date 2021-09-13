@@ -164,6 +164,11 @@ final class Offer
         return $this->status;
     }
 
+    public function getBookingAvailability(): BookingAvailability
+    {
+        return $this->bookingAvailability;
+    }
+
     public function getStartDate(): ?DateTimeImmutable
     {
         return $this->startDate;
