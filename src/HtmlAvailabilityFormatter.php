@@ -7,7 +7,7 @@ namespace CultuurNet\CalendarSummaryV3;
 use CultuurNet\CalendarSummaryV3\Offer\Offer;
 use CultuurNet\CalendarSummaryV3\Offer\Status;
 
-final class HtmlStatusFormatter
+final class HtmlAvailabilityFormatter
 {
     /**
      * @var Translator
