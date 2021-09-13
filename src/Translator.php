@@ -36,6 +36,7 @@ final class Translator
                 'cancelled' => 'cancelled',
                 'postponed' => 'postponed',
                 'event_concluded' => 'Event ended',
+                'sold_out' => 'Sold out or fully booked',
             ],
             'nl' => [
                 'from' => 'van',
@@ -51,6 +52,7 @@ final class Translator
                 'cancelled' => 'geannuleerd',
                 'postponed' => 'uitgesteld',
                 'event_concluded' => 'Evenement afgelopen',
+                'sold_out' => 'Volzet of uitverkocht',
             ],
             'fr' => [
                 'from' => 'du',
@@ -66,6 +68,7 @@ final class Translator
                 'cancelled' => 'annulé',
                 'postponed' => 'reporté',
                 'event_concluded' => 'Fin de l’événement',
+                'sold_out' => 'Complet',
             ],
             'de' => [
                 'from' => 'von',
@@ -81,6 +84,7 @@ final class Translator
                 'cancelled' => 'abgesagt',
                 'postponed' => 'verschoben',
                 'event_concluded' => 'Event abgeschlossen',
+                'sold_out' => 'Ausgebucht oder ausverkauft',
             ],
         ];
 
