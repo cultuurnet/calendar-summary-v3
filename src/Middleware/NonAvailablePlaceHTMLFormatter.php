@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace CultuurNet\CalendarSummaryV3\Middleware;
 
 use Closure;
-use CultuurNet\CalendarSummaryV3\HtmlStatusFormatter;
+use CultuurNet\CalendarSummaryV3\HtmlAvailabilityFormatter;
 use CultuurNet\CalendarSummaryV3\Translator;
 use CultuurNet\CalendarSummaryV3\Offer\Offer;
 
@@ -26,7 +26,7 @@ final class NonAvailablePlaceHTMLFormatter implements FormatterMiddleware
     public function format(Offer $offer, Closure $next): string
     {
         if ($this->appliesToOffer($offer)) {
-            return HtmlStatusFormatter::forOffer($offer, $this->translator)
+            return HtmlAvailabilityFormatter::forOffer($offer, $this->translator)
                 ->withElement('span')
                 ->withoutBraces()
                 ->capitalize()
