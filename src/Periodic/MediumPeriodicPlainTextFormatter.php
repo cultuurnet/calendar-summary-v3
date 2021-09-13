@@ -41,14 +41,14 @@ final class MediumPeriodicPlainTextFormatter implements PeriodicFormatterInterfa
         if ($formattedStartDate === $formattedEndDate) {
             return $summaryBuilder->append($formattedStartDayOfWeek)
                 ->append($formattedStartDate)
-                ->appendStatus($offer->getStatus())
+                ->appendAvailability($offer->getStatus())
                 ->toString();
         }
 
         return $summaryBuilder
             ->from($formattedStartDate)
             ->till($formattedEndDate)
-            ->appendStatus($offer->getStatus())
+            ->appendAvailability($offer->getStatus())
             ->toString();
     }
 }

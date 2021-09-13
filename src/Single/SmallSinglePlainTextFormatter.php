@@ -42,7 +42,7 @@ final class SmallSinglePlainTextFormatter implements SingleFormatterInterface
 
         return PlainTextSummaryBuilder::start($this->translator)
             ->append($output)
-            ->appendStatus($offer->getStatus())
+            ->appendAvailability($offer->getStatus())
             ->toString();
     }
 

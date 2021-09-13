@@ -154,7 +154,7 @@ final class PlainTextSummaryBuilder
         return $lowercaseFirstCharacter ? lcfirst($formatted) : ucfirst($formatted);
     }
 
-    public function appendStatus(Status $status): self
+    public function appendAvailability(Status $status): self
     {
         $c = clone $this;
 
