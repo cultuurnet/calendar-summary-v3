@@ -42,7 +42,7 @@ final class LargePermanentHTMLFormatter implements PermanentFormatterInterface
 
     public function format(Offer $offer): string
     {
-        if ($offer->getStatus()->getType() !== 'Available' || $offer->getBookingAvailability()->getType() !== 'Available') {
+        if (!$offer->isAvailable()) {
             return HtmlAvailabilityFormatter::forOffer($offer, $this->translator)
                 ->withElement('p')
                 ->withoutBraces()
