@@ -146,10 +146,12 @@ final class Offer
         return $clone;
     }
 
-    public function withStatus(Status $status): self
+    public function withAvailability(Status $status, BookingAvailability $bookingAvailability): self
     {
         $clone = clone $this;
+
         $clone->status = $status;
+        $clone->bookingAvailability = $bookingAvailability;
 
         return $clone;
     }

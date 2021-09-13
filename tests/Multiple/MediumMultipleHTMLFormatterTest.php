@@ -88,7 +88,14 @@ final class MediumMultipleHTMLFormatterTest extends TestCase
                 new DateTimeImmutable($subEvent['endDate'])
             );
         }
-        $newEvents[1] = $newEvents[1]->withStatus(new Status('Unavailable', []));
+        $newEvents[1] = $newEvents[1]->withAvailability(
+            new Status('Unavailable', []),
+            new BookingAvailability('Unavailable')
+        );
+        $newEvents[2] = $newEvents[2]->withAvailability(
+            new Status('Available', []),
+            new BookingAvailability('Unavailable')
+        );
         $event = $event->withSubEvents($newEvents);
 
         $expectedOutput = '<ul class="cnw-event-date-info"><li>';
@@ -97,7 +104,7 @@ final class MediumMultipleHTMLFormatterTest extends TestCase
         $expectedOutput .= '<li><span class="cf-weekday cf-meta">Donderdag</span> ';
         $expectedOutput .= '<span class="cf-date">16 november 2017</span> <span class="cf-status">(geannuleerd)</span></li>';
         $expectedOutput .= '<li><span class="cf-weekday cf-meta">Donderdag</span> ';
-        $expectedOutput .= '<span class="cf-date">23 november 2017</span></li>';
+        $expectedOutput .= '<span class="cf-date">23 november 2017</span> <span class="cf-status">(Volzet of uitverkocht)</span></li>';
         $expectedOutput .= '<li><span class="cf-weekday cf-meta">Donderdag</span> ';
         $expectedOutput .= '<span class="cf-date">30 november 2017</span></li></ul>';
 

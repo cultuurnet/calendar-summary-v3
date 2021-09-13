@@ -156,13 +156,20 @@ final class MediumMultiplePlainTextFormatterTest extends TestCase
             );
         }
 
-        $newEvents[1] = $newEvents[1]->withStatus(new Status('Unavailable', []));
+        $newEvents[1] = $newEvents[1]->withAvailability(
+            new Status('Unavailable', []),
+            new BookingAvailability('Unavailable')
+        );
+        $newEvents[2] = $newEvents[2]->withAvailability(
+            new Status('Available', []),
+            new BookingAvailability('Unavailable')
+        );
 
         $event = $event->withSubEvents($newEvents);
 
         $expectedOutput = 'Donderdag 9 november 2017' . PHP_EOL;
         $expectedOutput .= 'Donderdag 16 november 2017 (geannuleerd)' . PHP_EOL;
-        $expectedOutput .= 'Donderdag 23 november 2017' . PHP_EOL;
+        $expectedOutput .= 'Donderdag 23 november 2017 (Volzet of uitverkocht)' . PHP_EOL;
         $expectedOutput .= 'Donderdag 30 november 2017';
 
         $this->assertEquals(

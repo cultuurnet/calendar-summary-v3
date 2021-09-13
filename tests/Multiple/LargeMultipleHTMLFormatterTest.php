@@ -120,7 +120,7 @@ final class LargeMultipleHTMLFormatterTest extends TestCase
         );
     }
 
-    public function testFormatHTMLMultipleDateLargeOneDayWithUnavailableStatus(): void
+    public function testFormatHTMLMultipleDateLargeOneDayWithUnavailability(): void
     {
         $subEvents = json_decode(file_get_contents(__DIR__ . '/data/subEvents.json'), true);
         $event = new Offer(
@@ -142,7 +142,14 @@ final class LargeMultipleHTMLFormatterTest extends TestCase
                 new DateTimeImmutable($subEvent['endDate'])
             );
         }
-        $newEvents[1] = $newEvents[1]->withStatus(new Status('Unavailable', []));
+        $newEvents[1] = $newEvents[1]->withAvailability(
+            new Status('Unavailable', []),
+            new BookingAvailability('Unavailable')
+        );
+        $newEvents[2] = $newEvents[2]->withAvailability(
+            new Status('Available', []),
+            new BookingAvailability('Unavailable')
+        );
         $event = $event->withSubEvents($newEvents);
 
         $expectedOutput = '<ul class="cnw-event-date-info"><li>';
@@ -190,7 +197,7 @@ final class LargeMultipleHTMLFormatterTest extends TestCase
         $expectedOutput .= ' ';
         $expectedOutput .= '<time itemprop="endDate" datetime="2017-11-23T22:00:00+01:00">';
         $expectedOutput .= '<span class="cf-time">22:00</span>';
-        $expectedOutput .= '</time></li>';
+        $expectedOutput .= '</time> <span class="cf-status">(Volzet of uitverkocht)</span></li>';
         $expectedOutput .= '<li><time itemprop="startDate" datetime="2017-11-30T20:00:00+01:00">';
         $expectedOutput .= '<span class="cf-weekday cf-meta">Donderdag</span>';
         $expectedOutput .= ' ';
