@@ -74,6 +74,47 @@ final class LargePermanentPlainTextFormatterTest extends TestCase
         );
     }
 
+    public function testFormatASimplePermanentInFrench(): void
+    {
+        $place = new Offer(
+            OfferType::place(),
+            new Status('Available', []),
+            new BookingAvailability('Available'),
+            new DateTimeImmutable('25-11-2025'),
+            new DateTimeImmutable('30-11-2030')
+        );
+
+        $openingHours1 = new OpeningHour(
+            ['monday'],
+            '09:00',
+            '13:00'
+        );
+
+        $openingHours2 = new OpeningHour(
+            ['friday'],
+            '00:01',
+            '13:00'
+        );
+
+        $place = $place->withOpeningHours(
+            [
+                $openingHours1,
+                $openingHours2,
+            ]
+        );
+
+        $this->assertEquals(
+            'Lun. de 9:00 à 13:00' . PHP_EOL
+            . 'Mar. fermé' . PHP_EOL
+            . 'Mer. fermé' . PHP_EOL
+            . 'Jeu. fermé' . PHP_EOL
+            . 'Ven. de 0:01 à 13:00' . PHP_EOL
+            . 'Sam. fermé' . PHP_EOL
+            . 'Dim. fermé' . PHP_EOL,
+            (new LargePermanentPlainTextFormatter(new Translator('fr')))->format($place)
+        );
+    }
+
     public function testFormatAMixedPermanent(): void
     {
         $place = new Offer(

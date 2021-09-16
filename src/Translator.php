@@ -25,7 +25,9 @@ final class Translator
             'en' => [
                 'from' => 'from',
                 'from_period' => 'from',
+                'from_hour' => 'from',
                 'till' => 'till',
+                'till_hour' => 'till',
                 'closed' => 'closed',
                 'open' => 'open at',
                 'at' => 'at',
@@ -41,7 +43,9 @@ final class Translator
             'nl' => [
                 'from' => 'van',
                 'from_period' => 'vanaf',
+                'from_hour' => 'van',
                 'till' => 'tot',
+                'till_hour' => 'tot',
                 'closed' => 'gesloten',
                 'open' => 'open op',
                 'at' => 'om',
@@ -57,7 +61,9 @@ final class Translator
             'fr' => [
                 'from' => 'du',
                 'from_period' => 'du',
+                'from_hour' => 'de',
                 'till' => 'au',
+                'till_hour' => 'à',
                 'closed' => 'fermé',
                 'open' => 'ouvert le',
                 'at' => 'à',
@@ -73,7 +79,9 @@ final class Translator
             'de' => [
                 'from' => 'von',
                 'from_period' => 'aus',
+                'from_hour' => 'von',
                 'till' => 'bis',
+                'till_hour' => 'bis',
                 'closed' => 'geschlossen',
                 'open' => 'öffnen',
                 'at' => 'um',

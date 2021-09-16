@@ -67,16 +67,16 @@ final class LargePeriodicPlainTextFormatter implements PeriodicFormatterInterfac
                     $formattedDays[$dayName] = PlainTextSummaryBuilder::start($this->translator)
                         ->lowercaseNextFirstCharacter()
                         ->append($translatedDay)
-                        ->from(OpeningHourFormatter::format($openingHours->getOpens()))
-                        ->till(OpeningHourFormatter::format($openingHours->getCloses()));
+                        ->fromHour(OpeningHourFormatter::format($openingHours->getOpens()))
+                        ->tillHour(OpeningHourFormatter::format($openingHours->getCloses()));
 
                     continue;
                 }
 
                 $formattedDays[$dayName] = $formattedDays[$dayName]
                     ->and()
-                    ->from(OpeningHourFormatter::format($openingHours->getOpens()))
-                    ->till(OpeningHourFormatter::format($openingHours->getCloses()));
+                    ->fromHour(OpeningHourFormatter::format($openingHours->getOpens()))
+                    ->tillHour(OpeningHourFormatter::format($openingHours->getCloses()));
             }
         }
 

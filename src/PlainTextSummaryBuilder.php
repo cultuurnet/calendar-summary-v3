@@ -67,9 +67,19 @@ final class PlainTextSummaryBuilder
         return $this->appendTranslation('from_period')->appendMultiple($text, ' ');
     }
 
+    public function fromHour(string ...$text): self
+    {
+        return $this->appendTranslation('from_hour')->appendMultiple($text, ' ');
+    }
+
     public function till(string ...$text): self
     {
         return $this->appendTranslation('till')->appendMultiple($text, ' ');
+    }
+
+    public function tillHour(string ...$text): self
+    {
+        return $this->appendTranslation('till_hour')->appendMultiple($text, ' ');
     }
 
     public function at(string ...$text): self

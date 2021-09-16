@@ -63,6 +63,40 @@ final class LargePeriodicPlainTextFormatterTest extends TestCase
         );
     }
 
+    public function testFormatAPeriodWithSingleTimeBlocksInFrench(): void
+    {
+        $place = new Offer(
+            OfferType::place(),
+            new Status('Available', []),
+            new BookingAvailability('Available'),
+            new DateTimeImmutable('25-11-2025'),
+            new DateTimeImmutable('30-11-2030'),
+            CalendarType::periodic()
+        );
+
+        $place = $place->withOpeningHours(
+            [
+                new OpeningHour(
+                    ['monday'],
+                    '00:01',
+                    '17:00'
+                ),
+                new OpeningHour(
+                    ['friday'],
+                    '10:00',
+                    '18:00'
+                ),
+            ]
+        );
+
+        $this->assertEquals(
+            'Du 25 novembre 2025 au 30 novembre 2030' . PHP_EOL
+            . '(lundi de 0:01 à 17:00, '
+            . 'vendredi de 10:00 à 18:00)',
+            (new LargePeriodicPlainTextFormatter(new Translator('fr')))->format($place)
+        );
+    }
+
     public function testFormatAPeriodWithSingleTimeBlocksWithUnavailableStatus(): void
     {
         $event = new Offer(

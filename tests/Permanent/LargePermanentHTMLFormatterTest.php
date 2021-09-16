@@ -121,6 +121,80 @@ final class LargePermanentHTMLFormatterTest extends TestCase
         );
     }
 
+    public function testFormatASimplePermanentInFrench(): void
+    {
+        $place = new Offer(
+            OfferType::place(),
+            new Status('Available', []),
+            new BookingAvailability('Available'),
+            new DateTimeImmutable('25-11-2025'),
+            new DateTimeImmutable('25-11-2025')
+        );
+
+        $openingHours1 = new OpeningHour(
+            ['monday'],
+            '00:01',
+            '13:00'
+        );
+
+        $openingHours2 = new OpeningHour(
+            ['friday'],
+            '09:00',
+            '13:00'
+        );
+
+        $place = $place->withOpeningHours(
+            [
+                $openingHours1,
+                $openingHours2,
+            ]
+        );
+
+        $this->assertEquals(
+            '<ul class="list-unstyled"> '
+            . '<meta itemprop="openingHours" datetime="Lun. 0:01-13:00"> </meta> '
+            . '<li itemprop="openingHoursSpecification"> '
+            . '<span class="cf-days">Lundi</span> '
+            . '<span itemprop="opens" content="0:01" class="cf-from cf-meta">de</span> '
+            . '<span class="cf-time">0:01</span> '
+            . '<span itemprop="closes" content="13:00" class="cf-to cf-meta">à</span> '
+            . '<span class="cf-time">13:00</span> '
+            . '</li> '
+            . '<meta itemprop="openingHours" datetime="Mardi"> </meta> '
+            . '<li itemprop="openingHoursSpecification"> '
+            . '<span class="cf-days">Mardi</span> '
+            . '<span itemprop="closed" content="closed" class="cf-closed cf-meta">fermé</span> '
+            . '</li> '
+            . '<meta itemprop="openingHours" datetime="Mercredi"> </meta> '
+            . '<li itemprop="openingHoursSpecification"> '
+            . '<span class="cf-days">Mercredi</span> '
+            . '<span itemprop="closed" content="closed" class="cf-closed cf-meta">fermé</span> '
+            . '</li> '
+            . '<meta itemprop="openingHours" datetime="Jeudi"> </meta> '
+            . '<li itemprop="openingHoursSpecification"> <span class="cf-days">Jeudi</span> '
+            . '<span itemprop="closed" content="closed" class="cf-closed cf-meta">fermé</span> '
+            . '</li> '
+            . '<meta itemprop="openingHours" datetime="Ven. 9:00-13:00"> </meta> '
+            . '<li itemprop="openingHoursSpecification"> '
+            . '<span class="cf-days">Vendredi</span> <span itemprop="opens" content="9:00" class="cf-from cf-meta">de</span> '
+            . '<span class="cf-time">9:00</span> '
+            . '<span itemprop="closes" content="13:00" class="cf-to cf-meta">à</span> '
+            . '<span class="cf-time">13:00</span> '
+            . '</li> '
+            . '<meta itemprop="openingHours" datetime="Samedi"> </meta> '
+            . '<li itemprop="openingHoursSpecification"> '
+            . '<span class="cf-days">Samedi</span> '
+            . '<span itemprop="closed" content="closed" class="cf-closed cf-meta">fermé</span> '
+            . '</li> '
+            . '<meta itemprop="openingHours" datetime="Dimanche"> </meta> '
+            . '<li itemprop="openingHoursSpecification"> '
+            . '<span class="cf-days">Dimanche</span> '
+            . '<span itemprop="closed" content="closed" class="cf-closed cf-meta">fermé</span> '
+            . '</li> </ul>',
+            (new LargePermanentHTMLFormatter(new Translator('fr')))->format($place)
+        );
+    }
+
     public function testFormatAMixedPermanent(): void
     {
         $place = new Offer(

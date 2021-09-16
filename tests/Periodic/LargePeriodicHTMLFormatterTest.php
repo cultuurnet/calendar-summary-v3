@@ -108,6 +108,64 @@ final class LargePeriodicHTMLFormatterTest extends TestCase
         );
     }
 
+    public function testFormatAPeriodWithSingleTimeBlocksInFrench(): void
+    {
+        $place = new Offer(
+            OfferType::place(),
+            new Status('Available', []),
+            new BookingAvailability('Available'),
+            new DateTimeImmutable('25-11-2025'),
+            new DateTimeImmutable('30-11-2030'),
+            CalendarType::periodic()
+        );
+
+        $place = $place->withOpeningHours(
+            [
+                new OpeningHour(
+                    ['monday'],
+                    '00:00',
+                    '17:00'
+                ),
+                new OpeningHour(
+                    ['friday'],
+                    '10:00',
+                    '18:00'
+                ),
+            ]
+        );
+
+        $this->assertEquals(
+            '<p class="cf-period"> '
+            . '<time itemprop="startDate" datetime="2025-11-25"> '
+            . '<span class="cf-date">25 novembre 2025</span> '
+            . '</time> '
+            . '<span class="cf-to cf-meta">au</span> '
+            . '<time itemprop="endDate" datetime="2030-11-30"> '
+            . '<span class="cf-date">30 novembre 2030</span> '
+            . '</time> '
+            . '</p> '
+            . '<p class="cf-openinghours">Ouvert le:</p> '
+            . '<ul class="list-unstyled"> '
+            . '<meta itemprop="openingHours" datetime="Lun. 0:00-17:00"> </meta> '
+            . '<li itemprop="openingHoursSpecification"> '
+            . '<span class="cf-days">Lundi</span> '
+            . '<span itemprop="opens" content="0:00" class="cf-from cf-meta">de</span> '
+            . '<span class="cf-time">0:00</span> '
+            . '<span itemprop="closes" content="17:00" class="cf-to cf-meta">à</span> '
+            . '<span class="cf-time">17:00</span> '
+            . '</li> '
+            . '<meta itemprop="openingHours" datetime="Ven. 10:00-18:00"> </meta> '
+            . '<li itemprop="openingHoursSpecification"> '
+            . '<span class="cf-days">Vendredi</span> '
+            . '<span itemprop="opens" content="10:00" class="cf-from cf-meta">de</span> '
+            . '<span class="cf-time">10:00</span> '
+            . '<span itemprop="closes" content="18:00" class="cf-to cf-meta">à</span> '
+            . '<span class="cf-time">18:00</span> '
+            . '</li> </ul>',
+            (new LargePeriodicHTMLFormatter(new Translator('fr')))->format($place)
+        );
+    }
+
     public function testFormatAPeriodWithSingleTimeBlocksWithUnavailableStatus(): void
     {
         $event = new Offer(

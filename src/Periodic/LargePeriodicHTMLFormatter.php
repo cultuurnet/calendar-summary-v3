@@ -149,19 +149,19 @@ final class LargePeriodicHTMLFormatter implements PeriodicFormatterInterface
                         . '<li itemprop="openingHoursSpecification"> '
                         . "<span class=\"cf-days\">$daySpanLong</span> "
                         . "<span itemprop=\"opens\" content=\"$opens\" class=\"cf-from cf-meta\">"
-                        . $this->translator->translate('from') . '</span> '
+                        . $this->translator->translate('from_hour') . '</span> '
                         . "<span class=\"cf-time\">$opens</span> "
                         . "<span itemprop=\"closes\" content=\"$closes\" class=\"cf-to cf-meta\">"
-                        . $this->translator->translate('till') . '</span> '
+                        . $this->translator->translate('till_hour') . '</span> '
                         . "<span class=\"cf-time\">$closes</span>";
                 } else {
                     $formattedTimespans[$dayOfWeek] .=
                         "<span itemprop=\"opens\" content=\"$opens\" class=\"cf-from cf-meta\">"
                         . $this->translator->translate('and') . ' '
-                        . $this->translator->translate('from') . '</span> '
+                        . $this->translator->translate('from_hour') . '</span> '
                         . "<span class=\"cf-time\">$opens</span> "
                         . "<span itemprop=\"closes\" content=\"$closes\" class=\"cf-to cf-meta\">"
-                        . $this->translator->translate('till') . '</span> '
+                        . $this->translator->translate('till_hour') . '</span> '
                         . "<span class=\"cf-time\">$closes</span>";
                 }
             }
