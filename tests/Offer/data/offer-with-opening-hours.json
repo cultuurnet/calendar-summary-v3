@@ -6,6 +6,9 @@
   "status": {
     "type": "Available"
   },
+  "bookingAvailability": {
+    "type": "Available"
+  },
   "openingHours": [
     {
       "opens":"08:00",

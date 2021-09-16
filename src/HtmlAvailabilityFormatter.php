@@ -4,10 +4,11 @@ declare(strict_types=1);
 
 namespace CultuurNet\CalendarSummaryV3;
 
+use CultuurNet\CalendarSummaryV3\Offer\BookingAvailability;
 use CultuurNet\CalendarSummaryV3\Offer\Offer;
 use CultuurNet\CalendarSummaryV3\Offer\Status;
 
-final class HtmlStatusFormatter
+final class HtmlAvailabilityFormatter
 {
     /**
      * @var Translator
@@ -15,9 +16,19 @@ final class HtmlStatusFormatter
     private $translator;
 
     /**
+     * @var bool
+     */
+    private $isAvailable;
+
+    /**
      * @var Status
      */
     private $status;
+
+    /**
+     * @var BookingAvailability
+     */
+    private $bookingAvailability;
 
     /**
      * @var string
@@ -47,7 +58,9 @@ final class HtmlStatusFormatter
     public static function forOffer(Offer $offer, Translator $translator): self
     {
         $formatter = new self($translator);
+        $formatter->isAvailable = $offer->isAvailable();
         $formatter->status = $offer->getStatus();
+        $formatter->bookingAvailability = $offer->getBookingAvailability();
         $formatter->isPlace = $offer->isPlace();
         return $formatter;
     }
@@ -82,26 +95,26 @@ final class HtmlStatusFormatter
 
     public function toString(): string
     {
-        if ($this->status->getType() === 'Available') {
+        if ($this->isAvailable) {
             return '';
         }
 
         $openTag = '<' . $this->element . ' ' . $this->getReasonAsTitleAttribute() . 'class="cf-status">';
         $closingTag = '</' . $this->element . '>';
-        $statusText = $this->getStatusText();
+        $availabilityText = $this->getAvailabilityText();
 
         if ($this->capitalize) {
-            $statusText = ucfirst($statusText);
+            $availabilityText = ucfirst($availabilityText);
         }
 
         if ($this->withBraces) {
-            $statusText = '(' . $statusText . ')';
+            $availabilityText = '(' . $availabilityText . ')';
         }
 
-        return $openTag . $statusText . $closingTag;
+        return $openTag . $availabilityText . $closingTag;
     }
 
-    private function getStatusText(): string
+    private function getAvailabilityText(): string
     {
         if ($this->isPlace) {
             return $this->status->getType() === 'Unavailable' ?
@@ -109,9 +122,17 @@ final class HtmlStatusFormatter
                 $this->translator->translate('temporarily_closed');
         }
 
-        return $this->status->getType() === 'Unavailable' ?
-            $this->translator->translate('cancelled') :
-            $this->translator->translate('postponed');
+        if ($this->status->getType() !== 'Available') {
+            return $this->status->getType() === 'Unavailable' ?
+                $this->translator->translate('cancelled') :
+                $this->translator->translate('postponed');
+        }
+
+        if (!$this->bookingAvailability->isAvailable()) {
+            return $this->translator->translate('sold_out');
+        }
+
+        return '';
     }
 
     private function getReasonAsTitleAttribute(): string

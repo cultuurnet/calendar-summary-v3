@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace CultuurNet\CalendarSummaryV3\Multiple;
 
+use CultuurNet\CalendarSummaryV3\Offer\BookingAvailability;
 use CultuurNet\CalendarSummaryV3\Offer\CalendarType;
 use CultuurNet\CalendarSummaryV3\Offer\Offer;
 use CultuurNet\CalendarSummaryV3\Offer\OfferType;
@@ -30,6 +31,7 @@ final class MediumMultiplePlainTextFormatterTest extends TestCase
         $event = new Offer(
             OfferType::event(),
             new Status('Available', []),
+            new BookingAvailability('Available'),
             null,
             null,
             CalendarType::multiple()
@@ -40,6 +42,7 @@ final class MediumMultiplePlainTextFormatterTest extends TestCase
             $newEvents[] = new Offer(
                 OfferType::event(),
                 new Status('Available', []),
+                new BookingAvailability('Available'),
                 new DateTimeImmutable($subEvent['startDate']),
                 new DateTimeImmutable($subEvent['endDate'])
             );
@@ -64,6 +67,7 @@ final class MediumMultiplePlainTextFormatterTest extends TestCase
         $event = new Offer(
             OfferType::event(),
             new Status('Available', []),
+            new BookingAvailability('Available'),
             null,
             null,
             CalendarType::multiple()
@@ -74,6 +78,7 @@ final class MediumMultiplePlainTextFormatterTest extends TestCase
             $newEvents[] = new Offer(
                 OfferType::event(),
                 new Status('Available', []),
+                new BookingAvailability('Available'),
                 new DateTimeImmutable($subEvent['startDate']),
                 new DateTimeImmutable($subEvent['endDate'])
             );
@@ -98,6 +103,7 @@ final class MediumMultiplePlainTextFormatterTest extends TestCase
         $event = new Offer(
             OfferType::event(),
             new Status('Unavailable', []),
+            new BookingAvailability('Available'),
             null,
             null,
             CalendarType::multiple()
@@ -108,6 +114,7 @@ final class MediumMultiplePlainTextFormatterTest extends TestCase
             $newEvents[] = new Offer(
                 OfferType::event(),
                 new Status('Unavailable', []),
+                new BookingAvailability('Available'),
                 new DateTimeImmutable($subEvent['startDate']),
                 new DateTimeImmutable($subEvent['endDate'])
             );
@@ -132,6 +139,7 @@ final class MediumMultiplePlainTextFormatterTest extends TestCase
         $event = new Offer(
             OfferType::event(),
             new Status('Available', []),
+            new BookingAvailability('Available'),
             null,
             null,
             CalendarType::multiple()
@@ -142,18 +150,26 @@ final class MediumMultiplePlainTextFormatterTest extends TestCase
             $newEvents[] = new Offer(
                 OfferType::event(),
                 new Status('Available', []),
+                new BookingAvailability('Available'),
                 new DateTimeImmutable($subEvent['startDate']),
                 new DateTimeImmutable($subEvent['endDate'])
             );
         }
 
-        $newEvents[1] = $newEvents[1]->withStatus(new Status('Unavailable', []));
+        $newEvents[1] = $newEvents[1]->withAvailability(
+            new Status('Unavailable', []),
+            new BookingAvailability('Unavailable')
+        );
+        $newEvents[2] = $newEvents[2]->withAvailability(
+            new Status('Available', []),
+            new BookingAvailability('Unavailable')
+        );
 
         $event = $event->withSubEvents($newEvents);
 
         $expectedOutput = 'Donderdag 9 november 2017' . PHP_EOL;
         $expectedOutput .= 'Donderdag 16 november 2017 (geannuleerd)' . PHP_EOL;
-        $expectedOutput .= 'Donderdag 23 november 2017' . PHP_EOL;
+        $expectedOutput .= 'Donderdag 23 november 2017 (Volzet of uitverkocht)' . PHP_EOL;
         $expectedOutput .= 'Donderdag 30 november 2017';
 
         $this->assertEquals(
@@ -170,6 +186,7 @@ final class MediumMultiplePlainTextFormatterTest extends TestCase
         $event = new Offer(
             OfferType::event(),
             new Status('Available', []),
+            new BookingAvailability('Available'),
             null,
             null,
             CalendarType::multiple()
@@ -180,6 +197,7 @@ final class MediumMultiplePlainTextFormatterTest extends TestCase
             $newEvents[] = new Offer(
                 OfferType::event(),
                 new Status('Available', []),
+                new BookingAvailability('Available'),
                 new DateTimeImmutable($subEvent['startDate']),
                 new DateTimeImmutable($subEvent['endDate'])
             );

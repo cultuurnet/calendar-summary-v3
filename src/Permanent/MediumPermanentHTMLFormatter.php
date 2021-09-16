@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace CultuurNet\CalendarSummaryV3\Permanent;
 
 use CultuurNet\CalendarSummaryV3\DateFormatter;
-use CultuurNet\CalendarSummaryV3\HtmlStatusFormatter;
+use CultuurNet\CalendarSummaryV3\HtmlAvailabilityFormatter;
 use CultuurNet\CalendarSummaryV3\Offer\OpeningHour;
 use CultuurNet\CalendarSummaryV3\Translator;
 use CultuurNet\CalendarSummaryV3\Offer\Offer;
@@ -31,8 +31,8 @@ final class MediumPermanentHTMLFormatter implements PermanentFormatterInterface
 
     public function format(Offer $offer): string
     {
-        if ($offer->getStatus()->getType() !== 'Available') {
-            return HtmlStatusFormatter::forOffer($offer, $this->translator)
+        if (!$offer->isAvailable()) {
+            return HtmlAvailabilityFormatter::forOffer($offer, $this->translator)
                 ->withElement('p')
                 ->withoutBraces()
                 ->capitalize()

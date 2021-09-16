@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace CultuurNet\CalendarSummaryV3\Multiple;
 
+use CultuurNet\CalendarSummaryV3\Offer\BookingAvailability;
 use CultuurNet\CalendarSummaryV3\Offer\CalendarType;
 use CultuurNet\CalendarSummaryV3\Offer\Offer;
 use CultuurNet\CalendarSummaryV3\Offer\OfferType;
@@ -30,6 +31,7 @@ final class MediumMultipleHTMLFormatterTest extends TestCase
         $event = new Offer(
             OfferType::event(),
             new Status('Available', []),
+            new BookingAvailability('Available'),
             null,
             null,
             CalendarType::multiple()
@@ -40,6 +42,7 @@ final class MediumMultipleHTMLFormatterTest extends TestCase
             $newEvents[] = new Offer(
                 OfferType::event(),
                 new Status('Available', []),
+                new BookingAvailability('Available'),
                 new DateTimeImmutable($subEvent['startDate']),
                 new DateTimeImmutable($subEvent['endDate'])
             );
@@ -69,6 +72,7 @@ final class MediumMultipleHTMLFormatterTest extends TestCase
         $event = new Offer(
             OfferType::event(),
             new Status('Available', []),
+            new BookingAvailability('Available'),
             null,
             null,
             CalendarType::multiple()
@@ -79,11 +83,19 @@ final class MediumMultipleHTMLFormatterTest extends TestCase
             $newEvents[] = new Offer(
                 OfferType::event(),
                 new Status('Available', []),
+                new BookingAvailability('Available'),
                 new DateTimeImmutable($subEvent['startDate']),
                 new DateTimeImmutable($subEvent['endDate'])
             );
         }
-        $newEvents[1] = $newEvents[1]->withStatus(new Status('Unavailable', []));
+        $newEvents[1] = $newEvents[1]->withAvailability(
+            new Status('Unavailable', []),
+            new BookingAvailability('Unavailable')
+        );
+        $newEvents[2] = $newEvents[2]->withAvailability(
+            new Status('Available', []),
+            new BookingAvailability('Unavailable')
+        );
         $event = $event->withSubEvents($newEvents);
 
         $expectedOutput = '<ul class="cnw-event-date-info"><li>';
@@ -92,7 +104,7 @@ final class MediumMultipleHTMLFormatterTest extends TestCase
         $expectedOutput .= '<li><span class="cf-weekday cf-meta">Donderdag</span> ';
         $expectedOutput .= '<span class="cf-date">16 november 2017</span> <span class="cf-status">(geannuleerd)</span></li>';
         $expectedOutput .= '<li><span class="cf-weekday cf-meta">Donderdag</span> ';
-        $expectedOutput .= '<span class="cf-date">23 november 2017</span></li>';
+        $expectedOutput .= '<span class="cf-date">23 november 2017</span> <span class="cf-status">(Volzet of uitverkocht)</span></li>';
         $expectedOutput .= '<li><span class="cf-weekday cf-meta">Donderdag</span> ';
         $expectedOutput .= '<span class="cf-date">30 november 2017</span></li></ul>';
 
@@ -108,6 +120,7 @@ final class MediumMultipleHTMLFormatterTest extends TestCase
         $event = new Offer(
             OfferType::event(),
             new Status('Available', []),
+            new BookingAvailability('Available'),
             null,
             null,
             CalendarType::multiple()
@@ -118,6 +131,7 @@ final class MediumMultipleHTMLFormatterTest extends TestCase
             $newEvents[] = new Offer(
                 OfferType::event(),
                 new Status('Available', []),
+                new BookingAvailability('Available'),
                 new DateTimeImmutable($subEvent['startDate']),
                 new DateTimeImmutable($subEvent['endDate'])
             );
@@ -164,6 +178,7 @@ final class MediumMultipleHTMLFormatterTest extends TestCase
         $event = new Offer(
             OfferType::event(),
             new Status('Available', []),
+            new BookingAvailability('Available'),
             null,
             null,
             CalendarType::multiple()
@@ -174,6 +189,7 @@ final class MediumMultipleHTMLFormatterTest extends TestCase
             $newEvents[] = new Offer(
                 OfferType::event(),
                 new Status('Available', []),
+                new BookingAvailability('Available'),
                 new DateTimeImmutable($subEvent['startDate']),
                 new DateTimeImmutable($subEvent['endDate'])
             );

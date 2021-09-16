@@ -37,14 +37,14 @@ final class ExtraSmallMultiplePlainTextFormatter implements MultipleFormatterInt
         if (DateComparison::onSameDay($startDate, $endDate)) {
             return PlainTextSummaryBuilder::start($this->translator)
                 ->append($this->formatter->formatAsShortDate($startDate))
-                ->appendStatus($offer->getStatus())
+                ->appendAvailability($offer->getStatus(), $offer->getBookingAvailability())
                 ->toString();
         }
 
         return PlainTextSummaryBuilder::start($this->translator)
             ->from($this->formatter->formatAsShortDate($startDate))
             ->till($this->formatter->formatAsShortDate($endDate))
-            ->appendStatus($offer->getStatus())
+            ->appendAvailability($offer->getStatus(), $offer->getBookingAvailability())
             ->toString();
     }
 }

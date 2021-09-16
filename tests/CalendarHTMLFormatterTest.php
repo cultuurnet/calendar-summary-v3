@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace CultuurNet\CalendarSummaryV3;
 
+use CultuurNet\CalendarSummaryV3\Offer\BookingAvailability;
 use CultuurNet\CalendarSummaryV3\Offer\CalendarType;
 use CultuurNet\CalendarSummaryV3\Offer\Offer;
 use CultuurNet\CalendarSummaryV3\Offer\OfferType;
@@ -28,6 +29,7 @@ final class CalendarHTMLFormatterTest extends TestCase
         $offer = new Offer(
             OfferType::event(),
             new Status('Available', []),
+            new BookingAvailability('Available'),
             new DateTimeImmutable('2018-01-25T20:00:00+01:00'),
             new DateTimeImmutable('2018-01-25T21:30:00+01:00'),
             CalendarType::single()
@@ -44,6 +46,7 @@ final class CalendarHTMLFormatterTest extends TestCase
         $offer = new Offer(
             OfferType::event(),
             new Status('Available', []),
+            new BookingAvailability('Available'),
             new DateTimeImmutable('2018-01-25T20:00:00+01:00'),
             new DateTimeImmutable('2018-01-25T21:30:00+01:00'),
             CalendarType::single()

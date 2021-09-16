@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace CultuurNet\CalendarSummaryV3;
 
+use CultuurNet\CalendarSummaryV3\Offer\BookingAvailability;
 use CultuurNet\CalendarSummaryV3\Offer\Status;
 
 final class PlainTextSummaryBuilder
@@ -154,7 +155,7 @@ final class PlainTextSummaryBuilder
         return $lowercaseFirstCharacter ? lcfirst($formatted) : ucfirst($formatted);
     }
 
-    public function appendStatus(Status $status): self
+    public function appendAvailability(Status $status, BookingAvailability $bookingAvailability): self
     {
         $c = clone $this;
 
@@ -166,6 +167,9 @@ final class PlainTextSummaryBuilder
                 $c->workingLine[] = '(' . $this->translator->translate('postponed') . ')';
                 return $c;
             default:
+                if (!$bookingAvailability->isAvailable()) {
+                    $c->workingLine[] = '(' . $this->translator->translate('sold_out') . ')';
+                }
                 return $c;
         }
     }

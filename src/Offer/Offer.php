@@ -19,6 +19,11 @@ final class Offer
     private $status;
 
     /**
+     * @var BookingAvailability
+     */
+    private $bookingAvailability;
+
+    /**
      * @var DateTimeImmutable|null
      */
     private $startDate;
@@ -46,12 +51,14 @@ final class Offer
     public function __construct(
         OfferType $offerType,
         Status $status,
+        BookingAvailability $bookingAvailability,
         ?DateTimeImmutable $startDate = null,
         ?DateTimeImmutable $endDate = null,
         ?CalendarType $calendarType = null
     ) {
         $this->offerType = $offerType;
         $this->status = $status;
+        $this->bookingAvailability = $bookingAvailability;
         $this->startDate = $startDate;
         $this->endDate = $endDate;
         $this->calendarType = $calendarType;
@@ -64,6 +71,7 @@ final class Offer
         $offer = new self(
             OfferType::fromContext(strtolower($data['@context'])),
             Status::fromArray($data['status']),
+            BookingAvailability::fromArray($data['bookingAvailability']),
             isset($data['startDate']) ? new DateTimeImmutable($data['startDate']) : null,
             isset($data['endDate']) ? new DateTimeImmutable($data['endDate']) : null,
             new CalendarType($data['calendarType'])
@@ -90,6 +98,7 @@ final class Offer
             $subEvents[] = new self(
                 OfferType::event(),
                 Status::fromArray($subEventData['status']),
+                BookingAvailability::fromArray($subEventData['bookingAvailability']),
                 new DateTimeImmutable($subEventData['startDate']),
                 new DateTimeImmutable($subEventData['endDate'])
             );
@@ -137,10 +146,12 @@ final class Offer
         return $clone;
     }
 
-    public function withStatus(Status $status): self
+    public function withAvailability(Status $status, BookingAvailability $bookingAvailability): self
     {
         $clone = clone $this;
+
         $clone->status = $status;
+        $clone->bookingAvailability = $bookingAvailability;
 
         return $clone;
     }
@@ -153,6 +164,16 @@ final class Offer
     public function getStatus(): Status
     {
         return $this->status;
+    }
+
+    public function getBookingAvailability(): BookingAvailability
+    {
+        return $this->bookingAvailability;
+    }
+
+    public function isAvailable(): bool
+    {
+        return $this->status->getType() === 'Available' && $this->bookingAvailability->isAvailable();
     }
 
     public function getStartDate(): ?DateTimeImmutable

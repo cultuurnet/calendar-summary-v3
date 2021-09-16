@@ -6,7 +6,7 @@ namespace CultuurNet\CalendarSummaryV3\Multiple;
 
 use CultuurNet\CalendarSummaryV3\DateComparison;
 use CultuurNet\CalendarSummaryV3\DateFormatter;
-use CultuurNet\CalendarSummaryV3\HtmlStatusFormatter;
+use CultuurNet\CalendarSummaryV3\HtmlAvailabilityFormatter;
 use CultuurNet\CalendarSummaryV3\Offer\Offer;
 use CultuurNet\CalendarSummaryV3\Translator;
 use DateTimeZone;
@@ -43,10 +43,10 @@ final class ExtraSmallMultipleHTMLFormatter implements MultipleFormatterInterfac
                 '<span class="cf-date">' . $this->formatter->formatAsShortDate($dateTo) . '</span>';
         }
 
-        $optionalStatus = HtmlStatusFormatter::forOffer($offer, $this->translator)
+        $optionalAvailability = HtmlAvailabilityFormatter::forOffer($offer, $this->translator)
             ->withBraces()
             ->toString();
 
-        return trim($output . ' ' . $optionalStatus);
+        return trim($output . ' ' . $optionalAvailability);
     }
 }

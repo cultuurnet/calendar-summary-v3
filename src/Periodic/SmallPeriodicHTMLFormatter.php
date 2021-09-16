@@ -6,7 +6,7 @@ namespace CultuurNet\CalendarSummaryV3\Periodic;
 
 use CultuurNet\CalendarSummaryV3\DateComparison;
 use CultuurNet\CalendarSummaryV3\DateFormatter;
-use CultuurNet\CalendarSummaryV3\HtmlStatusFormatter;
+use CultuurNet\CalendarSummaryV3\HtmlAvailabilityFormatter;
 use CultuurNet\CalendarSummaryV3\Translator;
 use CultuurNet\CalendarSummaryV3\Offer\Offer;
 use DateTimeInterface;
@@ -41,11 +41,11 @@ final class SmallPeriodicHTMLFormatter implements PeriodicFormatterInterface
             $output = $this->formatStarted($endDate);
         }
 
-        $optionalStatus = HtmlStatusFormatter::forOffer($offer, $this->translator)
+        $optionalAvailability = HtmlAvailabilityFormatter::forOffer($offer, $this->translator)
             ->withBraces()
             ->toString();
 
-        return trim($output . ' ' . $optionalStatus);
+        return trim($output . ' ' . $optionalAvailability);
     }
 
     private function formatStarted(DateTimeInterface $endDate): string

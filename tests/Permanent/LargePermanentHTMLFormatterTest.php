@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace CultuurNet\CalendarSummaryV3\Permanent;
 
+use CultuurNet\CalendarSummaryV3\Offer\BookingAvailability;
 use CultuurNet\CalendarSummaryV3\Offer\CalendarType;
 use CultuurNet\CalendarSummaryV3\Offer\Offer;
 use CultuurNet\CalendarSummaryV3\Offer\OfferType;
@@ -30,6 +31,7 @@ final class LargePermanentHTMLFormatterTest extends TestCase
         $place = new Offer(
             OfferType::place(),
             new Status('Available', []),
+            new BookingAvailability('Available'),
             new DateTimeImmutable('25-11-2025'),
             new DateTimeImmutable('25-11-2025')
         );
@@ -124,6 +126,7 @@ final class LargePermanentHTMLFormatterTest extends TestCase
         $place = new Offer(
             OfferType::place(),
             new Status('Available', []),
+            new BookingAvailability('Available'),
             new DateTimeImmutable('25-11-2025'),
             new DateTimeImmutable('25-11-2025')
         );
@@ -242,6 +245,7 @@ final class LargePermanentHTMLFormatterTest extends TestCase
         $place = new Offer(
             OfferType::place(),
             new Status('Available', []),
+            new BookingAvailability('Available'),
             new DateTimeImmutable('25-11-2025'),
             new DateTimeImmutable('25-11-2025')
         );
@@ -356,6 +360,7 @@ final class LargePermanentHTMLFormatterTest extends TestCase
         $event = new Offer(
             OfferType::event(),
             new Status('Unavailable', []),
+            new BookingAvailability('Available'),
             null,
             null,
             CalendarType::permanent()
@@ -372,6 +377,7 @@ final class LargePermanentHTMLFormatterTest extends TestCase
         $event = new Offer(
             OfferType::event(),
             new Status('TemporarilyUnavailable', []),
+            new BookingAvailability('Available'),
             null,
             null,
             CalendarType::permanent()
@@ -389,6 +395,7 @@ final class LargePermanentHTMLFormatterTest extends TestCase
         $event = new Offer(
             OfferType::event(),
             new Status('Unavailable', ['nl' => 'Covid-19']),
+            new BookingAvailability('Available'),
             null,
             null,
             CalendarType::permanent()
@@ -405,6 +412,7 @@ final class LargePermanentHTMLFormatterTest extends TestCase
         $event = new Offer(
             OfferType::event(),
             new Status('Unavailable', ['fr' => 'Sacre bleu']),
+            new BookingAvailability('Available'),
             null,
             null,
             CalendarType::permanent()

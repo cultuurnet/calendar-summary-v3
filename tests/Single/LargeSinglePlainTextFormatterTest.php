@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace CultuurNet\CalendarSummaryV3\Single;
 
+use CultuurNet\CalendarSummaryV3\Offer\BookingAvailability;
 use CultuurNet\CalendarSummaryV3\Offer\Offer;
 use CultuurNet\CalendarSummaryV3\Offer\OfferType;
 use CultuurNet\CalendarSummaryV3\Offer\Status;
@@ -29,6 +30,7 @@ final class LargeSinglePlainTextFormatterTest extends TestCase
         $event = new Offer(
             OfferType::event(),
             new Status('Available', []),
+            new BookingAvailability('Available'),
             new DateTimeImmutable('2018-01-25T20:00:00+01:00'),
             new DateTimeImmutable('2018-01-25T21:30:00+01:00')
         );
@@ -46,6 +48,7 @@ final class LargeSinglePlainTextFormatterTest extends TestCase
         $event = new Offer(
             OfferType::event(),
             new Status('Available', []),
+            new BookingAvailability('Available'),
             new DateTimeImmutable('2018-01-08T20:00:00+01:00'),
             new DateTimeImmutable('2018-01-08T21:30:00+01:00')
         );
@@ -63,6 +66,7 @@ final class LargeSinglePlainTextFormatterTest extends TestCase
         $event = new Offer(
             OfferType::event(),
             new Status('Unavailable', []),
+            new BookingAvailability('Available'),
             new DateTimeImmutable('2018-01-25T20:00:00+01:00'),
             new DateTimeImmutable('2018-01-25T21:30:00+01:00')
         );
@@ -75,11 +79,48 @@ final class LargeSinglePlainTextFormatterTest extends TestCase
         );
     }
 
+    public function testFormatPlainTextSingleDateLargeOneDayWithUnavailableStatusAndUnavailableBooking(): void
+    {
+        $event = new Offer(
+            OfferType::event(),
+            new Status('Unavailable', []),
+            new BookingAvailability('Unavailable'),
+            new DateTimeImmutable('2018-01-25T20:00:00+01:00'),
+            new DateTimeImmutable('2018-01-25T21:30:00+01:00')
+        );
+
+        $expectedOutput = 'Donderdag 25 januari 2018 van 20:00 tot 21:30 (geannuleerd)';
+
+        $this->assertEquals(
+            $expectedOutput,
+            $this->formatter->format($event)
+        );
+    }
+
+    public function testFormatPlainTextSingleDateLargeOneDayWithAvailableStatusAndUnavailableBooking(): void
+    {
+        $event = new Offer(
+            OfferType::event(),
+            new Status('Available', []),
+            new BookingAvailability('Unavailable'),
+            new DateTimeImmutable('2018-01-25T20:00:00+01:00'),
+            new DateTimeImmutable('2018-01-25T21:30:00+01:00')
+        );
+
+        $expectedOutput = 'Donderdag 25 januari 2018 van 20:00 tot 21:30 (Volzet of uitverkocht)';
+
+        $this->assertEquals(
+            $expectedOutput,
+            $this->formatter->format($event)
+        );
+    }
+
     public function testFormatPlainTextSingleDateLargeMoreDays(): void
     {
         $event = new Offer(
             OfferType::event(),
             new Status('Available', []),
+            new BookingAvailability('Available'),
             new DateTimeImmutable('2018-01-25T20:00:00+01:00'),
             new DateTimeImmutable('2018-01-28T21:30:00+01:00')
         );
@@ -97,6 +138,7 @@ final class LargeSinglePlainTextFormatterTest extends TestCase
         $event = new Offer(
             OfferType::event(),
             new Status('Available', []),
+            new BookingAvailability('Available'),
             new DateTimeImmutable('2018-01-06T20:00:00+01:00'),
             new DateTimeImmutable('2018-01-08T21:30:00+01:00')
         );
@@ -114,6 +156,7 @@ final class LargeSinglePlainTextFormatterTest extends TestCase
         $event = new Offer(
             OfferType::event(),
             new Status('Available', []),
+            new BookingAvailability('Available'),
             new DateTimeImmutable('2018-01-06T00:00:00+01:00'),
             new DateTimeImmutable('2018-01-06T23:59:59+01:00')
         );
@@ -131,6 +174,7 @@ final class LargeSinglePlainTextFormatterTest extends TestCase
         $event = new Offer(
             OfferType::event(),
             new Status('Available', []),
+            new BookingAvailability('Available'),
             new DateTimeImmutable('2018-01-06T13:30:00+01:00'),
             new DateTimeImmutable('2018-01-06T13:30:00+01:00')
         );
