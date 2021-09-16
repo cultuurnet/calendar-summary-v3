@@ -128,7 +128,7 @@ final class HtmlAvailabilityFormatter
                 $this->translator->translate('postponed');
         }
 
-        if ($this->bookingAvailability->getType() === 'Unavailable') {
+        if (!$this->bookingAvailability->isAvailable()) {
             return $this->translator->translate('sold_out');
         }
 

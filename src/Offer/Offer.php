@@ -173,7 +173,7 @@ final class Offer
 
     public function isAvailable(): bool
     {
-        return $this->status->getType() === 'Available' && $this->bookingAvailability->getType() === 'Available';
+        return $this->status->getType() === 'Available' && $this->bookingAvailability->isAvailable();
     }
 
     public function getStartDate(): ?DateTimeImmutable
