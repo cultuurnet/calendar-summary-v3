@@ -34,6 +34,11 @@ final class BookingAvailability
         return $this->type;
     }
 
+    public function isAvailable(): bool
+    {
+        return $this->type === self::AVAILABLE;
+    }
+
     /**
      * @param string[] $data
      */
