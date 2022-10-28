@@ -20,7 +20,7 @@ final class DateComparison
 
     public static function isThisEvening(DateTimeImmutable $date): bool
     {
-        return  self::onSameDay($date, new DateTimeImmutable()) && (int)$date->format('G') >= 18;
+        return self::onSameDay($date, new DateTimeImmutable()) && (int)$date->format('G') >= 18;
     }
 
     public static function isToday(DateTimeImmutable $date): bool
