@@ -12,7 +12,7 @@ use CultuurNet\CalendarSummaryV3\Translator;
 use DateTimeImmutable;
 use PHPUnit\Framework\TestCase;
 
-final class SmallSinglePlainTextFormatterTest extends TestCase
+final class ExtraSmallSinglePlainTextFormatterTest extends TestCase
 {
     /**
      * @var SmallSinglePlainTextFormatter
@@ -21,10 +21,10 @@ final class SmallSinglePlainTextFormatterTest extends TestCase
 
     protected function setUp(): void
     {
-        $this->formatter = new SmallSinglePlainTextFormatter(new Translator('nl_NL'));
+        $this->formatter = new ExtraSmallSinglePlainTextFormatter(new Translator('nl_NL'));
     }
 
-    public function testFormatPlainTextSingleDateSmOneDay(): void
+    public function testFormatPlainTextSingleDateXsOneDay(): void
     {
         $event = new Offer(
             OfferType::event(),
@@ -40,7 +40,7 @@ final class SmallSinglePlainTextFormatterTest extends TestCase
         );
     }
 
-    public function testFormatPlainTextSingleDateSmWithLeadingZeroOneDay(): void
+    public function testFormatPlainTextSingleDateXsWithLeadingZeroOneDay(): void
     {
         $event = new Offer(
             OfferType::event(),
@@ -56,7 +56,7 @@ final class SmallSinglePlainTextFormatterTest extends TestCase
         );
     }
 
-    public function testFormatPlainTextSingleDateSmMoreDays(): void
+    public function testFormatPlainTextSingleDateXsMoreDays(): void
     {
         $event = new Offer(
             OfferType::event(),
@@ -72,7 +72,7 @@ final class SmallSinglePlainTextFormatterTest extends TestCase
         );
     }
 
-    public function testFormatPlainTextSingleDateSmWithLeadingZeroMoreDays(): void
+    public function testFormatPlainTextSingleDateXsWithLeadingZeroMoreDays(): void
     {
         $event = new Offer(
             OfferType::event(),
@@ -88,7 +88,7 @@ final class SmallSinglePlainTextFormatterTest extends TestCase
         );
     }
 
-    public function testFormatPlainTextSingleDateSmOneDayWithStatusUnavailable(): void
+    public function testFormatPlainTextSingleDateXsOneDayWithStatusUnavailable(): void
     {
         $event = new Offer(
             OfferType::event(),
@@ -104,7 +104,7 @@ final class SmallSinglePlainTextFormatterTest extends TestCase
         );
     }
 
-    public function testFormatPlainTextSingleDateSmOneDayWithStatusTemporarilyUnavailable(): void
+    public function testFormatPlainTextSingleDateXsOneDayWithStatusTemporarilyUnavailable(): void
     {
         $event = new Offer(
             OfferType::event(),
@@ -120,7 +120,7 @@ final class SmallSinglePlainTextFormatterTest extends TestCase
         );
     }
 
-    public function testFormatPlainTextSingleDateSmMoreDaysWithStatusUnavailable(): void
+    public function testFormatPlainTextSingleDateXsMoreDaysWithStatusUnavailable(): void
     {
         $event = new Offer(
             OfferType::event(),
@@ -136,7 +136,7 @@ final class SmallSinglePlainTextFormatterTest extends TestCase
         );
     }
 
-    public function testFormatPlainTextSingleDateSmMoreDaysWithStatusUnavailableAndBookingUnavailable(): void
+    public function testFormatPlainTextSingleDateXsMoreDaysWithStatusUnavailableAndBookingUnavailable(): void
     {
         $event = new Offer(
             OfferType::event(),
@@ -152,7 +152,7 @@ final class SmallSinglePlainTextFormatterTest extends TestCase
         );
     }
 
-    public function testFormatPlainTextSingleDateSmMoreDaysWithStatusAvailableAndBookingUnavailable(): void
+    public function testFormatPlainTextSingleDateXsMoreDaysWithStatusAvailableAndBookingUnavailable(): void
     {
         $event = new Offer(
             OfferType::event(),
@@ -168,7 +168,7 @@ final class SmallSinglePlainTextFormatterTest extends TestCase
         );
     }
 
-    public function testFormatPlainTextSingleDateSmMoreDaysWithStatusTemporarilyUnavailable(): void
+    public function testFormatPlainTextSingleDateXsMoreDaysWithStatusTemporarilyUnavailable(): void
     {
         $event = new Offer(
             OfferType::event(),

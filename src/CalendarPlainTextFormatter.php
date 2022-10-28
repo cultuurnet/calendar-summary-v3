@@ -10,6 +10,7 @@ use CultuurNet\CalendarSummaryV3\Multiple\ExtraSmallMultiplePlainTextFormatter;
 use CultuurNet\CalendarSummaryV3\Multiple\SmallMultiplePlainTextFormatter;
 use CultuurNet\CalendarSummaryV3\Offer\CalendarType;
 use CultuurNet\CalendarSummaryV3\Permanent\MediumPermanentPlainTextFormatter;
+use CultuurNet\CalendarSummaryV3\Single\ExtraSmallSinglePlainTextFormatter;
 use CultuurNet\CalendarSummaryV3\Single\LargeSinglePlainTextFormatter;
 use CultuurNet\CalendarSummaryV3\Single\MediumSinglePlainTextFormatter;
 use CultuurNet\CalendarSummaryV3\Single\SmallSinglePlainTextFormatter;
@@ -49,7 +50,7 @@ final class CalendarPlainTextFormatter implements CalendarFormatterInterface
                     'lg' => new LargeSinglePlainTextFormatter($translator),
                     'md' => new MediumSinglePlainTextFormatter($translator),
                     'sm' => new SmallSinglePlainTextFormatter($translator),
-                    'xs' => new SmallSinglePlainTextFormatter($translator),
+                    'xs' => new ExtraSmallSinglePlainTextFormatter($translator),
                 ],
             CalendarType::multiple()->toString() =>
                 [
