@@ -33,12 +33,10 @@ final class DateComparison
         return self::onSameDay($date, (new DateTimeImmutable())->add(new DateInterval('P1D')));
     }
 
-    public static function inTheSameYear(DateTimeImmutable $date1, DateTimeImmutable $date2): bool
+    public static function isCurrentYear(DateTimeImmutable $date): bool
     {
-        $date1 = $date1->setTimezone(new DateTimeZone(date_default_timezone_get()));
-        $date2 = $date2->setTimezone(new DateTimeZone(date_default_timezone_get()));
-
-        return $date1->format('Y') === $date2->format('Y');
+        $date = $date->setTimezone(new DateTimeZone(date_default_timezone_get()));
+        return $date->format('Y') === (new DateTimeImmutable())->format('Y');
     }
 
     public static function inTheFuture(DateTimeImmutable $date): bool
