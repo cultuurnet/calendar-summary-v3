@@ -48,9 +48,22 @@ final class SmallSinglePlainTextFormatter implements SingleFormatterInterface
 
     private function formatSameDay(DateTimeInterface $date): string
     {
+        if (DateComparison::isThisEvening($date)) {
+            return 'tonight';
+        }
+        if (DateComparison::isToday($date)) {
+            return 'today';
+        }
+        if (DateComparison::isTomorrow($date)) {
+            return 'tomorrow';
+        }
         $dayNumber = $this->formatter->formatAsDayNumber($date);
         $monthName = $this->formatter->formatAsAbbreviatedMonthName($date);
-        return PlainTextSummaryBuilder::singleLine($dayNumber, $monthName);
+        if (DateComparison::isCurrentYear($date)) {
+            return PlainTextSummaryBuilder::singleLine($dayNumber, $monthName);
+        }
+        $year = $this->formatter->formatAsYear($date);
+        return PlainTextSummaryBuilder::singleLine($dayNumber, $monthName, $year);
     }
 
     private function formatMoreDays(DateTimeInterface $startDate, DateTimeInterface $endDate): string
