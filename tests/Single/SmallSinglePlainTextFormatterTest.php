@@ -9,6 +9,7 @@ use CultuurNet\CalendarSummaryV3\Offer\Offer;
 use CultuurNet\CalendarSummaryV3\Offer\OfferType;
 use CultuurNet\CalendarSummaryV3\Offer\Status;
 use CultuurNet\CalendarSummaryV3\Translator;
+use DateInterval;
 use DateTimeImmutable;
 use PHPUnit\Framework\TestCase;
 
@@ -40,6 +41,22 @@ final class SmallSinglePlainTextFormatterTest extends TestCase
         );
     }
 
+    public function testFormatPlainTextSingleDateSmOneDayCurrentYear(): void
+    {
+        $event = new Offer(
+            OfferType::event(),
+            new Status('Available', []),
+            new BookingAvailability('Available'),
+            new DateTimeImmutable((new DateTimeImmutable())->format('Y') . '-01-25T20:00:00+01:00'),
+            new DateTimeImmutable((new DateTimeImmutable())->format('Y') . '-01-25T21:30:00+01:00')
+        );
+
+        $this->assertEquals(
+            '25 jan',
+            $this->formatter->format($event)
+        );
+    }
+
     public function testFormatPlainTextSingleDateSmToday(): void
     {
         $event = new Offer(
@@ -52,6 +69,39 @@ final class SmallSinglePlainTextFormatterTest extends TestCase
 
         $this->assertEquals(
             'Vandaag',
+            $this->formatter->format($event)
+        );
+    }
+
+    public function testFormatPlainTextSingleDateSmTonight(): void
+    {
+        $event = new Offer(
+            OfferType::event(),
+            new Status('Available', []),
+            new BookingAvailability('Available'),
+            new DateTimeImmutable((new DateTimeImmutable())->format('Y-m-d') . 'T18:30:00+01:00'),
+            new DateTimeImmutable((new DateTimeImmutable())->format('Y-m-d') . 'T22:30:00+01:00')
+        );
+
+        $this->assertEquals(
+            'Vanavond',
+            $this->formatter->format($event)
+        );
+    }
+
+    public function testFormatPlainTextSingleDateSmTomorrow(): void
+    {
+        $tomorrow = (new DateTimeImmutable())->add(new DateInterval('P1D'));
+        $event = new Offer(
+            OfferType::event(),
+            new Status('Available', []),
+            new BookingAvailability('Available'),
+            new DateTimeImmutable($tomorrow->format('Y-m-d') . 'T18:30:00+01:00'),
+            new DateTimeImmutable($tomorrow->format('Y-m-d') . 'T22:30:00+01:00')
+        );
+
+        $this->assertEquals(
+            'Morgen',
             $this->formatter->format($event)
         );
     }
