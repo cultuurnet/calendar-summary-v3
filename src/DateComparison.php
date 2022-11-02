@@ -33,6 +33,12 @@ final class DateComparison
         return self::onSameDay($date, (new DateTimeImmutable())->add(new DateInterval('P1D')));
     }
 
+    public static function isCurrentWeek(DateTimeImmutable $date): bool
+    {
+        $date = $date->setTimezone(new DateTimeZone(date_default_timezone_get()));
+        return $date->format('Y-ww') === (new DateTimeImmutable())->format('Y-ww');
+    }
+
     public static function isCurrentYear(DateTimeImmutable $date): bool
     {
         $date = $date->setTimezone(new DateTimeZone(date_default_timezone_get()));
