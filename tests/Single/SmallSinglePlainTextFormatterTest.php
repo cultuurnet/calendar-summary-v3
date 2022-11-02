@@ -35,7 +35,23 @@ final class SmallSinglePlainTextFormatterTest extends TestCase
         );
 
         $this->assertEquals(
-            '25 jan',
+            '25 jan 2018',
+            $this->formatter->format($event)
+        );
+    }
+
+    public function testFormatPlainTextSingleDateSmToday(): void
+    {
+        $event = new Offer(
+            OfferType::event(),
+            new Status('Available', []),
+            new BookingAvailability('Available'),
+            new DateTimeImmutable((new DateTimeImmutable())->format('Y-m-d') . 'T11:00:00+01:00'),
+            new DateTimeImmutable((new DateTimeImmutable())->format('Y-m-d') . 'T20:30:00+01:00')
+        );
+
+        $this->assertEquals(
+            'Vandaag',
             $this->formatter->format($event)
         );
     }
@@ -51,7 +67,7 @@ final class SmallSinglePlainTextFormatterTest extends TestCase
         );
 
         $this->assertEquals(
-            '8 jan',
+            '8 jan 2018',
             $this->formatter->format($event)
         );
     }
@@ -99,7 +115,7 @@ final class SmallSinglePlainTextFormatterTest extends TestCase
         );
 
         $this->assertEquals(
-            '25 jan (geannuleerd)',
+            '25 jan 2018 (geannuleerd)',
             $this->formatter->format($event)
         );
     }
@@ -115,7 +131,7 @@ final class SmallSinglePlainTextFormatterTest extends TestCase
         );
 
         $this->assertEquals(
-            '25 jan (uitgesteld)',
+            '25 jan 2018 (uitgesteld)',
             $this->formatter->format($event)
         );
     }
