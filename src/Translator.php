@@ -39,6 +39,9 @@ final class Translator
                 'postponed' => 'postponed',
                 'event_concluded' => 'Event ended',
                 'sold_out' => 'Sold out or fully booked',
+                'today' => 'Today',
+                'tonight' => 'Tonight',
+                'tomorrow' => 'Tomorrow',
             ],
             'nl' => [
                 'from' => 'van',
@@ -57,6 +60,9 @@ final class Translator
                 'postponed' => 'uitgesteld',
                 'event_concluded' => 'Evenement afgelopen',
                 'sold_out' => 'Volzet of uitverkocht',
+                'today' => 'Vandaag',
+                'tonight' => 'Vanavond',
+                'tomorrow' => 'Morgen',
             ],
             'fr' => [
                 'from' => 'du',
@@ -75,6 +81,9 @@ final class Translator
                 'postponed' => 'reporté',
                 'event_concluded' => 'Fin de l’événement',
                 'sold_out' => 'Complet',
+                'today' => 'Aujourd\'hui',
+                'tonight' => 'Ce soir',
+                'tomorrow' => 'Demain',
             ],
             'de' => [
                 'from' => 'von',
@@ -93,6 +102,9 @@ final class Translator
                 'postponed' => 'verschoben',
                 'event_concluded' => 'Event abgeschlossen',
                 'sold_out' => 'Ausgebucht oder ausverkauft',
+                'today' => 'Heute',
+                'tonight' => 'Diesen Abend',
+                'tomorrow' => 'Morgen',
             ],
         ];
 
