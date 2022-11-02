@@ -49,13 +49,13 @@ final class SmallSinglePlainTextFormatter implements SingleFormatterInterface
     private function formatSameDay(DateTimeInterface $date): string
     {
         if (DateComparison::isThisEvening($date)) {
-            return 'tonight';
+            return $this->translator->translate('tonight');
         }
         if (DateComparison::isToday($date)) {
-            return 'today';
+            return $this->translator->translate('today');
         }
         if (DateComparison::isTomorrow($date)) {
-            return 'tomorrow';
+            return $this->translator->translate('tomorrow');
         }
         $dayNumber = $this->formatter->formatAsDayNumber($date);
         $monthName = $this->formatter->formatAsAbbreviatedMonthName($date);
