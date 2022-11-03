@@ -43,16 +43,21 @@ final class SmallSinglePlainTextFormatterTest extends TestCase
 
     public function testFormatPlainTextSingleDateSmOneDayCurrentYear(): void
     {
+        $someDayInCurrentYear =
+        (new DateTimeImmutable())->add(new DateInterval('P10D'))->format('Y') === (new DateTimeImmutable())->format('Y')
+        ? (new DateTimeImmutable())->add(new DateInterval('P10D')) : (new DateTimeImmutable())->sub(new DateInterval('P10D'));
+        // This is a catch edge cases when running the tests at the end of or beginning of the current year
+        $expected = $someDayInCurrentYear->format('d M');
         $event = new Offer(
             OfferType::event(),
             new Status('Available', []),
             new BookingAvailability('Available'),
-            new DateTimeImmutable((new DateTimeImmutable())->format('Y') . '-01-25T20:00:00+01:00'),
-            new DateTimeImmutable((new DateTimeImmutable())->format('Y') . '-01-25T21:30:00+01:00')
+            new DateTimeImmutable($someDayInCurrentYear->format('Y-m-d') . 'T20:00:00+01:00'),
+            new DateTimeImmutable($someDayInCurrentYear->format('Y-m-d') . 'T21:30:00+01:00')
         );
 
         $this->assertEquals(
-            '25 jan',
+            $expected,
             $this->formatter->format($event)
         );
     }
