@@ -36,7 +36,7 @@ final class DateComparison
     public static function isCurrentWeek(DateTimeImmutable $date): bool
     {
         $date = $date->setTimezone(new DateTimeZone(date_default_timezone_get()));
-        return $date->format('Y-ww') === (new DateTimeImmutable())->format('Y-ww');
+        return $date->format('Y-W') === (new DateTimeImmutable())->format('Y-W');
     }
 
     public static function isCurrentYear(DateTimeImmutable $date): bool
