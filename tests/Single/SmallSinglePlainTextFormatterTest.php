@@ -46,7 +46,7 @@ final class SmallSinglePlainTextFormatterTest extends TestCase
         $someDayInCurrentYear =
         (new DateTimeImmutable())->add(new DateInterval('P10D'))->format('Y') === (new DateTimeImmutable())->format('Y')
         ? (new DateTimeImmutable())->add(new DateInterval('P10D')) : (new DateTimeImmutable())->sub(new DateInterval('P10D'));
-        // This is a catch edge cases when running the tests at the end of or beginning of the current year
+        // This is to catch edge cases when running the tests at the end of or beginning of the current year
         $expected = $someDayInCurrentYear->format('d M');
         $event = new Offer(
             OfferType::event(),
