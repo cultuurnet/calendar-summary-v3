@@ -35,15 +35,31 @@ final class ExtraSmallMultiplePlainTextFormatter implements MultipleFormatterInt
         $endDate = $offer->getEndDate()->setTimezone(new DateTimeZone(date_default_timezone_get()));
 
         if (DateComparison::onSameDay($startDate, $endDate)) {
-            return PlainTextSummaryBuilder::start($this->translator)
-                ->append($this->formatter->formatAsShortDate($startDate))
-                ->appendAvailability($offer->getStatus(), $offer->getBookingAvailability())
+            $plainTextSummaryBuilder = PlainTextSummaryBuilder::start($this->translator)
+                ->append($this->formatter->formatAsDayNumber($startDate))
+                ->append($this->formatter->formatAsAbbreviatedMonthName($startDate));
+            if (!DateComparison::isCurrentYear($startDate)) {
+                $plainTextSummaryBuilder = $plainTextSummaryBuilder->append($this->formatter->formatAsYear($startDate));
+            }
+
+            return $plainTextSummaryBuilder->appendAvailability($offer->getStatus(), $offer->getBookingAvailability())
                 ->toString();
         }
 
-        return PlainTextSummaryBuilder::start($this->translator)
-            ->from($this->formatter->formatAsShortDate($startDate))
-            ->till($this->formatter->formatAsShortDate($endDate))
+        $plainTextSummaryBuilder = PlainTextSummaryBuilder::start($this->translator)
+            ->append($this->formatter->formatAsDayNumber($startDate))
+            ->append($this->formatter->formatAsAbbreviatedMonthName($startDate));
+        if (!DateComparison::isCurrentYear($startDate)) {
+            $plainTextSummaryBuilder = $plainTextSummaryBuilder->append($this->formatter->formatAsYear($startDate));
+        }
+        $plainTextSummaryBuilder = $plainTextSummaryBuilder->append('-')
+            ->append($this->formatter->formatAsDayNumber($endDate))
+            ->append($this->formatter->formatAsAbbreviatedMonthName($endDate));
+        if (!DateComparison::isCurrentYear($endDate)) {
+            $plainTextSummaryBuilder = $plainTextSummaryBuilder->append($this->formatter->formatAsYear($endDate));
+        }
+
+        return $plainTextSummaryBuilder
             ->appendAvailability($offer->getStatus(), $offer->getBookingAvailability())
             ->toString();
     }
