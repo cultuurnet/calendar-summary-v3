@@ -49,7 +49,7 @@ final class MediumSinglePlainTextFormatter implements SingleFormatterInterface
     private function formatSameDay(DateTimeInterface $date): string
     {
         $formattedDate = $this->formatter->formatAsFullDate($date);
-        $formattedWeekDay = $this->formatter->formatAsDayOfWeek($date);
+        $formattedWeekDay = $this->formatter->formatAsAbbreviatedDayOfWeek($date);
         return PlainTextSummaryBuilder::singleLine($formattedWeekDay, $formattedDate);
     }
 
