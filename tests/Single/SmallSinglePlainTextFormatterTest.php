@@ -111,6 +111,25 @@ final class SmallSinglePlainTextFormatterTest extends TestCase
         );
     }
 
+    public function testFormatPlainTextSingleCurrentWeek(): void
+    {
+        $offSet = (int) (new DateTimeImmutable())->format('w');
+        $daysTillSunday = 7 - $offSet;
+        $thisSunday = (new DateTimeImmutable())->add(new DateInterval('P' . $daysTillSunday . 'D'));
+        $event = new Offer(
+            OfferType::event(),
+            new Status('Available', []),
+            new BookingAvailability('Available'),
+            new DateTimeImmutable($thisSunday->format('Y-m-d') . 'T18:30:00+01:00'),
+            new DateTimeImmutable($thisSunday->format('Y-m-d') . 'T22:30:00+01:00')
+        );
+
+        $this->assertEquals(
+            'Deze zondag',
+            $this->formatter->format($event)
+        );
+    }
+
     public function testFormatPlainTextSingleDateSmWithLeadingZeroOneDay(): void
     {
         $event = new Offer(
