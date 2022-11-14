@@ -56,10 +56,10 @@ final class MediumSinglePlainTextFormatter implements SingleFormatterInterface
     private function formatMoreDays(DateTimeInterface $startDate, DateTimeInterface $endDate): string
     {
         $formattedStartDate = $this->formatter->formatAsFullDate($startDate);
-        $formattedStartDayOfWeek = $this->formatter->formatAsDayOfWeek($startDate);
+        $formattedStartDayOfWeek = $this->formatter->formatAsAbbreviatedDayOfWeek($startDate);
 
         $formattedEndDate = $this->formatter->formatAsFullDate($endDate);
-        $formattedEndDayOfWeek = $this->formatter->formatAsDayOfWeek($endDate);
+        $formattedEndDayOfWeek = $this->formatter->formatAsAbbreviatedDayOfWeek($endDate);
 
         return PlainTextSummaryBuilder::start($this->translator)
             ->from($formattedStartDayOfWeek, $formattedStartDate)
