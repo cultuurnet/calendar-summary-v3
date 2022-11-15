@@ -49,6 +49,25 @@ final class SmallSingleHTMLFormatter implements SingleFormatterInterface
 
     private function formatSameDay(DateTimeInterface $dateFrom): string
     {
+        if (DateComparison::isThisEvening($dateFrom)) {
+            return '<span class="cf-days">' . $this->translator->translate('tonight') . '</span>';
+        }
+        if (DateComparison::isToday($dateFrom)) {
+            return '<span class="cf-days">' . $this->translator->translate('today') . '</span>';
+        }
+        if (DateComparison::isTomorrow($dateFrom)) {
+            return '<span class="cf-days">' . $this->translator->translate('tomorrow') . '</span>';
+        }
+        if (DateComparison::isCurrentWeek($dateFrom)) {
+            return '<span class="cf-meta">' .
+                $this->translator->translate('this') .
+                '</span>' .
+                ' ' .
+                '<span class="cf-days">' .
+                $this->formatter->formatAsDayOfWeek($dateFrom) .
+                '</span>';
+        }
+
         $dateFromDay = $this->formatter->formatAsDayNumber($dateFrom);
         $dateFromMonth = $this->formatter->formatAsAbbreviatedMonthName($dateFrom);
 
