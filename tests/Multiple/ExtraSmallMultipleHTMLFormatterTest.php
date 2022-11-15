@@ -37,8 +37,9 @@ final class ExtraSmallMultipleHTMLFormatterTest extends TestCase
         );
 
         $this->assertEquals(
-            '<span class="cf-from cf-meta">Van</span> <span class="cf-date">25/11/25</span> '
-            . '<span class="cf-to cf-meta">tot</span> <span class="cf-date">30/11/30</span>',
+            '<span class="cf-date">25</span> <span class="cf-month">nov</span> <span class="cf-year">2025</span>'
+            . ' - '
+            . '<span class="cf-date">30</span> <span class="cf-month">nov</span> <span class="cf-year">2030</span>',
             $this->formatter->format($offer)
         );
     }
@@ -55,8 +56,9 @@ final class ExtraSmallMultipleHTMLFormatterTest extends TestCase
         );
 
         $this->assertEquals(
-            '<span class="cf-from cf-meta">Van</span> <span class="cf-date">4/3/25</span> '
-            . '<span class="cf-to cf-meta">tot</span> <span class="cf-date">8/3/30</span>',
+            '<span class="cf-date">4</span> <span class="cf-month">mrt</span> <span class="cf-year">2025</span>'
+            . ' - '
+            . '<span class="cf-date">8</span> <span class="cf-month">mrt</span> <span class="cf-year">2030</span>',
             $this->formatter->format($offer)
         );
     }
@@ -73,8 +75,9 @@ final class ExtraSmallMultipleHTMLFormatterTest extends TestCase
         );
 
         $this->assertEquals(
-            '<span class="cf-from cf-meta">Van</span> <span class="cf-date">25/11/25</span> '
-            . '<span class="cf-to cf-meta">tot</span> <span class="cf-date">30/11/30</span>'
+            '<span class="cf-date">25</span> <span class="cf-month">nov</span> <span class="cf-year">2025</span>'
+            . ' - '
+            . '<span class="cf-date">30</span> <span class="cf-month">nov</span> <span class="cf-year">2030</span>'
             . ' <span class="cf-status">(geannuleerd)</span>',
             $this->formatter->format($offer)
         );
@@ -92,8 +95,9 @@ final class ExtraSmallMultipleHTMLFormatterTest extends TestCase
         );
 
         $this->assertEquals(
-            '<span class="cf-from cf-meta">Van</span> <span class="cf-date">25/11/25</span> '
-            . '<span class="cf-to cf-meta">tot</span> <span class="cf-date">30/11/30</span>'
+            '<span class="cf-date">25</span> <span class="cf-month">nov</span> <span class="cf-year">2025</span>'
+            . ' - '
+            . '<span class="cf-date">30</span> <span class="cf-month">nov</span> <span class="cf-year">2030</span>'
             . ' <span class="cf-status">(geannuleerd)</span>',
             $this->formatter->format($offer)
         );
@@ -111,8 +115,9 @@ final class ExtraSmallMultipleHTMLFormatterTest extends TestCase
         );
 
         $this->assertEquals(
-            '<span class="cf-from cf-meta">Van</span> <span class="cf-date">25/11/25</span> '
-            . '<span class="cf-to cf-meta">tot</span> <span class="cf-date">30/11/30</span>'
+            '<span class="cf-date">25</span> <span class="cf-month">nov</span> <span class="cf-year">2025</span>'
+            . ' - '
+            . '<span class="cf-date">30</span> <span class="cf-month">nov</span> <span class="cf-year">2030</span>'
             . ' <span class="cf-status">(Volzet of uitverkocht)</span>',
             $this->formatter->format($offer)
         );
@@ -130,8 +135,8 @@ final class ExtraSmallMultipleHTMLFormatterTest extends TestCase
         );
 
         $this->assertEquals(
-            '<span class="cf-from cf-meta">Van</span> <span class="cf-date">4/10/25</span> '
-            . '<span class="cf-to cf-meta">tot</span> <span class="cf-date">8/10/30</span>',
+            '<span class="cf-date">4</span> <span class="cf-month">okt</span> <span class="cf-year">2025</span>' .
+            ' - <span class="cf-date">8</span> <span class="cf-month">okt</span> <span class="cf-year">2030</span>',
             $this->formatter->format($offer)
         );
     }
@@ -147,7 +152,7 @@ final class ExtraSmallMultipleHTMLFormatterTest extends TestCase
             CalendarType::multiple()
         );
 
-        $output = '<span class="cf-date">8/10/25</span>';
+        $output = '<span class="cf-date">8</span> <span class="cf-month">okt</span> <span class="cf-year">2025</span>';
 
         $this->assertEquals(
             $output,
