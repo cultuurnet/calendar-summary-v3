@@ -159,4 +159,23 @@ final class ExtraSmallMultipleHTMLFormatterTest extends TestCase
             $this->formatter->format($offer)
         );
     }
+
+    public function testFormatAMultipleWithSameBeginAndEndDayCurrentYear(): void
+    {
+        $offer = new Offer(
+            OfferType::event(),
+            new Status('Available', []),
+            new BookingAvailability('Available'),
+            new DateTimeImmutable('08-10-' . (new DateTimeImmutable())->format('Y') . ' 12:00'),
+            new DateTimeImmutable('08-10-' . (new DateTimeImmutable())->format('Y') . ' 14:00'),
+            CalendarType::multiple()
+        );
+
+        $output = '<span class="cf-date">8</span> <span class="cf-month">okt</span>';
+
+        $this->assertEquals(
+            $output,
+            $this->formatter->format($offer)
+        );
+    }
 }
