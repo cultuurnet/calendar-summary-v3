@@ -11,7 +11,7 @@ use CultuurNet\CalendarSummaryV3\Translator;
 use CultuurNet\CalendarSummaryV3\Offer\Offer;
 use DateTimeInterface;
 
-final class SmallSingleHTMLFormatter implements SingleFormatterInterface
+final class ExtraSmallSingleHTMLFormatter implements SingleFormatterInterface
 {
     /**
      * @var DateFormatter
@@ -49,37 +49,12 @@ final class SmallSingleHTMLFormatter implements SingleFormatterInterface
 
     private function formatSameDay(DateTimeInterface $dateFrom): string
     {
-        if (DateComparison::isThisEvening($dateFrom)) {
-            return '<span class="cf-days">' . $this->translator->translate('tonight') . '</span>';
-        }
-        if (DateComparison::isToday($dateFrom)) {
-            return '<span class="cf-days">' . $this->translator->translate('today') . '</span>';
-        }
-        if (DateComparison::isTomorrow($dateFrom)) {
-            return '<span class="cf-days">' . $this->translator->translate('tomorrow') . '</span>';
-        }
-        if (DateComparison::isCurrentWeek($dateFrom)) {
-            return '<span class="cf-meta">' .
-                $this->translator->translate('this') .
-                '</span>' .
-                ' ' .
-                '<span class="cf-days">' .
-                $this->formatter->formatAsDayOfWeek($dateFrom) .
-                '</span>';
-        }
-
         $dateFromDay = $this->formatter->formatAsDayNumber($dateFrom);
         $dateFromMonth = $this->formatter->formatAsAbbreviatedMonthName($dateFrom);
 
-        $formattedDate = '<span class="cf-date">' . ucfirst($dateFromDay) . '</span>'
+        return '<span class="cf-date">' . ucfirst($dateFromDay) . '</span>'
             . ' '
             . '<span class="cf-month">' . $dateFromMonth . '</span>';
-
-        if (!DateComparison::isCurrentYear($dateFrom)) {
-            $formattedDate .= ' <span class="cf-year">' . $this->formatter->formatAsYear($dateFrom) . '</span>';
-        }
-
-        return $formattedDate;
     }
 
     private function formatMoreDays(DateTimeInterface $dateFrom, DateTimeInterface $dateEnd): string
@@ -95,20 +70,12 @@ final class SmallSingleHTMLFormatter implements SingleFormatterInterface
         $output .= '<span class="cf-date">' . $dateFromDay . '</span>';
         $output .= ' ';
         $output .= '<span class="cf-month">' . $dateFromMonth . '</span>';
-        if (!DateComparison::isCurrentYear($dateFrom)) {
-            $output .= ' ';
-            $output .= '<span class="cf-year">' . $this->formatter->formatAsYear($dateFrom) . '</span>';
-        }
         $output .= ' ';
         $output .= '<span class="cf-to cf-meta">' . $this->translator->translate('till') . '</span>';
         $output .= ' ';
         $output .= '<span class="cf-date">' . $dateEndDay . '</span>';
         $output .= ' ';
         $output .= '<span class="cf-month">' . $dateEndMonth . '</span>';
-        if (!DateComparison::isCurrentYear($dateEnd)) {
-            $output .= ' ';
-            $output .= '<span class="cf-year">' . $this->formatter->formatAsYear($dateEnd) . '</span>';
-        }
 
         return $output;
     }
