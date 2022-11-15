@@ -35,12 +35,21 @@ final class ExtraSmallMultipleHTMLFormatter implements MultipleFormatterInterfac
         $dateTo = $offer->getEndDate()->setTimezone(new DateTimeZone(date_default_timezone_get()));
 
         if (DateComparison::onSameDay($dateFrom, $dateTo)) {
-            $output = '<span class="cf-date">' . $this->formatter->formatAsShortDate($dateFrom) . '</span>';
+            $output = '<span class="cf-date">' . $this->formatter->formatAsDayNumber($dateFrom) .
+                '</span> <span class="cf-month">' . $this->formatter->formatAsAbbreviatedMonthName($dateFrom) . '</span>';
+            if (!DateComparison::isCurrentYear($dateFrom)) {
+                $output .= ' <span class="cf-year">' . $this->formatter->formatAsYear($dateFrom) . '</span>';
+            }
         } else {
-            $output = '<span class="cf-from cf-meta">' . ucfirst($this->translator->translate('from')) . '</span> ' .
-                '<span class="cf-date">' . $this->formatter->formatAsShortDate($dateFrom) . '</span> ' .
-                '<span class="cf-to cf-meta">' . $this->translator->translate('till') . '</span> ' .
-                '<span class="cf-date">' . $this->formatter->formatAsShortDate($dateTo) . '</span>';
+            $output = '<span class="cf-date">' . $this->formatter->formatAsDayNumber($dateFrom) .
+                '</span> <span class="cf-month">' . $this->formatter->formatAsAbbreviatedMonthName($dateFrom) . '</span>' .
+                ' <span class="cf-year">' . $this->formatter->formatAsYear($dateFrom) . '</span>' .
+                ' - ' .
+                '<span class="cf-date">' . $this->formatter->formatAsDayNumber($dateTo) .
+                '</span> <span class="cf-month">' . $this->formatter->formatAsAbbreviatedMonthName($dateTo) . '</span>';
+            if (!DateComparison::isCurrentYear($dateTo)) {
+                $output .= ' <span class="cf-year">' . $this->formatter->formatAsYear($dateTo) . '</span>';
+            }
         }
 
         $optionalAvailability = HtmlAvailabilityFormatter::forOffer($offer, $this->translator)
