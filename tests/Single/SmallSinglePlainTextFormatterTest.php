@@ -10,7 +10,6 @@ use CultuurNet\CalendarSummaryV3\Offer\Offer;
 use CultuurNet\CalendarSummaryV3\Offer\OfferType;
 use CultuurNet\CalendarSummaryV3\Offer\Status;
 use CultuurNet\CalendarSummaryV3\Translator;
-use DateInterval;
 use DateTimeImmutable;
 use PHPUnit\Framework\TestCase;
 
@@ -44,21 +43,17 @@ final class SmallSinglePlainTextFormatterTest extends TestCase
 
     public function testFormatPlainTextSingleDateSmOneDayCurrentYear(): void
     {
-        $someDayInCurrentYear =
-        (new DateTimeImmutable())->add(new DateInterval('P10D'))->format('Y') === (new DateTimeImmutable())->format('Y')
-        ? (new DateTimeImmutable())->add(new DateInterval('P10D')) : (new DateTimeImmutable())->sub(new DateInterval('P10D'));
-        // This is to catch edge cases when running the tests at the end of or beginning of the current year
-        $expected = strtolower($someDayInCurrentYear->format('d M'));
+        CarbonImmutable::setTestNow(CarbonImmutable::create(2021, 3, 4));
         $event = new Offer(
             OfferType::event(),
             new Status('Available', []),
             new BookingAvailability('Available'),
-            new DateTimeImmutable($someDayInCurrentYear->format('Y-m-d') . 'T20:00:00+01:00'),
-            new DateTimeImmutable($someDayInCurrentYear->format('Y-m-d') . 'T21:30:00+01:00')
+            CarbonImmutable::create(2021, 5, 4),
+            CarbonImmutable::create(2021, 5, 4)
         );
 
         $this->assertEquals(
-            $expected,
+            '4 mei',
             $this->formatter->format($event)
         );
     }
