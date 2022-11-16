@@ -31,10 +31,11 @@ final class MediumPeriodicPlainTextFormatter implements PeriodicFormatterInterfa
     {
         $startDate = $offer->getStartDate()->setTimezone(new \DateTimeZone(date_default_timezone_get()));
         $formattedStartDate = $this->formatter->formatAsFullDate($startDate);
-        $formattedStartDayOfWeek = $this->formatter->formatAsDayOfWeek($startDate);
+        $formattedStartDayOfWeek = $this->formatter->formatAsAbbreviatedDayOfWeek($startDate);
 
         $endDate = $offer->getEndDate()->setTimezone(new \DateTimeZone(date_default_timezone_get()));
         $formattedEndDate = $this->formatter->formatAsFullDate($endDate);
+        $formattedEndDayOfWeek = $this->formatter->formatAsAbbreviatedDayOfWeek($endDate);
 
         $summaryBuilder = PlainTextSummaryBuilder::start($this->translator);
 
@@ -46,8 +47,8 @@ final class MediumPeriodicPlainTextFormatter implements PeriodicFormatterInterfa
         }
 
         return $summaryBuilder
-            ->from($formattedStartDate)
-            ->till($formattedEndDate)
+            ->from($formattedStartDayOfWeek, $formattedStartDate)
+            ->till($formattedEndDayOfWeek, $formattedEndDate)
             ->appendAvailability($offer->getStatus(), $offer->getBookingAvailability())
             ->toString();
     }
