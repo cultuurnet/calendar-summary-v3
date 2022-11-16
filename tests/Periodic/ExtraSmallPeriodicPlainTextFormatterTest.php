@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace CultuurNet\CalendarSummaryV3\Periodic;
 
+use Carbon\CarbonImmutable;
 use CultuurNet\CalendarSummaryV3\Offer\BookingAvailability;
 use CultuurNet\CalendarSummaryV3\Offer\CalendarType;
 use CultuurNet\CalendarSummaryV3\Offer\Offer;
@@ -23,6 +24,7 @@ final class ExtraSmallPeriodicPlainTextFormatterTest extends TestCase
     protected function setUp(): void
     {
         $this->formatter = new ExtraSmallPeriodicPlainTextFormatter(new Translator('nl_NL'));
+        CarbonImmutable::setTestNow(CarbonImmutable::create(2021, 5, 3));
     }
 
     public function testFormatAPeriodWithoutLeadingZeroes(): void
@@ -72,6 +74,40 @@ final class ExtraSmallPeriodicPlainTextFormatterTest extends TestCase
 
         $this->assertEquals(
             'Vanaf 25 nov 2025 (geannuleerd)',
+            $this->formatter->format($offer)
+        );
+    }
+
+    public function testFormatAPeriodStartsCurrentYear(): void
+    {
+        $offer = new Offer(
+            OfferType::event(),
+            new Status('Available', []),
+            new BookingAvailability('Available'),
+            new DateTimeImmutable('25-11-2021'),
+            new DateTimeImmutable('30-11-2030'),
+            CalendarType::periodic()
+        );
+
+        $this->assertEquals(
+            'Vanaf 25 nov',
+            $this->formatter->format($offer)
+        );
+    }
+
+    public function testFormatAPeriodEndsCurrentYear(): void
+    {
+        $offer = new Offer(
+            OfferType::event(),
+            new Status('Available', []),
+            new BookingAvailability('Available'),
+            new DateTimeImmutable('25-11-2015'),
+            new DateTimeImmutable('30-11-2021'),
+            CalendarType::periodic()
+        );
+
+        $this->assertEquals(
+            'Tot 30 nov',
             $this->formatter->format($offer)
         );
     }
