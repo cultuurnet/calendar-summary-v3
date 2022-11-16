@@ -4,13 +4,13 @@ declare(strict_types=1);
 
 namespace CultuurNet\CalendarSummaryV3\Multiple;
 
+use Carbon\CarbonImmutable;
 use CultuurNet\CalendarSummaryV3\Offer\BookingAvailability;
 use CultuurNet\CalendarSummaryV3\Offer\CalendarType;
 use CultuurNet\CalendarSummaryV3\Offer\Offer;
 use CultuurNet\CalendarSummaryV3\Offer\OfferType;
 use CultuurNet\CalendarSummaryV3\Offer\Status;
 use CultuurNet\CalendarSummaryV3\Translator;
-use DateInterval;
 use DateTimeImmutable;
 use PHPUnit\Framework\TestCase;
 
@@ -24,6 +24,7 @@ final class SmallMultiplePlainTextFormatterTest extends TestCase
     protected function setUp(): void
     {
         $this->formatter = new SmallMultiplePlainTextFormatter(new Translator('nl_NL'));
+        CarbonImmutable::setTestNow(CarbonImmutable::create(2021, 5, 3));
     }
 
     public function testFormatMultipleWithoutLeadingZeroes(): void
@@ -49,8 +50,8 @@ final class SmallMultiplePlainTextFormatterTest extends TestCase
             OfferType::event(),
             new Status('Available', []),
             new BookingAvailability('Available'),
-            new DateTimeImmutable((new DateTimeImmutable())->format('Y-m-d') . 'T11:00:00+01:00'),
-            new DateTimeImmutable((new DateTimeImmutable())->format('Y-m-d') . 'T15:00:00+01:00'),
+            CarbonImmutable::create(2021, 5, 3)->setTime(11, 30),
+            CarbonImmutable::create(2021, 5, 3)->setTime(20, 30),
             CalendarType::multiple()
         );
 
@@ -66,8 +67,8 @@ final class SmallMultiplePlainTextFormatterTest extends TestCase
             OfferType::event(),
             new Status('Available', []),
             new BookingAvailability('Available'),
-            new DateTimeImmutable((new DateTimeImmutable())->format('Y-m-d') . 'T18:00:00+01:00'),
-            new DateTimeImmutable((new DateTimeImmutable())->format('Y-m-d') . 'T21:00:00+01:00'),
+            CarbonImmutable::create(2021, 5, 3)->setTime(18, 0),
+            CarbonImmutable::create(2021, 5, 3)->setTime(21, 30),
             CalendarType::multiple()
         );
 
@@ -79,13 +80,12 @@ final class SmallMultiplePlainTextFormatterTest extends TestCase
 
     public function testFormatMultipleSingleDateSmTomorrow(): void
     {
-        $tomorrow = (new DateTimeImmutable())->add(new DateInterval('P1D'));
         $event = new Offer(
             OfferType::event(),
             new Status('Available', []),
             new BookingAvailability('Available'),
-            new DateTimeImmutable($tomorrow->format('Y-m-d') . 'T18:30:00+01:00'),
-            new DateTimeImmutable($tomorrow->format('Y-m-d') . 'T22:30:00+01:00'),
+            CarbonImmutable::create(2021, 5, 4)->setTime(18, 0),
+            CarbonImmutable::create(2021, 5, 4)->setTime(21, 30),
             CalendarType::multiple()
         );
 
@@ -97,15 +97,12 @@ final class SmallMultiplePlainTextFormatterTest extends TestCase
 
     public function testFormatMultipleCurrentWeek(): void
     {
-        $offSet = (int) (new DateTimeImmutable())->format('w');
-        $daysTillSunday = 7 - $offSet;
-        $thisSunday = (new DateTimeImmutable())->add(new DateInterval('P' . $daysTillSunday . 'D'));
         $event = new Offer(
             OfferType::event(),
             new Status('Available', []),
             new BookingAvailability('Available'),
-            new DateTimeImmutable($thisSunday->format('Y-m-d') . 'T18:30:00+01:00'),
-            new DateTimeImmutable($thisSunday->format('Y-m-d') . 'T22:30:00+01:00'),
+            CarbonImmutable::create(2021, 5, 9)->setTime(18, 0),
+            CarbonImmutable::create(2021, 5, 9)->setTime(21, 30),
             CalendarType::multiple()
         );
 
