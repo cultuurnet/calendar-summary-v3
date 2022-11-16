@@ -44,6 +44,57 @@ final class SmallMultipleHTMLFormatterTest extends TestCase
         );
     }
 
+    public function testFormatMultipleOnSamedayTonight(): void
+    {
+        $offer = new Offer(
+            OfferType::event(),
+            new Status('Available', []),
+            new BookingAvailability('Available'),
+            CarbonImmutable::create(2021, 5, 3)->setTime(18, 30),
+            CarbonImmutable::create(2021, 5, 3)->setTime(20, 30),
+            CalendarType::multiple()
+        );
+
+        $this->assertEquals(
+            '<span class="cf-days">Vanavond</span>',
+            $this->formatter->format($offer)
+        );
+    }
+
+    public function testFormatMultipleOnSamedayTomorrow(): void
+    {
+        $offer = new Offer(
+            OfferType::event(),
+            new Status('Available', []),
+            new BookingAvailability('Available'),
+            CarbonImmutable::create(2021, 5, 4)->setTime(11, 30),
+            CarbonImmutable::create(2021, 5, 4)->setTime(20, 30),
+            CalendarType::multiple()
+        );
+
+        $this->assertEquals(
+            '<span class="cf-days">Morgen</span>',
+            $this->formatter->format($offer)
+        );
+    }
+
+    public function testFormatMultipleOnSamedayThisWeek(): void
+    {
+        $offer = new Offer(
+            OfferType::event(),
+            new Status('Available', []),
+            new BookingAvailability('Available'),
+            CarbonImmutable::create(2021, 5, 7)->setTime(11, 30),
+            CarbonImmutable::create(2021, 5, 7)->setTime(20, 30),
+            CalendarType::multiple()
+        );
+
+        $this->assertEquals(
+            '<span class="cf-days">Deze</span> <span class="cf-days">vrijdag</span>',
+            $this->formatter->format($offer)
+        );
+    }
+
     public function testFormatMultipleWithoutLeadingZeroes(): void
     {
         $offer = new Offer(
