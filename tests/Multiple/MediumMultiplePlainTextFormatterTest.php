@@ -50,10 +50,10 @@ final class MediumMultiplePlainTextFormatterTest extends TestCase
 
         $event = $event->withSubEvents($newEvents);
 
-        $expectedOutput = 'Donderdag 9 november 2017' . PHP_EOL;
-        $expectedOutput .= 'Donderdag 16 november 2017' . PHP_EOL;
-        $expectedOutput .= 'Donderdag 23 november 2017' . PHP_EOL;
-        $expectedOutput .= 'Donderdag 30 november 2017';
+        $expectedOutput = 'Do 9 november 2017' . PHP_EOL;
+        $expectedOutput .= 'Do 16 november 2017' . PHP_EOL;
+        $expectedOutput .= 'Do 23 november 2017' . PHP_EOL;
+        $expectedOutput .= 'Do 30 november 2017';
 
         $this->assertEquals(
             $expectedOutput,
@@ -122,10 +122,10 @@ final class MediumMultiplePlainTextFormatterTest extends TestCase
 
         $event = $event->withSubEvents($newEvents);
 
-        $expectedOutput = 'Donderdag 9 november 2017 (geannuleerd)' . PHP_EOL;
-        $expectedOutput .= 'Donderdag 16 november 2017 (geannuleerd)' . PHP_EOL;
-        $expectedOutput .= 'Donderdag 23 november 2017 (geannuleerd)' . PHP_EOL;
-        $expectedOutput .= 'Donderdag 30 november 2017 (geannuleerd)';
+        $expectedOutput = 'Do 9 november 2017 (geannuleerd)' . PHP_EOL;
+        $expectedOutput .= 'Do 16 november 2017 (geannuleerd)' . PHP_EOL;
+        $expectedOutput .= 'Do 23 november 2017 (geannuleerd)' . PHP_EOL;
+        $expectedOutput .= 'Do 30 november 2017 (geannuleerd)';
 
         $this->assertEquals(
             $expectedOutput,
@@ -167,10 +167,10 @@ final class MediumMultiplePlainTextFormatterTest extends TestCase
 
         $event = $event->withSubEvents($newEvents);
 
-        $expectedOutput = 'Donderdag 9 november 2017' . PHP_EOL;
-        $expectedOutput .= 'Donderdag 16 november 2017 (geannuleerd)' . PHP_EOL;
-        $expectedOutput .= 'Donderdag 23 november 2017 (Volzet of uitverkocht)' . PHP_EOL;
-        $expectedOutput .= 'Donderdag 30 november 2017';
+        $expectedOutput = 'Do 9 november 2017' . PHP_EOL;
+        $expectedOutput .= 'Do 16 november 2017 (geannuleerd)' . PHP_EOL;
+        $expectedOutput .= 'Do 23 november 2017 (Volzet of uitverkocht)' . PHP_EOL;
+        $expectedOutput .= 'Do 30 november 2017';
 
         $this->assertEquals(
             $expectedOutput,

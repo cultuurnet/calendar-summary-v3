@@ -35,7 +35,7 @@ final class MediumSinglePlainTextFormatterTest extends TestCase
         );
 
         $this->assertEquals(
-            'Donderdag 25 januari 2018',
+            'Do 25 januari 2018',
             $this->formatter->format($event)
         );
     }
@@ -51,7 +51,7 @@ final class MediumSinglePlainTextFormatterTest extends TestCase
         );
 
         $this->assertEquals(
-            'Maandag 8 januari 2018',
+            'Ma 8 januari 2018',
             $this->formatter->format($event)
         );
     }
@@ -99,7 +99,7 @@ final class MediumSinglePlainTextFormatterTest extends TestCase
         );
 
         $this->assertEquals(
-            'Donderdag 25 januari 2018 (geannuleerd)',
+            'Do 25 januari 2018 (geannuleerd)',
             $this->formatter->format($event)
         );
     }
@@ -115,7 +115,7 @@ final class MediumSinglePlainTextFormatterTest extends TestCase
         );
 
         $this->assertEquals(
-            'Donderdag 25 januari 2018 (geannuleerd)',
+            'Do 25 januari 2018 (geannuleerd)',
             $this->formatter->format($event)
         );
     }
@@ -131,7 +131,7 @@ final class MediumSinglePlainTextFormatterTest extends TestCase
         );
 
         $this->assertEquals(
-            'Donderdag 25 januari 2018 (Volzet of uitverkocht)',
+            'Do 25 januari 2018 (Volzet of uitverkocht)',
             $this->formatter->format($event)
         );
     }
@@ -147,7 +147,7 @@ final class MediumSinglePlainTextFormatterTest extends TestCase
         );
 
         $this->assertEquals(
-            'Donderdag 25 januari 2018 (uitgesteld)',
+            'Do 25 januari 2018 (uitgesteld)',
             $this->formatter->format($event)
         );
     }

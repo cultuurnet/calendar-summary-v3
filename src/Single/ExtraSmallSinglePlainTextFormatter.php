@@ -11,7 +11,7 @@ use CultuurNet\CalendarSummaryV3\Translator;
 use CultuurNet\CalendarSummaryV3\Offer\Offer;
 use DateTimeInterface;
 
-final class MediumSinglePlainTextFormatter implements SingleFormatterInterface
+final class ExtraSmallSinglePlainTextFormatter implements SingleFormatterInterface
 {
     /**
      * @var DateFormatter
@@ -48,22 +48,22 @@ final class MediumSinglePlainTextFormatter implements SingleFormatterInterface
 
     private function formatSameDay(DateTimeInterface $date): string
     {
-        $formattedDate = $this->formatter->formatAsFullDate($date);
-        $formattedWeekDay = $this->formatter->formatAsAbbreviatedDayOfWeek($date);
-        return PlainTextSummaryBuilder::singleLine($formattedWeekDay, $formattedDate);
+        $dayNumber = $this->formatter->formatAsDayNumber($date);
+        $monthName = $this->formatter->formatAsAbbreviatedMonthName($date);
+        return PlainTextSummaryBuilder::singleLine($dayNumber, $monthName);
     }
 
     private function formatMoreDays(DateTimeInterface $startDate, DateTimeInterface $endDate): string
     {
-        $formattedStartDate = $this->formatter->formatAsFullDate($startDate);
-        $formattedStartDayOfWeek = $this->formatter->formatAsDayOfWeek($startDate);
+        $startDayNumber = $this->formatter->formatAsDayNumber($startDate);
+        $startMonthName = $this->formatter->formatAsAbbreviatedMonthName($startDate);
 
-        $formattedEndDate = $this->formatter->formatAsFullDate($endDate);
-        $formattedEndDayOfWeek = $this->formatter->formatAsDayOfWeek($endDate);
+        $endDayNumber = $this->formatter->formatAsDayNumber($endDate);
+        $endMonthName = $this->formatter->formatAsAbbreviatedMonthName($endDate);
 
         return PlainTextSummaryBuilder::start($this->translator)
-            ->from($formattedStartDayOfWeek, $formattedStartDate)
-            ->till($formattedEndDayOfWeek, $formattedEndDate)
+            ->from($startDayNumber, $startMonthName)
+            ->till($endDayNumber, $endMonthName)
             ->toString();
     }
 }

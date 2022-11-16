@@ -36,7 +36,7 @@ final class CalendarHTMLFormatterTest extends TestCase
         );
 
         $this->assertSame(
-            '<span class="cf-date">25</span> <span class="cf-month">jan</span>',
+            '<span class="cf-date">25</span> <span class="cf-month">jan</span> <span class="cf-year">2018</span>',
             $this->formatter->format($offer, 'xs')
         );
     }

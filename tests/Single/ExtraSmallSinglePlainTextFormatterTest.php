@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace CultuurNet\CalendarSummaryV3\Single;
 
-use Carbon\CarbonImmutable;
 use CultuurNet\CalendarSummaryV3\Offer\BookingAvailability;
 use CultuurNet\CalendarSummaryV3\Offer\Offer;
 use CultuurNet\CalendarSummaryV3\Offer\OfferType;
@@ -13,7 +12,7 @@ use CultuurNet\CalendarSummaryV3\Translator;
 use DateTimeImmutable;
 use PHPUnit\Framework\TestCase;
 
-final class SmallSinglePlainTextFormatterTest extends TestCase
+final class ExtraSmallSinglePlainTextFormatterTest extends TestCase
 {
     /**
      * @var SmallSinglePlainTextFormatter
@@ -22,123 +21,42 @@ final class SmallSinglePlainTextFormatterTest extends TestCase
 
     protected function setUp(): void
     {
-        $this->formatter = new SmallSinglePlainTextFormatter(new Translator('nl_NL'));
-        CarbonImmutable::setTestNow(CarbonImmutable::create(2021, 5, 3));
+        $this->formatter = new ExtraSmallSinglePlainTextFormatter(new Translator('nl_NL'));
     }
 
-    public function testFormatPlainTextSingleDateSmOneDay(): void
+    public function testFormatPlainTextSingleDateXsOneDay(): void
     {
         $event = new Offer(
             OfferType::event(),
             new Status('Available', []),
             new BookingAvailability('Available'),
-            CarbonImmutable::create(2018, 1, 25),
-            CarbonImmutable::create(2018, 1, 25)->setTime(21, 30)
+            new DateTimeImmutable('2018-01-25T20:00:00+01:00'),
+            new DateTimeImmutable('2018-01-25T21:30:00+01:00')
         );
 
         $this->assertEquals(
-            '25 jan 2018',
+            '25 jan',
             $this->formatter->format($event)
         );
     }
 
-    public function testFormatPlainTextSingleDateSmOneDayCurrentYear(): void
+    public function testFormatPlainTextSingleDateXsWithLeadingZeroOneDay(): void
     {
         $event = new Offer(
             OfferType::event(),
             new Status('Available', []),
             new BookingAvailability('Available'),
-            CarbonImmutable::create(2021, 8, 4),
-            CarbonImmutable::create(2021, 8, 4)
+            new DateTimeImmutable('2018-01-08T20:00:00+01:00'),
+            new DateTimeImmutable('2018-01-08T21:30:00+01:00')
         );
 
         $this->assertEquals(
-            '4 aug',
+            '8 jan',
             $this->formatter->format($event)
         );
     }
 
-    public function testFormatPlainTextSingleDateSmToday(): void
-    {
-        $event = new Offer(
-            OfferType::event(),
-            new Status('Available', []),
-            new BookingAvailability('Available'),
-            CarbonImmutable::create(2021, 5, 3)->setTime(11, 30),
-            CarbonImmutable::create(2021, 5, 3)->setTime(20, 30)
-        );
-
-        $this->assertEquals(
-            'Vandaag',
-            $this->formatter->format($event)
-        );
-    }
-
-    public function testFormatPlainTextSingleDateSmTonight(): void
-    {
-        $event = new Offer(
-            OfferType::event(),
-            new Status('Available', []),
-            new BookingAvailability('Available'),
-            CarbonImmutable::create(2021, 5, 3)->setTime(18, 30),
-            CarbonImmutable::create(2021, 5, 3)->setTime(21, 30)
-        );
-
-        $this->assertEquals(
-            'Vanavond',
-            $this->formatter->format($event)
-        );
-    }
-
-    public function testFormatPlainTextSingleDateSmTomorrow(): void
-    {
-        $event = new Offer(
-            OfferType::event(),
-            new Status('Available', []),
-            new BookingAvailability('Available'),
-            CarbonImmutable::create(2021, 5, 4)->setTime(18, 30),
-            CarbonImmutable::create(2021, 5, 4)->setTime(21, 30)
-        );
-
-        $this->assertEquals(
-            'Morgen',
-            $this->formatter->format($event)
-        );
-    }
-
-    public function testFormatPlainTextSingleCurrentWeek(): void
-    {
-        $event = new Offer(
-            OfferType::event(),
-            new Status('Available', []),
-            new BookingAvailability('Available'),
-            CarbonImmutable::create(2021, 5, 9)->setTime(18, 30),
-            CarbonImmutable::create(2021, 5, 9)->setTime(18, 30)
-        );
-
-        $this->assertEquals(
-            'Deze zondag',
-            $this->formatter->format($event)
-        );
-    }
-
-    public function testFormatPlainTextSingleDateSmWithLeadingZeroOneDay(): void
-    {
-        $event = new Offer(
-            OfferType::event(),
-            new Status('Available', []),
-            new BookingAvailability('Available'),
-            CarbonImmutable::create(2018, 1, 8)->setTime(0, 0),
-            CarbonImmutable::create(2018, 1, 8)->setTime(21, 30)
-        );
-
-        $this->assertEquals(
-            '8 jan 2018',
-            $this->formatter->format($event)
-        );
-    }
-
-    public function testFormatPlainTextSingleDateSmMoreDays(): void
+    public function testFormatPlainTextSingleDateXsMoreDays(): void
     {
         $event = new Offer(
             OfferType::event(),
@@ -154,7 +72,7 @@ final class SmallSinglePlainTextFormatterTest extends TestCase
         );
     }
 
-    public function testFormatPlainTextSingleDateSmWithLeadingZeroMoreDays(): void
+    public function testFormatPlainTextSingleDateXsWithLeadingZeroMoreDays(): void
     {
         $event = new Offer(
             OfferType::event(),
@@ -170,7 +88,7 @@ final class SmallSinglePlainTextFormatterTest extends TestCase
         );
     }
 
-    public function testFormatPlainTextSingleDateSmOneDayWithStatusUnavailable(): void
+    public function testFormatPlainTextSingleDateXsOneDayWithStatusUnavailable(): void
     {
         $event = new Offer(
             OfferType::event(),
@@ -181,12 +99,12 @@ final class SmallSinglePlainTextFormatterTest extends TestCase
         );
 
         $this->assertEquals(
-            '25 jan 2018 (geannuleerd)',
+            '25 jan (geannuleerd)',
             $this->formatter->format($event)
         );
     }
 
-    public function testFormatPlainTextSingleDateSmOneDayWithStatusTemporarilyUnavailable(): void
+    public function testFormatPlainTextSingleDateXsOneDayWithStatusTemporarilyUnavailable(): void
     {
         $event = new Offer(
             OfferType::event(),
@@ -197,12 +115,12 @@ final class SmallSinglePlainTextFormatterTest extends TestCase
         );
 
         $this->assertEquals(
-            '25 jan 2018 (uitgesteld)',
+            '25 jan (uitgesteld)',
             $this->formatter->format($event)
         );
     }
 
-    public function testFormatPlainTextSingleDateSmMoreDaysWithStatusUnavailable(): void
+    public function testFormatPlainTextSingleDateXsMoreDaysWithStatusUnavailable(): void
     {
         $event = new Offer(
             OfferType::event(),
@@ -218,7 +136,7 @@ final class SmallSinglePlainTextFormatterTest extends TestCase
         );
     }
 
-    public function testFormatPlainTextSingleDateSmMoreDaysWithStatusUnavailableAndBookingUnavailable(): void
+    public function testFormatPlainTextSingleDateXsMoreDaysWithStatusUnavailableAndBookingUnavailable(): void
     {
         $event = new Offer(
             OfferType::event(),
@@ -234,7 +152,7 @@ final class SmallSinglePlainTextFormatterTest extends TestCase
         );
     }
 
-    public function testFormatPlainTextSingleDateSmMoreDaysWithStatusAvailableAndBookingUnavailable(): void
+    public function testFormatPlainTextSingleDateXsMoreDaysWithStatusAvailableAndBookingUnavailable(): void
     {
         $event = new Offer(
             OfferType::event(),
@@ -250,7 +168,7 @@ final class SmallSinglePlainTextFormatterTest extends TestCase
         );
     }
 
-    public function testFormatPlainTextSingleDateSmMoreDaysWithStatusTemporarilyUnavailable(): void
+    public function testFormatPlainTextSingleDateXsMoreDaysWithStatusTemporarilyUnavailable(): void
     {
         $event = new Offer(
             OfferType::event(),
