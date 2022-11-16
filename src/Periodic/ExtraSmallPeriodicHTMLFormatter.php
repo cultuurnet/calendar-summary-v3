@@ -64,13 +64,11 @@ final class ExtraSmallPeriodicHTMLFormatter implements PeriodicFormatterInterfac
 
     private function formatDate(DateTimeInterface $date): string
     {
-        $dateFromDay = $this->formatter->formatAsDayNumber($date);
-        $dateFromMonth = $this->formatter->formatAsMonthNumber($date);
-        $dateFromYear = $this->formatter->formatAsShortYear($date);
-
-        return
-            '<span class="cf-date">' . $dateFromDay . '</span>/' .
-            '<span class="cf-month">' . $dateFromMonth . '</span>/' .
-            '<span class="cf-year">' . $dateFromYear . '</span>';
+        $formattedDate = '<span class="cf-date">' . $this->formatter->formatAsDayNumber($date) . '</span>/' .
+            '<span class="cf-month">' . $this->formatter->formatAsAbbreviatedMonthName($date) . '</span>';
+        if (!DateComparison::isCurrentYear($date)) {
+            $formattedDate .= '/<span class="cf-year">' . $this->formatter->formatAsYear($date) . '</span>';
+        }
+        return $formattedDate;
     }
 }
