@@ -37,7 +37,7 @@ final class MediumPeriodicPlainTextFormatterTest extends TestCase
         );
 
         $this->assertEquals(
-            'Van 25 november 2025 tot 30 november 2030',
+            'Van di 25 november 2025 tot za 30 november 2030',
             $this->formatter->format($offer)
         );
     }
@@ -54,7 +54,7 @@ final class MediumPeriodicPlainTextFormatterTest extends TestCase
         );
 
         $this->assertEquals(
-            'Van 4 maart 2025 tot 8 maart 2030',
+            'Van di 4 maart 2025 tot vr 8 maart 2030',
             $this->formatter->format($offer)
         );
     }
@@ -71,7 +71,7 @@ final class MediumPeriodicPlainTextFormatterTest extends TestCase
         );
 
         $this->assertEquals(
-            'Van 25 november 2025 tot 30 november 2030 (geannuleerd)',
+            'Van di 25 november 2025 tot za 30 november 2030 (geannuleerd)',
             $this->formatter->format($offer)
         );
     }
@@ -88,7 +88,7 @@ final class MediumPeriodicPlainTextFormatterTest extends TestCase
         );
 
         $this->assertEquals(
-            'Van 25 maart 2025 tot 30 maart 2030',
+            'Van di 25 maart 2025 tot za 30 maart 2030',
             $this->formatter->format($offer)
         );
     }
@@ -105,7 +105,7 @@ final class MediumPeriodicPlainTextFormatterTest extends TestCase
         );
 
         $this->assertEquals(
-            'Van 4 oktober 2025 tot 8 oktober 2030',
+            'Van za 4 oktober 2025 tot di 8 oktober 2030',
             $this->formatter->format($offer)
         );
     }
@@ -122,7 +122,7 @@ final class MediumPeriodicPlainTextFormatterTest extends TestCase
         );
 
         $this->assertEquals(
-            'Van 25 maart 2025 tot 30 maart 2030 (geannuleerd)',
+            'Van di 25 maart 2025 tot za 30 maart 2030 (geannuleerd)',
             $this->formatter->format($offer)
         );
     }
@@ -139,7 +139,7 @@ final class MediumPeriodicPlainTextFormatterTest extends TestCase
         );
 
         $this->assertEquals(
-            'Woensdag 8 oktober 2025',
+            'Wo 8 oktober 2025',
             $this->formatter->format($offer)
         );
     }
@@ -156,7 +156,7 @@ final class MediumPeriodicPlainTextFormatterTest extends TestCase
         );
 
         $this->assertEquals(
-            'Woensdag 8 oktober 2025 (geannuleerd)',
+            'Wo 8 oktober 2025 (geannuleerd)',
             $this->formatter->format($offer)
         );
     }
