@@ -81,7 +81,7 @@ final class SmallMultipleHTMLFormatter implements MultipleFormatterInterface
                 '</span>';
         }
 
-        return '<span class="cf-weekday cf-meta">' . ucfirst($this->formatter->formatAsDayOfWeek($dateFrom)) . '</span>'
+        return '<span class="cf-weekday cf-meta">' . ucfirst($this->formatter->formatAsAbbreviatedDayOfWeek($dateFrom)) . '</span>'
             . ' '
             . '<span class="cf-date">' . $intlDateFrom . '</span>';
     }

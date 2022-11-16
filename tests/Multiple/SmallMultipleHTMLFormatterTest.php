@@ -90,7 +90,7 @@ final class SmallMultipleHTMLFormatterTest extends TestCase
         );
 
         $this->assertEquals(
-            '<span class="cf-days">Deze</span> <span class="cf-days">vrijdag</span>',
+            '<span class="cf-meta">Deze</span> <span class="cf-days">vrijdag</span>',
             $this->formatter->format($offer)
         );
     }
@@ -198,7 +198,7 @@ final class SmallMultipleHTMLFormatterTest extends TestCase
             CalendarType::multiple()
         );
 
-        $output = '<span class="cf-weekday cf-meta">Woensdag</span>';
+        $output = '<span class="cf-weekday cf-meta">Wo</span>';
         $output .= ' ';
         $output .= '<span class="cf-date">8 okt 2025</span>';
 
