@@ -77,6 +77,11 @@ final class PlainTextSummaryBuilder
         return $this->appendTranslation('till')->appendMultiple($text, ' ');
     }
 
+    public function to(string ...$text): self
+    {
+        return $this->appendTranslation('to')->appendMultiple($text, ' ');
+    }
+
     public function tillHour(string ...$text): self
     {
         return $this->appendTranslation('till_hour')->appendMultiple($text, ' ');
