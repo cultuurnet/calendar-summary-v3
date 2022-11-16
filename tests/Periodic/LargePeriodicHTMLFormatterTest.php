@@ -54,10 +54,12 @@ final class LargePeriodicHTMLFormatterTest extends TestCase
 
         $this->assertEquals(
             '<p class="cf-period"> '
+            . '<span class="cf-weekday cf-meta">dinsdag</span> '
             . '<time itemprop="startDate" datetime="2025-11-25"> '
             . '<span class="cf-date">25 november 2025</span> '
             . '</time> '
-            . '<span class="cf-to cf-meta">tot</span> '
+            . '<span class="cf-to cf-meta">tot en met</span> '
+            . '<span class="cf-weekday cf-meta">zaterdag</span> '
             . '<time itemprop="endDate" datetime="2030-11-30"> '
             . '<span class="cf-date">30 november 2030</span> '
             . '</time> '
@@ -136,10 +138,12 @@ final class LargePeriodicHTMLFormatterTest extends TestCase
 
         $this->assertEquals(
             '<p class="cf-period"> '
+            . '<span class="cf-weekday cf-meta">mardi</span> '
             . '<time itemprop="startDate" datetime="2025-11-25"> '
             . '<span class="cf-date">25 novembre 2025</span> '
             . '</time> '
-            . '<span class="cf-to cf-meta">au</span> '
+            . '<span class="cf-to cf-meta">à</span> '
+            . '<span class="cf-weekday cf-meta">samedi</span> '
             . '<time itemprop="endDate" datetime="2030-11-30"> '
             . '<span class="cf-date">30 novembre 2030</span> '
             . '</time> '
@@ -194,10 +198,12 @@ final class LargePeriodicHTMLFormatterTest extends TestCase
 
         $this->assertEquals(
             '<p class="cf-period"> '
+            . '<span class="cf-weekday cf-meta">dinsdag</span> '
             . '<time itemprop="startDate" datetime="2025-11-25"> '
             . '<span class="cf-date">25 november 2025</span> '
             . '</time> '
-            . '<span class="cf-to cf-meta">tot</span> '
+            . '<span class="cf-to cf-meta">tot en met</span> '
+            . '<span class="cf-weekday cf-meta">zaterdag</span> '
             . '<time itemprop="endDate" datetime="2030-11-30"> '
             . '<span class="cf-date">30 november 2030</span> '
             . '</time> '
@@ -287,10 +293,12 @@ final class LargePeriodicHTMLFormatterTest extends TestCase
 
         $this->assertEquals(
             '<p class="cf-period"> '
+            . '<span class="cf-weekday cf-meta">dinsdag</span> '
             . '<time itemprop="startDate" datetime="2025-11-25"> '
             . '<span class="cf-date">25 november 2025</span> '
             . '</time> '
-            . '<span class="cf-to cf-meta">tot</span> '
+            . '<span class="cf-to cf-meta">tot en met</span> '
+            . '<span class="cf-weekday cf-meta">zaterdag</span> '
             . '<time itemprop="endDate" datetime="2030-11-30"> '
             . '<span class="cf-date">30 november 2030</span> '
             . '</time> '
@@ -404,10 +412,12 @@ final class LargePeriodicHTMLFormatterTest extends TestCase
 
         $this->assertEquals(
             '<p class="cf-period"> '
+            . '<span class="cf-weekday cf-meta">dinsdag</span> '
             . '<time itemprop="startDate" datetime="2025-11-25"> '
             . '<span class="cf-date">25 november 2025</span> '
             . '</time> '
-            . '<span class="cf-to cf-meta">tot</span> '
+            . '<span class="cf-to cf-meta">tot en met</span> '
+            . '<span class="cf-weekday cf-meta">zaterdag</span> '
             . '<time itemprop="endDate" datetime="2030-11-30"> '
             . '<span class="cf-date">30 november 2030</span> '
             . '</time> '
@@ -475,10 +485,12 @@ final class LargePeriodicHTMLFormatterTest extends TestCase
 
         $this->assertEquals(
             '<p class="cf-period"> '
+            . '<span class="cf-weekday cf-meta">dinsdag</span> '
             . '<time itemprop="startDate" datetime="2025-11-25"> '
             . '<span class="cf-date">25 november 2025</span> '
             . '</time> '
-            . '<span class="cf-to cf-meta">tot</span> '
+            . '<span class="cf-to cf-meta">tot en met</span> '
+            . '<span class="cf-weekday cf-meta">zaterdag</span> '
             . '<time itemprop="endDate" datetime="2030-11-30"> '
             . '<span class="cf-date">30 november 2030</span> '
             . '</time> '
