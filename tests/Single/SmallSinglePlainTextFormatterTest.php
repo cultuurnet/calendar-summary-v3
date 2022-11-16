@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace CultuurNet\CalendarSummaryV3\Single;
 
+use Carbon\CarbonImmutable;
 use CultuurNet\CalendarSummaryV3\Offer\BookingAvailability;
 use CultuurNet\CalendarSummaryV3\Offer\Offer;
 use CultuurNet\CalendarSummaryV3\Offer\OfferType;
@@ -64,12 +65,13 @@ final class SmallSinglePlainTextFormatterTest extends TestCase
 
     public function testFormatPlainTextSingleDateSmToday(): void
     {
+        CarbonImmutable::setTestNow(CarbonImmutable::create(2021, 5, 4));
         $event = new Offer(
             OfferType::event(),
             new Status('Available', []),
             new BookingAvailability('Available'),
-            new DateTimeImmutable((new DateTimeImmutable())->format('Y-m-d') . 'T11:00:00+01:00'),
-            new DateTimeImmutable((new DateTimeImmutable())->format('Y-m-d') . 'T20:30:00+01:00')
+            CarbonImmutable::create(2021, 5, 4)->setTime(11, 30),
+            CarbonImmutable::create(2021, 5, 4)->setTime(20, 30)
         );
 
         $this->assertEquals(
@@ -80,12 +82,13 @@ final class SmallSinglePlainTextFormatterTest extends TestCase
 
     public function testFormatPlainTextSingleDateSmTonight(): void
     {
+        CarbonImmutable::setTestNow(CarbonImmutable::create(2021, 5, 4));
         $event = new Offer(
             OfferType::event(),
             new Status('Available', []),
             new BookingAvailability('Available'),
-            new DateTimeImmutable((new DateTimeImmutable())->format('Y-m-d') . 'T18:30:00+01:00'),
-            new DateTimeImmutable((new DateTimeImmutable())->format('Y-m-d') . 'T22:30:00+01:00')
+            CarbonImmutable::create(2021, 5, 4)->setTime(18, 30),
+            CarbonImmutable::create(2021, 5, 4)->setTime(21, 30)
         );
 
         $this->assertEquals(
@@ -96,13 +99,13 @@ final class SmallSinglePlainTextFormatterTest extends TestCase
 
     public function testFormatPlainTextSingleDateSmTomorrow(): void
     {
-        $tomorrow = (new DateTimeImmutable())->add(new DateInterval('P1D'));
+        CarbonImmutable::setTestNow(CarbonImmutable::create(2021, 5, 4));
         $event = new Offer(
             OfferType::event(),
             new Status('Available', []),
             new BookingAvailability('Available'),
-            new DateTimeImmutable($tomorrow->format('Y-m-d') . 'T18:30:00+01:00'),
-            new DateTimeImmutable($tomorrow->format('Y-m-d') . 'T22:30:00+01:00')
+            CarbonImmutable::create(2021, 5, 5)->setTime(18, 30),
+            CarbonImmutable::create(2021, 5, 5)->setTime(21, 30)
         );
 
         $this->assertEquals(
@@ -113,15 +116,13 @@ final class SmallSinglePlainTextFormatterTest extends TestCase
 
     public function testFormatPlainTextSingleCurrentWeek(): void
     {
-        $offSet = (int) (new DateTimeImmutable())->format('w');
-        $daysTillSunday = 7 - $offSet;
-        $thisSunday = (new DateTimeImmutable())->add(new DateInterval('P' . $daysTillSunday . 'D'));
+        CarbonImmutable::setTestNow(CarbonImmutable::create(2021, 5, 3));
         $event = new Offer(
             OfferType::event(),
             new Status('Available', []),
             new BookingAvailability('Available'),
-            new DateTimeImmutable($thisSunday->format('Y-m-d') . 'T18:30:00+01:00'),
-            new DateTimeImmutable($thisSunday->format('Y-m-d') . 'T22:30:00+01:00')
+            CarbonImmutable::create(2021, 5, 9)->setTime(18, 30),
+            CarbonImmutable::create(2021, 5, 9)->setTime(18, 30)
         );
 
         $this->assertEquals(
