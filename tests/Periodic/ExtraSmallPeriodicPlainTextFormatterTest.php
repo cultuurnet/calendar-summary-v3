@@ -122,7 +122,7 @@ final class ExtraSmallPeriodicPlainTextFormatterTest extends TestCase
         );
 
         $this->assertEquals(
-            'Tot 18/3/30',
+            'Tot 18 mrt 2030',
             $this->formatter->format($offer)
         );
     }
