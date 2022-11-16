@@ -41,9 +41,9 @@ final class ExtraSmallPeriodicHTMLFormatterTest extends TestCase
             ' ' .
             '<span class="cf-date">25</span>' .
             '/' .
-            '<span class="cf-month">11</span>' .
+            '<span class="cf-month">nov</span>' .
             '/' .
-            '<span class="cf-year">25</span>';
+            '<span class="cf-year">2025</span>';
 
         $this->assertEquals(
             $expected,
@@ -67,9 +67,9 @@ final class ExtraSmallPeriodicHTMLFormatterTest extends TestCase
             ' ' .
             '<span class="cf-date">4</span>' .
             '/' .
-            '<span class="cf-month">3</span>' .
+            '<span class="cf-month">mrt</span>' .
             '/' .
-            '<span class="cf-year">25</span>';
+            '<span class="cf-year">2025</span>';
 
         $this->assertEquals(
             $expected,
@@ -93,9 +93,9 @@ final class ExtraSmallPeriodicHTMLFormatterTest extends TestCase
             ' ' .
             '<span class="cf-date">25</span>' .
             '/' .
-            '<span class="cf-month">11</span>' .
+            '<span class="cf-month">nov</span>' .
             '/' .
-            '<span class="cf-year">25</span>' .
+            '<span class="cf-year">2025</span>' .
             ' ' .
             '<span class="cf-status">(geannuleerd)</span>';
 
@@ -121,9 +121,9 @@ final class ExtraSmallPeriodicHTMLFormatterTest extends TestCase
             ' ' .
             '<span class="cf-date">25</span>' .
             '/' .
-            '<span class="cf-month">3</span>' .
+            '<span class="cf-month">mrt</span>' .
             '/' .
-            '<span class="cf-year">25</span>';
+            '<span class="cf-year">2025</span>';
 
         $this->assertEquals(
             $expected,
@@ -147,9 +147,9 @@ final class ExtraSmallPeriodicHTMLFormatterTest extends TestCase
             ' ' .
             '<span class="cf-date">4</span>' .
             '/' .
-            '<span class="cf-month">10</span>' .
+            '<span class="cf-month">okt</span>' .
             '/' .
-            '<span class="cf-year">25</span>';
+            '<span class="cf-year">2025</span>';
 
         $this->assertEquals(
             $expected,
@@ -173,9 +173,9 @@ final class ExtraSmallPeriodicHTMLFormatterTest extends TestCase
             ' ' .
             '<span class="cf-date">18</span>' .
             '/' .
-            '<span class="cf-month">3</span>' .
+            '<span class="cf-month">mrt</span>' .
             '/' .
-            '<span class="cf-year">30</span>';
+            '<span class="cf-year">2030</span>';
 
         $this->assertEquals(
             $expected,
