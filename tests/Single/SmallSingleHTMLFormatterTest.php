@@ -23,6 +23,7 @@ final class SmallSingleHTMLFormatterTest extends TestCase
     protected function setUp(): void
     {
         $this->formatter = new SmallSingleHTMLFormatter(new Translator('nl_NL'));
+        CarbonImmutable::setTestNow(CarbonImmutable::create(2021, 5, 3));
     }
 
     public function testFormatHTMLSingleDateXsOneDay(): void
@@ -43,17 +44,16 @@ final class SmallSingleHTMLFormatterTest extends TestCase
 
     public function testFormatHtmlSingleDateSmOneDayCurrentYear(): void
     {
-        CarbonImmutable::setTestNow(CarbonImmutable::create(2021, 3, 4));
         $event = new Offer(
             OfferType::event(),
             new Status('Available', []),
             new BookingAvailability('Available'),
-            CarbonImmutable::create(2021, 5, 4),
-            CarbonImmutable::create(2021, 5, 4)
+            CarbonImmutable::create(2021, 5, 24),
+            CarbonImmutable::create(2021, 5, 24)
         );
 
         $this->assertEquals(
-            '<span class="cf-date">4</span> <span class="cf-month">mei</span>',
+            '<span class="cf-date">24</span> <span class="cf-month">mei</span>',
             $this->formatter->format($event)
         );
     }
@@ -61,13 +61,12 @@ final class SmallSingleHTMLFormatterTest extends TestCase
 
     public function testFormatHTMLSingleDateXsToday(): void
     {
-        CarbonImmutable::setTestNow(CarbonImmutable::create(2021, 5, 4));
         $event = new Offer(
             OfferType::event(),
             new Status('Available', []),
             new BookingAvailability('Available'),
-            CarbonImmutable::create(2021, 5, 4)->setTime(11, 30),
-            CarbonImmutable::create(2021, 5, 4)->setTime(20, 30)
+            CarbonImmutable::create(2021, 5, 3)->setTime(11, 30),
+            CarbonImmutable::create(2021, 5, 3)->setTime(20, 30)
         );
 
         $this->assertEquals(
@@ -78,13 +77,12 @@ final class SmallSingleHTMLFormatterTest extends TestCase
 
     public function testFormatHTMLSingleDateXsTonight(): void
     {
-        CarbonImmutable::setTestNow(CarbonImmutable::create(2021, 5, 4));
         $event = new Offer(
             OfferType::event(),
             new Status('Available', []),
             new BookingAvailability('Available'),
-            CarbonImmutable::create(2021, 5, 4)->setTime(18, 30),
-            CarbonImmutable::create(2021, 5, 4)->setTime(21, 30)
+            CarbonImmutable::create(2021, 5, 3)->setTime(18, 30),
+            CarbonImmutable::create(2021, 5, 3)->setTime(21, 30)
         );
 
         $this->assertEquals(
@@ -95,13 +93,12 @@ final class SmallSingleHTMLFormatterTest extends TestCase
 
     public function testFormatHTMLSingleDateXsTomorrow(): void
     {
-        CarbonImmutable::setTestNow(CarbonImmutable::create(2021, 5, 4));
         $event = new Offer(
             OfferType::event(),
             new Status('Available', []),
             new BookingAvailability('Available'),
-            CarbonImmutable::create(2021, 5, 5)->setTime(18, 30),
-            CarbonImmutable::create(2021, 5, 5)->setTime(21, 30)
+            CarbonImmutable::create(2021, 5, 4)->setTime(18, 30),
+            CarbonImmutable::create(2021, 5, 4)->setTime(21, 30)
         );
 
         $this->assertEquals(
@@ -112,7 +109,6 @@ final class SmallSingleHTMLFormatterTest extends TestCase
 
     public function testFormatPlainTextSingleCurrentWeek(): void
     {
-        CarbonImmutable::setTestNow(CarbonImmutable::create(2021, 5, 3));
         $event = new Offer(
             OfferType::event(),
             new Status('Available', []),
