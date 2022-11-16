@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace CultuurNet\CalendarSummaryV3\Periodic;
 
+use Carbon\CarbonImmutable;
 use CultuurNet\CalendarSummaryV3\Offer\BookingAvailability;
 use CultuurNet\CalendarSummaryV3\Offer\CalendarType;
 use CultuurNet\CalendarSummaryV3\Offer\Offer;
@@ -23,6 +24,55 @@ final class ExtraSmallPeriodicHTMLFormatterTest extends TestCase
     protected function setUp(): void
     {
         $this->formatter = new ExtraSmallPeriodicHTMLFormatter(new Translator('nl_NL'));
+        CarbonImmutable::setTestNow(CarbonImmutable::create(2021, 5, 3));
+    }
+
+    public function testFormatAPeriodStartsCurrentYear(): void
+    {
+        $offer = new Offer(
+            OfferType::event(),
+            new Status('Available', []),
+            new BookingAvailability('Available'),
+            new DateTimeImmutable('25-11-2021'),
+            new DateTimeImmutable('30-11-2030'),
+            CalendarType::periodic()
+        );
+
+        $expected =
+            '<span class="from meta">Vanaf</span>' .
+            ' ' .
+            '<span class="cf-date">25</span>' .
+            '/' .
+            '<span class="cf-month">nov</span>';
+
+        $this->assertEquals(
+            $expected,
+            $this->formatter->format($offer)
+        );
+    }
+
+    public function testFormatAPeriodEndsCurrentYear(): void
+    {
+        $offer = new Offer(
+            OfferType::event(),
+            new Status('Available', []),
+            new BookingAvailability('Available'),
+            new DateTimeImmutable('25-01-2020'),
+            new DateTimeImmutable('30-01-2021'),
+            CalendarType::periodic()
+        );
+
+        $expected =
+            '<span class="to meta">Tot</span>' .
+            ' ' .
+            '<span class="cf-date">30</span>' .
+            '/' .
+            '<span class="cf-month">jan</span>';
+
+        $this->assertEquals(
+            $expected,
+            $this->formatter->format($offer)
+        );
     }
 
     public function testFormatAPeriodWithoutLeadingZeroes(): void
