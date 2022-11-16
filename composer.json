@@ -15,7 +15,7 @@
       "ext-json": "*",
       "delfimov/translate": "^2.4",
       "psr/container": "^1.0",
-        "nesbot/carbon": "^2.63"
+      "nesbot/carbon": "^2.63"
     },
     "autoload": {
       "psr-4": {
