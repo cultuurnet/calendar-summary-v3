@@ -8,11 +8,13 @@ use CultuurNet\CalendarSummaryV3\DateComparison;
 use CultuurNet\CalendarSummaryV3\DateFormatter;
 use CultuurNet\CalendarSummaryV3\HtmlAvailabilityFormatter;
 use CultuurNet\CalendarSummaryV3\Offer\Offer;
+use CultuurNet\CalendarSummaryV3\RelativeDateHTMLFormatter;
 use CultuurNet\CalendarSummaryV3\Translator;
 use DateTimeInterface;
 
 final class SmallMultipleHTMLFormatter implements MultipleFormatterInterface
 {
+    use RelativeDateHTMLFormatter;
     /**
      * @var DateFormatter
      */
@@ -62,27 +64,9 @@ final class SmallMultipleHTMLFormatter implements MultipleFormatterInterface
 
     private function formatSameDay(DateTimeInterface $dateFrom, string $intlDateFrom): string
     {
-        if (DateComparison::isThisEvening($dateFrom)) {
-            return '<span class="cf-days">' . $this->translator->translate('tonight') . '</span>';
-        }
-        if (DateComparison::isToday($dateFrom)) {
-            return '<span class="cf-days">' . $this->translator->translate('today') . '</span>';
-        }
-        if (DateComparison::isTomorrow($dateFrom)) {
-            return '<span class="cf-days">' . $this->translator->translate('tomorrow') . '</span>';
-        }
-        if (DateComparison::isCurrentWeek($dateFrom)) {
-            return '<span class="cf-meta">' .
-                $this->translator->translate('this') .
-                '</span>' .
-                ' ' .
-                '<span class="cf-days">' .
-                $this->formatter->formatAsDayOfWeek($dateFrom) .
-                '</span>';
-        }
-
-        return '<span class="cf-weekday cf-meta">' . ucfirst($this->formatter->formatAsAbbreviatedDayOfWeek($dateFrom)) . '</span>'
-            . ' '
-            . '<span class="cf-date">' . $intlDateFrom . '</span>';
+        $relativeDate = $this->getRelativeDate($dateFrom, $this->translator, $this->formatter);
+        return $relativeDate ?? ('<span class="cf-weekday cf-meta">' . ucfirst($this->formatter->formatAsAbbreviatedDayOfWeek($dateFrom)) . '</span>'
+                . ' '
+                . '<span class="cf-date">' . $intlDateFrom . '</span>');
     }
 }
