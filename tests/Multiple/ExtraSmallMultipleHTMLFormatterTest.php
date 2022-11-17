@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace CultuurNet\CalendarSummaryV3\Multiple;
 
+use Carbon\CarbonImmutable;
 use CultuurNet\CalendarSummaryV3\Offer\BookingAvailability;
 use CultuurNet\CalendarSummaryV3\Offer\CalendarType;
 use CultuurNet\CalendarSummaryV3\Offer\Offer;
@@ -23,6 +24,7 @@ final class ExtraSmallMultipleHTMLFormatterTest extends TestCase
     protected function setUp(): void
     {
         $this->formatter = new ExtraSmallMultipleHTMLFormatter(new Translator('nl_NL'));
+        CarbonImmutable::setTestNow(CarbonImmutable::create(2021, 5, 3));
     }
 
     public function testFormatMultipleWithoutLeadingZeroes(): void
@@ -166,8 +168,8 @@ final class ExtraSmallMultipleHTMLFormatterTest extends TestCase
             OfferType::event(),
             new Status('Available', []),
             new BookingAvailability('Available'),
-            new DateTimeImmutable('08-10-' . (new DateTimeImmutable())->format('Y') . ' 12:00'),
-            new DateTimeImmutable('08-10-' . (new DateTimeImmutable())->format('Y') . ' 14:00'),
+            CarbonImmutable::create(2021, 10, 8)->setTime(12, 0),
+            CarbonImmutable::create(2021, 10, 8)->setTime(14, 0),
             CalendarType::multiple()
         );
 
