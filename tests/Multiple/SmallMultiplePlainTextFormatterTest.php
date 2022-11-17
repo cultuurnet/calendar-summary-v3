@@ -129,6 +129,57 @@ final class SmallMultiplePlainTextFormatterTest extends TestCase
         );
     }
 
+    public function testFormatMultipleCurrentYear(): void
+    {
+        $offer = new Offer(
+            OfferType::event(),
+            new Status('Available', []),
+            new BookingAvailability('Available'),
+            new DateTimeImmutable('04-03-2021'),
+            new DateTimeImmutable('08-03-2021'),
+            CalendarType::multiple()
+        );
+
+        $this->assertEquals(
+            '4 mrt - 8 mrt',
+            $this->formatter->format($offer)
+        );
+    }
+
+    public function testFormatMultipleStartsCurrentYear(): void
+    {
+        $offer = new Offer(
+            OfferType::event(),
+            new Status('Available', []),
+            new BookingAvailability('Available'),
+            new DateTimeImmutable('04-03-2021'),
+            new DateTimeImmutable('08-03-2030'),
+            CalendarType::multiple()
+        );
+
+        $this->assertEquals(
+            '4 mrt - 8 mrt 2030',
+            $this->formatter->format($offer)
+        );
+    }
+
+    public function testFormatMultipleEndsCurrentYear(): void
+    {
+        $offer = new Offer(
+            OfferType::event(),
+            new Status('Available', []),
+            new BookingAvailability('Available'),
+            new DateTimeImmutable('04-03-2020'),
+            new DateTimeImmutable('08-03-2021'),
+            CalendarType::multiple()
+        );
+
+        $this->assertEquals(
+            '4 mrt 2020 - 8 mrt',
+            $this->formatter->format($offer)
+        );
+    }
+
     public function testFormatMultipleWithUnavailableStatus(): void
     {
         $offer = new Offer(

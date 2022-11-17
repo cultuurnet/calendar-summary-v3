@@ -113,6 +113,60 @@ final class SmallMultipleHTMLFormatterTest extends TestCase
         );
     }
 
+    public function testFormatMultipleCurrentYear(): void
+    {
+        $offer = new Offer(
+            OfferType::event(),
+            new Status('Available', []),
+            new BookingAvailability('Available'),
+            CarbonImmutable::create(2021, 11, 25),
+            CarbonImmutable::create(2021, 11, 30),
+            CalendarType::multiple()
+        );
+
+        $this->assertEquals(
+            '<span class="cf-date">25 nov</span> '
+            . '<span class="cf-to cf-meta">-</span> <span class="cf-date">30 nov</span>',
+            $this->formatter->format($offer)
+        );
+    }
+
+    public function testFormatMultipleStartsCurrentYear(): void
+    {
+        $offer = new Offer(
+            OfferType::event(),
+            new Status('Available', []),
+            new BookingAvailability('Available'),
+            CarbonImmutable::create(2021, 11, 25),
+            CarbonImmutable::create(2030, 11, 30),
+            CalendarType::multiple()
+        );
+
+        $this->assertEquals(
+            '<span class="cf-date">25 nov</span> '
+            . '<span class="cf-to cf-meta">-</span> <span class="cf-date">30 nov 2030</span>',
+            $this->formatter->format($offer)
+        );
+    }
+
+    public function testFormatMultipleEndsCurrentYear(): void
+    {
+        $offer = new Offer(
+            OfferType::event(),
+            new Status('Available', []),
+            new BookingAvailability('Available'),
+            new DateTimeImmutable('25-11-2020'),
+            new DateTimeImmutable('30-11-2021'),
+            CalendarType::multiple()
+        );
+
+        $this->assertEquals(
+            '<span class="cf-date">25 nov 2020</span> '
+            . '<span class="cf-to cf-meta">-</span> <span class="cf-date">30 nov</span>',
+            $this->formatter->format($offer)
+        );
+    }
+
     public function testFormatMultipleWithoutLeadingZeroesWithUnavailableStatus(): void
     {
         $offer = new Offer(

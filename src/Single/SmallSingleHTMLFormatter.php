@@ -7,12 +7,14 @@ namespace CultuurNet\CalendarSummaryV3\Single;
 use CultuurNet\CalendarSummaryV3\DateComparison;
 use CultuurNet\CalendarSummaryV3\DateFormatter;
 use CultuurNet\CalendarSummaryV3\HtmlAvailabilityFormatter;
+use CultuurNet\CalendarSummaryV3\RelativeDateHTMLFormatter;
 use CultuurNet\CalendarSummaryV3\Translator;
 use CultuurNet\CalendarSummaryV3\Offer\Offer;
 use DateTimeInterface;
 
 final class SmallSingleHTMLFormatter implements SingleFormatterInterface
 {
+    use RelativeDateHTMLFormatter;
     /**
      * @var DateFormatter
      */
@@ -49,23 +51,9 @@ final class SmallSingleHTMLFormatter implements SingleFormatterInterface
 
     private function formatSameDay(DateTimeInterface $dateFrom): string
     {
-        if (DateComparison::isThisEvening($dateFrom)) {
-            return '<span class="cf-days">' . $this->translator->translate('tonight') . '</span>';
-        }
-        if (DateComparison::isToday($dateFrom)) {
-            return '<span class="cf-days">' . $this->translator->translate('today') . '</span>';
-        }
-        if (DateComparison::isTomorrow($dateFrom)) {
-            return '<span class="cf-days">' . $this->translator->translate('tomorrow') . '</span>';
-        }
-        if (DateComparison::isCurrentWeek($dateFrom)) {
-            return '<span class="cf-meta">' .
-                $this->translator->translate('this') .
-                '</span>' .
-                ' ' .
-                '<span class="cf-days">' .
-                $this->formatter->formatAsDayOfWeek($dateFrom) .
-                '</span>';
+        $relativeDate = $this->getRelativeDate($dateFrom, $this->translator, $this->formatter);
+        if (isset($relativeDate)) {
+            return $relativeDate;
         }
 
         $dateFromDay = $this->formatter->formatAsDayNumber($dateFrom);

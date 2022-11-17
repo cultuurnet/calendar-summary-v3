@@ -8,11 +8,13 @@ use CultuurNet\CalendarSummaryV3\DateComparison;
 use CultuurNet\CalendarSummaryV3\DateFormatter;
 use CultuurNet\CalendarSummaryV3\Offer\Offer;
 use CultuurNet\CalendarSummaryV3\PlainTextSummaryBuilder;
+use CultuurNet\CalendarSummaryV3\RelativeDatePlainTextFormatter;
 use CultuurNet\CalendarSummaryV3\Translator;
 use DateTimeZone;
 
 final class SmallMultiplePlainTextFormatter implements MultipleFormatterInterface
 {
+    use RelativeDatePlainTextFormatter;
     /**
      * @var DateFormatter
      */
@@ -35,20 +37,11 @@ final class SmallMultiplePlainTextFormatter implements MultipleFormatterInterfac
         $endDate = $offer->getEndDate()->setTimezone(new DateTimeZone(date_default_timezone_get()));
 
         if (DateComparison::onSameDay($startDate, $endDate)) {
-            if (DateComparison::isThisEvening($startDate)) {
-                return $this->translator->translate('tonight');
+            $relativeDate = $this->getRelativeDate($startDate, $this->translator, $this->formatter);
+            if (isset($relativeDate)) {
+                return $relativeDate;
             }
-            if (DateComparison::isToday($startDate)) {
-                return $this->translator->translate('today');
-            }
-            if (DateComparison::isTomorrow($startDate)) {
-                return $this->translator->translate('tomorrow');
-            }
-            if (DateComparison::isCurrentWeek($startDate)) {
-                $preposition = $this->translator->translate('this');
-                $weekDay = $this->formatter->formatAsDayOfWeek($startDate);
-                return PlainTextSummaryBuilder::singleLine($preposition, $weekDay);
-            }
+
             $plainTextSummaryBuilder = PlainTextSummaryBuilder::start($this->translator)
                 ->append($this->formatter->formatAsAbbreviatedDayOfWeek($startDate))
                 ->append($this->formatter->formatAsDayNumber($startDate))
