@@ -185,8 +185,7 @@ final class MediumPermanentPlainTextFormatterTest extends TestCase
         );
 
         $this->assertEquals(
-            'Elke dag open
-            ',
+            'Elke dag open' . PHP_EOL,
             $this->formatter->format($event)
         );
     }
