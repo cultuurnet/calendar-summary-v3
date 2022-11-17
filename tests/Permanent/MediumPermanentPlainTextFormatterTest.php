@@ -173,6 +173,24 @@ final class MediumPermanentPlainTextFormatterTest extends TestCase
         );
     }
 
+    public function testFormatPermanentWithoutOpeningHours(): void
+    {
+        $event = new Offer(
+            OfferType::event(),
+            new Status('Available', []),
+            new BookingAvailability('Available'),
+            null,
+            null,
+            CalendarType::permanent()
+        );
+
+        $this->assertEquals(
+            'Elke dag open
+            ',
+            $this->formatter->format($event)
+        );
+    }
+
     public function testFormatAnUnavailablePermanent(): void
     {
         $event = new Offer(

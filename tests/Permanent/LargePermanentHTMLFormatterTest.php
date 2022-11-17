@@ -497,4 +497,21 @@ final class LargePermanentHTMLFormatterTest extends TestCase
             $this->formatter->format($event)
         );
     }
+
+    public function testFormatPermanentWithoutOpeningHours(): void
+    {
+        $event = new Offer(
+            OfferType::event(),
+            new Status('Available', []),
+            new BookingAvailability('Available'),
+            null,
+            null,
+            CalendarType::permanent()
+        );
+
+        $this->assertEquals(
+            '<p class="cf-openinghours">Elke dag open</p>',
+            $this->formatter->format($event)
+        );
+    }
 }
