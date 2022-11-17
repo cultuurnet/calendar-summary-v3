@@ -44,7 +44,7 @@ final class MediumPermanentHTMLFormatter implements PermanentFormatterInterface
         }
 
         return '<p class="cf-openinghours">' .
-            ucfirst($this->translator->translate('always_open')) . '</p>';
+            ucfirst($this->translator->translate('open_every_day')) . '</p>';
     }
 
     /**

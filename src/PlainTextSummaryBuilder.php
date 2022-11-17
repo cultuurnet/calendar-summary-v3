@@ -49,7 +49,7 @@ final class PlainTextSummaryBuilder
 
     public function alwaysOpen(): self
     {
-        return $this->appendTranslation('always_open');
+        return $this->appendTranslation('open_every_day');
     }
 
     public function closed(): self

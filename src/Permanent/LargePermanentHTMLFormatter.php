@@ -56,7 +56,7 @@ final class LargePermanentHTMLFormatter implements PermanentFormatterInterface
 
         return $this->formatSummary(
             '<p class="cf-openinghours">'
-            . ucfirst($this->translator->translate('always_open'))
+            . ucfirst($this->translator->translate('open_every_day'))
             . '</p>'
         );
     }
