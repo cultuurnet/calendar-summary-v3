@@ -33,14 +33,14 @@ final class SmallMultipleHTMLFormatter implements MultipleFormatterInterface
 
     public function format(Offer $offer): string
     {
-        $dateFrom = $offer->getStartDate()->setTimezone(new \DateTimeZone(date_default_timezone_get()));
+        $dateFrom = $offer->getStartDate();
         $intlDateFrom = $this->formatter->formatAsDayNumber($dateFrom) .
             ' ' . $this->formatter->formatAsAbbreviatedMonthName($dateFrom);
         if (!DateComparison::isCurrentYear($dateFrom)) {
             $intlDateFrom .= ' ' . $this->formatter->formatAsYear($dateFrom);
         }
 
-        $dateTo = $offer->getEndDate()->setTimezone(new \DateTimeZone(date_default_timezone_get()));
+        $dateTo = $offer->getEndDate();
         $intlDateTo = $this->formatter->formatAsDayNumber($dateTo) .
             ' ' . $this->formatter->formatAsAbbreviatedMonthName($dateTo);
         if (!DateComparison::isCurrentYear($dateTo)) {

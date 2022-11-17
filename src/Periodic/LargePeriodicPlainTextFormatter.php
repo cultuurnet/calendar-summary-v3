@@ -32,8 +32,8 @@ final class LargePeriodicPlainTextFormatter implements PeriodicFormatterInterfac
 
     public function format(Offer $offer): string
     {
-        $startDate = $offer->getStartDate()->setTimezone(new \DateTimeZone(date_default_timezone_get()));
-        $endDate = $offer->getEndDate()->setTimezone(new \DateTimeZone(date_default_timezone_get()));
+        $startDate = $offer->getStartDate();
+        $endDate = $offer->getEndDate();
 
         $formattedStartDate = $this->formatter->formatAsFullDate($startDate);
         $formattedStartDayName = $this->formatter->formatAsDayOfWeek($startDate);

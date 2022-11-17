@@ -31,13 +31,13 @@ final class SmallPeriodicHTMLFormatter implements PeriodicFormatterInterface
 
     public function format(Offer $offer): string
     {
-        $startDate = $offer->getStartDate()->setTimezone(new \DateTimeZone(date_default_timezone_get()));
+        $startDate = $offer->getStartDate();
         $startDate->setTime(0, 0, 1);
 
         if (DateComparison::inTheFuture($startDate)) {
             $output = $this->formatNotStarted($startDate);
         } else {
-            $endDate = $offer->getEndDate()->setTimezone(new \DateTimeZone(date_default_timezone_get()));
+            $endDate = $offer->getEndDate();
             $output = $this->formatStarted($endDate);
         }
 
