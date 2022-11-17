@@ -7,12 +7,14 @@ namespace CultuurNet\CalendarSummaryV3\Single;
 use CultuurNet\CalendarSummaryV3\DateComparison;
 use CultuurNet\CalendarSummaryV3\DateFormatter;
 use CultuurNet\CalendarSummaryV3\PlainTextSummaryBuilder;
+use CultuurNet\CalendarSummaryV3\RelativeDatePlainTextFormatter;
 use CultuurNet\CalendarSummaryV3\Translator;
 use CultuurNet\CalendarSummaryV3\Offer\Offer;
 use DateTimeInterface;
 
 final class SmallSinglePlainTextFormatter implements SingleFormatterInterface
 {
+    use RelativeDatePlainTextFormatter;
     /**
      * @var DateFormatter
      */
@@ -48,20 +50,11 @@ final class SmallSinglePlainTextFormatter implements SingleFormatterInterface
 
     private function formatSameDay(DateTimeInterface $date): string
     {
-        if (DateComparison::isThisEvening($date)) {
-            return $this->translator->translate('tonight');
+        $relativeDate = $this->getRelativeDate($date, $this->translator, $this->formatter);
+        if (isset($relativeDate)) {
+            return $relativeDate;
         }
-        if (DateComparison::isToday($date)) {
-            return $this->translator->translate('today');
-        }
-        if (DateComparison::isTomorrow($date)) {
-            return $this->translator->translate('tomorrow');
-        }
-        if (DateComparison::isCurrentWeek($date)) {
-            $preposition = $this->translator->translate('this');
-            $weekDay = $this->formatter->formatAsDayOfWeek($date);
-            return PlainTextSummaryBuilder::singleLine($preposition, $weekDay);
-        }
+
         $dayNumber = $this->formatter->formatAsDayNumber($date);
         $monthName = $this->formatter->formatAsAbbreviatedMonthName($date);
         if (DateComparison::isCurrentYear($date)) {
