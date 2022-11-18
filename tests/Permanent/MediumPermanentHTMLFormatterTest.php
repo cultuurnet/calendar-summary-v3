@@ -226,6 +226,83 @@ final class MediumPermanentHTMLFormatterTest extends TestCase
         );
     }
 
+    public function testFormatPermanentOpenSevenDayAWeek(): void
+    {
+        $place = new Offer(
+            OfferType::place(),
+            new Status('Available', []),
+            new BookingAvailability('Available'),
+            new DateTimeImmutable('25-11-2025'),
+            new DateTimeImmutable('25-11-2025')
+        );
+
+        $openingHours1 = new OpeningHour(
+            ['wednesday', 'thursday'],
+            '18:00',
+            '20:00'
+        );
+
+        $openingHours2 = new OpeningHour(
+            ['monday', 'tuesday', 'friday'],
+            '21:00',
+            '23:00'
+        );
+
+        $openingHours3 = new OpeningHour(
+            ['saturday', 'sunday'],
+            '10:00',
+            '15:00'
+        );
+
+        $place = $place->withOpeningHours(
+            [
+                $openingHours1,
+                $openingHours2,
+                $openingHours3,
+            ]
+        );
+
+        $this->assertEquals(
+            '<p class="cf-openinghours">Elke dag open</p>',
+            $this->formatter->format($place)
+        );
+    }
+
+    public function testFormatPermanentOpenOneDayAWeek(): void
+    {
+        $place = new Offer(
+            OfferType::place(),
+            new Status('Available', []),
+            new BookingAvailability('Available'),
+            new DateTimeImmutable('25-11-2025'),
+            new DateTimeImmutable('25-11-2025')
+        );
+
+        $openingHours1 = new OpeningHour(
+            ['wednesday'],
+            '09:00',
+            '11:00'
+        );
+
+        $openingHours2 = new OpeningHour(
+            ['wednesday'],
+            '18:00',
+            '20:00'
+        );
+
+        $place = $place->withOpeningHours(
+            [
+                $openingHours1,
+                $openingHours2,
+            ]
+        );
+
+        $this->assertEquals(
+            '<p class="cf-openinghours">Elke woensdag open</p>',
+            $this->formatter->format($place)
+        );
+    }
+
     public function testFormatPermanentThreePeriods(): void
     {
         $place = new Offer(
