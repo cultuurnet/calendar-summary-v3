@@ -65,8 +65,10 @@ final class SmallMultipleHTMLFormatter implements MultipleFormatterInterface
     private function formatSameDay(DateTimeInterface $dateFrom, string $intlDateFrom): string
     {
         $relativeDate = $this->getRelativeDate($dateFrom, $this->translator, $this->formatter);
-        return $relativeDate ?? ('<span class="cf-weekday cf-meta">' . ucfirst($this->formatter->formatAsAbbreviatedDayOfWeek($dateFrom)) . '</span>'
-                . ' '
-                . '<span class="cf-date">' . $intlDateFrom . '</span>');
+        return $relativeDate ?? (
+            '<span class="cf-weekday cf-meta">' . ucfirst($this->formatter->formatAsAbbreviatedDayOfWeek($dateFrom)) . '</span>'
+            . ' '
+            . '<span class="cf-date">' . $intlDateFrom . '</span>'
+        );
     }
 }
