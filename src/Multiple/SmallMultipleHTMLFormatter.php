@@ -66,9 +66,9 @@ final class SmallMultipleHTMLFormatter implements MultipleFormatterInterface
     {
         $relativeDate = $this->getRelativeDate($dateFrom, $this->translator, $this->formatter);
         return $relativeDate ?? (
-            '<span class="cf-weekday cf-meta">' . ucfirst($this->formatter->formatAsAbbreviatedDayOfWeek($dateFrom)) . '</span>'
-            . ' '
-            . '<span class="cf-date">' . $intlDateFrom . '</span>'
+            '<span class="cf-weekday cf-meta">' . ucfirst($this->formatter->formatAsAbbreviatedDayOfWeek($dateFrom)) . '</span>' .
+            ' ' .
+            '<span class="cf-date">' . $intlDateFrom . '</span>'
         );
     }
 }
