@@ -13,6 +13,8 @@ use DateTimeImmutable;
 
 final class MediumPermanentPlainTextFormatter implements PermanentFormatterInterface
 {
+    use MediumPermanentWeekScheme;
+
     /**
      * @var DateFormatter
      */
@@ -75,33 +77,12 @@ final class MediumPermanentPlainTextFormatter implements PermanentFormatterInter
             return 'Elke ' . $this->formatter->formatAsDayOfWeek(new DateTimeImmutable($weekDaysOpen[key($weekDaysOpen)])) . ' open';
         }
 
-        $translatedDayNamesWithOpeningHours = [];
-        $dayPeriod = '';
-        $startNewPeriod = true;
-        foreach ($weekDaysOpen as $weekDayNumber => $dayName) {
-            // We start a new period, but the following day is closed
-            if ($startNewPeriod && !array_key_exists($weekDayNumber + 1, $weekDaysOpen)) {
-                $translatedDayNamesWithOpeningHours[] = $this->formatter->formatAsAbbreviatedDayOfWeek(new DateTimeImmutable($dayName));
-            }
-            // Start a new period and the following day is open
-            if ($startNewPeriod && array_key_exists($weekDayNumber + 1, $weekDaysOpen)) {
-                $dayPeriod = $this->formatter->formatAsAbbreviatedDayOfWeek(new DateTimeImmutable($dayName));
-                $startNewPeriod = false;
-            }
-            // The previous day was open but the following day isn't
-            if (!$startNewPeriod && !array_key_exists($weekDayNumber + 1, $weekDaysOpen)) {
-                $dayPeriod .= ' - ' . $this->formatter->formatAsAbbreviatedDayOfWeek(new DateTimeImmutable($dayName));
-                $translatedDayNamesWithOpeningHours[] = $dayPeriod;
-                $startNewPeriod = true;
-                $dayPeriod = '';
-            }
-            // Do nothing if both the previous & following day are open
-        }
+        $weekScheme = $this->getWeekScheme($weekDaysOpen, $this->formatter);
 
         // Put all the day names with opening hours on a single line with 'Open at' (sec) at the beginning.
         // E.g. 'Open at mo - th & su'
         return PlainTextSummaryBuilder::start($this->translator)
-            ->openAt(...$translatedDayNamesWithOpeningHours)
+            ->openAt(...$weekScheme)
             ->toString();
     }
 }

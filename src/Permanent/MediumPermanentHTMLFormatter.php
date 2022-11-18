@@ -13,6 +13,8 @@ use DateTimeImmutable;
 
 final class MediumPermanentHTMLFormatter implements PermanentFormatterInterface
 {
+    use MediumPermanentWeekScheme;
+
     /**
      * @var DateFormatter
      */
@@ -73,37 +75,15 @@ final class MediumPermanentHTMLFormatter implements PermanentFormatterInterface
             return '<p class="cf-openinghours">Elke ' . $this->formatter->formatAsDayOfWeek(new DateTimeImmutable($weekDaysOpen[key($weekDaysOpen)])) . ' open</p>';
         }
 
-        $translatedDayNamesWithOpeningHours = [];
-        $dayPeriod = '';
-        $startNewPeriod = true;
-        foreach ($weekDaysOpen as $weekDayNumber => $dayName) {
-            // We start a new period, but the following day is closed
-            if ($startNewPeriod && !array_key_exists($weekDayNumber + 1, $weekDaysOpen)) {
-                $translatedDayNamesWithOpeningHours[] = $this->formatter->formatAsAbbreviatedDayOfWeek(new DateTimeImmutable($dayName));
-            }
-            // Start a new period and the following day is open
-            if ($startNewPeriod && array_key_exists($weekDayNumber + 1, $weekDaysOpen)) {
-                $dayPeriod = $this->formatter->formatAsAbbreviatedDayOfWeek(new DateTimeImmutable($dayName));
-                $startNewPeriod = false;
-            }
-            // The previous day was open but the following day isn't
-            if (!$startNewPeriod && !array_key_exists($weekDayNumber + 1, $weekDaysOpen)) {
-                $dayPeriod .= ' - ' . $this->formatter->formatAsAbbreviatedDayOfWeek(new DateTimeImmutable($dayName));
-                $translatedDayNamesWithOpeningHours[] = $dayPeriod;
-                $startNewPeriod = true;
-                $dayPeriod = '';
-            }
-            // Do nothing if both the previous & following day are open
-        }
+        $weekScheme = $this->getWeekScheme($weekDaysOpen, $this->formatter);
 
         $outputWeek = '<span>' . ucfirst($this->translator->translate('open')) . ' '
             . '<span class="cf-weekdays">';
 
         $i = 0;
-
-        foreach ($translatedDayNamesWithOpeningHours as $translatedDayNamesWithOpeningHour) {
+        foreach ($weekScheme as $translatedDayNamesWithOpeningHour) {
             $outputWeek .= '<span class="cf-weekday-open">' . $translatedDayNamesWithOpeningHour . '</span>';
-            if (++$i !== count($translatedDayNamesWithOpeningHours)) {
+            if (++$i !== count($weekScheme)) {
                 $outputWeek .= ' & ';
             }
         }
