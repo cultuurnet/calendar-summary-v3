@@ -271,6 +271,90 @@ final class MediumPermanentPlainTextFormatterTest extends TestCase
         );
     }
 
+    public function testFormatPermanentClosedOnMondays(): void
+    {
+        $place = new Offer(
+            OfferType::place(),
+            new Status('Available', []),
+            new BookingAvailability('Available'),
+            new DateTimeImmutable('25-11-2025'),
+            new DateTimeImmutable('25-11-2025')
+        );
+
+        $openingHours1 = new OpeningHour(
+            ['wednesday', 'thursday'],
+            '18:00',
+            '20:00'
+        );
+
+        $openingHours2 = new OpeningHour(
+            ['friday'],
+            '21:00',
+            '23:00'
+        );
+
+        $openingHours3 = new OpeningHour(
+            ['sunday'],
+            '10:00',
+            '15:00'
+        );
+
+        $place = $place->withOpeningHours(
+            [
+                $openingHours1,
+                $openingHours2,
+                $openingHours3,
+            ]
+        );
+
+        $this->assertEquals(
+            'Open op wo - vr & zo',
+            $this->formatter->format($place)
+        );
+    }
+
+    public function testFormatPermanentThreePeriods(): void
+    {
+        $place = new Offer(
+            OfferType::place(),
+            new Status('Available', []),
+            new BookingAvailability('Available'),
+            new DateTimeImmutable('25-11-2025'),
+            new DateTimeImmutable('25-11-2025')
+        );
+
+        $openingHours1 = new OpeningHour(
+            ['monday', 'tuesday'],
+            '18:00',
+            '20:00'
+        );
+
+        $openingHours2 = new OpeningHour(
+            ['thursday', 'friday'],
+            '21:00',
+            '23:00'
+        );
+
+        $openingHours3 = new OpeningHour(
+            ['sunday'],
+            '10:00',
+            '15:00'
+        );
+
+        $place = $place->withOpeningHours(
+            [
+                $openingHours1,
+                $openingHours2,
+                $openingHours3,
+            ]
+        );
+
+        $this->assertEquals(
+            'Open op ma - di & do - vr & zo',
+            $this->formatter->format($place)
+        );
+    }
+
     public function testFormatPermanentWithoutOpeningHours(): void
     {
         $event = new Offer(
