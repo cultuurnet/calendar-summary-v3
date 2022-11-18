@@ -64,12 +64,8 @@ final class MediumPermanentHTMLFormatterTest extends TestCase
 
         $this->assertEquals(
             '<span>Open op <span class="cf-weekdays">'
-            . '<span class="cf-weekday-open">ma</span>, '
-            . '<span class="cf-weekday-open">di</span>, '
-            . '<span class="cf-weekday-open">wo</span>, '
-            . '<span class="cf-weekday-open">vr</span>, '
-            . '<span class="cf-weekday-open">za</span>, '
-            . '<span class="cf-weekday-open">zo</span>'
+            . '<span class="cf-weekday-open">ma - wo</span> & '
+            . '<span class="cf-weekday-open">vr - zo</span>'
             . '</span></span>',
             $this->formatter->format($place)
         );
@@ -120,11 +116,8 @@ final class MediumPermanentHTMLFormatterTest extends TestCase
 
         $this->assertEquals(
             '<span>Open op <span class="cf-weekdays">'
-            . '<span class="cf-weekday-open">ma</span>, '
-            . '<span class="cf-weekday-open">di</span>, '
-            . '<span class="cf-weekday-open">wo</span>, '
-            . '<span class="cf-weekday-open">vr</span>, '
-            . '<span class="cf-weekday-open">za</span>'
+            . '<span class="cf-weekday-open">ma - wo</span> & '
+            . '<span class="cf-weekday-open">vr - za</span>'
             . '</span></span>',
             $this->formatter->format($place)
         );
@@ -182,7 +175,7 @@ final class MediumPermanentHTMLFormatterTest extends TestCase
 
         $this->assertEquals(
             '<span>Open op <span class="cf-weekdays">'
-            . '<span class="cf-weekday-open">ma</span>, '
+            . '<span class="cf-weekday-open">ma -</span>, '
             . '<span class="cf-weekday-open">di</span>, '
             . '<span class="cf-weekday-open">vr</span>, '
             . '<span class="cf-weekday-open">za</span>'
