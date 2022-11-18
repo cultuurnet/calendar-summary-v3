@@ -74,7 +74,11 @@ final class MediumPermanentPlainTextFormatter implements PermanentFormatterInter
         }
 
         if (count($weekDaysOpen) === 1) {
-            return 'Elke ' . $this->formatter->formatAsDayOfWeek(new DateTimeImmutable($weekDaysOpen[key($weekDaysOpen)])) . ' open';
+            return PlainTextSummaryBuilder::start($this->translator)
+                ->append($this->translator->translate('open_every'))
+                ->append($this->formatter->formatAsDayOfWeek(new DateTimeImmutable($weekDaysOpen[key($weekDaysOpen)])))
+                ->append($this->translator->translate('open_every_end'))
+                ->toString();
         }
 
         $weekScheme = $this->getWeekScheme($weekDaysOpen, $this->formatter);
