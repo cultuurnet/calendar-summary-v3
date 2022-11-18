@@ -54,28 +54,57 @@ final class MediumPermanentHTMLFormatter implements PermanentFormatterInterface
      */
     private function generateWeekScheme(array $openingHoursData): string
     {
-        $outputWeek = '<span>' . ucfirst($this->translator->translate('open')) . ' '
-            . '<span class="cf-weekdays">';
-        // Create an array with formatted days.
-        $formattedDays = [];
-
+        $weekDaysOpen = [];
+        // Create a list of all day names that have opening hours
         foreach ($openingHoursData as $openingHours) {
-            $daysOfWeek = $openingHours->getDaysOfWeek();
-            foreach ($daysOfWeek as $i => $dayOfWeek) {
-                $translatedDay = $this->formatter->formatAsAbbreviatedDayOfWeek(new DateTimeImmutable($dayOfWeek));
-
-                if (!isset($formattedDays[$dayOfWeek])) {
-                    $formattedDays[$dayOfWeek] = $translatedDay;
+            foreach ($openingHours->getDaysOfWeek() as $dayName) {
+                if (!in_array($dayName, $weekDaysOpen, true)) {
+                    $weekDaysOpen[(int) $this->formatter->formatAsDayOfWeekNumber(new DateTimeImmutable($dayName))] = $dayName;
                 }
             }
         }
 
+        if (count($weekDaysOpen) === 7) {
+            return '<p class="cf-openinghours">' .
+                ucfirst($this->translator->translate('open_every_day')) . '</p>';
+        }
+
+        if (count($weekDaysOpen) === 1) {
+            return '<p class="cf-openinghours">Elke ' . $this->formatter->formatAsDayOfWeek(new DateTimeImmutable($weekDaysOpen[key($weekDaysOpen)])) . ' open</p>';
+        }
+
+        $translatedDayNamesWithOpeningHours = [];
+        $dayPeriod = '';
+        $startNewPeriod = true;
+        foreach ($weekDaysOpen as $weekDayNumber => $dayName) {
+            // We start a new period, but the following day is closed
+            if ($startNewPeriod && !array_key_exists($weekDayNumber + 1, $weekDaysOpen)) {
+                $translatedDayNamesWithOpeningHours[] = $this->formatter->formatAsAbbreviatedDayOfWeek(new DateTimeImmutable($dayName));
+            }
+            // Start a new period and the following day is open
+            if ($startNewPeriod && array_key_exists($weekDayNumber + 1, $weekDaysOpen)) {
+                $dayPeriod = $this->formatter->formatAsAbbreviatedDayOfWeek(new DateTimeImmutable($dayName));
+                $startNewPeriod = false;
+            }
+            // The previous day was open but the following day isn't
+            if (!$startNewPeriod && !array_key_exists($weekDayNumber + 1, $weekDaysOpen)) {
+                $dayPeriod .= ' - ' . $this->formatter->formatAsAbbreviatedDayOfWeek(new DateTimeImmutable($dayName));
+                $translatedDayNamesWithOpeningHours[] = $dayPeriod;
+                $startNewPeriod = true;
+                $dayPeriod = '';
+            }
+            // Do nothing if both the previous & following day are open
+        }
+
+        $outputWeek = '<span>' . ucfirst($this->translator->translate('open')) . ' '
+            . '<span class="cf-weekdays">';
+
         $i = 0;
 
-        foreach ($formattedDays as $formattedDay) {
-            $outputWeek .= '<span class="cf-weekday-open">' . $formattedDay . '</span>';
-            if (++$i !== count($formattedDays)) {
-                $outputWeek .= ', ';
+        foreach ($translatedDayNamesWithOpeningHours as $translatedDayNamesWithOpeningHour) {
+            $outputWeek .= '<span class="cf-weekday-open">' . $translatedDayNamesWithOpeningHour . '</span>';
+            if (++$i !== count($translatedDayNamesWithOpeningHours)) {
+                $outputWeek .= ' & ';
             }
         }
 
