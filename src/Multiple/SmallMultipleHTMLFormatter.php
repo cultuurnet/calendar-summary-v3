@@ -34,18 +34,10 @@ final class SmallMultipleHTMLFormatter implements MultipleFormatterInterface
     public function format(Offer $offer): string
     {
         $dateFrom = $offer->getStartDate()->setTimezone(new \DateTimeZone(date_default_timezone_get()));
-        $intlDateFrom = $this->formatter->formatAsDayNumber($dateFrom) .
-            ' ' . $this->formatter->formatAsAbbreviatedMonthName($dateFrom);
-        if (!DateComparison::isCurrentYear($dateFrom)) {
-            $intlDateFrom .= ' ' . $this->formatter->formatAsYear($dateFrom);
-        }
+        $intlDateFrom = $this->getIntlDate($dateFrom);
 
         $dateTo = $offer->getEndDate()->setTimezone(new \DateTimeZone(date_default_timezone_get()));
-        $intlDateTo = $this->formatter->formatAsDayNumber($dateTo) .
-            ' ' . $this->formatter->formatAsAbbreviatedMonthName($dateTo);
-        if (!DateComparison::isCurrentYear($dateTo)) {
-            $intlDateTo .= ' ' . $this->formatter->formatAsYear($dateTo);
-        }
+        $intlDateTo = $this->getIntlDate($dateTo);
 
         if (DateComparison::onSameDay($dateFrom, $dateTo)) {
             $output = $this->formatSameDay($dateFrom, $intlDateFrom);
@@ -70,5 +62,15 @@ final class SmallMultipleHTMLFormatter implements MultipleFormatterInterface
             ' ' .
             '<span class="cf-date">' . $intlDateFrom . '</span>'
         );
+    }
+
+    private function getIntlDate(\DateTimeImmutable $dateTime): string
+    {
+        $intlDate = $this->formatter->formatAsDayNumber($dateTime) .
+            ' ' . $this->formatter->formatAsAbbreviatedMonthName($dateTime);
+        if (!DateComparison::isCurrentYear($dateTime)) {
+            $intlDate .= ' ' . $this->formatter->formatAsYear($dateTime);
+        }
+        return $intlDate;
     }
 }
