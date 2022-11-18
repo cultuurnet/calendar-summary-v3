@@ -41,12 +41,12 @@ final class ExtraSmallMultipleHTMLFormatter implements MultipleFormatterInterfac
                 $output .= ' <span class="cf-year">' . $this->formatter->formatAsYear($dateFrom) . '</span>';
             }
         } else {
-            $output = '<span class="cf-date">' . $this->formatter->formatAsDayNumber($dateFrom) .
-                '</span> <span class="cf-month">' . $this->formatter->formatAsAbbreviatedMonthName($dateFrom) . '</span>' .
-                ' <span class="cf-year">' . $this->formatter->formatAsYear($dateFrom) . '</span>' .
+            $output = '<span class="cf-date">' . $this->formatter->formatAsDayNumber($dateFrom) . '</span> ' .
+                '<span class="cf-month">' . $this->formatter->formatAsAbbreviatedMonthName($dateFrom) . '</span> ' .
+                '<span class="cf-year">' . $this->formatter->formatAsYear($dateFrom) . '</span>' .
                 ' - ' .
-                '<span class="cf-date">' . $this->formatter->formatAsDayNumber($dateTo) .
-                '</span> <span class="cf-month">' . $this->formatter->formatAsAbbreviatedMonthName($dateTo) . '</span>';
+                '<span class="cf-date">' . $this->formatter->formatAsDayNumber($dateTo) . '</span> ' .
+                '<span class="cf-month">' . $this->formatter->formatAsAbbreviatedMonthName($dateTo) . '</span>';
             if (!DateComparison::isCurrentYear($dateTo)) {
                 $output .= ' <span class="cf-year">' . $this->formatter->formatAsYear($dateTo) . '</span>';
             }

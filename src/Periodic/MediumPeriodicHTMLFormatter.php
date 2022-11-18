@@ -42,11 +42,11 @@ final class MediumPeriodicHTMLFormatter implements PeriodicFormatterInterface
                 . ' '
                 . '<span class="cf-date">' . $intlDateFrom . '</span>';
         } else {
-            $output = '<span class="cf-from cf-meta">' . ucfirst($this->translator->translate('from'))
-                . '</span> <span class="cf-weekday cf-meta">' . $intlDateFromDay . '</span> '
+            $output = '<span class="cf-from cf-meta">' . ucfirst($this->translator->translate('from')) . '</span> '
+                . '<span class="cf-weekday cf-meta">' . $intlDateFromDay . '</span> '
                 . '<span class="cf-date">' . $intlDateFrom . '</span> '
-                . '<span class="cf-to cf-meta">' . $this->translator->translate('till')
-                . '</span> <span class="cf-weekday cf-meta">' . $intlDateDayTo . '</span> '
+                . '<span class="cf-to cf-meta">' . $this->translator->translate('till') . '</span> '
+                . '<span class="cf-weekday cf-meta">' . $intlDateDayTo . '</span> '
                 . '<span class="cf-date">' . $intlDateTo . '</span>';
         }
 
