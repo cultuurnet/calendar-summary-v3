@@ -44,7 +44,7 @@ final class PlainTextSummaryBuilder
 
     public function openAt(string ...$text): self
     {
-        return $this->appendTranslation('open')->appendMultiple($text, ', ');
+        return $this->appendTranslation('open')->appendMultiple($text, ' & ');
     }
 
     public function alwaysOpen(): self
