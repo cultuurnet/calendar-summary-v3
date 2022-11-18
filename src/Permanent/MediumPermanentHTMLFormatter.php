@@ -72,7 +72,10 @@ final class MediumPermanentHTMLFormatter implements PermanentFormatterInterface
         }
 
         if (count($weekDaysOpen) === 1) {
-            return '<p class="cf-openinghours">Elke ' . $this->formatter->formatAsDayOfWeek(new DateTimeImmutable($weekDaysOpen[key($weekDaysOpen)])) . ' open</p>';
+            return '<p class="cf-openinghours">' .
+                $this->translator->translate('open_every') . ' ' .
+                $this->formatter->formatAsDayOfWeek(new DateTimeImmutable($weekDaysOpen[key($weekDaysOpen)])) . ' ' .
+                $this->translator->translate('open_every_end') . '</p>';
         }
 
         $weekScheme = $this->getWeekScheme($weekDaysOpen, $this->formatter);
