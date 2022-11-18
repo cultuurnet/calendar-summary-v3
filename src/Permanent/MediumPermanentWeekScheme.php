@@ -11,9 +11,12 @@ trait MediumPermanentWeekScheme
 {
     public function getWeekScheme(array $weekDaysOpen, DateFormatter $formatter): array
     {
+        // Do no assume people will order the days consecutive
+        ksort($weekDaysOpen);
         $translatedDayNamesWithOpeningHours = [];
         $dayPeriod = '';
         $startNewPeriod = true;
+
         foreach ($weekDaysOpen as $weekDayNumber => $dayName) {
             // We start a new period, but the following day is closed
             if ($startNewPeriod && !array_key_exists($weekDayNumber + 1, $weekDaysOpen)) {
