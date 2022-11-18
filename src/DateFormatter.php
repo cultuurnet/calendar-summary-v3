@@ -15,6 +15,7 @@ final class DateFormatter
     private const PATTERN_DAY_NUMBER = 'd'; // Example '1', '31'
     private const PATTERN_MONTH_NUMBER = 'M'; // Example '1', '12'
 
+    private const PATTERN_DAY_OF_WEEK_NR = 'e'; // Example '1', '7'
     private const PATTERN_DAY_OF_WEEK = 'EEEE'; // Example 'tuesday'
     private const PATTERN_DAY_OF_WEEK_ABBREVIATED = 'EEE'; // Example 'tue'
 
@@ -60,6 +61,14 @@ final class DateFormatter
     public function formatAsDayOfWeek(DateTimeInterface $dateTime): string
     {
         return $this->format($dateTime, self::PATTERN_DAY_OF_WEEK);
+    }
+
+    /**
+     * Used to format weekdays as '1' to '7'
+     */
+    public function formatAsDayOfWeekNumber(DateTimeInterface $dateTime): string
+    {
+        return $this->format($dateTime, self::PATTERN_DAY_OF_WEEK_NR);
     }
 
     /**
