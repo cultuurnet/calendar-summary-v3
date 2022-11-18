@@ -34,18 +34,10 @@ final class SmallMultipleHTMLFormatter implements MultipleFormatterInterface
     public function format(Offer $offer): string
     {
         $dateFrom = $offer->getStartDate();
-        $intlDateFrom = $this->formatter->formatAsDayNumber($dateFrom) .
-            ' ' . $this->formatter->formatAsAbbreviatedMonthName($dateFrom);
-        if (!DateComparison::isCurrentYear($dateFrom)) {
-            $intlDateFrom .= ' ' . $this->formatter->formatAsYear($dateFrom);
-        }
+        $intlDateFrom = $this->getIntlDate($dateFrom);
 
         $dateTo = $offer->getEndDate();
-        $intlDateTo = $this->formatter->formatAsDayNumber($dateTo) .
-            ' ' . $this->formatter->formatAsAbbreviatedMonthName($dateTo);
-        if (!DateComparison::isCurrentYear($dateTo)) {
-            $intlDateTo .= ' ' . $this->formatter->formatAsYear($dateTo);
-        }
+        $intlDateTo = $this->getIntlDate($dateTo);
 
         if (DateComparison::onSameDay($dateFrom, $dateTo)) {
             $output = $this->formatSameDay($dateFrom, $intlDateFrom);
@@ -65,8 +57,20 @@ final class SmallMultipleHTMLFormatter implements MultipleFormatterInterface
     private function formatSameDay(DateTimeInterface $dateFrom, string $intlDateFrom): string
     {
         $relativeDate = $this->getRelativeDate($dateFrom, $this->translator, $this->formatter);
-        return $relativeDate ?? ('<span class="cf-weekday cf-meta">' . ucfirst($this->formatter->formatAsAbbreviatedDayOfWeek($dateFrom)) . '</span>'
-                . ' '
-                . '<span class="cf-date">' . $intlDateFrom . '</span>');
+        return $relativeDate ?? (
+            '<span class="cf-weekday cf-meta">' . ucfirst($this->formatter->formatAsAbbreviatedDayOfWeek($dateFrom)) . '</span>' .
+            ' ' .
+            '<span class="cf-date">' . $intlDateFrom . '</span>'
+        );
+    }
+
+    private function getIntlDate(\DateTimeImmutable $dateTime): string
+    {
+        $intlDate = $this->formatter->formatAsDayNumber($dateTime) .
+            ' ' . $this->formatter->formatAsAbbreviatedMonthName($dateTime);
+        if (!DateComparison::isCurrentYear($dateTime)) {
+            $intlDate .= ' ' . $this->formatter->formatAsYear($dateTime);
+        }
+        return $intlDate;
     }
 }
