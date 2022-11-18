@@ -20,13 +20,9 @@ trait RelativeDateHTMLFormatter
             return '<span class="cf-days">' . $translator->translate('tomorrow') . '</span>';
         }
         if (DateComparison::isCurrentWeek($date)) {
-            return '<span class="cf-meta">' .
-                $translator->translate('this') .
-                '</span>' .
+            return '<span class="cf-meta">' . $translator->translate('this') . '</span>' .
                 ' ' .
-                '<span class="cf-days">' .
-                $formatter->formatAsDayOfWeek($date) .
-                '</span>';
+                '<span class="cf-days">' . $formatter->formatAsDayOfWeek($date) . '</span>';
         }
         return null;
     }
