@@ -99,7 +99,7 @@ final class MediumPermanentPlainTextFormatter implements PermanentFormatterInter
         }
 
         // Put all the day names with opening hours on a single line with 'Open at' (sec) at the beginning.
-        // E.g. 'Open at monday - thursday & sunday'
+        // E.g. 'Open at mo - th & su'
         return PlainTextSummaryBuilder::start($this->translator)
             ->openAt(...$translatedDayNamesWithOpeningHours)
             ->toString();
