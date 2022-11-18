@@ -54,18 +54,52 @@ final class MediumPermanentPlainTextFormatter implements PermanentFormatterInter
      */
     private function generateWeekScheme(array $openingHoursData): string
     {
-        // Create a list of all day names that have opening hours, translated
-        $translatedDayNamesWithOpeningHours = [];
+        $weekDaysOpen = [];
+        // Create a list of all day names that have opening hours
         foreach ($openingHoursData as $openingHours) {
             foreach ($openingHours->getDaysOfWeek() as $dayName) {
-                $translatedDayName = $this->formatter->formatAsAbbreviatedDayOfWeek(new DateTimeImmutable($dayName));
-                $translatedDayNamesWithOpeningHours[] = $translatedDayName;
+                if (!in_array($dayName, $weekDaysOpen, true)) {
+                    $weekDaysOpen[(int) $this->formatter->formatAsDayOfWeekNumber(new DateTimeImmutable($dayName))] = $dayName;
+                }
             }
         }
-        $translatedDayNamesWithOpeningHours = array_unique($translatedDayNamesWithOpeningHours);
+
+        if (count($weekDaysOpen) === 7) {
+            return PlainTextSummaryBuilder::start($this->translator)
+                ->alwaysOpen()
+                ->startNewLine()
+                ->toString();
+        }
+
+        if (count($weekDaysOpen) === 1) {
+            return 'Elke ' . $this->formatter->formatAsDayOfWeek(new DateTimeImmutable($weekDaysOpen[key($weekDaysOpen)])) . ' open';
+        }
+
+        $translatedDayNamesWithOpeningHours = [];
+        $subString = '';
+        $startNewPeriod = true;
+        foreach ($weekDaysOpen as $weekDayNumber => $dayName) {
+            // We start a new period, but the following day is closed
+            if ($startNewPeriod && !array_key_exists($weekDayNumber + 1, $weekDaysOpen)) {
+                $translatedDayNamesWithOpeningHours[] = $this->formatter->formatAsAbbreviatedDayOfWeek(new DateTimeImmutable($dayName));
+            }
+            // Start a new period and the following day is open
+            if ($startNewPeriod && array_key_exists($weekDayNumber + 1, $weekDaysOpen)) {
+                $subString = $this->formatter->formatAsAbbreviatedDayOfWeek(new DateTimeImmutable($dayName));
+                $startNewPeriod = false;
+            }
+            // The previous day was open but the following day isn't
+            if (!$startNewPeriod && !array_key_exists($weekDayNumber + 1, $weekDaysOpen)) {
+                $subString .= ' - ' . $this->formatter->formatAsAbbreviatedDayOfWeek(new DateTimeImmutable($dayName));
+                $translatedDayNamesWithOpeningHours[] = $subString;
+                $startNewPeriod = true;
+                $subString = '';
+            }
+            // Do nothing if both the previous & following day are open
+        }
 
         // Put all the day names with opening hours on a single line with 'Open at' (sec) at the beginning.
-        // E.g. 'Open at monday, wednesday, thursday'
+        // E.g. 'Open at monday - thursday & sunday'
         return PlainTextSummaryBuilder::start($this->translator)
             ->openAt(...$translatedDayNamesWithOpeningHours)
             ->toString();
