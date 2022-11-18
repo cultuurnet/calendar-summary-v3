@@ -37,7 +37,7 @@ final class SmallMultiplePlainTextFormatter implements MultipleFormatterInterfac
 
         if (DateComparison::onSameDay($startDate, $endDate)) {
             $relativeDate = $this->getRelativeDate($startDate, $this->translator, $this->formatter);
-            if (isset($relativeDate)) {
+            if ($relativeDate !== null) {
                 return $relativeDate;
             }
 

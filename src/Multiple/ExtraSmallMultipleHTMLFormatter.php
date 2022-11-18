@@ -34,8 +34,8 @@ final class ExtraSmallMultipleHTMLFormatter implements MultipleFormatterInterfac
         $dateTo = $offer->getEndDate();
 
         if (DateComparison::onSameDay($dateFrom, $dateTo)) {
-            $output = '<span class="cf-date">' . $this->formatter->formatAsDayNumber($dateFrom) .
-                '</span> <span class="cf-month">' . $this->formatter->formatAsAbbreviatedMonthName($dateFrom) . '</span>';
+            $output = '<span class="cf-date">' . $this->formatter->formatAsDayNumber($dateFrom) . '</span> ' .
+                '<span class="cf-month">' . $this->formatter->formatAsAbbreviatedMonthName($dateFrom) . '</span>';
             if (!DateComparison::isCurrentYear($dateFrom)) {
                 $output .= ' <span class="cf-year">' . $this->formatter->formatAsYear($dateFrom) . '</span>';
             }
