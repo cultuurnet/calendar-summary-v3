@@ -76,7 +76,7 @@ final class MediumPermanentPlainTextFormatter implements PermanentFormatterInter
         }
 
         $translatedDayNamesWithOpeningHours = [];
-        $subString = '';
+        $dayPeriod = '';
         $startNewPeriod = true;
         foreach ($weekDaysOpen as $weekDayNumber => $dayName) {
             // We start a new period, but the following day is closed
@@ -85,15 +85,15 @@ final class MediumPermanentPlainTextFormatter implements PermanentFormatterInter
             }
             // Start a new period and the following day is open
             if ($startNewPeriod && array_key_exists($weekDayNumber + 1, $weekDaysOpen)) {
-                $subString = $this->formatter->formatAsAbbreviatedDayOfWeek(new DateTimeImmutable($dayName));
+                $dayPeriod = $this->formatter->formatAsAbbreviatedDayOfWeek(new DateTimeImmutable($dayName));
                 $startNewPeriod = false;
             }
             // The previous day was open but the following day isn't
             if (!$startNewPeriod && !array_key_exists($weekDayNumber + 1, $weekDaysOpen)) {
-                $subString .= ' - ' . $this->formatter->formatAsAbbreviatedDayOfWeek(new DateTimeImmutable($dayName));
-                $translatedDayNamesWithOpeningHours[] = $subString;
+                $dayPeriod .= ' - ' . $this->formatter->formatAsAbbreviatedDayOfWeek(new DateTimeImmutable($dayName));
+                $translatedDayNamesWithOpeningHours[] = $dayPeriod;
                 $startNewPeriod = true;
-                $subString = '';
+                $dayPeriod = '';
             }
             // Do nothing if both the previous & following day are open
         }
