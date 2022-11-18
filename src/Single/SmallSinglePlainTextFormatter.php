@@ -51,7 +51,7 @@ final class SmallSinglePlainTextFormatter implements SingleFormatterInterface
     private function formatSameDay(DateTimeInterface $date): string
     {
         $relativeDate = $this->getRelativeDate($date, $this->translator, $this->formatter);
-        if (isset($relativeDate)) {
+        if ($relativeDate !== null) {
             return $relativeDate;
         }
 

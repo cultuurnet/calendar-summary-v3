@@ -180,6 +180,23 @@ final class ExtraSmallMultiplePlainTextFormatterTest extends TestCase
         );
     }
 
+    public function testFormatAPeriodWithSameBeginAndEndDateCurrentYear(): void
+    {
+        $offer = new Offer(
+            OfferType::event(),
+            new Status('Available', []),
+            new BookingAvailability('Available'),
+            CarbonImmutable::create(2021, 3, 8)->setTime(11, 0),
+            CarbonImmutable::create(2021, 3, 8)->setTime(19, 0),
+            CalendarType::multiple()
+        );
+
+        $this->assertEquals(
+            '8 mrt',
+            $this->formatter->format($offer)
+        );
+    }
+
     public function testFormatMultipleMonthWithUnavailableStatus(): void
     {
         $offer = new Offer(
