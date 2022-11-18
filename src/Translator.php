@@ -44,6 +44,8 @@ final class Translator
                 'tonight' => 'Tonight',
                 'tomorrow' => 'Tomorrow',
                 'to' => 'to',
+                'open_every' => 'Open every',
+                'open_every_end' => '',
             ],
             'nl' => [
                 'from' => 'van',
@@ -67,6 +69,8 @@ final class Translator
                 'tonight' => 'Vanavond',
                 'tomorrow' => 'Morgen',
                 'to' => 'tot en met',
+                'open_every' => 'Elke',
+                'open_every_end' => 'open',
             ],
             'fr' => [
                 'from' => 'du',
@@ -90,6 +94,8 @@ final class Translator
                 'tonight' => 'Ce soir',
                 'tomorrow' => 'Demain',
                 'to' => 'à',
+                'open_every' => 'Ouvert chaque',
+                'open_every_end' => '',
             ],
             'de' => [
                 'from' => 'von',
@@ -113,6 +119,8 @@ final class Translator
                 'tonight' => 'Diesen Abend',
                 'tomorrow' => 'Morgen',
                 'to' => 'bis',
+                'open_every' => 'Jeden',
+                'open_every_end' => 'geöffnet',
             ],
         ];
 
