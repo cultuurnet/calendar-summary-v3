@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace CultuurNet\CalendarSummaryV3\Offer;
 
 use DateTimeImmutable;
-use PHPStan\Testing\TestCase;
+use PHPUnit\Framework\TestCase;
 
 final class OfferTest extends TestCase
 {
