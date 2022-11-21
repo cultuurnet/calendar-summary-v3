@@ -34,16 +34,28 @@ final class ExtraSmallPeriodicPlainTextFormatter implements PeriodicFormatterInt
         $startDate->setTime(0, 0, 1);
 
         if (DateComparison::inTheFuture($startDate)) {
-            return PlainTextSummaryBuilder::start($this->translator)
-                ->fromPeriod($this->formatter->formatAsShortDate($startDate))
-                ->appendAvailability($offer->getStatus(), $offer->getBookingAvailability())
+            $plainTextSummaryBuilder = PlainTextSummaryBuilder::start($this->translator)
+                ->fromPeriod(
+                    $this->formatter->formatAsDayNumber($startDate),
+                    $this->formatter->formatAsAbbreviatedMonthName($startDate)
+                );
+            if (!DateComparison::isCurrentYear($startDate)) {
+                $plainTextSummaryBuilder = $plainTextSummaryBuilder->append($this->formatter->formatAsYear($startDate));
+            }
+            return $plainTextSummaryBuilder->appendAvailability($offer->getStatus(), $offer->getBookingAvailability())
                 ->toString();
         }
 
         $endDate = $offer->getEndDate();
-        return PlainTextSummaryBuilder::start($this->translator)
-            ->till($this->formatter->formatAsShortDate($endDate))
-            ->appendAvailability($offer->getStatus(), $offer->getBookingAvailability())
+        $plainTextSummaryBuilder = PlainTextSummaryBuilder::start($this->translator)
+            ->till(
+                $this->formatter->formatAsDayNumber($endDate),
+                $this->formatter->formatAsAbbreviatedMonthName($endDate)
+            );
+        if (!DateComparison::isCurrentYear($endDate)) {
+            $plainTextSummaryBuilder = $plainTextSummaryBuilder->append($this->formatter->formatAsYear($endDate));
+        }
+        return $plainTextSummaryBuilder->appendAvailability($offer->getStatus(), $offer->getBookingAvailability())
             ->toString();
     }
 }

@@ -36,11 +36,13 @@ final class LargePeriodicPlainTextFormatter implements PeriodicFormatterInterfac
         $endDate = $offer->getEndDate()->setTimezone(new \DateTimeZone(date_default_timezone_get()));
 
         $formattedStartDate = $this->formatter->formatAsFullDate($startDate);
+        $formattedStartDayName = $this->formatter->formatAsDayOfWeek($startDate);
         $formattedEndDate = $this->formatter->formatAsFullDate($endDate);
+        $formattedEndDayName = $this->formatter->formatAsDayOfWeek($endDate);
 
         $summary = PlainTextSummaryBuilder::start($this->translator)
-            ->from($formattedStartDate)
-            ->till($formattedEndDate);
+            ->from($formattedStartDayName, $formattedStartDate)
+            ->to($formattedEndDayName, $formattedEndDate);
 
         if ($offer->getOpeningHours()) {
             $summary = $summary

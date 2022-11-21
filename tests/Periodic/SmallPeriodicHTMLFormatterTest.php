@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace CultuurNet\CalendarSummaryV3\Periodic;
 
+use Carbon\CarbonImmutable;
 use CultuurNet\CalendarSummaryV3\Offer\BookingAvailability;
 use CultuurNet\CalendarSummaryV3\Offer\CalendarType;
 use CultuurNet\CalendarSummaryV3\Offer\Offer;
@@ -23,6 +24,7 @@ final class SmallPeriodicHTMLFormatterTest extends TestCase
     protected function setUp(): void
     {
         $this->formatter = new SmallPeriodicHTMLFormatter(new Translator('nl_NL'));
+        CarbonImmutable::setTestNow(CarbonImmutable::create(2021, 5, 3));
     }
 
     public function testFormatAPeriodWithoutLeadingZeroes(): void
@@ -38,6 +40,8 @@ final class SmallPeriodicHTMLFormatterTest extends TestCase
 
         $expected =
             '<span class="from meta">Vanaf</span>' .
+            ' ' .
+            '<span class="cf-days">di</span>' .
             ' ' .
             '<span class="cf-date">25</span>' .
             ' ' .
@@ -65,11 +69,91 @@ final class SmallPeriodicHTMLFormatterTest extends TestCase
         $expected =
             '<span class="from meta">Vanaf</span>' .
             ' ' .
+            '<span class="cf-days">di</span>' .
+            ' ' .
             '<span class="cf-date">4</span>' .
             ' ' .
             '<span class="cf-month">mrt</span>' .
             ' ' .
             '<span class="cf-year">2025</span>';
+
+        $this->assertEquals(
+            $expected,
+            $this->formatter->format($offer)
+        );
+    }
+
+    public function testFormatAPeriodCurrentYear(): void
+    {
+        $offer = new Offer(
+            OfferType::event(),
+            new Status('Available', []),
+            new BookingAvailability('Available'),
+            new DateTimeImmutable('25-11-2021'),
+            new DateTimeImmutable('30-11-2021'),
+            CalendarType::periodic()
+        );
+
+        $expected =
+            '<span class="from meta">Vanaf</span>' .
+            ' ' .
+            '<span class="cf-days">do</span>' .
+            ' ' .
+            '<span class="cf-date">25</span>' .
+            ' ' .
+            '<span class="cf-month">nov</span>';
+
+        $this->assertEquals(
+            $expected,
+            $this->formatter->format($offer)
+        );
+    }
+
+    public function testFormatAPeriodStartsCurrentYear(): void
+    {
+        $offer = new Offer(
+            OfferType::event(),
+            new Status('Available', []),
+            new BookingAvailability('Available'),
+            new DateTimeImmutable('25-11-2021'),
+            new DateTimeImmutable('30-11-2030'),
+            CalendarType::periodic()
+        );
+
+        $expected =
+            '<span class="from meta">Vanaf</span>' .
+            ' ' .
+            '<span class="cf-days">do</span>' .
+            ' ' .
+            '<span class="cf-date">25</span>' .
+            ' ' .
+            '<span class="cf-month">nov</span>';
+
+        $this->assertEquals(
+            $expected,
+            $this->formatter->format($offer)
+        );
+    }
+
+    public function testFormatAPeriodEndsCurrentYear(): void
+    {
+        $offer = new Offer(
+            OfferType::event(),
+            new Status('Available', []),
+            new BookingAvailability('Available'),
+            new DateTimeImmutable('04-03-2020'),
+            new DateTimeImmutable('08-03-2021'),
+            CalendarType::periodic()
+        );
+
+        $expected =
+            '<span class="to meta">Tot</span>' .
+            ' ' .
+            '<span class="cf-days">ma</span>' .
+            ' ' .
+            '<span class="cf-date">8</span>' .
+            ' ' .
+            '<span class="cf-month">mrt</span>';
 
         $this->assertEquals(
             $expected,
@@ -90,6 +174,8 @@ final class SmallPeriodicHTMLFormatterTest extends TestCase
 
         $expected =
             '<span class="from meta">Vanaf</span>' .
+            ' ' .
+            '<span class="cf-days">di</span>' .
             ' ' .
             '<span class="cf-date">25</span>' .
             ' ' .
@@ -119,6 +205,8 @@ final class SmallPeriodicHTMLFormatterTest extends TestCase
         $expected =
             '<span class="from meta">Vanaf</span>' .
             ' ' .
+            '<span class="cf-days">di</span>' .
+            ' ' .
             '<span class="cf-date">25</span>' .
             ' ' .
             '<span class="cf-month">mrt</span>' .
@@ -145,6 +233,8 @@ final class SmallPeriodicHTMLFormatterTest extends TestCase
         $expected =
             '<span class="from meta">Vanaf</span>' .
             ' ' .
+            '<span class="cf-days">za</span>' .
+            ' ' .
             '<span class="cf-date">4</span>' .
             ' ' .
             '<span class="cf-month">okt</span>' .
@@ -170,6 +260,8 @@ final class SmallPeriodicHTMLFormatterTest extends TestCase
 
         $expected =
             '<span class="to meta">Tot</span>' .
+            ' ' .
+            '<span class="cf-days">ma</span>' .
             ' ' .
             '<span class="cf-date">18</span>' .
             ' ' .

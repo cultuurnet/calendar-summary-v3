@@ -50,9 +50,13 @@ final class SmallPeriodicPlainTextFormatter implements PeriodicFormatterInterfac
 
     private function formatDate(DateTimeInterface $date): string
     {
-        $dayNumber = $this->formatter->formatAsDayNumber($date);
-        $monthName = $this->formatter->formatAsAbbreviatedMonthName($date);
-        $year = $this->formatter->formatAsYear($date);
-        return PlainTextSummaryBuilder::singleLine($dayNumber, $monthName, $year);
+        $formattedDate = $this->formatter->formatAsAbbreviatedDayOfWeek($date) . ' '
+            . $this->formatter->formatAsDayNumber($date) . ' '
+            . $this->formatter->formatAsAbbreviatedMonthName($date);
+
+        if (!DateComparison::isCurrentYear($date)) {
+            $formattedDate .= ' ' . $this->formatter->formatAsYear($date);
+        }
+        return $formattedDate;
     }
 }

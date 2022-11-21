@@ -43,6 +43,7 @@ final class Translator
                 'today' => 'Today',
                 'tonight' => 'Tonight',
                 'tomorrow' => 'Tomorrow',
+                'to' => 'to',
             ],
             'nl' => [
                 'from' => 'van',
@@ -65,6 +66,7 @@ final class Translator
                 'today' => 'Vandaag',
                 'tonight' => 'Vanavond',
                 'tomorrow' => 'Morgen',
+                'to' => 'tot en met',
             ],
             'fr' => [
                 'from' => 'du',
@@ -87,6 +89,7 @@ final class Translator
                 'today' => 'Aujourd\'hui',
                 'tonight' => 'Ce soir',
                 'tomorrow' => 'Demain',
+                'to' => 'à',
             ],
             'de' => [
                 'from' => 'von',
@@ -109,6 +112,7 @@ final class Translator
                 'today' => 'Heute',
                 'tonight' => 'Diesen Abend',
                 'tomorrow' => 'Morgen',
+                'to' => 'bis',
             ],
         ];
 

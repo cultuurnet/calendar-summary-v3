@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace CultuurNet\CalendarSummaryV3\Periodic;
 
+use Carbon\CarbonImmutable;
 use CultuurNet\CalendarSummaryV3\Offer\BookingAvailability;
 use CultuurNet\CalendarSummaryV3\Offer\CalendarType;
 use CultuurNet\CalendarSummaryV3\Offer\Offer;
@@ -23,6 +24,41 @@ final class SmallPeriodicPlainTextFormatterTest extends TestCase
     protected function setUp(): void
     {
         $this->formatter = new SmallPeriodicPlainTextFormatter(new Translator('nl_NL'));
+        CarbonImmutable::setTestNow(CarbonImmutable::create(2021, 5, 3));
+    }
+
+    public function testFormatAPeriodStartsCurrentYear(): void
+    {
+        $offer = new Offer(
+            OfferType::event(),
+            new Status('Available', []),
+            new BookingAvailability('Available'),
+            new DateTimeImmutable('25-11-2021'),
+            new DateTimeImmutable('30-11-2030'),
+            CalendarType::periodic()
+        );
+
+        $this->assertEquals(
+            'Vanaf do 25 nov',
+            $this->formatter->format($offer)
+        );
+    }
+
+    public function testFormatAPeriodEndsCurrentYear(): void
+    {
+        $offer = new Offer(
+            OfferType::event(),
+            new Status('Available', []),
+            new BookingAvailability('Available'),
+            new DateTimeImmutable('25-11-2015'),
+            new DateTimeImmutable('22-02-2021'),
+            CalendarType::periodic()
+        );
+
+        $this->assertEquals(
+            'Tot ma 22 feb',
+            $this->formatter->format($offer)
+        );
     }
 
     public function testFormatAPeriodWithoutLeadingZeroes(): void
@@ -37,7 +73,7 @@ final class SmallPeriodicPlainTextFormatterTest extends TestCase
         );
 
         $this->assertEquals(
-            'Vanaf 25 nov 2025',
+            'Vanaf di 25 nov 2025',
             $this->formatter->format($offer)
         );
     }
@@ -54,7 +90,7 @@ final class SmallPeriodicPlainTextFormatterTest extends TestCase
         );
 
         $this->assertEquals(
-            'Vanaf 4 mrt 2025',
+            'Vanaf di 4 mrt 2025',
             $this->formatter->format($offer)
         );
     }
@@ -71,7 +107,7 @@ final class SmallPeriodicPlainTextFormatterTest extends TestCase
         );
 
         $this->assertEquals(
-            'Vanaf 25 nov 2025 (geannuleerd)',
+            'Vanaf di 25 nov 2025 (geannuleerd)',
             $this->formatter->format($offer)
         );
     }
@@ -88,7 +124,7 @@ final class SmallPeriodicPlainTextFormatterTest extends TestCase
         );
 
         $this->assertEquals(
-            'Vanaf 25 mrt 2025',
+            'Vanaf di 25 mrt 2025',
             $this->formatter->format($offer)
         );
     }
@@ -105,7 +141,7 @@ final class SmallPeriodicPlainTextFormatterTest extends TestCase
         );
 
         $this->assertEquals(
-            'Vanaf 4 okt 2025',
+            'Vanaf za 4 okt 2025',
             $this->formatter->format($offer)
         );
     }
@@ -122,7 +158,7 @@ final class SmallPeriodicPlainTextFormatterTest extends TestCase
         );
 
         $this->assertEquals(
-            'Tot 18 mrt 2030',
+            'Tot ma 18 mrt 2030',
             $this->formatter->format($offer)
         );
     }
@@ -139,7 +175,7 @@ final class SmallPeriodicPlainTextFormatterTest extends TestCase
         );
 
         $this->assertEquals(
-            'Tot 18 mrt 2030 (geannuleerd)',
+            'Tot ma 18 mrt 2030 (geannuleerd)',
             $this->formatter->format($offer)
         );
     }

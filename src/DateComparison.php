@@ -52,7 +52,7 @@ final class DateComparison
     public static function inTheFuture(DateTimeImmutable $date): bool
     {
         $date = $date->setTimezone(new DateTimeZone(date_default_timezone_get()));
-        $now = new DateTimeImmutable();
+        $now = new CarbonImmutable();
         return $date > $now;
     }
 }

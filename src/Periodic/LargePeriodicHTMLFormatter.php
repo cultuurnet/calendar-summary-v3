@@ -106,9 +106,11 @@ final class LargePeriodicHTMLFormatter implements PeriodicFormatterInterface
         $intlDateTo = $this->formatter->formatAsFullDate($dateTo);
 
         return '<p class="cf-period">'
+            . '<span class="cf-weekday cf-meta">' . $this->formatter->formatAsDayOfWeek($dateFrom) . '</span>'
             . '<time itemprop="startDate" datetime="' . $dateFrom->format('Y-m-d') . '">'
             . '<span class="cf-date">' . $intlDateFrom . '</span> </time>'
-            . '<span class="cf-to cf-meta">' . $this->translator->translate('till') . '</span>'
+            . '<span class="cf-to cf-meta">' . $this->translator->translate('to') . '</span>'
+            . '<span class="cf-weekday cf-meta">' . $this->formatter->formatAsDayOfWeek($dateTo) . '</span>'
             . '<time itemprop="endDate" datetime="' . $dateTo->format('Y-m-d') . '">'
             . '<span class="cf-date">' . $intlDateTo . '</span> </time>'
             . $optionalStatus

@@ -37,8 +37,10 @@ final class MediumPeriodicHTMLFormatterTest extends TestCase
         );
 
         $this->assertEquals(
-            '<span class="cf-from cf-meta">Van</span> <span class="cf-date">25 november 2025</span> '
-            . '<span class="cf-to cf-meta">tot</span> <span class="cf-date">30 november 2030</span>',
+            '<span class="cf-from cf-meta">Van</span> <span class="cf-weekday cf-meta">di</span> ' .
+            '<span class="cf-date">25 november 2025</span> ' .
+            '<span class="cf-to cf-meta">tot</span> <span class="cf-weekday cf-meta">za</span> ' .
+            '<span class="cf-date">30 november 2030</span>',
             $this->formatter->format($offer)
         );
     }
@@ -55,8 +57,10 @@ final class MediumPeriodicHTMLFormatterTest extends TestCase
         );
 
         $this->assertEquals(
-            '<span class="cf-from cf-meta">Van</span> <span class="cf-date">4 maart 2025</span> '
-            . '<span class="cf-to cf-meta">tot</span> <span class="cf-date">8 maart 2030</span>',
+            '<span class="cf-from cf-meta">Van</span> <span class="cf-weekday cf-meta">di</span> ' .
+            '<span class="cf-date">4 maart 2025</span> ' .
+            '<span class="cf-to cf-meta">tot</span> <span class="cf-weekday cf-meta">vr</span> ' .
+            '<span class="cf-date">8 maart 2030</span>',
             $this->formatter->format($offer)
         );
     }
@@ -73,8 +77,10 @@ final class MediumPeriodicHTMLFormatterTest extends TestCase
         );
 
         $this->assertEquals(
-            '<span class="cf-from cf-meta">Van</span> <span class="cf-date">25 november 2025</span> '
-            . '<span class="cf-to cf-meta">tot</span> <span class="cf-date">30 november 2030</span>'
+            '<span class="cf-from cf-meta">Van</span> <span class="cf-weekday cf-meta">di</span> '
+            . '<span class="cf-date">25 november 2025</span> '
+            . '<span class="cf-to cf-meta">tot</span> <span class="cf-weekday cf-meta">za</span> '
+            . '<span class="cf-date">30 november 2030</span>'
             . ' <span class="cf-status">(geannuleerd)</span>',
             $this->formatter->format($offer)
         );
@@ -92,8 +98,10 @@ final class MediumPeriodicHTMLFormatterTest extends TestCase
         );
 
         $this->assertEquals(
-            '<span class="cf-from cf-meta">Van</span> <span class="cf-date">25 maart 2025</span> '
-            . '<span class="cf-to cf-meta">tot</span> <span class="cf-date">30 maart 2030</span>',
+            '<span class="cf-from cf-meta">Van</span> <span class="cf-weekday cf-meta">di</span> ' .
+            '<span class="cf-date">25 maart 2025</span> '
+            . '<span class="cf-to cf-meta">tot</span> <span class="cf-weekday cf-meta">za</span> '
+            . '<span class="cf-date">30 maart 2030</span>',
             $this->formatter->format($offer)
         );
     }
@@ -110,8 +118,10 @@ final class MediumPeriodicHTMLFormatterTest extends TestCase
         );
 
         $this->assertEquals(
-            '<span class="cf-from cf-meta">Van</span> <span class="cf-date">4 oktober 2025</span> '
-            . '<span class="cf-to cf-meta">tot</span> <span class="cf-date">8 oktober 2030</span>',
+            '<span class="cf-from cf-meta">Van</span> <span class="cf-weekday cf-meta">za</span>'
+            . ' <span class="cf-date">4 oktober 2025</span> '
+            . '<span class="cf-to cf-meta">tot</span> '
+            . '<span class="cf-weekday cf-meta">di</span> <span class="cf-date">8 oktober 2030</span>',
             $this->formatter->format($offer)
         );
     }
@@ -127,7 +137,7 @@ final class MediumPeriodicHTMLFormatterTest extends TestCase
             CalendarType::periodic()
         );
 
-        $output = '<span class="cf-weekday cf-meta">Woensdag</span>';
+        $output = '<span class="cf-weekday cf-meta">Wo</span>';
         $output .= ' ';
         $output .= '<span class="cf-date">8 oktober 2025</span>';
 
