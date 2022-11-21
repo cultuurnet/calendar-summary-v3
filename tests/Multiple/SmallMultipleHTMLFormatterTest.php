@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace CultuurNet\CalendarSummaryV3\Multiple;
 
+use Carbon\CarbonImmutable;
 use CultuurNet\CalendarSummaryV3\Offer\BookingAvailability;
 use CultuurNet\CalendarSummaryV3\Offer\CalendarType;
 use CultuurNet\CalendarSummaryV3\Offer\Offer;
@@ -23,6 +24,75 @@ final class SmallMultipleHTMLFormatterTest extends TestCase
     protected function setUp(): void
     {
         $this->formatter = new SmallMultipleHTMLFormatter(new Translator('nl_NL'));
+        CarbonImmutable::setTestNow(CarbonImmutable::create(2021, 5, 3));
+    }
+
+    public function testFormatMultipleOnSamedayToday(): void
+    {
+        $offer = new Offer(
+            OfferType::event(),
+            new Status('Available', []),
+            new BookingAvailability('Available'),
+            CarbonImmutable::create(2021, 5, 3)->setTime(11, 30),
+            CarbonImmutable::create(2021, 5, 3)->setTime(20, 30),
+            CalendarType::multiple()
+        );
+
+        $this->assertEquals(
+            '<span class="cf-days">Vandaag</span>',
+            $this->formatter->format($offer)
+        );
+    }
+
+    public function testFormatMultipleOnSamedayTonight(): void
+    {
+        $offer = new Offer(
+            OfferType::event(),
+            new Status('Available', []),
+            new BookingAvailability('Available'),
+            CarbonImmutable::create(2021, 5, 3)->setTime(18, 30),
+            CarbonImmutable::create(2021, 5, 3)->setTime(20, 30),
+            CalendarType::multiple()
+        );
+
+        $this->assertEquals(
+            '<span class="cf-days">Vanavond</span>',
+            $this->formatter->format($offer)
+        );
+    }
+
+    public function testFormatMultipleOnSamedayTomorrow(): void
+    {
+        $offer = new Offer(
+            OfferType::event(),
+            new Status('Available', []),
+            new BookingAvailability('Available'),
+            CarbonImmutable::create(2021, 5, 4)->setTime(11, 30),
+            CarbonImmutable::create(2021, 5, 4)->setTime(20, 30),
+            CalendarType::multiple()
+        );
+
+        $this->assertEquals(
+            '<span class="cf-days">Morgen</span>',
+            $this->formatter->format($offer)
+        );
+    }
+
+    public function testFormatMultipleOnSamedayThisWeek(): void
+    {
+        $offer = new Offer(
+            OfferType::event(),
+            new Status('Available', []),
+            new BookingAvailability('Available'),
+            CarbonImmutable::create(2021, 5, 7)->setTime(11, 30),
+            CarbonImmutable::create(2021, 5, 7)->setTime(20, 30),
+            CalendarType::multiple()
+        );
+
+        $this->assertEquals(
+            '<span class="cf-meta">Deze</span> <span class="cf-days">vrijdag</span>',
+            $this->formatter->format($offer)
+        );
     }
 
     public function testFormatMultipleWithoutLeadingZeroes(): void
@@ -37,8 +107,62 @@ final class SmallMultipleHTMLFormatterTest extends TestCase
         );
 
         $this->assertEquals(
-            '<span class="cf-from cf-meta">Van</span> <span class="cf-date">25 november 2025</span> '
-            . '<span class="cf-to cf-meta">tot</span> <span class="cf-date">30 november 2030</span>',
+            '<span class="cf-date">25 nov 2025</span> '
+            . '<span class="cf-to cf-meta">-</span> <span class="cf-date">30 nov 2030</span>',
+            $this->formatter->format($offer)
+        );
+    }
+
+    public function testFormatMultipleCurrentYear(): void
+    {
+        $offer = new Offer(
+            OfferType::event(),
+            new Status('Available', []),
+            new BookingAvailability('Available'),
+            CarbonImmutable::create(2021, 11, 25),
+            CarbonImmutable::create(2021, 11, 30),
+            CalendarType::multiple()
+        );
+
+        $this->assertEquals(
+            '<span class="cf-date">25 nov</span> '
+            . '<span class="cf-to cf-meta">-</span> <span class="cf-date">30 nov</span>',
+            $this->formatter->format($offer)
+        );
+    }
+
+    public function testFormatMultipleStartsCurrentYear(): void
+    {
+        $offer = new Offer(
+            OfferType::event(),
+            new Status('Available', []),
+            new BookingAvailability('Available'),
+            CarbonImmutable::create(2021, 11, 25),
+            CarbonImmutable::create(2030, 11, 30),
+            CalendarType::multiple()
+        );
+
+        $this->assertEquals(
+            '<span class="cf-date">25 nov</span> '
+            . '<span class="cf-to cf-meta">-</span> <span class="cf-date">30 nov 2030</span>',
+            $this->formatter->format($offer)
+        );
+    }
+
+    public function testFormatMultipleEndsCurrentYear(): void
+    {
+        $offer = new Offer(
+            OfferType::event(),
+            new Status('Available', []),
+            new BookingAvailability('Available'),
+            new DateTimeImmutable('25-11-2020'),
+            new DateTimeImmutable('30-11-2021'),
+            CalendarType::multiple()
+        );
+
+        $this->assertEquals(
+            '<span class="cf-date">25 nov 2020</span> '
+            . '<span class="cf-to cf-meta">-</span> <span class="cf-date">30 nov</span>',
             $this->formatter->format($offer)
         );
     }
@@ -55,8 +179,8 @@ final class SmallMultipleHTMLFormatterTest extends TestCase
         );
 
         $this->assertEquals(
-            '<span class="cf-from cf-meta">Van</span> <span class="cf-date">25 november 2025</span> '
-            . '<span class="cf-to cf-meta">tot</span> <span class="cf-date">30 november 2030</span>'
+            '<span class="cf-date">25 nov 2025</span> '
+            . '<span class="cf-to cf-meta">-</span> <span class="cf-date">30 nov 2030</span>'
             . ' <span class="cf-status">(geannuleerd)</span>',
             $this->formatter->format($offer)
         );
@@ -74,8 +198,8 @@ final class SmallMultipleHTMLFormatterTest extends TestCase
         );
 
         $this->assertEquals(
-            '<span class="cf-from cf-meta">Van</span> <span class="cf-date">25 november 2025</span> '
-            . '<span class="cf-to cf-meta">tot</span> <span class="cf-date">30 november 2030</span>'
+            '<span class="cf-date">25 nov 2025</span> '
+            . '<span class="cf-to cf-meta">-</span> <span class="cf-date">30 nov 2030</span>'
             . ' <span class="cf-status">(Volzet of uitverkocht)</span>',
             $this->formatter->format($offer)
         );
@@ -93,8 +217,8 @@ final class SmallMultipleHTMLFormatterTest extends TestCase
         );
 
         $this->assertEquals(
-            '<span class="cf-from cf-meta">Van</span> <span class="cf-date">4 maart 2025</span> '
-            . '<span class="cf-to cf-meta">tot</span> <span class="cf-date">8 maart 2030</span>',
+            '<span class="cf-date">4 mrt 2025</span> '
+            . '<span class="cf-to cf-meta">-</span> <span class="cf-date">8 mrt 2030</span>',
             $this->formatter->format($offer)
         );
     }
@@ -111,8 +235,8 @@ final class SmallMultipleHTMLFormatterTest extends TestCase
         );
 
         $this->assertEquals(
-            '<span class="cf-from cf-meta">Van</span> <span class="cf-date">4 oktober 2025</span> '
-            . '<span class="cf-to cf-meta">tot</span> <span class="cf-date">8 oktober 2030</span>',
+            '<span class="cf-date">4 okt 2025</span> '
+            . '<span class="cf-to cf-meta">-</span> <span class="cf-date">8 okt 2030</span>',
             $this->formatter->format($offer)
         );
     }
@@ -128,9 +252,9 @@ final class SmallMultipleHTMLFormatterTest extends TestCase
             CalendarType::multiple()
         );
 
-        $output = '<span class="cf-weekday cf-meta">Woensdag</span>';
+        $output = '<span class="cf-weekday cf-meta">Wo</span>';
         $output .= ' ';
-        $output .= '<span class="cf-date">8 oktober 2025</span>';
+        $output .= '<span class="cf-date">8 okt 2025</span>';
 
         $this->assertEquals(
             $output,

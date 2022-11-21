@@ -51,13 +51,13 @@ final class MediumMultipleHTMLFormatterTest extends TestCase
         $event = $event->withSubEvents($newEvents);
 
         $expectedOutput = '<ul class="cnw-event-date-info"><li>';
-        $expectedOutput .= '<span class="cf-weekday cf-meta">Donderdag</span> ';
+        $expectedOutput .= '<span class="cf-weekday cf-meta">Do</span> ';
         $expectedOutput .= '<span class="cf-date">9 november 2017</span></li>';
-        $expectedOutput .= '<li><span class="cf-weekday cf-meta">Donderdag</span> ';
+        $expectedOutput .= '<li><span class="cf-weekday cf-meta">Do</span> ';
         $expectedOutput .= '<span class="cf-date">16 november 2017</span></li>';
-        $expectedOutput .= '<li><span class="cf-weekday cf-meta">Donderdag</span> ';
+        $expectedOutput .= '<li><span class="cf-weekday cf-meta">Do</span> ';
         $expectedOutput .= '<span class="cf-date">23 november 2017</span></li>';
-        $expectedOutput .= '<li><span class="cf-weekday cf-meta">Donderdag</span> ';
+        $expectedOutput .= '<li><span class="cf-weekday cf-meta">Do</span> ';
         $expectedOutput .= '<span class="cf-date">30 november 2017</span></li></ul>';
 
         $this->assertEquals(
@@ -99,13 +99,13 @@ final class MediumMultipleHTMLFormatterTest extends TestCase
         $event = $event->withSubEvents($newEvents);
 
         $expectedOutput = '<ul class="cnw-event-date-info"><li>';
-        $expectedOutput .= '<span class="cf-weekday cf-meta">Donderdag</span> ';
+        $expectedOutput .= '<span class="cf-weekday cf-meta">Do</span> ';
         $expectedOutput .= '<span class="cf-date">9 november 2017</span></li>';
-        $expectedOutput .= '<li><span class="cf-weekday cf-meta">Donderdag</span> ';
+        $expectedOutput .= '<li><span class="cf-weekday cf-meta">Do</span> ';
         $expectedOutput .= '<span class="cf-date">16 november 2017</span> <span class="cf-status">(geannuleerd)</span></li>';
-        $expectedOutput .= '<li><span class="cf-weekday cf-meta">Donderdag</span> ';
+        $expectedOutput .= '<li><span class="cf-weekday cf-meta">Do</span> ';
         $expectedOutput .= '<span class="cf-date">23 november 2017</span> <span class="cf-status">(Volzet of uitverkocht)</span></li>';
-        $expectedOutput .= '<li><span class="cf-weekday cf-meta">Donderdag</span> ';
+        $expectedOutput .= '<li><span class="cf-weekday cf-meta">Do</span> ';
         $expectedOutput .= '<span class="cf-date">30 november 2017</span></li></ul>';
 
         $this->assertEquals(
@@ -141,28 +141,28 @@ final class MediumMultipleHTMLFormatterTest extends TestCase
 
         $expectedOutput = '<ul class="cnw-event-date-info"><li>';
         $expectedOutput .= '<span class="cf-from cf-meta">Van</span> ';
-        $expectedOutput .= '<span class="cf-weekday cf-meta">maandag</span> ';
+        $expectedOutput .= '<span class="cf-weekday cf-meta">ma</span> ';
         $expectedOutput .= '<span class="cf-date">6 november 2017</span> ';
         $expectedOutput .= '<span class="cf-to cf-meta">tot</span> ';
-        $expectedOutput .= '<span class="cf-weekday cf-meta">donderdag</span> ';
+        $expectedOutput .= '<span class="cf-weekday cf-meta">do</span> ';
         $expectedOutput .= '<span class="cf-date">9 november 2017</span></li>';
         $expectedOutput .= '<li><span class="cf-from cf-meta">Van</span> ';
-        $expectedOutput .= '<span class="cf-weekday cf-meta">dinsdag</span> ';
+        $expectedOutput .= '<span class="cf-weekday cf-meta">di</span> ';
         $expectedOutput .= '<span class="cf-date">14 november 2017</span> ';
         $expectedOutput .= '<span class="cf-to cf-meta">tot</span> ';
-        $expectedOutput .= '<span class="cf-weekday cf-meta">donderdag</span> ';
+        $expectedOutput .= '<span class="cf-weekday cf-meta">do</span> ';
         $expectedOutput .= '<span class="cf-date">16 november 2017</span></li>';
         $expectedOutput .= '<li><span class="cf-from cf-meta">Van</span> ';
-        $expectedOutput .= '<span class="cf-weekday cf-meta">dinsdag</span> ';
+        $expectedOutput .= '<span class="cf-weekday cf-meta">di</span> ';
         $expectedOutput .= '<span class="cf-date">21 november 2017</span> ';
         $expectedOutput .= '<span class="cf-to cf-meta">tot</span> ';
-        $expectedOutput .= '<span class="cf-weekday cf-meta">donderdag</span> ';
+        $expectedOutput .= '<span class="cf-weekday cf-meta">do</span> ';
         $expectedOutput .= '<span class="cf-date">23 november 2017</span></li>';
         $expectedOutput .= '<li><span class="cf-from cf-meta">Van</span> ';
-        $expectedOutput .= '<span class="cf-weekday cf-meta">dinsdag</span> ';
+        $expectedOutput .= '<span class="cf-weekday cf-meta">di</span> ';
         $expectedOutput .= '<span class="cf-date">28 november 2017</span> ';
         $expectedOutput .= '<span class="cf-to cf-meta">tot</span> ';
-        $expectedOutput .= '<span class="cf-weekday cf-meta">donderdag</span> ';
+        $expectedOutput .= '<span class="cf-weekday cf-meta">do</span> ';
         $expectedOutput .= '<span class="cf-date">30 november 2017</span></li></ul>';
 
         $this->assertEquals(

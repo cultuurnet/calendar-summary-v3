@@ -67,7 +67,7 @@ final class MediumSinglePlainTextFormatterTest extends TestCase
         );
 
         $this->assertEquals(
-            'Van donderdag 25 januari 2018 tot zaterdag 27 januari 2018',
+            'Van do 25 januari 2018 tot za 27 januari 2018',
             $this->formatter->format($event)
         );
     }
@@ -83,7 +83,7 @@ final class MediumSinglePlainTextFormatterTest extends TestCase
         );
 
         $this->assertEquals(
-            'Van zaterdag 6 januari 2018 tot maandag 8 januari 2018',
+            'Van za 6 januari 2018 tot ma 8 januari 2018',
             $this->formatter->format($event)
         );
     }

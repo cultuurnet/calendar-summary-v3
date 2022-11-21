@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace CultuurNet\CalendarSummaryV3\Multiple;
 
+use Carbon\CarbonImmutable;
 use CultuurNet\CalendarSummaryV3\Offer\BookingAvailability;
 use CultuurNet\CalendarSummaryV3\Offer\CalendarType;
 use CultuurNet\CalendarSummaryV3\Offer\Offer;
@@ -23,6 +24,7 @@ final class ExtraSmallMultiplePlainTextFormatterTest extends TestCase
     protected function setUp(): void
     {
         $this->formatter = new ExtraSmallMultiplePlainTextFormatter(new Translator('nl_NL'));
+        CarbonImmutable::setTestNow(CarbonImmutable::create(2021, 5, 3));
     }
 
     public function testFormatMultipleWithoutLeadingZeroes(): void
@@ -37,7 +39,7 @@ final class ExtraSmallMultiplePlainTextFormatterTest extends TestCase
         );
 
         $this->assertEquals(
-            'Van 25/11/25 tot 30/11/30',
+            '25 nov 2025 - 30 nov 2030',
             $this->formatter->format($offer)
         );
     }
@@ -54,7 +56,7 @@ final class ExtraSmallMultiplePlainTextFormatterTest extends TestCase
         );
 
         $this->assertEquals(
-            'Van 4/3/25 tot 8/3/30',
+            '4 mrt 2025 - 8 mrt 2030',
             $this->formatter->format($offer)
         );
     }
@@ -71,7 +73,7 @@ final class ExtraSmallMultiplePlainTextFormatterTest extends TestCase
         );
 
         $this->assertEquals(
-            'Van 25/11/25 tot 30/11/30 (geannuleerd)',
+            '25 nov 2025 - 30 nov 2030 (geannuleerd)',
             $this->formatter->format($offer)
         );
     }
@@ -88,7 +90,7 @@ final class ExtraSmallMultiplePlainTextFormatterTest extends TestCase
         );
 
         $this->assertEquals(
-            '30/11/30 (geannuleerd)',
+            '30 nov 2030 (geannuleerd)',
             $this->formatter->format($offer)
         );
     }
@@ -105,7 +107,41 @@ final class ExtraSmallMultiplePlainTextFormatterTest extends TestCase
         );
 
         $this->assertEquals(
-            'Van 25/3/25 tot 30/3/30',
+            '25 mrt 2025 - 30 mrt 2030',
+            $this->formatter->format($offer)
+        );
+    }
+
+    public function testFormatMultipleDayStartCurrentYear(): void
+    {
+        $offer = new Offer(
+            OfferType::event(),
+            new Status('Available', []),
+            new BookingAvailability('Available'),
+            CarbonImmutable::create(2021, 3, 25),
+            CarbonImmutable::create(2030, 3, 30),
+            CalendarType::multiple()
+        );
+
+        $this->assertEquals(
+            '25 mrt - 30 mrt 2030',
+            $this->formatter->format($offer)
+        );
+    }
+
+    public function testFormatMultipleDayEndCurrentYear(): void
+    {
+        $offer = new Offer(
+            OfferType::event(),
+            new Status('Available', []),
+            new BookingAvailability('Available'),
+            CarbonImmutable::create(2020, 03, 25),
+            CarbonImmutable::create(2021, 3, 30),
+            CalendarType::multiple()
+        );
+
+        $this->assertEquals(
+            '25 mrt 2020 - 30 mrt',
             $this->formatter->format($offer)
         );
     }
@@ -122,7 +158,7 @@ final class ExtraSmallMultiplePlainTextFormatterTest extends TestCase
         );
 
         $this->assertEquals(
-            'Van 4/10/25 tot 8/10/30',
+            '4 okt 2025 - 8 okt 2030',
             $this->formatter->format($offer)
         );
     }
@@ -139,7 +175,24 @@ final class ExtraSmallMultiplePlainTextFormatterTest extends TestCase
         );
 
         $this->assertEquals(
-            '8/3/25',
+            '8 mrt 2025',
+            $this->formatter->format($offer)
+        );
+    }
+
+    public function testFormatAPeriodWithSameBeginAndEndDateCurrentYear(): void
+    {
+        $offer = new Offer(
+            OfferType::event(),
+            new Status('Available', []),
+            new BookingAvailability('Available'),
+            CarbonImmutable::create(2021, 3, 8)->setTime(11, 0),
+            CarbonImmutable::create(2021, 3, 8)->setTime(19, 0),
+            CalendarType::multiple()
+        );
+
+        $this->assertEquals(
+            '8 mrt',
             $this->formatter->format($offer)
         );
     }
@@ -156,7 +209,7 @@ final class ExtraSmallMultiplePlainTextFormatterTest extends TestCase
         );
 
         $this->assertEquals(
-            'Van 4/10/25 tot 8/10/30 (geannuleerd)',
+            '4 okt 2025 - 8 okt 2030 (geannuleerd)',
             $this->formatter->format($offer)
         );
     }
@@ -173,7 +226,7 @@ final class ExtraSmallMultiplePlainTextFormatterTest extends TestCase
         );
 
         $this->assertEquals(
-            'Van 4/10/25 tot 8/10/30 (geannuleerd)',
+            '4 okt 2025 - 8 okt 2030 (geannuleerd)',
             $this->formatter->format($offer)
         );
     }
@@ -190,7 +243,7 @@ final class ExtraSmallMultiplePlainTextFormatterTest extends TestCase
         );
 
         $this->assertEquals(
-            'Van 4/10/25 tot 8/10/30 (Volzet of uitverkocht)',
+            '4 okt 2025 - 8 okt 2030 (Volzet of uitverkocht)',
             $this->formatter->format($offer)
         );
     }

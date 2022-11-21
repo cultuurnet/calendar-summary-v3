@@ -35,7 +35,7 @@ final class MediumSingleHTMLFormatterTest extends TestCase
         );
 
         $this->assertEquals(
-            '<span class="cf-weekday cf-meta">Donderdag</span> <span class="cf-date">25 januari 2018</span>',
+            '<span class="cf-weekday cf-meta">Do</span> <span class="cf-date">25 januari 2018</span>',
             $this->formatter->format($event)
         );
     }
@@ -51,7 +51,7 @@ final class MediumSingleHTMLFormatterTest extends TestCase
         );
 
         $this->assertEquals(
-            '<span class="cf-weekday cf-meta">Donderdag</span> <span class="cf-date">25 januari 2018</span> <span class="cf-status">(geannuleerd)</span>',
+            '<span class="cf-weekday cf-meta">Do</span> <span class="cf-date">25 januari 2018</span> <span class="cf-status">(geannuleerd)</span>',
             $this->formatter->format($event)
         );
     }
@@ -67,7 +67,7 @@ final class MediumSingleHTMLFormatterTest extends TestCase
         );
 
         $this->assertEquals(
-            '<span class="cf-weekday cf-meta">Maandag</span> <span class="cf-date">8 januari 2018</span>',
+            '<span class="cf-weekday cf-meta">Ma</span> <span class="cf-date">8 januari 2018</span>',
             $this->formatter->format($event)
         );
     }
@@ -84,13 +84,13 @@ final class MediumSingleHTMLFormatterTest extends TestCase
 
         $expectedOutput = '<span class="cf-from cf-meta">Van</span>';
         $expectedOutput .= ' ';
-        $expectedOutput .= '<span class="cf-weekday cf-meta">donderdag</span>';
+        $expectedOutput .= '<span class="cf-weekday cf-meta">do</span>';
         $expectedOutput .= ' ';
         $expectedOutput .= '<span class="cf-date">25 januari 2018</span>';
         $expectedOutput .= ' ';
         $expectedOutput .= '<span class="cf-to cf-meta">tot</span>';
         $expectedOutput .= ' ';
-        $expectedOutput .= '<span class="cf-weekday cf-meta">zondag</span>';
+        $expectedOutput .= '<span class="cf-weekday cf-meta">zo</span>';
         $expectedOutput .= ' ';
         $expectedOutput .= '<span class="cf-date">28 januari 2018</span>';
 
@@ -112,13 +112,13 @@ final class MediumSingleHTMLFormatterTest extends TestCase
 
         $expectedOutput = '<span class="cf-from cf-meta">Van</span>';
         $expectedOutput .= ' ';
-        $expectedOutput .= '<span class="cf-weekday cf-meta">zaterdag</span>';
+        $expectedOutput .= '<span class="cf-weekday cf-meta">za</span>';
         $expectedOutput .= ' ';
         $expectedOutput .= '<span class="cf-date">6 januari 2018</span>';
         $expectedOutput .= ' ';
         $expectedOutput .= '<span class="cf-to cf-meta">tot</span>';
         $expectedOutput .= ' ';
-        $expectedOutput .= '<span class="cf-weekday cf-meta">maandag</span>';
+        $expectedOutput .= '<span class="cf-weekday cf-meta">ma</span>';
         $expectedOutput .= ' ';
         $expectedOutput .= '<span class="cf-date">8 januari 2018</span>';
 

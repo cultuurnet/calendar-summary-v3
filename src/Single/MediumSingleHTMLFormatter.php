@@ -50,7 +50,7 @@ final class MediumSingleHTMLFormatter implements SingleFormatterInterface
     private function formatSameDay(DateTimeInterface $dateFrom): string
     {
         $intlDateFrom = $this->formatter->formatAsFullDate($dateFrom);
-        $intlDateDayFrom = $this->formatter->formatAsDayOfWeek($dateFrom);
+        $intlDateDayFrom = $this->formatter->formatAsAbbreviatedDayOfWeek($dateFrom);
 
         $output = '<span class="cf-weekday cf-meta">' . ucfirst($intlDateDayFrom) . '</span>';
         $output .= ' ';
@@ -62,10 +62,10 @@ final class MediumSingleHTMLFormatter implements SingleFormatterInterface
     private function formatMoreDays(DateTimeInterface $dateFrom, DateTimeInterface $dateEnd): string
     {
         $intlDateFrom = $this->formatter->formatAsFullDate($dateFrom);
-        $intlDateDayFrom = $this->formatter->formatAsDayOfWeek($dateFrom);
+        $intlDateDayFrom = $this->formatter->formatAsAbbreviatedDayOfWeek($dateFrom);
 
         $intlDateEnd = $this->formatter->formatAsFullDate($dateEnd);
-        $intlDateDayEnd = $this->formatter->formatAsDayOfWeek($dateEnd);
+        $intlDateDayEnd = $this->formatter->formatAsAbbreviatedDayOfWeek($dateEnd);
 
         $output = '<span class="cf-from cf-meta">' . ucfirst($this->translator->translate('from')) . '</span>';
         $output .= ' ';

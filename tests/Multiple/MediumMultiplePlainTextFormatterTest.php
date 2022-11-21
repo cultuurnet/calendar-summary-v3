@@ -86,10 +86,10 @@ final class MediumMultiplePlainTextFormatterTest extends TestCase
 
         $event = $event->withSubEvents($newEvents);
 
-        $expectedOutput = 'Van maandag 6 november 2017 tot donderdag 9 november 2017' . PHP_EOL;
-        $expectedOutput .= 'Van dinsdag 14 november 2017 tot donderdag 16 november 2017' . PHP_EOL;
-        $expectedOutput .= 'Van dinsdag 21 november 2017 tot donderdag 23 november 2017' . PHP_EOL;
-        $expectedOutput .= 'Van dinsdag 28 november 2017 tot donderdag 30 november 2017';
+        $expectedOutput = 'Van ma 6 november 2017 tot do 9 november 2017' . PHP_EOL;
+        $expectedOutput .= 'Van di 14 november 2017 tot do 16 november 2017' . PHP_EOL;
+        $expectedOutput .= 'Van di 21 november 2017 tot do 23 november 2017' . PHP_EOL;
+        $expectedOutput .= 'Van di 28 november 2017 tot do 30 november 2017';
 
         $this->assertEquals(
             $expectedOutput,

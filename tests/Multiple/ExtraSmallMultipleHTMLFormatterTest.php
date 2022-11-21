@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace CultuurNet\CalendarSummaryV3\Multiple;
 
+use Carbon\CarbonImmutable;
 use CultuurNet\CalendarSummaryV3\Offer\BookingAvailability;
 use CultuurNet\CalendarSummaryV3\Offer\CalendarType;
 use CultuurNet\CalendarSummaryV3\Offer\Offer;
@@ -23,6 +24,7 @@ final class ExtraSmallMultipleHTMLFormatterTest extends TestCase
     protected function setUp(): void
     {
         $this->formatter = new ExtraSmallMultipleHTMLFormatter(new Translator('nl_NL'));
+        CarbonImmutable::setTestNow(CarbonImmutable::create(2021, 5, 3));
     }
 
     public function testFormatMultipleWithoutLeadingZeroes(): void
@@ -37,8 +39,9 @@ final class ExtraSmallMultipleHTMLFormatterTest extends TestCase
         );
 
         $this->assertEquals(
-            '<span class="cf-from cf-meta">Van</span> <span class="cf-date">25/11/25</span> '
-            . '<span class="cf-to cf-meta">tot</span> <span class="cf-date">30/11/30</span>',
+            '<span class="cf-date">25</span> <span class="cf-month">nov</span> <span class="cf-year">2025</span>'
+            . ' - '
+            . '<span class="cf-date">30</span> <span class="cf-month">nov</span> <span class="cf-year">2030</span>',
             $this->formatter->format($offer)
         );
     }
@@ -55,8 +58,9 @@ final class ExtraSmallMultipleHTMLFormatterTest extends TestCase
         );
 
         $this->assertEquals(
-            '<span class="cf-from cf-meta">Van</span> <span class="cf-date">4/3/25</span> '
-            . '<span class="cf-to cf-meta">tot</span> <span class="cf-date">8/3/30</span>',
+            '<span class="cf-date">4</span> <span class="cf-month">mrt</span> <span class="cf-year">2025</span>'
+            . ' - '
+            . '<span class="cf-date">8</span> <span class="cf-month">mrt</span> <span class="cf-year">2030</span>',
             $this->formatter->format($offer)
         );
     }
@@ -73,8 +77,9 @@ final class ExtraSmallMultipleHTMLFormatterTest extends TestCase
         );
 
         $this->assertEquals(
-            '<span class="cf-from cf-meta">Van</span> <span class="cf-date">25/11/25</span> '
-            . '<span class="cf-to cf-meta">tot</span> <span class="cf-date">30/11/30</span>'
+            '<span class="cf-date">25</span> <span class="cf-month">nov</span> <span class="cf-year">2025</span>'
+            . ' - '
+            . '<span class="cf-date">30</span> <span class="cf-month">nov</span> <span class="cf-year">2030</span>'
             . ' <span class="cf-status">(geannuleerd)</span>',
             $this->formatter->format($offer)
         );
@@ -92,8 +97,9 @@ final class ExtraSmallMultipleHTMLFormatterTest extends TestCase
         );
 
         $this->assertEquals(
-            '<span class="cf-from cf-meta">Van</span> <span class="cf-date">25/11/25</span> '
-            . '<span class="cf-to cf-meta">tot</span> <span class="cf-date">30/11/30</span>'
+            '<span class="cf-date">25</span> <span class="cf-month">nov</span> <span class="cf-year">2025</span>'
+            . ' - '
+            . '<span class="cf-date">30</span> <span class="cf-month">nov</span> <span class="cf-year">2030</span>'
             . ' <span class="cf-status">(geannuleerd)</span>',
             $this->formatter->format($offer)
         );
@@ -111,8 +117,9 @@ final class ExtraSmallMultipleHTMLFormatterTest extends TestCase
         );
 
         $this->assertEquals(
-            '<span class="cf-from cf-meta">Van</span> <span class="cf-date">25/11/25</span> '
-            . '<span class="cf-to cf-meta">tot</span> <span class="cf-date">30/11/30</span>'
+            '<span class="cf-date">25</span> <span class="cf-month">nov</span> <span class="cf-year">2025</span>'
+            . ' - '
+            . '<span class="cf-date">30</span> <span class="cf-month">nov</span> <span class="cf-year">2030</span>'
             . ' <span class="cf-status">(Volzet of uitverkocht)</span>',
             $this->formatter->format($offer)
         );
@@ -130,8 +137,8 @@ final class ExtraSmallMultipleHTMLFormatterTest extends TestCase
         );
 
         $this->assertEquals(
-            '<span class="cf-from cf-meta">Van</span> <span class="cf-date">4/10/25</span> '
-            . '<span class="cf-to cf-meta">tot</span> <span class="cf-date">8/10/30</span>',
+            '<span class="cf-date">4</span> <span class="cf-month">okt</span> <span class="cf-year">2025</span>' .
+            ' - <span class="cf-date">8</span> <span class="cf-month">okt</span> <span class="cf-year">2030</span>',
             $this->formatter->format($offer)
         );
     }
@@ -147,7 +154,26 @@ final class ExtraSmallMultipleHTMLFormatterTest extends TestCase
             CalendarType::multiple()
         );
 
-        $output = '<span class="cf-date">8/10/25</span>';
+        $output = '<span class="cf-date">8</span> <span class="cf-month">okt</span> <span class="cf-year">2025</span>';
+
+        $this->assertEquals(
+            $output,
+            $this->formatter->format($offer)
+        );
+    }
+
+    public function testFormatAMultipleWithSameBeginAndEndDayCurrentYear(): void
+    {
+        $offer = new Offer(
+            OfferType::event(),
+            new Status('Available', []),
+            new BookingAvailability('Available'),
+            CarbonImmutable::create(2021, 10, 8)->setTime(12, 0),
+            CarbonImmutable::create(2021, 10, 8)->setTime(14, 0),
+            CalendarType::multiple()
+        );
+
+        $output = '<span class="cf-date">8</span> <span class="cf-month">okt</span>';
 
         $this->assertEquals(
             $output,
