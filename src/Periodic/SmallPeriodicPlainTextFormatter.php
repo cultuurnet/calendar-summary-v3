@@ -31,7 +31,7 @@ final class SmallPeriodicPlainTextFormatter implements PeriodicFormatterInterfac
 
     public function format(Offer $offer): string
     {
-        $startDate = $offer->getStartDate()->setTimezone(new \DateTimeZone(date_default_timezone_get()));
+        $startDate = $offer->getStartDate();
         $startDate->setTime(0, 0, 1);
 
         if (DateComparison::inTheFuture($startDate)) {
@@ -41,7 +41,7 @@ final class SmallPeriodicPlainTextFormatter implements PeriodicFormatterInterfac
                 ->toString();
         }
 
-        $endDate = $offer->getEndDate()->setTimezone(new \DateTimeZone(date_default_timezone_get()));
+        $endDate = $offer->getEndDate();
         return PlainTextSummaryBuilder::start($this->translator)
             ->till($this->formatDate($endDate))
             ->appendAvailability($offer->getStatus(), $offer->getBookingAvailability())

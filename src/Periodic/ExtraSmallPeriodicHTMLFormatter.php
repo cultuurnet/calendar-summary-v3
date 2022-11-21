@@ -31,7 +31,7 @@ final class ExtraSmallPeriodicHTMLFormatter implements PeriodicFormatterInterfac
 
     public function format(Offer $offer): string
     {
-        $startDate = $offer->getStartDate()->setTimezone(new \DateTimeZone(date_default_timezone_get()));
+        $startDate = $offer->getStartDate();
         $startDate->setTime(0, 0, 1);
 
         if (DateComparison::inTheFuture($startDate)) {

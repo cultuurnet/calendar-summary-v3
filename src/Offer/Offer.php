@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace CultuurNet\CalendarSummaryV3\Offer;
 
 use DateTimeImmutable;
+use DateTimeZone;
 
 final class Offer
 {
@@ -178,12 +179,12 @@ final class Offer
 
     public function getStartDate(): ?DateTimeImmutable
     {
-        return $this->startDate;
+        return isset($this->startDate) ? $this->startDate->setTimezone(new DateTimeZone(date_default_timezone_get())) : null;
     }
 
     public function getEndDate(): ?DateTimeImmutable
     {
-        return $this->endDate;
+        return isset($this->endDate) ? $this->endDate->setTimezone(new DateTimeZone(date_default_timezone_get())) : null;
     }
 
     public function isEvent(): bool

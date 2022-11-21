@@ -29,11 +29,11 @@ final class MediumPeriodicHTMLFormatter implements PeriodicFormatterInterface
 
     public function format(Offer $offer): string
     {
-        $dateFrom = $offer->getStartDate()->setTimezone(new \DateTimeZone(date_default_timezone_get()));
+        $dateFrom = $offer->getStartDate();
         $intlDateFrom = $this->formatter->formatAsFullDate($dateFrom);
         $intlDateFromDay = $this->formatter->formatAsAbbreviatedDayOfWeek($dateFrom);
 
-        $dateTo = $offer->getEndDate()->setTimezone(new \DateTimeZone(date_default_timezone_get()));
+        $dateTo = $offer->getEndDate();
         $intlDateTo = $this->formatter->formatAsFullDate($dateTo);
         $intlDateDayTo = $this->formatter->formatAsAbbreviatedDayOfWeek($dateTo);
 

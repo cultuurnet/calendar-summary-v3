@@ -9,7 +9,6 @@ use CultuurNet\CalendarSummaryV3\DateFormatter;
 use CultuurNet\CalendarSummaryV3\Offer\Offer;
 use CultuurNet\CalendarSummaryV3\PlainTextSummaryBuilder;
 use CultuurNet\CalendarSummaryV3\Translator;
-use DateTimeZone;
 
 final class ExtraSmallMultiplePlainTextFormatter implements MultipleFormatterInterface
 {
@@ -31,8 +30,8 @@ final class ExtraSmallMultiplePlainTextFormatter implements MultipleFormatterInt
 
     public function format(Offer $offer): string
     {
-        $startDate = $offer->getStartDate()->setTimezone(new DateTimeZone(date_default_timezone_get()));
-        $endDate = $offer->getEndDate()->setTimezone(new DateTimeZone(date_default_timezone_get()));
+        $startDate = $offer->getStartDate();
+        $endDate = $offer->getEndDate();
 
         if (DateComparison::onSameDay($startDate, $endDate)) {
             $plainTextSummaryBuilder = PlainTextSummaryBuilder::start($this->translator)

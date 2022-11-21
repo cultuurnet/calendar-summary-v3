@@ -9,7 +9,6 @@ use CultuurNet\CalendarSummaryV3\DateFormatter;
 use CultuurNet\CalendarSummaryV3\HtmlAvailabilityFormatter;
 use CultuurNet\CalendarSummaryV3\Offer\Offer;
 use CultuurNet\CalendarSummaryV3\Translator;
-use DateTimeZone;
 
 final class ExtraSmallMultipleHTMLFormatter implements MultipleFormatterInterface
 {
@@ -31,8 +30,8 @@ final class ExtraSmallMultipleHTMLFormatter implements MultipleFormatterInterfac
 
     public function format(Offer $offer): string
     {
-        $dateFrom = $offer->getStartDate()->setTimezone(new DateTimeZone(date_default_timezone_get()));
-        $dateTo = $offer->getEndDate()->setTimezone(new DateTimeZone(date_default_timezone_get()));
+        $dateFrom = $offer->getStartDate();
+        $dateTo = $offer->getEndDate();
 
         if (DateComparison::onSameDay($dateFrom, $dateTo)) {
             $output = '<span class="cf-date">' . $this->formatter->formatAsDayNumber($dateFrom) . '</span> ' .

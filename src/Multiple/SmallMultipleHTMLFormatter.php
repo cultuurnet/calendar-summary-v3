@@ -33,10 +33,10 @@ final class SmallMultipleHTMLFormatter implements MultipleFormatterInterface
 
     public function format(Offer $offer): string
     {
-        $dateFrom = $offer->getStartDate()->setTimezone(new \DateTimeZone(date_default_timezone_get()));
+        $dateFrom = $offer->getStartDate();
         $intlDateFrom = $this->getIntlDate($dateFrom);
 
-        $dateTo = $offer->getEndDate()->setTimezone(new \DateTimeZone(date_default_timezone_get()));
+        $dateTo = $offer->getEndDate();
         $intlDateTo = $this->getIntlDate($dateTo);
 
         if (DateComparison::onSameDay($dateFrom, $dateTo)) {

@@ -266,4 +266,21 @@ final class LargePermanentPlainTextFormatterTest extends TestCase
             $this->formatter->format($event)
         );
     }
+
+    public function testFormatPermanentWithoutOpeningHours(): void
+    {
+        $event = new Offer(
+            OfferType::event(),
+            new Status('Available', []),
+            new BookingAvailability('Available'),
+            null,
+            null,
+            CalendarType::permanent()
+        );
+
+        $this->assertEquals(
+            'Elke dag open' . PHP_EOL,
+            $this->formatter->format($event)
+        );
+    }
 }
