@@ -13,6 +13,8 @@ use DateTimeImmutable;
 
 final class MediumPermanentPlainTextFormatter implements PermanentFormatterInterface
 {
+    use MediumPermanentWeekScheme;
+
     /**
      * @var DateFormatter
      */
@@ -54,20 +56,37 @@ final class MediumPermanentPlainTextFormatter implements PermanentFormatterInter
      */
     private function generateWeekScheme(array $openingHoursData): string
     {
-        // Create a list of all day names that have opening hours, translated
-        $translatedDayNamesWithOpeningHours = [];
+        $weekDaysOpen = [];
+        // Create a list of all day names that have opening hours
         foreach ($openingHoursData as $openingHours) {
             foreach ($openingHours->getDaysOfWeek() as $dayName) {
-                $translatedDayName = $this->formatter->formatAsAbbreviatedDayOfWeek(new DateTimeImmutable($dayName));
-                $translatedDayNamesWithOpeningHours[] = $translatedDayName;
+                if (!in_array($dayName, $weekDaysOpen, true)) {
+                    $weekDaysOpen[(int) $this->formatter->formatAsDayOfWeekNumber(new DateTimeImmutable($dayName))] = $dayName;
+                }
             }
         }
-        $translatedDayNamesWithOpeningHours = array_unique($translatedDayNamesWithOpeningHours);
+
+        if (count($weekDaysOpen) === 7) {
+            return PlainTextSummaryBuilder::start($this->translator)
+                ->alwaysOpen()
+                ->startNewLine()
+                ->toString();
+        }
+
+        if (count($weekDaysOpen) === 1) {
+            return PlainTextSummaryBuilder::start($this->translator)
+                ->append($this->translator->translate('open_every'))
+                ->append($this->formatter->formatAsDayOfWeek(new DateTimeImmutable(reset($weekDaysOpen))))
+                ->append($this->translator->translate('open_every_end'))
+                ->toString();
+        }
+
+        $weekScheme = $this->getWeekScheme($weekDaysOpen, $this->formatter);
 
         // Put all the day names with opening hours on a single line with 'Open at' (sec) at the beginning.
-        // E.g. 'Open at monday, wednesday, thursday'
+        // E.g. 'Open at mo - th & su'
         return PlainTextSummaryBuilder::start($this->translator)
-            ->openAt(...$translatedDayNamesWithOpeningHours)
+            ->openAt(...$weekScheme)
             ->toString();
     }
 }

@@ -69,7 +69,7 @@ final class LargePermanentPlainTextFormatter implements PermanentFormatterInterf
         $formattedDays = [];
         foreach ($dayNames as $dayName) {
             $formattedDays[$dayName] = PlainTextSummaryBuilder::start($this->translator)
-                ->append($this->formatter->formatAsAbbreviatedDayOfWeek(new DateTimeImmutable($dayName)));
+                ->append($this->formatter->formatAsDayOfWeek(new DateTimeImmutable($dayName)));
         }
 
         // Keep track of which day (names) have opening hours, so we know which days are closed.

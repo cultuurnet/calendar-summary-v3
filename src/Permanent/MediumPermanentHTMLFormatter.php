@@ -13,6 +13,8 @@ use DateTimeImmutable;
 
 final class MediumPermanentHTMLFormatter implements PermanentFormatterInterface
 {
+    use MediumPermanentWeekScheme;
+
     /**
      * @var DateFormatter
      */
@@ -54,28 +56,38 @@ final class MediumPermanentHTMLFormatter implements PermanentFormatterInterface
      */
     private function generateWeekScheme(array $openingHoursData): string
     {
-        $outputWeek = '<span>' . ucfirst($this->translator->translate('open')) . ' '
-            . '<span class="cf-weekdays">';
-        // Create an array with formatted days.
-        $formattedDays = [];
-
+        $weekDaysOpen = [];
+        // Create a list of all day names that have opening hours
         foreach ($openingHoursData as $openingHours) {
-            $daysOfWeek = $openingHours->getDaysOfWeek();
-            foreach ($daysOfWeek as $i => $dayOfWeek) {
-                $translatedDay = $this->formatter->formatAsAbbreviatedDayOfWeek(new DateTimeImmutable($dayOfWeek));
-
-                if (!isset($formattedDays[$dayOfWeek])) {
-                    $formattedDays[$dayOfWeek] = $translatedDay;
+            foreach ($openingHours->getDaysOfWeek() as $dayName) {
+                if (!in_array($dayName, $weekDaysOpen, true)) {
+                    $weekDaysOpen[(int) $this->formatter->formatAsDayOfWeekNumber(new DateTimeImmutable($dayName))] = $dayName;
                 }
             }
         }
 
-        $i = 0;
+        if (count($weekDaysOpen) === 7) {
+            return '<p class="cf-openinghours">' .
+                ucfirst($this->translator->translate('open_every_day')) . '</p>';
+        }
 
-        foreach ($formattedDays as $formattedDay) {
-            $outputWeek .= '<span class="cf-weekday-open">' . $formattedDay . '</span>';
-            if (++$i !== count($formattedDays)) {
-                $outputWeek .= ', ';
+        if (count($weekDaysOpen) === 1) {
+            return '<p class="cf-openinghours">' .
+                $this->translator->translate('open_every') . ' ' .
+                $this->formatter->formatAsDayOfWeek(new DateTimeImmutable(reset($weekDaysOpen))) . ' ' .
+                $this->translator->translate('open_every_end') . '</p>';
+        }
+
+        $weekScheme = $this->getWeekScheme($weekDaysOpen, $this->formatter);
+
+        $outputWeek = '<span>' . ucfirst($this->translator->translate('open')) . ' '
+            . '<span class="cf-weekdays">';
+
+        $i = 0;
+        foreach ($weekScheme as $translatedDayNamesWithOpeningHour) {
+            $outputWeek .= '<span class="cf-weekday-open">' . $translatedDayNamesWithOpeningHour . '</span>';
+            if (++$i !== count($weekScheme)) {
+                $outputWeek .= ' & ';
             }
         }
 

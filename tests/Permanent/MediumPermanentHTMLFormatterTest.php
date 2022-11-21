@@ -64,12 +64,8 @@ final class MediumPermanentHTMLFormatterTest extends TestCase
 
         $this->assertEquals(
             '<span>Open op <span class="cf-weekdays">'
-            . '<span class="cf-weekday-open">ma</span>, '
-            . '<span class="cf-weekday-open">di</span>, '
-            . '<span class="cf-weekday-open">wo</span>, '
-            . '<span class="cf-weekday-open">vr</span>, '
-            . '<span class="cf-weekday-open">za</span>, '
-            . '<span class="cf-weekday-open">zo</span>'
+            . '<span class="cf-weekday-open">ma - wo</span> & '
+            . '<span class="cf-weekday-open">vr - zo</span>'
             . '</span></span>',
             $this->formatter->format($place)
         );
@@ -120,11 +116,8 @@ final class MediumPermanentHTMLFormatterTest extends TestCase
 
         $this->assertEquals(
             '<span>Open op <span class="cf-weekdays">'
-            . '<span class="cf-weekday-open">ma</span>, '
-            . '<span class="cf-weekday-open">di</span>, '
-            . '<span class="cf-weekday-open">wo</span>, '
-            . '<span class="cf-weekday-open">vr</span>, '
-            . '<span class="cf-weekday-open">za</span>'
+            . '<span class="cf-weekday-open">ma - wo</span> & '
+            . '<span class="cf-weekday-open">vr - za</span>'
             . '</span></span>',
             $this->formatter->format($place)
         );
@@ -182,11 +175,175 @@ final class MediumPermanentHTMLFormatterTest extends TestCase
 
         $this->assertEquals(
             '<span>Open op <span class="cf-weekdays">'
-            . '<span class="cf-weekday-open">ma</span>, '
-            . '<span class="cf-weekday-open">di</span>, '
-            . '<span class="cf-weekday-open">vr</span>, '
-            . '<span class="cf-weekday-open">za</span>'
+            . '<span class="cf-weekday-open">ma - di</span> & '
+            . '<span class="cf-weekday-open">vr - za</span>'
             . '</span></span>',
+            $this->formatter->format($place)
+        );
+    }
+
+    public function testFormatPermanentClosedOnMondays(): void
+    {
+        $place = new Offer(
+            OfferType::place(),
+            new Status('Available', []),
+            new BookingAvailability('Available'),
+            new DateTimeImmutable('25-11-2025'),
+            new DateTimeImmutable('25-11-2025')
+        );
+
+        $openingHours1 = new OpeningHour(
+            ['wednesday', 'thursday'],
+            '18:00',
+            '20:00'
+        );
+
+        $openingHours2 = new OpeningHour(
+            ['friday'],
+            '21:00',
+            '23:00'
+        );
+
+        $openingHours3 = new OpeningHour(
+            ['sunday'],
+            '10:00',
+            '15:00'
+        );
+
+        $place = $place->withOpeningHours(
+            [
+                $openingHours1,
+                $openingHours2,
+                $openingHours3,
+            ]
+        );
+
+        $this->assertEquals(
+            '<span>Open op <span class="cf-weekdays">' .
+            '<span class="cf-weekday-open">wo - vr</span> & ' .
+            '<span class="cf-weekday-open">zo</span></span></span>',
+            $this->formatter->format($place)
+        );
+    }
+
+    public function testFormatPermanentOpenSevenDayAWeek(): void
+    {
+        $place = new Offer(
+            OfferType::place(),
+            new Status('Available', []),
+            new BookingAvailability('Available'),
+            new DateTimeImmutable('25-11-2025'),
+            new DateTimeImmutable('25-11-2025')
+        );
+
+        $openingHours1 = new OpeningHour(
+            ['wednesday', 'thursday'],
+            '18:00',
+            '20:00'
+        );
+
+        $openingHours2 = new OpeningHour(
+            ['monday', 'tuesday', 'friday'],
+            '21:00',
+            '23:00'
+        );
+
+        $openingHours3 = new OpeningHour(
+            ['saturday', 'sunday'],
+            '10:00',
+            '15:00'
+        );
+
+        $place = $place->withOpeningHours(
+            [
+                $openingHours1,
+                $openingHours2,
+                $openingHours3,
+            ]
+        );
+
+        $this->assertEquals(
+            '<p class="cf-openinghours">Elke dag open</p>',
+            $this->formatter->format($place)
+        );
+    }
+
+    public function testFormatPermanentOpenOneDayAWeek(): void
+    {
+        $place = new Offer(
+            OfferType::place(),
+            new Status('Available', []),
+            new BookingAvailability('Available'),
+            new DateTimeImmutable('25-11-2025'),
+            new DateTimeImmutable('25-11-2025')
+        );
+
+        $openingHours1 = new OpeningHour(
+            ['wednesday'],
+            '09:00',
+            '11:00'
+        );
+
+        $openingHours2 = new OpeningHour(
+            ['wednesday'],
+            '18:00',
+            '20:00'
+        );
+
+        $place = $place->withOpeningHours(
+            [
+                $openingHours1,
+                $openingHours2,
+            ]
+        );
+
+        $this->assertEquals(
+            '<p class="cf-openinghours">Elke woensdag open</p>',
+            $this->formatter->format($place)
+        );
+    }
+
+    public function testFormatPermanentThreePeriods(): void
+    {
+        $place = new Offer(
+            OfferType::place(),
+            new Status('Available', []),
+            new BookingAvailability('Available'),
+            new DateTimeImmutable('25-11-2025'),
+            new DateTimeImmutable('25-11-2025')
+        );
+
+        $openingHours1 = new OpeningHour(
+            ['monday', 'tuesday'],
+            '18:00',
+            '20:00'
+        );
+
+        $openingHours2 = new OpeningHour(
+            ['thursday', 'friday'],
+            '21:00',
+            '23:00'
+        );
+
+        $openingHours3 = new OpeningHour(
+            ['sunday'],
+            '10:00',
+            '15:00'
+        );
+
+        $place = $place->withOpeningHours(
+            [
+                $openingHours1,
+                $openingHours2,
+                $openingHours3,
+            ]
+        );
+
+        $this->assertEquals(
+            '<span>Open op <span class="cf-weekdays">' .
+            '<span class="cf-weekday-open">ma - di</span> & ' .
+            '<span class="cf-weekday-open">do - vr</span> & ' .
+            '<span class="cf-weekday-open">zo</span></span></span>',
             $this->formatter->format($place)
         );
     }
@@ -256,6 +413,96 @@ final class MediumPermanentHTMLFormatterTest extends TestCase
         $this->assertEquals(
             '<p class="cf-status">Geannuleerd</p>',
             $this->formatter->format($event)
+        );
+    }
+
+    public function testFormatPermanentThreePeriodsMixedSorting(): void
+    {
+        $place = new Offer(
+            OfferType::place(),
+            new Status('Available', []),
+            new BookingAvailability('Available'),
+            new DateTimeImmutable('25-11-2025'),
+            new DateTimeImmutable('25-11-2025')
+        );
+
+        $openingHours1 = new OpeningHour(
+            ['monday', 'tuesday'],
+            '18:00',
+            '20:00'
+        );
+
+        $openingHours2 = new OpeningHour(
+            ['friday', 'saturday'],
+            '21:00',
+            '23:00'
+        );
+
+        $openingHours3 = new OpeningHour(
+            ['wednesday'],
+            '10:00',
+            '15:00'
+        );
+
+        $place = $place->withOpeningHours(
+            [
+                $openingHours1,
+                $openingHours2,
+                $openingHours3,
+            ]
+        );
+
+        $this->assertEquals(
+            '<span>Open op <span class="cf-weekdays">' .
+            '<span class="cf-weekday-open">ma - wo</span> & ' .
+            '<span class="cf-weekday-open">vr - za</span>' .
+            '</span></span>',
+            $this->formatter->format($place)
+        );
+    }
+
+    public function testFormatPermanentBreakTheWeek(): void
+    {
+        $place = new Offer(
+            OfferType::place(),
+            new Status('Available', []),
+            new BookingAvailability('Available'),
+            new DateTimeImmutable('25-11-2025'),
+            new DateTimeImmutable('25-11-2025')
+        );
+
+        $openingHours1 = new OpeningHour(
+            ['monday', 'tuesday'],
+            '18:00',
+            '20:00'
+        );
+
+        $openingHours2 = new OpeningHour(
+            ['tuesday', 'saturday'],
+            '21:00',
+            '23:00'
+        );
+
+        $openingHours3 = new OpeningHour(
+            ['sunday', 'monday'],
+            '10:00',
+            '15:00'
+        );
+
+        $place = $place->withOpeningHours(
+            [
+                $openingHours1,
+                $openingHours2,
+                $openingHours3,
+            ]
+        );
+
+        $this->assertEquals(
+            '<span>Open op <span class="cf-weekdays">' .
+            '<span class="cf-weekday-open">ma - di</span> & ' .
+            '<span class="cf-weekday-open">za - zo</span>' .
+            '</span></span>',
+            $this->formatter->format($place)
         );
     }
 
