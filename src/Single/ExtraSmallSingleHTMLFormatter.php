@@ -65,37 +65,26 @@ final class ExtraSmallSingleHTMLFormatter implements SingleFormatterInterface
 
     private function formatMoreDays(DateTimeInterface $dateFrom, DateTimeInterface $dateEnd): string
     {
-        $dateFromDay = $this->formatter->formatAsDayNumber($dateFrom);
-        $dateFromMonth = $this->formatter->formatAsAbbreviatedMonthName($dateFrom);
-
-        $dateEndDay = $this->formatter->formatAsDayNumber($dateEnd);
-        $dateEndMonth = $this->formatter->formatAsAbbreviatedMonthName($dateEnd);
-
         $output = '<span class="cf-from cf-meta">' . ucfirst($this->translator->translate('from')) . '</span>';
         $output .= ' ';
-        $output .= '<span class="cf-date">' . $dateFromDay . '</span>';
-        $output .= ' ';
-        $output .= '<span class="cf-month">' . $dateFromMonth . '</span>';
-        if (!DateComparison::isCurrentYear($dateFrom)) {
-            $output .= ' ';
-            $output .= '<span class="cf-year">' . $this->formatter->formatAsYear($dateFrom) . '</span>';
-        }
+        $output .= $this->getDatePart($dateFrom);
         $output .= ' ';
         $output .= '<span class="cf-to cf-meta">' . $this->translator->translate('till') . '</span>';
         $output .= ' ';
-        $output .= '<span class="cf-date">' . $dateEndDay . '</span>';
-        $output .= ' ';
-        $output .= '<span class="cf-month">' . $dateEndMonth . '</span>';
-        if (!DateComparison::isCurrentYear($dateEnd)) {
-            $output .= ' ';
-            $output .= '<span class="cf-year">' . $this->formatter->formatAsYear($dateEnd) . '</span>';
-        }
+        $output .= $this->getDatePart($dateEnd);
 
         return $output;
     }
 
     private function getDatePart(DateTimeInterface $date): string
     {
-        return ' ';
+        $output = '<span class="cf-date">' . $this->formatter->formatAsDayNumber($date) . '</span>';
+        $output .= ' ';
+        $output .= '<span class="cf-month">' . $this->formatter->formatAsAbbreviatedMonthName($date) . '</span>';
+        if (!DateComparison::isCurrentYear($date)) {
+            $output .= ' ';
+            $output .= '<span class="cf-year">' . $this->formatter->formatAsYear($date) . '</span>';
+        }
+        return $output;
     }
 }
