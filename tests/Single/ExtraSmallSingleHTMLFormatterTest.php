@@ -35,7 +35,9 @@ final class ExtraSmallSingleHTMLFormatterTest extends TestCase
         );
 
         $this->assertEquals(
-            '<span class="cf-date">25</span> <span class="cf-month">jan</span>',
+            '<span class="cf-date">25</span> ' .
+            '<span class="cf-month">jan</span> ' .
+            '<span class="cf-year">2018</span>',
             $this->formatter->format($event)
         );
     }
@@ -51,7 +53,10 @@ final class ExtraSmallSingleHTMLFormatterTest extends TestCase
         );
 
         $this->assertEquals(
-            '<span class="cf-date">25</span> <span class="cf-month">jan</span> <span class="cf-status">(geannuleerd)</span>',
+            '<span class="cf-date">25</span> ' .
+            '<span class="cf-month">jan</span> ' .
+            '<span class="cf-year">2018</span> ' .
+            '<span class="cf-status">(geannuleerd)</span>',
             $this->formatter->format($event)
         );
     }
@@ -67,7 +72,10 @@ final class ExtraSmallSingleHTMLFormatterTest extends TestCase
         );
 
         $this->assertEquals(
-            '<span class="cf-date">25</span> <span class="cf-month">jan</span> <span title="Covid-19" class="cf-status">(geannuleerd)</span>',
+            '<span class="cf-date">25</span> ' .
+            '<span class="cf-month">jan</span> ' .
+            '<span class="cf-year">2018</span> ' .
+            '<span title="Covid-19" class="cf-status">(geannuleerd)</span>',
             $this->formatter->format($event)
         );
     }
@@ -83,7 +91,7 @@ final class ExtraSmallSingleHTMLFormatterTest extends TestCase
         );
 
         $this->assertEquals(
-            '<span class="cf-date">8</span> <span class="cf-month">jan</span>',
+            '<span class="cf-date">8</span> <span class="cf-month">jan</span> <span class="cf-year">2018</span>',
             $this->formatter->format($event)
         );
     }
@@ -104,11 +112,15 @@ final class ExtraSmallSingleHTMLFormatterTest extends TestCase
         $expectedOutput .= ' ';
         $expectedOutput .= '<span class="cf-month">jan</span>';
         $expectedOutput .= ' ';
+        $expectedOutput .= '<span class="cf-year">2018</span>';
+        $expectedOutput .= ' ';
         $expectedOutput .= '<span class="cf-to cf-meta">tot</span>';
         $expectedOutput .= ' ';
         $expectedOutput .= '<span class="cf-date">27</span>';
         $expectedOutput .= ' ';
         $expectedOutput .= '<span class="cf-month">jan</span>';
+        $expectedOutput .= ' ';
+        $expectedOutput .= '<span class="cf-year">2018</span>';
 
         $this->assertEquals(
             $expectedOutput,
@@ -132,11 +144,15 @@ final class ExtraSmallSingleHTMLFormatterTest extends TestCase
         $expectedOutput .= ' ';
         $expectedOutput .= '<span class="cf-month">jan</span>';
         $expectedOutput .= ' ';
+        $expectedOutput .= '<span class="cf-year">2018</span>';
+        $expectedOutput .= ' ';
         $expectedOutput .= '<span class="cf-to cf-meta">tot</span>';
         $expectedOutput .= ' ';
         $expectedOutput .= '<span class="cf-date">27</span>';
         $expectedOutput .= ' ';
         $expectedOutput .= '<span class="cf-month">jan</span>';
+        $expectedOutput .= ' ';
+        $expectedOutput .= '<span class="cf-year">2018</span>';
         $expectedOutput .= ' ';
         $expectedOutput .= '<span class="cf-status">(geannuleerd)</span>';
 
@@ -162,11 +178,15 @@ final class ExtraSmallSingleHTMLFormatterTest extends TestCase
         $expectedOutput .= ' ';
         $expectedOutput .= '<span class="cf-month">jan</span>';
         $expectedOutput .= ' ';
+        $expectedOutput .= '<span class="cf-year">2018</span>';
+        $expectedOutput .= ' ';
         $expectedOutput .= '<span class="cf-to cf-meta">tot</span>';
         $expectedOutput .= ' ';
         $expectedOutput .= '<span class="cf-date">8</span>';
         $expectedOutput .= ' ';
         $expectedOutput .= '<span class="cf-month">jan</span>';
+        $expectedOutput .= ' ';
+        $expectedOutput .= '<span class="cf-year">2018</span>';
 
         $this->assertEquals(
             $expectedOutput,
