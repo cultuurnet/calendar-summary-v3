@@ -35,7 +35,7 @@ final class CalendarPlainTextFormatterTest extends TestCase
             CalendarType::single()
         );
 
-        $this->assertSame('25 jan', $this->formatter->format($offer, 'xs'));
+        $this->assertSame('25 jan 2018', $this->formatter->format($offer, 'xs'));
     }
 
     public function testGeneralFormatMethodAndCatchException(): void
