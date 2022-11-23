@@ -64,14 +64,14 @@ final class ExtraSmallSinglePlainTextFormatter implements SingleFormatterInterfa
         $startDay[] = $this->formatter->formatAsDayNumber($startDate);
         $startDay[] = $this->formatter->formatAsAbbreviatedMonthName($startDate);
         if (!DateComparison::isCurrentYear($startDate)) {
-            $startDay[] =$this->formatter->formatAsYear($startDate);
+            $startDay[] = $this->formatter->formatAsYear($startDate);
         }
 
         $endDay = [];
         $endDay[] = $this->formatter->formatAsDayNumber($endDate);
         $endDay[] = $this->formatter->formatAsAbbreviatedMonthName($endDate);
         if (!DateComparison::isCurrentYear($endDate)) {
-            $endDay[] =$this->formatter->formatAsYear($endDate);
+            $endDay[] = $this->formatter->formatAsYear($endDate);
         }
 
         return PlainTextSummaryBuilder::start($this->translator)
