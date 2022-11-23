@@ -48,22 +48,35 @@ final class ExtraSmallSinglePlainTextFormatter implements SingleFormatterInterfa
 
     private function formatSameDay(DateTimeInterface $date): string
     {
-        $dayNumber = $this->formatter->formatAsDayNumber($date);
-        $monthName = $this->formatter->formatAsAbbreviatedMonthName($date);
-        return PlainTextSummaryBuilder::singleLine($dayNumber, $monthName);
+        $dateParts = [];
+        $dateParts[] = $this->formatter->formatAsDayNumber($date);
+        $dateParts[] = $this->formatter->formatAsAbbreviatedMonthName($date);
+        if (!DateComparison::isCurrentYear($date)) {
+            $dateParts[] = $this->formatter->formatAsYear($date);
+        }
+
+        return PlainTextSummaryBuilder::singleLine(...$dateParts);
     }
 
     private function formatMoreDays(DateTimeInterface $startDate, DateTimeInterface $endDate): string
     {
-        $startDayNumber = $this->formatter->formatAsDayNumber($startDate);
-        $startMonthName = $this->formatter->formatAsAbbreviatedMonthName($startDate);
+        $startDay = [];
+        $startDay[] = $this->formatter->formatAsDayNumber($startDate);
+        $startDay[] = $this->formatter->formatAsAbbreviatedMonthName($startDate);
+        if (!DateComparison::isCurrentYear($startDate)) {
+            $startDay[] =$this->formatter->formatAsYear($startDate);
+        }
 
-        $endDayNumber = $this->formatter->formatAsDayNumber($endDate);
-        $endMonthName = $this->formatter->formatAsAbbreviatedMonthName($endDate);
+        $endDay = [];
+        $endDay[] = $this->formatter->formatAsDayNumber($endDate);
+        $endDay[] = $this->formatter->formatAsAbbreviatedMonthName($endDate);
+        if (!DateComparison::isCurrentYear($endDate)) {
+            $endDay[] =$this->formatter->formatAsYear($endDate);
+        }
 
         return PlainTextSummaryBuilder::start($this->translator)
-            ->from($startDayNumber, $startMonthName)
-            ->till($endDayNumber, $endMonthName)
+            ->from(...$startDay)
+            ->till(...$endDay)
             ->toString();
     }
 }
