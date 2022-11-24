@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace CultuurNet\CalendarSummaryV3\Single;
 
+use Carbon\CarbonImmutable;
 use CultuurNet\CalendarSummaryV3\Offer\BookingAvailability;
 use CultuurNet\CalendarSummaryV3\Offer\Offer;
 use CultuurNet\CalendarSummaryV3\Offer\OfferType;
@@ -22,6 +23,7 @@ final class ExtraSmallSinglePlainTextFormatterTest extends TestCase
     protected function setUp(): void
     {
         $this->formatter = new ExtraSmallSinglePlainTextFormatter(new Translator('nl_NL'));
+        CarbonImmutable::setTestNow(CarbonImmutable::create(2021, 5, 9));
     }
 
     public function testFormatPlainTextSingleDateXsOneDay(): void
@@ -35,7 +37,7 @@ final class ExtraSmallSinglePlainTextFormatterTest extends TestCase
         );
 
         $this->assertEquals(
-            '25 jan',
+            '25 jan 2018',
             $this->formatter->format($event)
         );
     }
@@ -51,7 +53,71 @@ final class ExtraSmallSinglePlainTextFormatterTest extends TestCase
         );
 
         $this->assertEquals(
+            '8 jan 2018',
+            $this->formatter->format($event)
+        );
+    }
+
+    public function testFormatPlainTextSingleDateCurrentYEar(): void
+    {
+        $event = new Offer(
+            OfferType::event(),
+            new Status('Available', []),
+            new BookingAvailability('Available'),
+            CarbonImmutable::create(2021, 1, 8)->setTime(1, 0),
+            CarbonImmutable::create(2021, 1, 8)->setTime(21, 30)
+        );
+
+        $this->assertEquals(
             '8 jan',
+            $this->formatter->format($event)
+        );
+    }
+
+    public function testFormatPlainTextSingleDateXsMoreDaysCurrentYear(): void
+    {
+        $event = new Offer(
+            OfferType::event(),
+            new Status('Available', []),
+            new BookingAvailability('Available'),
+            CarbonImmutable::create(2021, 1, 23)->setTime(1, 0),
+            CarbonImmutable::create(2021, 1, 28)->setTime(21, 30)
+        );
+
+        $this->assertEquals(
+            'Van 23 jan tot 28 jan',
+            $this->formatter->format($event)
+        );
+    }
+
+    public function testFormatPlainTextSingleDateXsMoreDaysStartCurrentYear(): void
+    {
+        $event = new Offer(
+            OfferType::event(),
+            new Status('Available', []),
+            new BookingAvailability('Available'),
+            CarbonImmutable::create(2021, 12, 23)->setTime(1, 0),
+            CarbonImmutable::create(2022, 1, 28)->setTime(21, 30)
+        );
+
+        $this->assertEquals(
+            'Van 23 dec tot 28 jan 2022',
+            $this->formatter->format($event)
+        );
+    }
+
+    public function testFormatPlainTextSingleDateXsMoreDaysEndCurrentYear(): void
+    {
+        $event = new Offer(
+            OfferType::event(),
+            new Status('Available', []),
+            new BookingAvailability('Available'),
+            CarbonImmutable::create(2020, 12, 23)->setTime(1, 0),
+            CarbonImmutable::create(2021, 1, 28)->setTime(21, 30)
+        );
+
+        $this->assertEquals(
+            'Van 23 dec 2020 tot 28 jan',
             $this->formatter->format($event)
         );
     }
@@ -67,7 +133,7 @@ final class ExtraSmallSinglePlainTextFormatterTest extends TestCase
         );
 
         $this->assertEquals(
-            'Van 25 jan tot 28 jan',
+            'Van 25 jan 2018 tot 28 jan 2018',
             $this->formatter->format($event)
         );
     }
@@ -83,7 +149,7 @@ final class ExtraSmallSinglePlainTextFormatterTest extends TestCase
         );
 
         $this->assertEquals(
-            'Van 6 jan tot 8 jan',
+            'Van 6 jan 2018 tot 8 jan 2018',
             $this->formatter->format($event)
         );
     }
@@ -99,7 +165,7 @@ final class ExtraSmallSinglePlainTextFormatterTest extends TestCase
         );
 
         $this->assertEquals(
-            '25 jan (geannuleerd)',
+            '25 jan 2018 (geannuleerd)',
             $this->formatter->format($event)
         );
     }
@@ -115,7 +181,7 @@ final class ExtraSmallSinglePlainTextFormatterTest extends TestCase
         );
 
         $this->assertEquals(
-            '25 jan (uitgesteld)',
+            '25 jan 2018 (uitgesteld)',
             $this->formatter->format($event)
         );
     }
@@ -131,7 +197,7 @@ final class ExtraSmallSinglePlainTextFormatterTest extends TestCase
         );
 
         $this->assertEquals(
-            'Van 25 jan tot 28 jan (geannuleerd)',
+            'Van 25 jan 2018 tot 28 jan 2018 (geannuleerd)',
             $this->formatter->format($event)
         );
     }
@@ -147,7 +213,7 @@ final class ExtraSmallSinglePlainTextFormatterTest extends TestCase
         );
 
         $this->assertEquals(
-            'Van 25 jan tot 28 jan (geannuleerd)',
+            'Van 25 jan 2018 tot 28 jan 2018 (geannuleerd)',
             $this->formatter->format($event)
         );
     }
@@ -163,7 +229,7 @@ final class ExtraSmallSinglePlainTextFormatterTest extends TestCase
         );
 
         $this->assertEquals(
-            'Van 25 jan tot 28 jan (Volzet of uitverkocht)',
+            'Van 25 jan 2018 tot 28 jan 2018 (Volzet of uitverkocht)',
             $this->formatter->format($event)
         );
     }
@@ -179,7 +245,7 @@ final class ExtraSmallSinglePlainTextFormatterTest extends TestCase
         );
 
         $this->assertEquals(
-            'Van 25 jan tot 28 jan (uitgesteld)',
+            'Van 25 jan 2018 tot 28 jan 2018 (uitgesteld)',
             $this->formatter->format($event)
         );
     }

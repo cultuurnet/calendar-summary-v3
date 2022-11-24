@@ -52,31 +52,39 @@ final class ExtraSmallSingleHTMLFormatter implements SingleFormatterInterface
         $dateFromDay = $this->formatter->formatAsDayNumber($dateFrom);
         $dateFromMonth = $this->formatter->formatAsAbbreviatedMonthName($dateFrom);
 
-        return '<span class="cf-date">' . ucfirst($dateFromDay) . '</span>'
+        $output = '<span class="cf-date">' . ucfirst($dateFromDay) . '</span>'
             . ' '
             . '<span class="cf-month">' . $dateFromMonth . '</span>';
+
+        if (!DateComparison::isCurrentYear($dateFrom)) {
+            $output .= ' <span class="cf-year">' . $this->formatter->formatAsYear($dateFrom) . '</span>';
+        }
+
+        return $output;
     }
 
     private function formatMoreDays(DateTimeInterface $dateFrom, DateTimeInterface $dateEnd): string
     {
-        $dateFromDay = $this->formatter->formatAsDayNumber($dateFrom);
-        $dateFromMonth = $this->formatter->formatAsAbbreviatedMonthName($dateFrom);
-
-        $dateEndDay = $this->formatter->formatAsDayNumber($dateEnd);
-        $dateEndMonth = $this->formatter->formatAsAbbreviatedMonthName($dateEnd);
-
         $output = '<span class="cf-from cf-meta">' . ucfirst($this->translator->translate('from')) . '</span>';
         $output .= ' ';
-        $output .= '<span class="cf-date">' . $dateFromDay . '</span>';
-        $output .= ' ';
-        $output .= '<span class="cf-month">' . $dateFromMonth . '</span>';
+        $output .= $this->getDatePart($dateFrom);
         $output .= ' ';
         $output .= '<span class="cf-to cf-meta">' . $this->translator->translate('till') . '</span>';
         $output .= ' ';
-        $output .= '<span class="cf-date">' . $dateEndDay . '</span>';
-        $output .= ' ';
-        $output .= '<span class="cf-month">' . $dateEndMonth . '</span>';
+        $output .= $this->getDatePart($dateEnd);
 
+        return $output;
+    }
+
+    private function getDatePart(DateTimeInterface $date): string
+    {
+        $output = '<span class="cf-date">' . $this->formatter->formatAsDayNumber($date) . '</span>';
+        $output .= ' ';
+        $output .= '<span class="cf-month">' . $this->formatter->formatAsAbbreviatedMonthName($date) . '</span>';
+        if (!DateComparison::isCurrentYear($date)) {
+            $output .= ' ';
+            $output .= '<span class="cf-year">' . $this->formatter->formatAsYear($date) . '</span>';
+        }
         return $output;
     }
 }
