@@ -313,6 +313,55 @@ final class MediumPermanentPlainTextFormatterTest extends TestCase
         );
     }
 
+    public function testFormatPermanentWhereFirstPeriodIsLessThan3days(): void
+    {
+        $place = new Offer(
+            OfferType::place(),
+            new Status('Available', []),
+            new BookingAvailability('Available'),
+            new DateTimeImmutable('25-11-2025'),
+            new DateTimeImmutable('25-11-2025')
+        );
+
+        $openingHours1 = new OpeningHour(
+            ['monday'],
+            '18:00',
+            '20:00'
+        );
+
+        $openingHours2 = new OpeningHour(
+            ['tuesday', 'thursday'],
+            '21:00',
+            '23:00'
+        );
+
+        $openingHours3 = new OpeningHour(
+            ['friday'],
+            '10:00',
+            '15:00'
+        );
+
+        $openingHours4 = new OpeningHour(
+            ['saturday', 'sunday'],
+            '11:00',
+            '15:00'
+        );
+
+        $place = $place->withOpeningHours(
+            [
+                $openingHours1,
+                $openingHours2,
+                $openingHours3,
+                $openingHours4,
+            ]
+        );
+
+        $this->assertEquals(
+            'Open op ma - di & do - zo',
+            $this->formatter->format($place)
+        );
+    }
+
     public function testFormatPermanentWhereFirstPeriodIsMinimum3days(): void
     {
         $place = new Offer(
@@ -324,13 +373,13 @@ final class MediumPermanentPlainTextFormatterTest extends TestCase
         );
 
         $openingHours1 = new OpeningHour(
-            ['wednesday', 'thursday'],
+            ['friday'],
             '18:00',
             '20:00'
         );
 
         $openingHours2 = new OpeningHour(
-            ['friday'],
+            ['saturday'],
             '21:00',
             '23:00'
         );
@@ -350,7 +399,7 @@ final class MediumPermanentPlainTextFormatterTest extends TestCase
         );
 
         $this->assertEquals(
-            'Open van wo - vr & zo',
+            'Open van vr - zo',
             $this->formatter->format($place)
         );
     }
