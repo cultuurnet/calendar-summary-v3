@@ -63,7 +63,7 @@ final class MediumPermanentPlainTextFormatterTest extends TestCase
         );
 
         $this->assertEquals(
-            'Open op ma - wo & vr - zo',
+            'Open van ma - wo & vr - zo',
             $this->formatter->format($place)
         );
     }
@@ -112,7 +112,7 @@ final class MediumPermanentPlainTextFormatterTest extends TestCase
         );
 
         $this->assertEquals(
-            'Open op ma - wo & vr - za',
+            'Open van ma - wo & vr - za',
             $this->formatter->format($place)
         );
     }
@@ -308,7 +308,49 @@ final class MediumPermanentPlainTextFormatterTest extends TestCase
         );
 
         $this->assertEquals(
-            'Open op wo - vr & zo',
+            'Open van wo - vr & zo',
+            $this->formatter->format($place)
+        );
+    }
+
+    public function testFormatPermanentWhereFirstPeriodIsMinimum3days(): void
+    {
+        $place = new Offer(
+            OfferType::place(),
+            new Status('Available', []),
+            new BookingAvailability('Available'),
+            new DateTimeImmutable('25-11-2025'),
+            new DateTimeImmutable('25-11-2025')
+        );
+
+        $openingHours1 = new OpeningHour(
+            ['wednesday', 'thursday'],
+            '18:00',
+            '20:00'
+        );
+
+        $openingHours2 = new OpeningHour(
+            ['friday'],
+            '21:00',
+            '23:00'
+        );
+
+        $openingHours3 = new OpeningHour(
+            ['sunday'],
+            '10:00',
+            '15:00'
+        );
+
+        $place = $place->withOpeningHours(
+            [
+                $openingHours1,
+                $openingHours2,
+                $openingHours3,
+            ]
+        );
+
+        $this->assertEquals(
+            'Open van wo - vr & zo',
             $this->formatter->format($place)
         );
     }
