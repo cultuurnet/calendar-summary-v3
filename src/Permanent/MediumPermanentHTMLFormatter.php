@@ -84,7 +84,7 @@ final class MediumPermanentHTMLFormatter implements PermanentFormatterInterface
 
         $outputWeek = '<span>';
         if ($isFirstPeriodMin3days) {
-            $outputWeek .= ucfirst($this->translator->translate('open'));
+            $outputWeek .= ucfirst($this->translator->translate('open_from'));
         } else {
             $outputWeek .= ucfirst($this->translator->translate('open'));
         }

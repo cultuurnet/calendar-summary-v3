@@ -85,14 +85,14 @@ final class MediumPermanentPlainTextFormatter implements PermanentFormatterInter
 
         $isFirstPeriodMin3days = array_pop($weekScheme);
 
-        if ($isFirstPeriodMin3days) {
-            return PlainTextSummaryBuilder::start($this->translator)
-                ->openAt(...$weekScheme)
-                ->toString();
-        }
-
         // Put all the day names with opening hours on a single line with 'Open at' (sec) at the beginning.
         // E.g. 'Open at mo - th & su'
+
+        if ($isFirstPeriodMin3days) {
+            return PlainTextSummaryBuilder::start($this->translator)
+                ->openfrom(...$weekScheme)
+                ->toString();
+        }
 
         return PlainTextSummaryBuilder::start($this->translator)
             ->openAt(...$weekScheme)
