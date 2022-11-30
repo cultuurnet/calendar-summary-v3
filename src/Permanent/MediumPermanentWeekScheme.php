@@ -16,16 +16,11 @@ trait MediumPermanentWeekScheme
         $translatedDayNamesWithOpeningHours = [];
         $dayPeriod = '';
         $startNewPeriod = true;
-        $isFirstPeriod = true;
-        $isFirstPeriodASingleDay = false;
 
         foreach ($weekDaysOpen as $weekDayNumber => $dayName) {
             // We start a new period, but the following day is closed
             if ($startNewPeriod && !array_key_exists($weekDayNumber + 1, $weekDaysOpen)) {
                 $translatedDayNamesWithOpeningHours[] = $formatter->formatAsAbbreviatedDayOfWeek(new DateTimeImmutable($dayName));
-                if ($isFirstPeriod) {
-                    $isFirstPeriodASingleDay = true;
-                }
             }
             // Start a new period and the following day is open
             if ($startNewPeriod && array_key_exists($weekDayNumber + 1, $weekDaysOpen)) {
@@ -40,11 +35,13 @@ trait MediumPermanentWeekScheme
                 $dayPeriod = '';
             }
             // Do nothing if both the previous & following day are open
-            // Set $isFirstPeriod = false after first loop
-            $isFirstPeriod = false;
         }
-        $translatedDayNamesWithOpeningHours[] = $isFirstPeriodASingleDay;
 
         return $translatedDayNamesWithOpeningHours;
+    }
+
+    public function isFirstPeriodASingleDay(array $weekDaysOpen): bool
+    {
+        return array_key_exists(array_key_first($weekDaysOpen) + 1, $weekDaysOpen);
     }
 }
