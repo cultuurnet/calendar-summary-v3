@@ -44,6 +44,6 @@ final class MediumMultiplePlainTextFormatter implements MultipleFormatterInterfa
             return $this->translator->translate('event_concluded');
         }
 
-        return implode(PHP_EOL, $subEventSummaries);
+        return implode(PHP_EOL, array_unique($subEventSummaries));
     }
 }
