@@ -42,6 +42,6 @@ trait MediumPermanentWeekScheme
 
     public function isFirstPeriodASingleDay(array $weekDaysOpen): bool
     {
-        return array_key_exists(array_key_first($weekDaysOpen) + 1, $weekDaysOpen);
+        return !array_key_exists(array_key_first($weekDaysOpen) + 1, $weekDaysOpen);
     }
 }
