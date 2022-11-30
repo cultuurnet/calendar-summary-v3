@@ -455,7 +455,7 @@ final class MediumPermanentHTMLFormatterTest extends TestCase
         $this->assertEquals(
             '<span>Open op <span class="cf-weekdays">' .
             '<span class="cf-weekday-open">ma</span> & ' .
-            '<span class="cf-weekday-open">vr - za</span>' .
+            '<span class="cf-weekday-open">vr - zo</span>' .
             '</span></span>',
             $this->formatter->format($place)
         );
