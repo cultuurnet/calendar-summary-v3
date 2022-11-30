@@ -47,6 +47,11 @@ final class PlainTextSummaryBuilder
         return $this->appendTranslation('open')->appendMultiple($text, ' & ');
     }
 
+    public function openFrom(string ...$text): self
+    {
+        return $this->appendTranslation('open_from')->appendMultiple($text, ' & ');
+    }
+
     public function alwaysOpen(): self
     {
         return $this->appendTranslation('open_every_day');
