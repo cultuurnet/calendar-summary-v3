@@ -68,6 +68,48 @@ final class MediumPermanentPlainTextFormatterTest extends TestCase
         );
     }
 
+    public function testFormatFirstPeriodIsASingleDay(): void
+    {
+        $place = new Offer(
+            OfferType::place(),
+            new Status('Available', []),
+            new BookingAvailability('Available'),
+            new DateTimeImmutable('25-11-2025'),
+            new DateTimeImmutable('25-11-2025')
+        );
+
+        $openingHours1 = new OpeningHour(
+            ['tuesday'],
+            '00:01',
+            '13:00'
+        );
+
+        $openingHours2 = new OpeningHour(
+            ['friday'],
+            '09:00',
+            '13:00'
+        );
+
+        $openingHours3 = new OpeningHour(
+            ['saturday', 'sunday'],
+            '09:00',
+            '19:00'
+        );
+
+        $place = $place->withOpeningHours(
+            [
+                $openingHours1,
+                $openingHours2,
+                $openingHours3,
+            ]
+        );
+
+        $this->assertEquals(
+            'Open op di & vr - zo',
+            $this->formatter->format($place)
+        );
+    }
+
     public function testFormatAMixedPermanent(): void
     {
         $place = new Offer(
