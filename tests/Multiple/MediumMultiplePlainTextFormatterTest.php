@@ -61,6 +61,39 @@ final class MediumMultiplePlainTextFormatterTest extends TestCase
         );
     }
 
+    public function testFormatPlainTextMultipleOnSameDay(): void
+    {
+        $subEvents = json_decode(file_get_contents(__DIR__ . '/data/subEventsSameDay.json'), true);
+        $event = new Offer(
+            OfferType::event(),
+            new Status('Available', []),
+            new BookingAvailability('Available'),
+            null,
+            null,
+            CalendarType::multiple()
+        );
+
+        $newEvents = [];
+        foreach ($subEvents as $subEvent) {
+            $newEvents[] = new Offer(
+                OfferType::event(),
+                new Status('Available', []),
+                new BookingAvailability('Available'),
+                new DateTimeImmutable($subEvent['startDate']),
+                new DateTimeImmutable($subEvent['endDate'])
+            );
+        }
+
+        $event = $event->withSubEvents($newEvents);
+
+        $expectedOutput = 'Do 9 november 2017' . PHP_EOL;
+
+        $this->assertEquals(
+            $expectedOutput,
+            $this->formatter->format($event)
+        );
+    }
+
     public function testFormatPlainTextMultipleDateMediumMoreDays(): void
     {
         $subEvents = json_decode(file_get_contents(__DIR__ . '/data/subEventsMoreDays.json'), true);
