@@ -80,8 +80,12 @@ final class MediumPermanentHTMLFormatter implements PermanentFormatterInterface
 
         $weekScheme = $this->getWeekScheme($weekDaysOpen, $this->formatter);
 
-        $outputWeek = '<span>' . ucfirst($this->translator->translate('open')) . ' '
-            . '<span class="cf-weekdays">';
+        $isFirstPeriodASingleDay = array_pop($weekScheme);
+
+        $outputWeek = '<span>';
+        $outputWeek .= $isFirstPeriodASingleDay ? ucfirst($this->translator->translate('open')) :
+            ucfirst($this->translator->translate('open_from'));
+        $outputWeek .= ' <span class="cf-weekdays">';
 
         $i = 0;
         foreach ($weekScheme as $translatedDayNamesWithOpeningHour) {
