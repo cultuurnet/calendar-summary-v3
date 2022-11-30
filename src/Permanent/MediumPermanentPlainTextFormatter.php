@@ -83,16 +83,16 @@ final class MediumPermanentPlainTextFormatter implements PermanentFormatterInter
 
         $weekScheme = $this->getWeekScheme($weekDaysOpen, $this->formatter);
 
-        $isFirstPeriodASingleDay = array_pop($weekScheme);
-
         // Put all the day names with opening hours on a single line with 'Open at' (sec) at the beginning.
-        // E.g. 'Open at mo - th & su'
-        if ($isFirstPeriodASingleDay) {
+        // E.g. 'Open at mo & th - su'
+        if ($this->isFirstPeriodASingleDay($weekDaysOpen)) {
             return PlainTextSummaryBuilder::start($this->translator)
                 ->openAt(...$weekScheme)
                 ->toString();
         }
 
+        // Put all the day names with opening hours on a single line with 'Open at' (sec) at the beginning.
+        // E.g. 'Open at mo - th & su'
         return PlainTextSummaryBuilder::start($this->translator)
             ->openFrom(...$weekScheme)
             ->toString();
