@@ -86,7 +86,7 @@ final class MediumMultiplePlainTextFormatterTest extends TestCase
 
         $event = $event->withSubEvents($newEvents);
 
-        $expectedOutput = 'Do 9 november 2017' . PHP_EOL;
+        $expectedOutput = 'Ma 6 november 2017';
 
         $this->assertEquals(
             $expectedOutput,
