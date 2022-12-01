@@ -181,15 +181,13 @@ final class SmallSingleHTMLFormatterTest extends TestCase
             new DateTimeImmutable('2018-01-27T21:30:00+01:00')
         );
 
-        $expectedOutput = '<span class="cf-from cf-meta">Van</span>';
-        $expectedOutput .= ' ';
-        $expectedOutput .= '<span class="cf-date">25</span>';
+        $expectedOutput = '<span class="cf-date">25</span>';
         $expectedOutput .= ' ';
         $expectedOutput .= '<span class="cf-month">jan</span>';
         $expectedOutput .= ' ';
         $expectedOutput .= '<span class="cf-year">2018</span>';
         $expectedOutput .= ' ';
-        $expectedOutput .= '<span class="cf-to cf-meta">tot</span>';
+        $expectedOutput .= '-';
         $expectedOutput .= ' ';
         $expectedOutput .= '<span class="cf-date">27</span>';
         $expectedOutput .= ' ';
@@ -213,15 +211,13 @@ final class SmallSingleHTMLFormatterTest extends TestCase
             new DateTimeImmutable('2018-01-27T21:30:00+01:00')
         );
 
-        $expectedOutput = '<span class="cf-from cf-meta">Van</span>';
-        $expectedOutput .= ' ';
-        $expectedOutput .= '<span class="cf-date">25</span>';
+        $expectedOutput = '<span class="cf-date">25</span>';
         $expectedOutput .= ' ';
         $expectedOutput .= '<span class="cf-month">jan</span>';
         $expectedOutput .= ' ';
         $expectedOutput .= '<span class="cf-year">2018</span>';
         $expectedOutput .= ' ';
-        $expectedOutput .= '<span class="cf-to cf-meta">tot</span>';
+        $expectedOutput .= '-';
         $expectedOutput .= ' ';
         $expectedOutput .= '<span class="cf-date">27</span>';
         $expectedOutput .= ' ';
@@ -247,15 +243,13 @@ final class SmallSingleHTMLFormatterTest extends TestCase
             new DateTimeImmutable('2018-01-08T21:30:00+01:00')
         );
 
-        $expectedOutput = '<span class="cf-from cf-meta">Van</span>';
-        $expectedOutput .= ' ';
-        $expectedOutput .= '<span class="cf-date">6</span>';
+        $expectedOutput = '<span class="cf-date">6</span>';
         $expectedOutput .= ' ';
         $expectedOutput .= '<span class="cf-month">jan</span>';
         $expectedOutput .= ' ';
         $expectedOutput .= '<span class="cf-year">2018</span>';
         $expectedOutput .= ' ';
-        $expectedOutput .= '<span class="cf-to cf-meta">tot</span>';
+        $expectedOutput .= '-';
         $expectedOutput .= ' ';
         $expectedOutput .= '<span class="cf-date">8</span>';
         $expectedOutput .= ' ';
