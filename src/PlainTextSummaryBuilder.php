@@ -150,7 +150,7 @@ final class PlainTextSummaryBuilder
         return $c;
     }
 
-    private function appendMultiple(array $text, string $separator): self
+    public function appendMultiple(array $text, string $separator): self
     {
         $c = clone $this;
         $c->workingLine[] = implode($separator, $text);
