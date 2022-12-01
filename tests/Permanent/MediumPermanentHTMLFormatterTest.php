@@ -263,7 +263,7 @@ final class MediumPermanentHTMLFormatterTest extends TestCase
         );
 
         $this->assertEquals(
-            '<p class="cf-openinghours">Elke dag open</p>',
+            '<p class="cf-openinghours">Alle dagen open</p>',
             $this->formatter->format($place)
         );
     }
@@ -564,7 +564,7 @@ final class MediumPermanentHTMLFormatterTest extends TestCase
         );
 
         $this->assertEquals(
-            '<p class="cf-openinghours">Elke dag open</p>',
+            '<p class="cf-openinghours">Alle dagen open</p>',
             $this->formatter->format($event)
         );
     }
