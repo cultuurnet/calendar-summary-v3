@@ -68,8 +68,8 @@ final class LargeSinglePlainTextFormatter implements SingleFormatterInterface
         }
 
         return $summaryBuilder
-            ->from($formattedStartTime)
-            ->till($formattedEndTime)
+            ->fromHour($formattedStartTime)
+            ->tillHour($formattedEndTime)
             ->toString();
     }
 
