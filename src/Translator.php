@@ -58,7 +58,7 @@ final class Translator
                 'open' => 'open op',
                 'open_from' => 'open van',
                 'at' => 'om',
-                'open_every_day' => 'Elke dag open',
+                'open_every_day' => 'Alle dagen open',
                 'and' => 'en',
                 'permanently_closed' => 'Permanent gesloten',
                 'temporarily_closed' => 'Tijdelijk gesloten',
