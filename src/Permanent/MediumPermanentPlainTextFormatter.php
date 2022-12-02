@@ -83,7 +83,7 @@ final class MediumPermanentPlainTextFormatter implements PermanentFormatterInter
 
         $weekScheme = $this->getWeekScheme($weekDaysOpen, $this->formatter);
 
-        // Put all the day names with opening hours on a single line with 'Open at' (sec) at the beginning.
+        // Put all the day names with opening hours on a single line with 'Open at' (sic) at the beginning.
         // E.g. 'Open at mo & th - su'
         if ($this->isFirstPeriodASingleDay($weekDaysOpen)) {
             return PlainTextSummaryBuilder::start($this->translator)
@@ -91,7 +91,7 @@ final class MediumPermanentPlainTextFormatter implements PermanentFormatterInter
                 ->toString();
         }
 
-        // Put all the day names with opening hours on a single line with 'Open at' (sec) at the beginning.
+        // Put all the day names with opening hours on a single line with 'Open at' (sic) at the beginning.
         // E.g. 'Open at mo - th & su'
         return PlainTextSummaryBuilder::start($this->translator)
             ->openFrom(...$weekScheme)
