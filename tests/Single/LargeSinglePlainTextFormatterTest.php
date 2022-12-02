@@ -162,7 +162,7 @@ final class LargeSinglePlainTextFormatterTest extends TestCase
             new DateTimeImmutable('2018-01-28T21:30:00+01:00')
         );
 
-        $expectedOutput = 'Van donderdag 25 januari 2018 om 20:00 tot zondag 28 januari 2018 om 21:30';
+        $expectedOutput = 'Van donderdag 25 januari 2018 om 20:00 tot en met zondag 28 januari 2018 om 21:30';
 
         $this->assertEquals(
             $expectedOutput,
@@ -180,7 +180,7 @@ final class LargeSinglePlainTextFormatterTest extends TestCase
             new DateTimeImmutable('2018-01-08T21:30:00+01:00')
         );
 
-        $expectedOutput = 'Van zaterdag 6 januari 2018 om 20:00 tot maandag 8 januari 2018 om 21:30';
+        $expectedOutput = 'Van zaterdag 6 januari 2018 om 20:00 tot en met maandag 8 januari 2018 om 21:30';
 
         $this->assertEquals(
             $expectedOutput,

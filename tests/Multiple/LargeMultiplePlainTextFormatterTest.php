@@ -137,10 +137,10 @@ final class LargeMultiplePlainTextFormatterTest extends TestCase
 
         $event = $event->withSubEvents($newEvents);
 
-        $expectedOutput = 'Van maandag 6 november 2017 om 20:00 tot donderdag 9 november 2017 om 22:00' . PHP_EOL;
-        $expectedOutput .= 'Van dinsdag 14 november 2017 om 20:00 tot donderdag 16 november 2017 om 22:00' . PHP_EOL;
-        $expectedOutput .= 'Van dinsdag 21 november 2017 om 20:00 tot donderdag 23 november 2017 om 22:00' . PHP_EOL;
-        $expectedOutput .= 'Van dinsdag 28 november 2017 om 20:00 tot donderdag 30 november 2017 om 22:00';
+        $expectedOutput = 'Van maandag 6 november 2017 om 20:00 tot en met donderdag 9 november 2017 om 22:00' . PHP_EOL;
+        $expectedOutput .= 'Van dinsdag 14 november 2017 om 20:00 tot en met donderdag 16 november 2017 om 22:00' . PHP_EOL;
+        $expectedOutput .= 'Van dinsdag 21 november 2017 om 20:00 tot en met donderdag 23 november 2017 om 22:00' . PHP_EOL;
+        $expectedOutput .= 'Van dinsdag 28 november 2017 om 20:00 tot en met donderdag 30 november 2017 om 22:00';
 
         $this->assertEquals(
             $expectedOutput,
