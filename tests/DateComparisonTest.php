@@ -75,12 +75,12 @@ final class DateComparisonTest extends TestCase
     public function testIsItTheCurrentWeek(): void
     {
         $this->assertTrue(
-            DateComparison::isCurrentWeek(
+            DateComparison::isUpcomingDayInCurrentWeek(
                 CarbonImmutable::create(2021, 5, 7)->setTime(18, 0)
             )
         );
         $this->assertFalse(
-            DateComparison::isCurrentWeek(
+            DateComparison::isUpcomingDayInCurrentWeek(
                 CarbonImmutable::create(2021, 5, 3)->setTime(17, 59)
             )
         );
