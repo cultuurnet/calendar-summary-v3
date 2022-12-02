@@ -89,6 +89,60 @@ final class LargeSingleHTMLFormatterTest extends TestCase
         );
     }
 
+    public function testFormatHtmlSingleFrench(): void
+    {
+        $event = new Offer(
+            OfferType::event(),
+            new Status('Available', []),
+            new BookingAvailability('Available'),
+            new DateTimeImmutable('2021-08-12T16:00+01:00'),
+            new DateTimeImmutable('2021-08-12T21:00:00+01:00')
+        );
+
+        $expectedOutput = '<time itemprop="startDate" datetime="2021-08-12T17:00:00+02:00">' .
+            '<span class="cf-weekday cf-meta">Jeudi</span> ' .
+            '<span class="cf-date">12 août 2021</span> ' .
+            '<span class="cf-from cf-meta">de</span> ' .
+            '<span class="cf-time">17:00</span></time> ' .
+            '<span class="cf-to cf-meta">à</span> ' .
+            '<time itemprop="endDate" datetime="2021-08-12T22:00:00+02:00">' .
+            '<span class="cf-time">22:00</span></time>';
+
+        $this->assertEquals(
+            $expectedOutput,
+            (new LargeSingleHTMLFormatter(new Translator('fr')))->format($event)
+        );
+    }
+
+    public function testFormatHtmlSingleMultipleDaysFrench(): void
+    {
+        $event = new Offer(
+            OfferType::event(),
+            new Status('Available', []),
+            new BookingAvailability('Available'),
+            new DateTimeImmutable('2021-08-12T16:00+01:00'),
+            new DateTimeImmutable('2021-08-14T21:00:00+01:00')
+        );
+
+        $expectedOutput = '<time itemprop="startDate" datetime="2021-08-12T17:00:00+02:00">' .
+            '<span class="cf-from cf-meta">Du</span> ' .
+            '<span class="cf-weekday cf-meta">jeudi</span> ' .
+            '<span class="cf-date">12 août 2021</span> ' .
+            '<span class="cf-at cf-meta">à</span> ' .
+            '<span class="cf-time">17:00</span></time> ' .
+            '<span class="cf-to cf-meta">au</span> ' .
+            '<time itemprop="endDate" datetime="2021-08-14T22:00:00+02:00">' .
+            '<span class="cf-weekday cf-meta">samedi</span> ' .
+            '<span class="cf-date">14 août 2021</span> ' .
+            '<span class="cf-at cf-meta">à</span> ' .
+            '<span class="cf-time">22:00</span></time>';
+
+        $this->assertEquals(
+            $expectedOutput,
+            (new LargeSingleHTMLFormatter(new Translator('fr')))->format($event)
+        );
+    }
+
     public function testFormatHTMLSingleDateLargeMoreDays(): void
     {
         $event = new Offer(

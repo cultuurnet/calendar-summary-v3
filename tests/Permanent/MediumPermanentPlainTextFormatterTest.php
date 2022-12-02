@@ -308,7 +308,7 @@ final class MediumPermanentPlainTextFormatterTest extends TestCase
         );
 
         $this->assertEquals(
-            'Elke dag open' . PHP_EOL,
+            'Alle dagen open' . PHP_EOL,
             $this->formatter->format($place)
         );
     }
@@ -409,7 +409,7 @@ final class MediumPermanentPlainTextFormatterTest extends TestCase
         );
 
         $this->assertEquals(
-            'Elke dag open' . PHP_EOL,
+            'Alle dagen open' . PHP_EOL,
             $this->formatter->format($event)
         );
     }

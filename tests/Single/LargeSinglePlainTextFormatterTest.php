@@ -61,6 +61,42 @@ final class LargeSinglePlainTextFormatterTest extends TestCase
         );
     }
 
+    public function testFormatPlainTextSingleFrench(): void
+    {
+        $event = new Offer(
+            OfferType::event(),
+            new Status('Available', []),
+            new BookingAvailability('Available'),
+            new DateTimeImmutable('2021-08-12T16:00+01:00'),
+            new DateTimeImmutable('2021-08-12T21:00:00+01:00')
+        );
+
+        $expectedOutput = 'Jeudi 12 août 2021 de 17:00 à 22:00';
+
+        $this->assertEquals(
+            $expectedOutput,
+            (new LargeSinglePlainTextFormatter(new Translator('fr')))->format($event)
+        );
+    }
+
+    public function testFormatPlainTextSingleMultipleDaysFrench(): void
+    {
+        $event = new Offer(
+            OfferType::event(),
+            new Status('Available', []),
+            new BookingAvailability('Available'),
+            new DateTimeImmutable('2021-08-12T16:00+01:00'),
+            new DateTimeImmutable('2021-08-14T21:00:00+01:00')
+        );
+
+        $expectedOutput = 'Du jeudi 12 août 2021 à 17:00 au samedi 14 août 2021 à 22:00';
+
+        $this->assertEquals(
+            $expectedOutput,
+            (new LargeSinglePlainTextFormatter(new Translator('fr')))->format($event)
+        );
+    }
+
     public function testFormatPlainTextSingleDateLargeOneDayWithUnavailableStatus(): void
     {
         $event = new Offer(

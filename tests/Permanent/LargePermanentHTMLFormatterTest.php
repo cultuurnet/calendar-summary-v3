@@ -510,7 +510,7 @@ final class LargePermanentHTMLFormatterTest extends TestCase
         );
 
         $this->assertEquals(
-            '<p class="cf-openinghours">Elke dag open</p>',
+            '<p class="cf-openinghours">Alle dagen open</p>',
             $this->formatter->format($event)
         );
     }
