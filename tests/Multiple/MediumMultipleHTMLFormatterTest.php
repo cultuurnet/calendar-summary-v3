@@ -66,6 +66,42 @@ final class MediumMultipleHTMLFormatterTest extends TestCase
         );
     }
 
+    public function testFormatPlainTextMultipleOnSameDay(): void
+    {
+        $subEvents = json_decode(file_get_contents(__DIR__ . '/data/subEventsSameDay.json'), true);
+        $event = new Offer(
+            OfferType::event(),
+            new Status('Available', []),
+            new BookingAvailability('Available'),
+            null,
+            null,
+            CalendarType::multiple()
+        );
+
+        $newEvents = [];
+        foreach ($subEvents as $subEvent) {
+            $newEvents[] = new Offer(
+                OfferType::event(),
+                new Status('Available', []),
+                new BookingAvailability('Available'),
+                new DateTimeImmutable($subEvent['startDate']),
+                new DateTimeImmutable($subEvent['endDate'])
+            );
+        }
+
+        $event = $event->withSubEvents($newEvents);
+
+        $expectedOutput = '<ul class="cnw-event-date-info">';
+        $expectedOutput .=  '<li><span class="cf-weekday cf-meta">Ma</span> ';
+        $expectedOutput .= '<span class="cf-date">6 november 2017</span></li></ul>';
+
+        $this->assertEquals(
+            $expectedOutput,
+            $this->formatter->format($event)
+        );
+    }
+
+
     public function testFormatHTMLMultipleDateMediumOneDayWithUnavailableStatus(): void
     {
         $subEvents = json_decode(file_get_contents(__DIR__ . '/data/subEvents.json'), true);

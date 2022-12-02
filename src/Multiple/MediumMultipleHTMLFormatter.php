@@ -38,6 +38,7 @@ final class MediumMultipleHTMLFormatter implements MultipleFormatterInterface
                 $subEventSummaries[] = $formatter->format($subEvent);
             }
         }
+        $subEventSummaries = array_unique($subEventSummaries);
 
         if (empty($subEventSummaries)) {
             return '<span>' . $this->translator->translate('event_concluded') . '</span>';
