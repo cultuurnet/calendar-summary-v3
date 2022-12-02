@@ -103,12 +103,12 @@ final class DateComparisonTest extends TestCase
     public function testIsItTheFuture(): void
     {
         $this->assertTrue(
-            DateComparison::inTheFuture(
+            DateComparison::isInTheFuture(
                 CarbonImmutable::create(2021, 12, 31)->setTime(18, 0)
             )
         );
         $this->assertFalse(
-            DateComparison::inTheFuture(
+            DateComparison::isInTheFuture(
                 CarbonImmutable::create(2021, 2, 3)->setTime(17, 59)
             )
         );
