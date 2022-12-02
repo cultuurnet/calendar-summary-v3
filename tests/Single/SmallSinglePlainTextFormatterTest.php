@@ -42,6 +42,24 @@ final class SmallSinglePlainTextFormatterTest extends TestCase
         );
     }
 
+    public function testSameWeekInThePast(): void
+    {
+        CarbonImmutable::setTestNow(CarbonImmutable::create(2021, 5, 5));
+
+        $event = new Offer(
+            OfferType::event(),
+            new Status('Available', []),
+            new BookingAvailability('Available'),
+            CarbonImmutable::create(2021, 5, 4),
+            CarbonImmutable::create(2021, 5, 4)->setTime(21, 30)
+        );
+
+        $this->assertEquals(
+            '4 mei',
+            $this->formatter->format($event)
+        );
+    }
+
     public function testFormatPlainTextSingleDateSmOneDayCurrentYear(): void
     {
         $event = new Offer(
