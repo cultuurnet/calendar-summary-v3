@@ -34,7 +34,7 @@ final class DateComparison
 
     public static function isCurrentWeek(DateTimeImmutable $date): bool
     {
-        return CarbonImmutable::instance($date)->isCurrentWeek();
+        return self::inTheFuture($date) && CarbonImmutable::instance($date)->isCurrentWeek();
     }
 
     public static function isCurrentYear(DateTimeImmutable $date): bool
