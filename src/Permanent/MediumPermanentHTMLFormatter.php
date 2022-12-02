@@ -82,7 +82,7 @@ final class MediumPermanentHTMLFormatter implements PermanentFormatterInterface
 
         $outputWeek = '<span>';
         $outputWeek .= $this->isFirstPeriodASingleDay($weekDaysOpen) ?
-            ucfirst($this->translator->translate('open')) : ucfirst($this->translator->translate('open_from'));
+            ucfirst($this->translator->translate('open_at')) : ucfirst($this->translator->translate('open_at_consecutive_days'));
         $outputWeek .= ' <span class="cf-weekdays">';
 
         $i = 0;
