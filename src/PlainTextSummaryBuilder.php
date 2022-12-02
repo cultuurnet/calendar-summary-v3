@@ -44,7 +44,12 @@ final class PlainTextSummaryBuilder
 
     public function openAt(string ...$text): self
     {
-        return $this->appendTranslation('open')->appendMultiple($text, ' & ');
+        return $this->appendTranslation('open_at')->appendMultiple($text, ' & ');
+    }
+
+    public function openFrom(string ...$text): self
+    {
+        return $this->appendTranslation('open_at_consecutive_days')->appendMultiple($text, ' & ');
     }
 
     public function alwaysOpen(): self
