@@ -148,6 +148,40 @@ final class LargeMultiplePlainTextFormatterTest extends TestCase
         );
     }
 
+    public function testFormatPlainTextMultipleDaysFrench(): void
+    {
+        $subEvents = json_decode(file_get_contents(__DIR__ . '/data/subEventsMoreDays.json'), true);
+        $event = new Offer(
+            OfferType::event(),
+            new Status('Available', []),
+            new BookingAvailability('Available'),
+            null,
+            null,
+            CalendarType::multiple()
+        );
+        $newEvents = [];
+        foreach ($subEvents as $subEvent) {
+            $newEvents[] = new Offer(
+                OfferType::event(),
+                new Status('Available', []),
+                new BookingAvailability('Available'),
+                new DateTimeImmutable($subEvent['startDate']),
+                new DateTimeImmutable($subEvent['endDate'])
+            );
+        }
+        $event = $event->withSubEvents($newEvents);
+
+        $expectedOutput = 'Du lundi 6 novembre 2017 à 20:00 au jeudi 9 novembre 2017 à 22:00' . PHP_EOL;
+        $expectedOutput .= 'Du mardi 14 novembre 2017 à 20:00 au jeudi 16 novembre 2017 à 22:00' . PHP_EOL;
+        $expectedOutput .= 'Du mardi 21 novembre 2017 à 20:00 au jeudi 23 novembre 2017 à 22:00' . PHP_EOL;
+        $expectedOutput .= 'Du mardi 28 novembre 2017 à 20:00 au jeudi 30 novembre 2017 à 22:00';
+
+        $this->assertEquals(
+            $expectedOutput,
+            (new LargeMultiplePlainTextFormatter(new Translator('fr'), false))->format($event)
+        );
+    }
+
     public function testItWillShowEventHasConcludedWhenAllPastDatesAreHidden(): void
     {
         $formatter = new LargeMultiplePlainTextFormatter(new Translator('nl_NL'), true);

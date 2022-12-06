@@ -120,6 +120,63 @@ final class LargeMultipleHTMLFormatterTest extends TestCase
         );
     }
 
+    public function testFormatPlainTextMultipleDaysFrench(): void
+    {
+        $subEvents = json_decode(file_get_contents(__DIR__ . '/data/subEventsMoreDays.json'), true);
+        $event = new Offer(
+            OfferType::event(),
+            new Status('Available', []),
+            new BookingAvailability('Available'),
+            null,
+            null,
+            CalendarType::multiple()
+        );
+        $newEvents = [];
+        foreach ($subEvents as $subEvent) {
+            $newEvents[] = new Offer(
+                OfferType::event(),
+                new Status('Available', []),
+                new BookingAvailability('Available'),
+                new DateTimeImmutable($subEvent['startDate']),
+                new DateTimeImmutable($subEvent['endDate'])
+            );
+        }
+        $event = $event->withSubEvents($newEvents);
+
+        $expectedOutput = '<ul class="cnw-event-date-info"><li><time itemprop="startDate" datetime="2017-11-06T20:00:00+01:00">';
+        $expectedOutput .='<span class="cf-from cf-meta">Du</span> <span class="cf-weekday cf-meta">lundi</span> ';
+        $expectedOutput .='<span class="cf-date">6 novembre 2017</span> <span class="cf-at cf-meta">à</span> ';
+        $expectedOutput .='<span class="cf-time">20:00</span></time> ';
+        $expectedOutput .='<span class="cf-to cf-meta">au</span> <time itemprop="endDate" datetime="2017-11-09T22:00:00+01:00">';
+        $expectedOutput .='<span class="cf-weekday cf-meta">jeudi</span> <span class="cf-date">9 novembre 2017</span> ';
+        $expectedOutput .='<span class="cf-at cf-meta">à</span> <span class="cf-time">22:00</span></time></li>';
+        $expectedOutput .='<li><time itemprop="startDate" datetime="2017-11-14T20:00:00+01:00"><span class="cf-from cf-meta">Du</span> ';
+        $expectedOutput .='<span class="cf-weekday cf-meta">mardi</span> <span class="cf-date">14 novembre 2017</span> ';
+        $expectedOutput .='<span class="cf-at cf-meta">à</span> <span class="cf-time">20:00</span></time> ';
+        $expectedOutput .='<span class="cf-to cf-meta">au</span> <time itemprop="endDate" datetime="2017-11-16T22:00:00+01:00">';
+        $expectedOutput .='<span class="cf-weekday cf-meta">jeudi</span> <span class="cf-date">16 novembre 2017</span> ';
+        $expectedOutput .='<span class="cf-at cf-meta">à</span> <span class="cf-time">22:00</span>';
+        $expectedOutput .='</time></li><li><time itemprop="startDate" datetime="2017-11-21T20:00:00+01:00">';
+        $expectedOutput .='<span class="cf-from cf-meta">Du</span> <span class="cf-weekday cf-meta">mardi</span> ';
+        $expectedOutput .='<span class="cf-date">21 novembre 2017</span> <span class="cf-at cf-meta">à</span> ';
+        $expectedOutput .='<span class="cf-time">20:00</span></time> <span class="cf-to cf-meta">au</span> ';
+        $expectedOutput .='<time itemprop="endDate" datetime="2017-11-23T22:00:00+01:00">';
+        $expectedOutput .='<span class="cf-weekday cf-meta">jeudi</span> <span class="cf-date">23 novembre 2017</span> ';
+        $expectedOutput .='<span class="cf-at cf-meta">à</span> <span class="cf-time">22:00</span></time></li>';
+        $expectedOutput .='<li><time itemprop="startDate" datetime="2017-11-28T20:00:00+01:00">';
+        $expectedOutput .='<span class="cf-from cf-meta">Du</span> <span class="cf-weekday cf-meta">mardi</span> ';
+        $expectedOutput .='<span class="cf-date">28 novembre 2017</span> <span class="cf-at cf-meta">à</span> ';
+        $expectedOutput .='<span class="cf-time">20:00</span></time> <span class="cf-to cf-meta">au</span> ';
+        $expectedOutput .='<time itemprop="endDate" datetime="2017-11-30T22:00:00+01:00">';
+        $expectedOutput .='<span class="cf-weekday cf-meta">jeudi</span> <span class="cf-date">30 novembre 2017</span> ';
+        $expectedOutput .='<span class="cf-at cf-meta">à</span> <span class="cf-time">22:00</span></time></li></ul>';
+
+        $this->assertEquals(
+            $expectedOutput,
+            (new LargeMultipleHTMLFormatter(new Translator('fr'), false))->format($event)
+        );
+    }
+
     public function testFormatHTMLMultipleDateLargeOneDayWithUnavailability(): void
     {
         $subEvents = json_decode(file_get_contents(__DIR__ . '/data/subEvents.json'), true);

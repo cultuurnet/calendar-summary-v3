@@ -97,7 +97,6 @@ final class LargeSinglePlainTextFormatterTest extends TestCase
         );
     }
 
-
     public function testFormatPlainTextSingleDateLargeOneDayWithUnavailableStatus(): void
     {
         $event = new Offer(
