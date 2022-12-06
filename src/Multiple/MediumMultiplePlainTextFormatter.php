@@ -35,7 +35,7 @@ final class MediumMultiplePlainTextFormatter implements MultipleFormatterInterfa
         foreach ($subEvents as $key => $subEvent) {
             $formatter = new MediumSinglePlainTextFormatter($this->translator);
 
-            if (!$this->hidePast || DateComparison::inTheFuture($subEvent->getEndDate())) {
+            if (!$this->hidePast || DateComparison::isInTheFuture($subEvent->getEndDate())) {
                 $subEventSummaries[] = $formatter->format($subEvent);
             }
         }

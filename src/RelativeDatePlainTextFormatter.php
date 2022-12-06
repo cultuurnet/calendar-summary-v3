@@ -19,7 +19,7 @@ trait RelativeDatePlainTextFormatter
         if (DateComparison::isTomorrow($date)) {
             return $translator->translate('tomorrow');
         }
-        if (DateComparison::isCurrentWeek($date)) {
+        if (DateComparison::isUpcomingDayInCurrentWeek($date)) {
             $preposition = $translator->translate('this');
             $weekDay = $formatter->formatAsDayOfWeek($date);
             return PlainTextSummaryBuilder::singleLine($preposition, $weekDay);

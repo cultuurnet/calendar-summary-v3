@@ -34,7 +34,7 @@ final class MediumMultipleHTMLFormatter implements MultipleFormatterInterface
 
         $subEventSummaries = [];
         foreach ($subEvents as $subEvent) {
-            if (!$this->hidePast || DateComparison::inTheFuture($subEvent->getEndDate())) {
+            if (!$this->hidePast || DateComparison::isInTheFuture($subEvent->getEndDate())) {
                 $subEventSummaries[] = $formatter->format($subEvent);
             }
         }

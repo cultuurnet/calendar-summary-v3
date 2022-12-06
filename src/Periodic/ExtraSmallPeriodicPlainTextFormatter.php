@@ -33,7 +33,7 @@ final class ExtraSmallPeriodicPlainTextFormatter implements PeriodicFormatterInt
         $startDate = $offer->getStartDate();
         $startDate->setTime(0, 0, 1);
 
-        if (DateComparison::inTheFuture($startDate)) {
+        if (DateComparison::isInTheFuture($startDate)) {
             $plainTextSummaryBuilder = PlainTextSummaryBuilder::start($this->translator)
                 ->fromPeriod(
                     $this->formatter->formatAsDayNumber($startDate),
