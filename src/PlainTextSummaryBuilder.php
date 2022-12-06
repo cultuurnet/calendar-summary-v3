@@ -84,7 +84,7 @@ final class PlainTextSummaryBuilder
 
     public function tillLarge(string ...$text): self
     {
-        return $this->appendTranslation('till_large')->appendMultiple($text, ' ');
+        return $this->appendTranslation('till_included')->appendMultiple($text, ' ');
     }
 
     public function to(string ...$text): self
