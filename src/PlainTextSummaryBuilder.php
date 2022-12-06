@@ -82,9 +82,9 @@ final class PlainTextSummaryBuilder
         return $this->appendTranslation('till')->appendMultiple($text, ' ');
     }
 
-    public function tillLarge(string ...$text): self
+    public function tillIncluded(string ...$text): self
     {
-        return $this->appendTranslation('till_large')->appendMultiple($text, ' ');
+        return $this->appendTranslation('till_included')->appendMultiple($text, ' ');
     }
 
     public function to(string ...$text): self
@@ -148,6 +148,13 @@ final class PlainTextSummaryBuilder
         return self::formatLine($text, false);
     }
 
+    public function fromTill(array $from, array $till): self
+    {
+        return $this->appendMultiple($from, ' ')
+            ->append('-')
+            ->appendMultiple($till, ' ');
+    }
+
     private function appendTranslation(string $translationKey): self
     {
         $c = clone $this;
@@ -155,7 +162,7 @@ final class PlainTextSummaryBuilder
         return $c;
     }
 
-    public function appendMultiple(array $text, string $separator): self
+    private function appendMultiple(array $text, string $separator): self
     {
         $c = clone $this;
         $c->workingLine[] = implode($separator, $text);

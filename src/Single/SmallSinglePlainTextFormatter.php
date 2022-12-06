@@ -75,9 +75,7 @@ final class SmallSinglePlainTextFormatter implements SingleFormatterInterface
         $endDay[] = $this->formatter->formatAsAbbreviatedMonthName($endDate);
 
         return PlainTextSummaryBuilder::start($this->translator)
-            ->appendMultiple($startDay, ' ')
-            ->append('-')
-            ->appendMultiple($endDay, ' ')
+            ->fromTill($startDay, $endDay)
             ->toString();
     }
 }

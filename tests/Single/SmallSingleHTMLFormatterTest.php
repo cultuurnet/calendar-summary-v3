@@ -187,7 +187,7 @@ final class SmallSingleHTMLFormatterTest extends TestCase
         $expectedOutput .= ' ';
         $expectedOutput .= '<span class="cf-year">2018</span>';
         $expectedOutput .= ' ';
-        $expectedOutput .= '-';
+        $expectedOutput .= '<span class="cf-to cf-meta">-</span>';
         $expectedOutput .= ' ';
         $expectedOutput .= '<span class="cf-date">27</span>';
         $expectedOutput .= ' ';
@@ -217,7 +217,7 @@ final class SmallSingleHTMLFormatterTest extends TestCase
         $expectedOutput .= ' ';
         $expectedOutput .= '<span class="cf-year">2018</span>';
         $expectedOutput .= ' ';
-        $expectedOutput .= '-';
+        $expectedOutput .= '<span class="cf-to cf-meta">-</span>';
         $expectedOutput .= ' ';
         $expectedOutput .= '<span class="cf-date">27</span>';
         $expectedOutput .= ' ';
@@ -249,7 +249,7 @@ final class SmallSingleHTMLFormatterTest extends TestCase
         $expectedOutput .= ' ';
         $expectedOutput .= '<span class="cf-year">2018</span>';
         $expectedOutput .= ' ';
-        $expectedOutput .= '-';
+        $expectedOutput .= '<span class="cf-to cf-meta">-</span>';
         $expectedOutput .= ' ';
         $expectedOutput .= '<span class="cf-date">8</span>';
         $expectedOutput .= ' ';

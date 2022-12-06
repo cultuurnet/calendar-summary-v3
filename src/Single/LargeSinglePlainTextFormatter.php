@@ -86,7 +86,7 @@ final class LargeSinglePlainTextFormatter implements SingleFormatterInterface
         return PlainTextSummaryBuilder::start($this->translator)
             ->from($formattedStartDayOfWeek, $formattedStartDate)
             ->at($formattedStartTime)
-            ->tillLarge($formattedEndDayOfWeek, $formattedEndDate)
+            ->tillIncluded($formattedEndDayOfWeek, $formattedEndDate)
             ->at($formattedEndTime)
             ->toString();
     }

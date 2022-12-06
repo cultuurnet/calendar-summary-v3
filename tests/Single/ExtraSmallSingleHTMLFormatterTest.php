@@ -92,7 +92,7 @@ final class ExtraSmallSingleHTMLFormatterTest extends TestCase
         $this->assertEquals(
             '<span class="cf-date">23</span> ' .
             '<span class="cf-month">jan</span> ' .
-            '- ' .
+            '<span class="cf-to cf-meta">-</span> ' .
             '<span class="cf-date">28</span> ' .
             '<span class="cf-month">jan</span>',
             $this->formatter->format($event)
@@ -112,7 +112,7 @@ final class ExtraSmallSingleHTMLFormatterTest extends TestCase
         $this->assertEquals(
             '<span class="cf-date">23</span> ' .
             '<span class="cf-month">dec</span> ' .
-            '- ' .
+            '<span class="cf-to cf-meta">-</span> ' .
             '<span class="cf-date">28</span> ' .
             '<span class="cf-month">jan</span> ' .
             '<span class="cf-year">2022</span>',
@@ -134,7 +134,7 @@ final class ExtraSmallSingleHTMLFormatterTest extends TestCase
             '<span class="cf-date">23</span> ' .
             '<span class="cf-month">dec</span> ' .
             '<span class="cf-year">2020</span> ' .
-            '- ' .
+            '<span class="cf-to cf-meta">-</span> ' .
             '<span class="cf-date">28</span> ' .
             '<span class="cf-month">jan</span>',
             $this->formatter->format($event)
@@ -192,7 +192,7 @@ final class ExtraSmallSingleHTMLFormatterTest extends TestCase
         $expectedOutput .= ' ';
         $expectedOutput .= '<span class="cf-year">2018</span>';
         $expectedOutput .= ' ';
-        $expectedOutput .= '-';
+        $expectedOutput .= '<span class="cf-to cf-meta">-</span>';
         $expectedOutput .= ' ';
         $expectedOutput .= '<span class="cf-date">27</span>';
         $expectedOutput .= ' ';
@@ -222,7 +222,7 @@ final class ExtraSmallSingleHTMLFormatterTest extends TestCase
         $expectedOutput .= ' ';
         $expectedOutput .= '<span class="cf-year">2018</span>';
         $expectedOutput .= ' ';
-        $expectedOutput .= '-';
+        $expectedOutput .= '<span class="cf-to cf-meta">-</span>';
         $expectedOutput .= ' ';
         $expectedOutput .= '<span class="cf-date">27</span>';
         $expectedOutput .= ' ';
@@ -254,7 +254,7 @@ final class ExtraSmallSingleHTMLFormatterTest extends TestCase
         $expectedOutput .= ' ';
         $expectedOutput .= '<span class="cf-year">2018</span>';
         $expectedOutput .= ' ';
-        $expectedOutput .= '-';
+        $expectedOutput .= '<span class="cf-to cf-meta">-</span>';
         $expectedOutput .= ' ';
         $expectedOutput .= '<span class="cf-date">8</span>';
         $expectedOutput .= ' ';

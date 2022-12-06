@@ -86,7 +86,7 @@ final class SmallSingleHTMLFormatter implements SingleFormatterInterface
             $output .= '<span class="cf-year">' . $this->formatter->formatAsYear($dateFrom) . '</span>';
         }
         $output .= ' ';
-        $output .= '-';
+        $output .= '<span class="cf-to cf-meta">-</span>';
         $output .= ' ';
         $output .= '<span class="cf-date">' . $dateEndDay . '</span>';
         $output .= ' ';
