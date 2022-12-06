@@ -66,15 +66,16 @@ final class SmallSinglePlainTextFormatter implements SingleFormatterInterface
 
     private function formatMoreDays(DateTimeInterface $startDate, DateTimeInterface $endDate): string
     {
-        $startDayNumber = $this->formatter->formatAsDayNumber($startDate);
-        $startMonthName = $this->formatter->formatAsAbbreviatedMonthName($startDate);
+        $startDay = [];
+        $startDay[] = $this->formatter->formatAsDayNumber($startDate);
+        $startDay[] = $this->formatter->formatAsAbbreviatedMonthName($startDate);
 
-        $endDayNumber = $this->formatter->formatAsDayNumber($endDate);
-        $endMonthName = $this->formatter->formatAsAbbreviatedMonthName($endDate);
+        $endDay = [];
+        $endDay[] = $this->formatter->formatAsDayNumber($endDate);
+        $endDay[] = $this->formatter->formatAsAbbreviatedMonthName($endDate);
 
         return PlainTextSummaryBuilder::start($this->translator)
-            ->from($startDayNumber, $startMonthName)
-            ->till($endDayNumber, $endMonthName)
+            ->fromTill($startDay, $endDay)
             ->toString();
     }
 }

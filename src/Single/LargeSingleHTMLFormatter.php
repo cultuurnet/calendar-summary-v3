@@ -113,7 +113,7 @@ final class LargeSingleHTMLFormatter implements SingleFormatterInterface
         $output .= '<span class="cf-time">' . $intlStartTimeFrom . '</span>';
         $output .= '</time>';
         $output .= ' ';
-        $output .= '<span class="cf-to cf-meta">' . $this->translator->translate('till') . '</span>';
+        $output .= '<span class="cf-to cf-meta">' . $this->translator->translate('till_included') . '</span>';
         $output .= ' ';
         $output .= '<time itemprop="endDate" datetime="' . $dateEnd->format(\DateTime::ATOM) . '">';
         $output .= '<span class="cf-weekday cf-meta">' . $intlWeekDayEnd . '</span>';

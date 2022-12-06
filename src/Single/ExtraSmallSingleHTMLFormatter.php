@@ -65,11 +65,9 @@ final class ExtraSmallSingleHTMLFormatter implements SingleFormatterInterface
 
     private function formatMoreDays(DateTimeInterface $dateFrom, DateTimeInterface $dateEnd): string
     {
-        $output = '<span class="cf-from cf-meta">' . ucfirst($this->translator->translate('from')) . '</span>';
+        $output = $this->getDatePart($dateFrom);
         $output .= ' ';
-        $output .= $this->getDatePart($dateFrom);
-        $output .= ' ';
-        $output .= '<span class="cf-to cf-meta">' . $this->translator->translate('till') . '</span>';
+        $output .= '<span class="cf-to cf-meta">-</span>';
         $output .= ' ';
         $output .= $this->getDatePart($dateEnd);
 

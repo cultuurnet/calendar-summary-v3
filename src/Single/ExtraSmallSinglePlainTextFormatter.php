@@ -75,8 +75,7 @@ final class ExtraSmallSinglePlainTextFormatter implements SingleFormatterInterfa
         }
 
         return PlainTextSummaryBuilder::start($this->translator)
-            ->from(...$startDay)
-            ->till(...$endDay)
+            ->fromTill($startDay, $endDay)
             ->toString();
     }
 }
