@@ -32,14 +32,14 @@ final class DateComparison
         return self::onSameDay($date, (new CarbonImmutable())->add(new DateInterval('P1D')));
     }
 
-    public static function inCurrentWeek(DateTimeImmutable $date): bool
+    public static function isInCurrentWeek(DateTimeImmutable $date): bool
     {
         return CarbonImmutable::instance($date)->isCurrentWeek();
     }
 
     public static function isUpcomingDayInCurrentWeek(DateTimeImmutable $date): bool
     {
-        return self::isInTheFuture($date) && self::inCurrentWeek($date);
+        return self::isInTheFuture($date) && self::isInCurrentWeek($date);
     }
 
     public static function isCurrentYear(DateTimeImmutable $date): bool
