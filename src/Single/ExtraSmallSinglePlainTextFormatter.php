@@ -75,9 +75,7 @@ final class ExtraSmallSinglePlainTextFormatter implements SingleFormatterInterfa
         }
 
         return PlainTextSummaryBuilder::start($this->translator)
-            ->appendMultiple($startDay, ' ')
-            ->append('-')
-            ->appendMultiple($endDay, ' ')
+            ->fromTill($startDay, $endDay)
             ->toString();
     }
 }
