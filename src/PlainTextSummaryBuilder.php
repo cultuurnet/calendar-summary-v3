@@ -148,6 +148,13 @@ final class PlainTextSummaryBuilder
         return self::formatLine($text, false);
     }
 
+    public function fromTill(array $from, array $till): self
+    {
+        return $this->appendMultiple($from, ' ')
+            ->append('-')
+            ->appendMultiple($till, ' ');
+    }
+
     private function appendTranslation(string $translationKey): self
     {
         $c = clone $this;
