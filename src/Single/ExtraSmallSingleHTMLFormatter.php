@@ -67,7 +67,7 @@ final class ExtraSmallSingleHTMLFormatter implements SingleFormatterInterface
     {
         $output = $this->getDatePart($dateFrom);
         $output .= ' ';
-        $output .= '-';
+        $output .= '<span class="cf-to cf-meta">-</span>';
         $output .= ' ';
         $output .= $this->getDatePart($dateEnd);
 
