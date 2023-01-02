@@ -24,7 +24,7 @@ final class SmallSingleHTMLFormatterTest extends TestCase
     protected function setUp(): void
     {
         $this->formatter = new SmallSingleHTMLFormatter(new Translator('nl_NL'));
-        CalendarSummaryTester::setTestNow(CarbonImmutable::create(2021, 5, 3));
+        CalendarSummaryTester::setTestNow(2021, 5, 3);
     }
 
     public function testFormatHTMLSingleDateXsOneDay(): void

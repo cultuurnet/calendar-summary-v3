@@ -24,7 +24,7 @@ final class SmallSinglePlainTextFormatterTest extends TestCase
     protected function setUp(): void
     {
         $this->formatter = new SmallSinglePlainTextFormatter(new Translator('nl_NL'));
-        CalendarSummaryTester::setTestNow(CarbonImmutable::create(2021, 5, 3));
+        CalendarSummaryTester::setTestNow(2021, 5, 3);
     }
 
     public function testFormatPlainTextSingleDateSmOneDay(): void
@@ -45,7 +45,7 @@ final class SmallSinglePlainTextFormatterTest extends TestCase
 
     public function testSameWeekInThePast(): void
     {
-        CalendarSummaryTester::setTestNow(CarbonImmutable::create(2021, 5, 5));
+        CalendarSummaryTester::setTestNow(2021, 5, 5);
 
         $event = new Offer(
             OfferType::event(),

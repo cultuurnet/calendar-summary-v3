@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace CultuurNet\CalendarSummaryV3\Periodic;
 
-use Carbon\CarbonImmutable;
 use CultuurNet\CalendarSummaryV3\CalendarSummaryTester;
 use CultuurNet\CalendarSummaryV3\Offer\BookingAvailability;
 use CultuurNet\CalendarSummaryV3\Offer\CalendarType;
@@ -25,7 +24,7 @@ final class SmallPeriodicHTMLFormatterTest extends TestCase
     protected function setUp(): void
     {
         $this->formatter = new SmallPeriodicHTMLFormatter(new Translator('nl_NL'));
-        CalendarSummaryTester::setTestNow(CarbonImmutable::create(2021, 5, 3));
+        CalendarSummaryTester::setTestNow(2021, 5, 3);
     }
 
     public function testFormatAPeriodWithoutLeadingZeroes(): void
