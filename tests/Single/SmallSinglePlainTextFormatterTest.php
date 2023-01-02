@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace CultuurNet\CalendarSummaryV3\Single;
 
 use Carbon\CarbonImmutable;
+use CultuurNet\CalendarSummaryV3\CalendarSummaryTester;
 use CultuurNet\CalendarSummaryV3\Offer\BookingAvailability;
 use CultuurNet\CalendarSummaryV3\Offer\Offer;
 use CultuurNet\CalendarSummaryV3\Offer\OfferType;
@@ -23,7 +24,7 @@ final class SmallSinglePlainTextFormatterTest extends TestCase
     protected function setUp(): void
     {
         $this->formatter = new SmallSinglePlainTextFormatter(new Translator('nl_NL'));
-        CarbonImmutable::setTestNow(CarbonImmutable::create(2021, 5, 3));
+        CalendarSummaryTester::setTestNow(CarbonImmutable::create(2021, 5, 3));
     }
 
     public function testFormatPlainTextSingleDateSmOneDay(): void
@@ -44,7 +45,7 @@ final class SmallSinglePlainTextFormatterTest extends TestCase
 
     public function testSameWeekInThePast(): void
     {
-        CarbonImmutable::setTestNow(CarbonImmutable::create(2021, 5, 5));
+        CalendarSummaryTester::setTestNow(CarbonImmutable::create(2021, 5, 5));
 
         $event = new Offer(
             OfferType::event(),
