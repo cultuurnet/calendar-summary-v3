@@ -11,7 +11,7 @@ final class DateComparisonTest extends TestCase
 {
     protected function setUp(): void
     {
-        CarbonImmutable::setTestNow(CarbonImmutable::create(2021, 5, 4));
+        CalendarSummaryTester::setTestNow(2021, 5, 4);
     }
 
     public function testAreTwoDatesOnTheSameDay(): void
