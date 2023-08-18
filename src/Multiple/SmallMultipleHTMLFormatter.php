@@ -35,16 +35,22 @@ final class SmallMultipleHTMLFormatter implements MultipleFormatterInterface
     {
         $dateFrom = $offer->getStartDate();
         $intlDateFrom = $this->getIntlDate($dateFrom);
+        $dayOfWeekFrom = $this->formatter->formatAsAbbreviatedDayOfWeek($dateFrom);
 
         $dateTo = $offer->getEndDate();
         $intlDateTo = $this->getIntlDate($dateTo);
+        $dayOfWeekTo = $this->formatter->formatAsAbbreviatedDayOfWeek($dateTo);
 
         if (DateComparison::onSameDay($dateFrom, $dateTo)) {
             $output = $this->formatSameDay($dateFrom, $intlDateFrom);
         } else {
-            $output = '<span class="cf-date">' . $intlDateFrom . '</span> '
-                . '<span class="cf-to cf-meta">-</span> ' .
-                '<span class="cf-date">' . $intlDateTo . '</span>';
+            $output = '<span class="cf-weekday cf-meta">' . ucfirst($dayOfWeekFrom) . '</span>'
+                . ' '
+                . '<span class="cf-date">' . $intlDateFrom . '</span> '
+                . '<span class="cf-to cf-meta">-</span> '
+                . '<span class="cf-weekday cf-meta">' . $dayOfWeekTo . '</span>'
+                . ' '
+                . '<span class="cf-date">' . $intlDateTo . '</span>';
         }
 
         $optionalAvailability = HtmlAvailabilityFormatter::forOffer($offer, $this->translator)
