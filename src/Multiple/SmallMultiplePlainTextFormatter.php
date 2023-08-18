@@ -54,12 +54,14 @@ final class SmallMultiplePlainTextFormatter implements MultipleFormatterInterfac
         }
 
         $plainTextSummaryBuilder = PlainTextSummaryBuilder::start($this->translator)
+            ->append($this->formatter->formatAsAbbreviatedDayOfWeek($startDate))
             ->append($this->formatter->formatAsDayNumber($startDate))
             ->append($this->formatter->formatAsAbbreviatedMonthName($startDate));
         if (!DateComparison::isCurrentYear($startDate)) {
             $plainTextSummaryBuilder = $plainTextSummaryBuilder->append($this->formatter->formatAsYear($startDate));
         }
         $plainTextSummaryBuilder = $plainTextSummaryBuilder->append('-')
+            ->append($this->formatter->formatAsAbbreviatedDayOfWeek($endDate))
             ->append($this->formatter->formatAsDayNumber($endDate))
             ->append($this->formatter->formatAsAbbreviatedMonthName($endDate));
         if (!DateComparison::isCurrentYear($endDate)) {
