@@ -56,10 +56,13 @@ final class SmallSingleHTMLFormatter implements SingleFormatterInterface
             return $relativeDate;
         }
 
+        $dateFromWeekDay = $this->formatter->formatAsAbbreviatedDayOfWeek($dateFrom);
         $dateFromDay = $this->formatter->formatAsDayNumber($dateFrom);
         $dateFromMonth = $this->formatter->formatAsAbbreviatedMonthName($dateFrom);
 
-        $formattedDate = '<span class="cf-date">' . ucfirst($dateFromDay) . '</span>'
+        $formattedDate = '<span class="cf-weekday cf-meta">' . ucfirst($dateFromWeekDay) . '</span>'
+            . ' '
+            . '<span class="cf-date">' . ucfirst($dateFromDay) . '</span>'
             . ' '
             . '<span class="cf-month">' . $dateFromMonth . '</span>';
 
@@ -72,13 +75,17 @@ final class SmallSingleHTMLFormatter implements SingleFormatterInterface
 
     private function formatMoreDays(DateTimeInterface $dateFrom, DateTimeInterface $dateEnd): string
     {
+        $dateFromWeekDay = $this->formatter->formatAsAbbreviatedDayOfWeek($dateFrom);
         $dateFromDay = $this->formatter->formatAsDayNumber($dateFrom);
         $dateFromMonth = $this->formatter->formatAsAbbreviatedMonthName($dateFrom);
 
+        $dateEndWeekDay = $this->formatter->formatAsAbbreviatedDayOfWeek($dateEnd);
         $dateEndDay = $this->formatter->formatAsDayNumber($dateEnd);
         $dateEndMonth = $this->formatter->formatAsAbbreviatedMonthName($dateEnd);
 
-        $output = '<span class="cf-date">' . $dateFromDay . '</span>';
+        $output = '<span class="cf-weekday cf-meta">' . ucfirst($dateFromWeekDay) . '</span>' ;
+        $output .= ' ';
+        $output .= '<span class="cf-date">' . $dateFromDay . '</span>';
         $output .= ' ';
         $output .= '<span class="cf-month">' . $dateFromMonth . '</span>';
         if (!DateComparison::isCurrentYear($dateFrom)) {
@@ -87,6 +94,8 @@ final class SmallSingleHTMLFormatter implements SingleFormatterInterface
         }
         $output .= ' ';
         $output .= '<span class="cf-to cf-meta">-</span>';
+        $output .= ' ';
+        $output .= '<span class="cf-weekday cf-meta">' . ucfirst($dateEndWeekDay) . '</span>' ;
         $output .= ' ';
         $output .= '<span class="cf-date">' . $dateEndDay . '</span>';
         $output .= ' ';

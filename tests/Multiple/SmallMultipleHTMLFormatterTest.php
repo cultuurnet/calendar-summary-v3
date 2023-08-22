@@ -108,8 +108,11 @@ final class SmallMultipleHTMLFormatterTest extends TestCase
         );
 
         $this->assertEquals(
-            '<span class="cf-date">25 nov 2025</span> '
-            . '<span class="cf-to cf-meta">-</span> <span class="cf-date">30 nov 2030</span>',
+            '<span class="cf-weekday cf-meta">Di</span> '
+            . '<span class="cf-date">25 nov 2025</span> '
+            . '<span class="cf-to cf-meta">-</span> '
+            . '<span class="cf-weekday cf-meta">za</span> '
+            . '<span class="cf-date">30 nov 2030</span>',
             $this->formatter->format($offer)
         );
     }
@@ -126,8 +129,11 @@ final class SmallMultipleHTMLFormatterTest extends TestCase
         );
 
         $this->assertEquals(
-            '<span class="cf-date">25 nov</span> '
-            . '<span class="cf-to cf-meta">-</span> <span class="cf-date">30 nov</span>',
+            '<span class="cf-weekday cf-meta">Do</span> '
+            . '<span class="cf-date">25 nov</span> '
+            . '<span class="cf-to cf-meta">-</span> '
+            . '<span class="cf-weekday cf-meta">di</span> '
+            . '<span class="cf-date">30 nov</span>',
             $this->formatter->format($offer)
         );
     }
@@ -144,8 +150,11 @@ final class SmallMultipleHTMLFormatterTest extends TestCase
         );
 
         $this->assertEquals(
-            '<span class="cf-date">25 nov</span> '
-            . '<span class="cf-to cf-meta">-</span> <span class="cf-date">30 nov 2030</span>',
+            '<span class="cf-weekday cf-meta">Do</span> '
+            . '<span class="cf-date">25 nov</span> '
+            . '<span class="cf-to cf-meta">-</span> '
+            . '<span class="cf-weekday cf-meta">za</span> '
+            . '<span class="cf-date">30 nov 2030</span>',
             $this->formatter->format($offer)
         );
     }
@@ -162,8 +171,11 @@ final class SmallMultipleHTMLFormatterTest extends TestCase
         );
 
         $this->assertEquals(
-            '<span class="cf-date">25 nov 2020</span> '
-            . '<span class="cf-to cf-meta">-</span> <span class="cf-date">30 nov</span>',
+            '<span class="cf-weekday cf-meta">Wo</span> '
+            . '<span class="cf-date">25 nov 2020</span> '
+            . '<span class="cf-to cf-meta">-</span> '
+            . '<span class="cf-weekday cf-meta">di</span> '
+            . '<span class="cf-date">30 nov</span>',
             $this->formatter->format($offer)
         );
     }
@@ -180,8 +192,11 @@ final class SmallMultipleHTMLFormatterTest extends TestCase
         );
 
         $this->assertEquals(
-            '<span class="cf-date">25 nov 2025</span> '
-            . '<span class="cf-to cf-meta">-</span> <span class="cf-date">30 nov 2030</span>'
+            '<span class="cf-weekday cf-meta">Di</span> '
+            . '<span class="cf-date">25 nov 2025</span> '
+            . '<span class="cf-to cf-meta">-</span> '
+            . '<span class="cf-weekday cf-meta">za</span> '
+            . '<span class="cf-date">30 nov 2030</span>'
             . ' <span class="cf-status">(geannuleerd)</span>',
             $this->formatter->format($offer)
         );
@@ -199,8 +214,11 @@ final class SmallMultipleHTMLFormatterTest extends TestCase
         );
 
         $this->assertEquals(
-            '<span class="cf-date">25 nov 2025</span> '
-            . '<span class="cf-to cf-meta">-</span> <span class="cf-date">30 nov 2030</span>'
+            '<span class="cf-weekday cf-meta">Di</span> '
+            . '<span class="cf-date">25 nov 2025</span> '
+            . '<span class="cf-to cf-meta">-</span> '
+            . '<span class="cf-weekday cf-meta">za</span> '
+            . '<span class="cf-date">30 nov 2030</span>'
             . ' <span class="cf-status">(Volzet of uitverkocht)</span>',
             $this->formatter->format($offer)
         );
@@ -218,8 +236,11 @@ final class SmallMultipleHTMLFormatterTest extends TestCase
         );
 
         $this->assertEquals(
-            '<span class="cf-date">4 mrt 2025</span> '
-            . '<span class="cf-to cf-meta">-</span> <span class="cf-date">8 mrt 2030</span>',
+            '<span class="cf-weekday cf-meta">Di</span> '
+            . '<span class="cf-date">4 mrt 2025</span> '
+            . '<span class="cf-to cf-meta">-</span> '
+            . '<span class="cf-weekday cf-meta">vr</span> '
+            . '<span class="cf-date">8 mrt 2030</span>',
             $this->formatter->format($offer)
         );
     }
@@ -236,8 +257,11 @@ final class SmallMultipleHTMLFormatterTest extends TestCase
         );
 
         $this->assertEquals(
-            '<span class="cf-date">4 okt 2025</span> '
-            . '<span class="cf-to cf-meta">-</span> <span class="cf-date">8 okt 2030</span>',
+            '<span class="cf-weekday cf-meta">Za</span> '
+            . '<span class="cf-date">4 okt 2025</span> '
+            . '<span class="cf-to cf-meta">-</span> '
+            . '<span class="cf-weekday cf-meta">di</span> '
+            . '<span class="cf-date">8 okt 2030</span>',
             $this->formatter->format($offer)
         );
     }

@@ -38,7 +38,7 @@ final class SmallSingleHTMLFormatterTest extends TestCase
         );
 
         $this->assertEquals(
-            '<span class="cf-date">25</span> <span class="cf-month">jan</span> <span class="cf-year">2018</span>',
+            '<span class="cf-weekday cf-meta">Do</span> <span class="cf-date">25</span> <span class="cf-month">jan</span> <span class="cf-year">2018</span>',
             $this->formatter->format($event)
         );
     }
@@ -54,7 +54,7 @@ final class SmallSingleHTMLFormatterTest extends TestCase
         );
 
         $this->assertEquals(
-            '<span class="cf-date">24</span> <span class="cf-month">mei</span>',
+            '<span class="cf-weekday cf-meta">Ma</span> <span class="cf-date">24</span> <span class="cf-month">mei</span>',
             $this->formatter->format($event)
         );
     }
@@ -135,7 +135,7 @@ final class SmallSingleHTMLFormatterTest extends TestCase
         );
 
         $this->assertEquals(
-            '<span class="cf-date">25</span> <span class="cf-month">jan</span> <span class="cf-year">2018</span> <span class="cf-status">(geannuleerd)</span>',
+            '<span class="cf-weekday cf-meta">Do</span> <span class="cf-date">25</span> <span class="cf-month">jan</span> <span class="cf-year">2018</span> <span class="cf-status">(geannuleerd)</span>',
             $this->formatter->format($event)
         );
     }
@@ -151,7 +151,7 @@ final class SmallSingleHTMLFormatterTest extends TestCase
         );
 
         $this->assertEquals(
-            '<span class="cf-date">25</span> <span class="cf-month">jan</span> <span class="cf-year">2018</span> <span title="Covid-19" class="cf-status">(geannuleerd)</span>',
+            '<span class="cf-weekday cf-meta">Do</span> <span class="cf-date">25</span> <span class="cf-month">jan</span> <span class="cf-year">2018</span> <span title="Covid-19" class="cf-status">(geannuleerd)</span>',
             $this->formatter->format($event)
         );
     }
@@ -167,7 +167,7 @@ final class SmallSingleHTMLFormatterTest extends TestCase
         );
 
         $this->assertEquals(
-            '<span class="cf-date">8</span> <span class="cf-month">jan</span> <span class="cf-year">2018</span>',
+            '<span class="cf-weekday cf-meta">Ma</span> <span class="cf-date">8</span> <span class="cf-month">jan</span> <span class="cf-year">2018</span>',
             $this->formatter->format($event)
         );
     }
@@ -182,13 +182,17 @@ final class SmallSingleHTMLFormatterTest extends TestCase
             new DateTimeImmutable('2018-01-27T21:30:00+01:00')
         );
 
-        $expectedOutput = '<span class="cf-date">25</span>';
+        $expectedOutput = '<span class="cf-weekday cf-meta">Do</span>';
+        $expectedOutput .= ' ';
+        $expectedOutput .= '<span class="cf-date">25</span>';
         $expectedOutput .= ' ';
         $expectedOutput .= '<span class="cf-month">jan</span>';
         $expectedOutput .= ' ';
         $expectedOutput .= '<span class="cf-year">2018</span>';
         $expectedOutput .= ' ';
         $expectedOutput .= '<span class="cf-to cf-meta">-</span>';
+        $expectedOutput .= ' ';
+        $expectedOutput .= '<span class="cf-weekday cf-meta">Za</span>';
         $expectedOutput .= ' ';
         $expectedOutput .= '<span class="cf-date">27</span>';
         $expectedOutput .= ' ';
@@ -212,13 +216,17 @@ final class SmallSingleHTMLFormatterTest extends TestCase
             new DateTimeImmutable('2018-01-27T21:30:00+01:00')
         );
 
-        $expectedOutput = '<span class="cf-date">25</span>';
+        $expectedOutput = '<span class="cf-weekday cf-meta">Do</span>';
+        $expectedOutput .= ' ';
+        $expectedOutput .= '<span class="cf-date">25</span>';
         $expectedOutput .= ' ';
         $expectedOutput .= '<span class="cf-month">jan</span>';
         $expectedOutput .= ' ';
         $expectedOutput .= '<span class="cf-year">2018</span>';
         $expectedOutput .= ' ';
         $expectedOutput .= '<span class="cf-to cf-meta">-</span>';
+        $expectedOutput .= ' ';
+        $expectedOutput .= '<span class="cf-weekday cf-meta">Za</span>';
         $expectedOutput .= ' ';
         $expectedOutput .= '<span class="cf-date">27</span>';
         $expectedOutput .= ' ';
@@ -244,13 +252,17 @@ final class SmallSingleHTMLFormatterTest extends TestCase
             new DateTimeImmutable('2018-01-08T21:30:00+01:00')
         );
 
-        $expectedOutput = '<span class="cf-date">6</span>';
+        $expectedOutput = '<span class="cf-weekday cf-meta">Za</span>';
+        $expectedOutput .= ' ';
+        $expectedOutput .= '<span class="cf-date">6</span>';
         $expectedOutput .= ' ';
         $expectedOutput .= '<span class="cf-month">jan</span>';
         $expectedOutput .= ' ';
         $expectedOutput .= '<span class="cf-year">2018</span>';
         $expectedOutput .= ' ';
         $expectedOutput .= '<span class="cf-to cf-meta">-</span>';
+        $expectedOutput .= ' ';
+        $expectedOutput .= '<span class="cf-weekday cf-meta">Ma</span>';
         $expectedOutput .= ' ';
         $expectedOutput .= '<span class="cf-date">8</span>';
         $expectedOutput .= ' ';

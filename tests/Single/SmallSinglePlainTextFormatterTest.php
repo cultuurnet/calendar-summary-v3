@@ -38,7 +38,7 @@ final class SmallSinglePlainTextFormatterTest extends TestCase
         );
 
         $this->assertEquals(
-            '25 jan 2018',
+            'Do 25 jan 2018',
             $this->formatter->format($event)
         );
     }
@@ -56,7 +56,7 @@ final class SmallSinglePlainTextFormatterTest extends TestCase
         );
 
         $this->assertEquals(
-            '4 mei',
+            'Di 4 mei',
             $this->formatter->format($event)
         );
     }
@@ -72,7 +72,7 @@ final class SmallSinglePlainTextFormatterTest extends TestCase
         );
 
         $this->assertEquals(
-            '4 aug',
+            'Wo 4 aug',
             $this->formatter->format($event)
         );
     }
@@ -152,7 +152,7 @@ final class SmallSinglePlainTextFormatterTest extends TestCase
         );
 
         $this->assertEquals(
-            '8 jan 2018',
+            'Ma 8 jan 2018',
             $this->formatter->format($event)
         );
     }
@@ -168,7 +168,7 @@ final class SmallSinglePlainTextFormatterTest extends TestCase
         );
 
         $this->assertEquals(
-            '25 jan - 28 jan',
+            'Do 25 jan - zo 28 jan',
             $this->formatter->format($event)
         );
     }
@@ -184,7 +184,7 @@ final class SmallSinglePlainTextFormatterTest extends TestCase
         );
 
         $this->assertEquals(
-            '6 jan - 8 jan',
+            'Za 6 jan - ma 8 jan',
             $this->formatter->format($event)
         );
     }
@@ -200,7 +200,7 @@ final class SmallSinglePlainTextFormatterTest extends TestCase
         );
 
         $this->assertEquals(
-            '25 jan 2018 (geannuleerd)',
+            'Do 25 jan 2018 (geannuleerd)',
             $this->formatter->format($event)
         );
     }
@@ -216,7 +216,7 @@ final class SmallSinglePlainTextFormatterTest extends TestCase
         );
 
         $this->assertEquals(
-            '25 jan 2018 (uitgesteld)',
+            'Do 25 jan 2018 (uitgesteld)',
             $this->formatter->format($event)
         );
     }
@@ -232,7 +232,7 @@ final class SmallSinglePlainTextFormatterTest extends TestCase
         );
 
         $this->assertEquals(
-            '25 jan - 28 jan (geannuleerd)',
+            'Do 25 jan - zo 28 jan (geannuleerd)',
             $this->formatter->format($event)
         );
     }
@@ -248,7 +248,7 @@ final class SmallSinglePlainTextFormatterTest extends TestCase
         );
 
         $this->assertEquals(
-            '25 jan - 28 jan (geannuleerd)',
+            'Do 25 jan - zo 28 jan (geannuleerd)',
             $this->formatter->format($event)
         );
     }
@@ -264,7 +264,7 @@ final class SmallSinglePlainTextFormatterTest extends TestCase
         );
 
         $this->assertEquals(
-            '25 jan - 28 jan (Volzet of uitverkocht)',
+            'Do 25 jan - zo 28 jan (Volzet of uitverkocht)',
             $this->formatter->format($event)
         );
     }
@@ -280,7 +280,7 @@ final class SmallSinglePlainTextFormatterTest extends TestCase
         );
 
         $this->assertEquals(
-            '25 jan - 28 jan (uitgesteld)',
+            'Do 25 jan - zo 28 jan (uitgesteld)',
             $this->formatter->format($event)
         );
     }

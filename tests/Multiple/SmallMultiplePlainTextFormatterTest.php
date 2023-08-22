@@ -40,7 +40,7 @@ final class SmallMultiplePlainTextFormatterTest extends TestCase
         );
 
         $this->assertEquals(
-            '25 nov 2025 - 30 nov 2030',
+            'Di 25 nov 2025 - za 30 nov 2030',
             $this->formatter->format($offer)
         );
     }
@@ -125,7 +125,7 @@ final class SmallMultiplePlainTextFormatterTest extends TestCase
         );
 
         $this->assertEquals(
-            '4 mrt 2025 - 8 mrt 2030',
+            'Di 4 mrt 2025 - vr 8 mrt 2030',
             $this->formatter->format($offer)
         );
     }
@@ -142,7 +142,7 @@ final class SmallMultiplePlainTextFormatterTest extends TestCase
         );
 
         $this->assertEquals(
-            '4 mrt - 8 mrt',
+            'Do 4 mrt - ma 8 mrt',
             $this->formatter->format($offer)
         );
     }
@@ -159,7 +159,7 @@ final class SmallMultiplePlainTextFormatterTest extends TestCase
         );
 
         $this->assertEquals(
-            '4 mrt - 8 mrt 2030',
+            'Do 4 mrt - vr 8 mrt 2030',
             $this->formatter->format($offer)
         );
     }
@@ -176,7 +176,7 @@ final class SmallMultiplePlainTextFormatterTest extends TestCase
         );
 
         $this->assertEquals(
-            '4 mrt 2020 - 8 mrt',
+            'Wo 4 mrt 2020 - ma 8 mrt',
             $this->formatter->format($offer)
         );
     }
@@ -193,7 +193,7 @@ final class SmallMultiplePlainTextFormatterTest extends TestCase
         );
 
         $this->assertEquals(
-            '25 nov 2025 - 30 nov 2030 (geannuleerd)',
+            'Di 25 nov 2025 - za 30 nov 2030 (geannuleerd)',
             $this->formatter->format($offer)
         );
     }
@@ -210,7 +210,7 @@ final class SmallMultiplePlainTextFormatterTest extends TestCase
         );
 
         $this->assertEquals(
-            '25 mrt 2025 - 30 mrt 2030',
+            'Di 25 mrt 2025 - za 30 mrt 2030',
             $this->formatter->format($offer)
         );
     }
@@ -227,7 +227,7 @@ final class SmallMultiplePlainTextFormatterTest extends TestCase
         );
 
         $this->assertEquals(
-            '4 okt 2025 - 8 okt 2030',
+            'Za 4 okt 2025 - di 8 okt 2030',
             $this->formatter->format($offer)
         );
     }
@@ -244,7 +244,7 @@ final class SmallMultiplePlainTextFormatterTest extends TestCase
         );
 
         $this->assertEquals(
-            '25 mrt 2025 - 30 mrt 2030 (geannuleerd)',
+            'Di 25 mrt 2025 - za 30 mrt 2030 (geannuleerd)',
             $this->formatter->format($offer)
         );
     }

@@ -55,22 +55,25 @@ final class SmallSinglePlainTextFormatter implements SingleFormatterInterface
             return $relativeDate;
         }
 
+        $dayOfWeek = $this->formatter->formatAsAbbreviatedDayOfWeek($date);
         $dayNumber = $this->formatter->formatAsDayNumber($date);
         $monthName = $this->formatter->formatAsAbbreviatedMonthName($date);
         if (DateComparison::isCurrentYear($date)) {
-            return PlainTextSummaryBuilder::singleLine($dayNumber, $monthName);
+            return PlainTextSummaryBuilder::singleLine($dayOfWeek, $dayNumber, $monthName);
         }
         $year = $this->formatter->formatAsYear($date);
-        return PlainTextSummaryBuilder::singleLine($dayNumber, $monthName, $year);
+        return PlainTextSummaryBuilder::singleLine($dayOfWeek, $dayNumber, $monthName, $year);
     }
 
     private function formatMoreDays(DateTimeInterface $startDate, DateTimeInterface $endDate): string
     {
         $startDay = [];
+        $startDay[] = $this->formatter->formatAsAbbreviatedDayOfWeek($startDate);
         $startDay[] = $this->formatter->formatAsDayNumber($startDate);
         $startDay[] = $this->formatter->formatAsAbbreviatedMonthName($startDate);
 
         $endDay = [];
+        $endDay[] = $this->formatter->formatAsAbbreviatedDayOfWeek($endDate);
         $endDay[] = $this->formatter->formatAsDayNumber($endDate);
         $endDay[] = $this->formatter->formatAsAbbreviatedMonthName($endDate);
 
