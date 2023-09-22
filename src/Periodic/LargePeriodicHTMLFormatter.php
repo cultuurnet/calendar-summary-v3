@@ -102,7 +102,7 @@ final class LargePeriodicHTMLFormatter implements PeriodicFormatterInterface
      */
     private function generateDates(DateTimeImmutable $dateFrom, DateTimeImmutable $dateTo, string $optionalStatus)
     {
-        $intlDateFrom =$this->formatter->formatAsFullDate($dateFrom);
+        $intlDateFrom = $this->formatter->formatAsFullDate($dateFrom);
         $intlDateTo = $this->formatter->formatAsFullDate($dateTo);
 
         return '<p class="cf-period">'
