@@ -4,24 +4,14 @@ declare(strict_types=1);
 
 namespace CultuurNet\CalendarSummaryV3;
 
-use DElfimov\Translate\Translate;
-use DElfimov\Translate\Loader\PhpArrayLoader;
-
 final class Translator
 {
-    /**
-     * @var Translate
-     */
-    private $translator;
-
-    /**
-     * @var string
-     */
-    private $locale;
+    private string $locale;
+    private array $messages;
 
     public function __construct(string $locale)
     {
-        $messages = [
+        $this->messages = [
             'en' => [
                 'from' => 'from',
                 'from_period' => 'from',
@@ -93,7 +83,7 @@ final class Translator
                 'temporarily_closed' => 'Fermé temporairement',
                 'cancelled' => 'annulé',
                 'postponed' => 'reporté',
-                'event_concluded' => 'Fin de l’événement',
+                'event_concluded' => 'Fin de l\'événement',
                 'sold_out' => 'Complet',
                 'this' => 'Ce',
                 'today' => 'Aujourd\'hui',
@@ -104,49 +94,40 @@ final class Translator
                 'open_every_end' => '',
             ],
             'de' => [
-                'from' => 'von',
-                'from_period' => 'aus',
-                'from_hour' => 'von',
-                'till' => 'bis',
-                'till_included' => 'bis',
-                'till_hour' => 'bis',
-                'closed' => 'geschlossen',
-                'open_at' => 'öffnen',
-                'open_at_consecutive_days' => 'öffnen',
-                'at' => 'um',
-                'open_every_day' => 'Jeden Tag geöffnet',
-                'and' => 'und',
-                'permanently_closed' => 'Dauerhaft geschlossen',
-                'temporarily_closed' => 'Vorübergehend geschlossen',
-                'cancelled' => 'abgesagt',
-                'postponed' => 'verschoben',
-                'event_concluded' => 'Event abgeschlossen',
-                'sold_out' => 'Ausgebucht oder ausverkauft',
-                'this' => 'Diesen',
-                'today' => 'Heute',
-                'tonight' => 'Diesen Abend',
-                'tomorrow' => 'Morgen',
-                'to' => 'bis',
-                'open_every' => 'Jeden',
-                'open_every_end' => 'geöffnet',
-            ],
+        'from' => 'von',
+        'from_period' => 'aus',
+        'from_hour' => 'von',
+        'till' => 'bis',
+        'till_included' => 'bis',
+        'till_hour' => 'bis',
+        'closed' => 'geschlossen',
+        'open_at' => 'öffnen',
+        'open_at_consecutive_days' => 'öffnen',
+        'at' => 'um',
+        'open_every_day' => 'Jeden Tag geöffnet',
+        'and' => 'und',
+        'permanently_closed' => 'Dauerhaft geschlossen',
+        'temporarily_closed' => 'Vorübergehend geschlossen',
+        'cancelled' => 'abgesagt',
+        'postponed' => 'verschoben',
+        'event_concluded' => 'Event abgeschlossen',
+        'sold_out' => 'Ausgebucht oder ausverkauft',
+        'this' => 'Diesen',
+        'today' => 'Heute',
+        'tonight' => 'Diesen Abend',
+        'tomorrow' => 'Morgen',
+        'to' => 'bis',
+        'open_every' => 'Jeden',
+        'open_every_end' => 'geöffnet',
+    ],
         ];
 
-        $this->translator = new Translate(
-            new PhpArrayLoader($messages),
-            [
-                'default' => 'en',
-                'available' => ['en', 'nl', 'fr', 'de'],
-            ]
-        );
-
         $this->locale = $locale;
-        $this->translator->setLanguage($this->getLanguageCode());
     }
 
     public function translate(string $key): string
     {
-        return $this->translator->t($key);
+        return $this->messages[$this->getLanguageCode()][$key];
     }
 
     /**
