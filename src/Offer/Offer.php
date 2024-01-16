@@ -141,9 +141,7 @@ final class Offer
      */
     public function withOpeningHours(array $openingHours): self
     {
-        usort($openingHours, function (OpeningHour $a, OpeningHour $b) {
-            return strcmp($a->getOpens(), $b->getCloses());
-        });
+        usort($openingHours, fn (OpeningHour $a, OpeningHour $b) => strcmp($a->getOpens(), $b->getOpens()));
 
         $clone = clone $this;
         $clone->openingHours = $openingHours;
