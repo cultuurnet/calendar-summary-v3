@@ -43,12 +43,18 @@ final class LargePermanentPlainTextFormatterTest extends TestCase
         );
 
         $openingHours2 = new OpeningHour(
+            ['monday'],
+            '14:00',
+            '20:00'
+        );
+
+        $openingHours3 = new OpeningHour(
             ['friday'],
             '00:01',
             '13:00'
         );
 
-        $openingHours3 = new OpeningHour(
+        $openingHours4 = new OpeningHour(
             ['saturday', 'sunday'],
             '09:00',
             '19:00'
@@ -56,14 +62,16 @@ final class LargePermanentPlainTextFormatterTest extends TestCase
 
         $place = $place->withOpeningHours(
             [
-                $openingHours1,
                 $openingHours2,
+                $openingHours1,
                 $openingHours3,
+                $openingHours4,
             ]
         );
 
         $this->assertEquals(
             'Maandag van 9:00 tot 13:00' . PHP_EOL
+            . 'van 14:00 tot 20:00' . PHP_EOL
             . 'Dinsdag van 9:00 tot 13:00' . PHP_EOL
             . 'Woensdag van 9:00 tot 13:00' . PHP_EOL
             . 'Donderdag gesloten' . PHP_EOL

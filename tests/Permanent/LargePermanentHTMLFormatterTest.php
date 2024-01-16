@@ -43,12 +43,18 @@ final class LargePermanentHTMLFormatterTest extends TestCase
         );
 
         $openingHours2 = new OpeningHour(
+            ['monday'],
+            '14:00',
+            '20:00'
+        );
+
+        $openingHours3 = new OpeningHour(
             ['friday'],
             '09:00',
             '13:00'
         );
 
-        $openingHours3 = new OpeningHour(
+        $openingHours4 = new OpeningHour(
             ['saturday', 'sunday'],
             '09:00',
             '19:00'
@@ -56,9 +62,10 @@ final class LargePermanentHTMLFormatterTest extends TestCase
 
         $place = $place->withOpeningHours(
             [
-                $openingHours1,
                 $openingHours2,
+                $openingHours1,
                 $openingHours3,
+                $openingHours4,
             ]
         );
 
@@ -71,6 +78,10 @@ final class LargePermanentHTMLFormatterTest extends TestCase
             . '<span class="cf-time">0:01</span> '
             . '<span itemprop="closes" content="13:00" class="cf-to cf-meta">tot</span> '
             . '<span class="cf-time">13:00</span> '
+            . '<span itemprop="opens" content="14:00" class="cf-from cf-meta">van</span> '
+            . '<span class="cf-time">14:00</span> '
+            . '<span itemprop="closes" content="20:00" class="cf-to cf-meta">tot</span> '
+            . '<span class="cf-time">20:00</span> '
             . '</li> '
             . '<meta itemprop="openingHours" datetime="Di 0:01-13:00"> </meta> '
             . '<li itemprop="openingHoursSpecification"> '
