@@ -71,7 +71,7 @@ final class LargePermanentHTMLFormatterTest extends TestCase
 
         $this->assertEquals(
             '<ul class="list-unstyled"> '
-            . '<meta itemprop="openingHours" datetime="Ma 0:01-13:00"> </meta> '
+            . '<meta itemprop="openingHours" datetime="Ma 0:01-20:00"> </meta> '
             . '<li itemprop="openingHoursSpecification"> '
             . '<span class="cf-days">Maandag</span> '
             . '<span itemprop="opens" content="0:01" class="cf-from cf-meta">van</span> '
