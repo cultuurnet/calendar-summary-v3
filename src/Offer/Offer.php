@@ -141,10 +141,30 @@ final class Offer
      */
     public function withOpeningHours(array $openingHours): self
     {
-        usort($openingHours, fn (OpeningHour $a, OpeningHour $b) => strcmp($a->getOpens(), $b->getOpens()));
+        // Split off opening hours per day
+        $individualOpeningHours = [];
+        foreach ($openingHours as $openingHour) {
+            foreach ($openingHour->getDaysOfWeek() as $dayOfWeek) {
+                $individualOpeningHours[] = new OpeningHour(
+                    [$dayOfWeek],
+                    $openingHour->getOpens(),
+                    $openingHour->getCloses()
+                );
+            }
+        }
+
+        // Sort by earliest opening hour and day
+        usort($individualOpeningHours, static function (OpeningHour $a, OpeningHour $b) {
+            $weekdayA = array_search($a->getDaysOfWeek()[0], OpeningHour::ALLOWED_DAYS);
+            $weekdayB = array_search($b->getDaysOfWeek()[0], OpeningHour::ALLOWED_DAYS);
+            $fullHoursA = $weekdayA * 24 + (int) $a->getOpens();
+            $fullHoursB = $weekdayB * 24 + (int) $b->getOpens();
+
+            return $fullHoursA <=> $fullHoursB;
+        });
 
         $clone = clone $this;
-        $clone->openingHours = $openingHours;
+        $clone->openingHours = $individualOpeningHours;
 
         return $clone;
     }

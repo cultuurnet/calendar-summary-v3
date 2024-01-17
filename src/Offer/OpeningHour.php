@@ -8,7 +8,7 @@ use InvalidArgumentException;
 
 final class OpeningHour
 {
-    private const ALLOWED_DAYS = [
+    public const ALLOWED_DAYS = [
         'monday',
         'tuesday',
         'wednesday',
