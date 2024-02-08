@@ -424,7 +424,7 @@ final class LargePeriodicHTMLFormatterTest extends TestCase
             . '</p> '
             . '<p class="cf-openinghours">Open op:</p> '
             . '<ul class="list-unstyled"> '
-            . '<meta itemprop="openingHours" datetime="Ma 9:30-13:45"> </meta> '
+            . '<meta itemprop="openingHours" datetime="Ma 9:30-20:00"> </meta> '
             . '<li itemprop="openingHoursSpecification"> '
             . '<span class="cf-days">Maandag</span> '
             . '<span itemprop="opens" content="9:30" class="cf-from cf-meta">van</span> '
