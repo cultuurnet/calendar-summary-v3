@@ -74,7 +74,12 @@ final class PlainTextSummaryBuilder
 
     public function fromHour(string ...$text): self
     {
-        return $this->appendTranslation('from_hour')->appendMultiple($text, ' ');
+        $self = $this;
+        if ($this->lines) {
+            $self = $self->and();
+        }
+
+        return $self->appendTranslation('from_hour')->appendMultiple($text, ' ');
     }
 
     public function till(string ...$text): self
