@@ -154,9 +154,10 @@ final class LargePermanentHTMLFormatter implements PermanentFormatterInterface
                         . $this->translator->translate('till_hour') . '</span> '
                         . "<span class=\"cf-time\">$closes</span>";
                 } else {
+                    $and = strpos($formattedTimespans[$dayOfWeek], 'cf-to') ? $this->translator->translate('and') . ' ' : '';
                     $formattedTimespans[$dayOfWeek] .=
                         "<span itemprop=\"opens\" content=\"$opens\" class=\"cf-from cf-meta\">"
-                        . $this->translator->translate('from_hour') . '</span> '
+                        . $and . $this->translator->translate('from_hour') . '</span> '
                         . "<span class=\"cf-time\">$opens</span> "
                         . "<span itemprop=\"closes\" content=\"$closes\" class=\"cf-to cf-meta\">"
                         . $this->translator->translate('till_hour') . '</span> '

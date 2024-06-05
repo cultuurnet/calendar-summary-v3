@@ -71,7 +71,7 @@ final class LargePermanentPlainTextFormatterTest extends TestCase
 
         $this->assertEquals(
             'Maandag van 9:00 tot 13:00' . PHP_EOL
-            . 'van 14:00 tot 20:00' . PHP_EOL
+            . 'en van 14:00 tot 20:00' . PHP_EOL
             . 'Dinsdag van 9:00 tot 13:00' . PHP_EOL
             . 'Woensdag van 9:00 tot 13:00' . PHP_EOL
             . 'Donderdag gesloten' . PHP_EOL
@@ -167,12 +167,12 @@ final class LargePermanentPlainTextFormatterTest extends TestCase
         );
 
         $this->assertEquals(
-            'Maandag van 9:00 tot 13:00' . PHP_EOL . 'van 17:00 tot 20:00' . PHP_EOL
-            . 'Dinsdag van 9:00 tot 13:00' . PHP_EOL . 'van 17:00 tot 20:00' . PHP_EOL
-            . 'Woensdag van 9:00 tot 13:00' . PHP_EOL . 'van 17:00 tot 20:00' . PHP_EOL
+            'Maandag van 9:00 tot 13:00' . PHP_EOL . 'en van 17:00 tot 20:00' . PHP_EOL
+            . 'Dinsdag van 9:00 tot 13:00' . PHP_EOL . 'en van 17:00 tot 20:00' . PHP_EOL
+            . 'Woensdag van 9:00 tot 13:00' . PHP_EOL . 'en van 17:00 tot 20:00' . PHP_EOL
             . 'Donderdag gesloten' . PHP_EOL
-            . 'Vrijdag van 10:00 tot 15:00' . PHP_EOL . 'van 18:00 tot 21:00' . PHP_EOL
-            . 'Zaterdag van 10:00 tot 15:00' . PHP_EOL . 'van 18:00 tot 21:00' . PHP_EOL
+            . 'Vrijdag van 10:00 tot 15:00' . PHP_EOL . 'en van 18:00 tot 21:00' . PHP_EOL
+            . 'Zaterdag van 10:00 tot 15:00' . PHP_EOL . 'en van 18:00 tot 21:00' . PHP_EOL
             . 'Zondag gesloten' . PHP_EOL,
             $this->formatter->format($place)
         );
@@ -229,9 +229,9 @@ final class LargePermanentPlainTextFormatterTest extends TestCase
         );
 
         $this->assertEquals(
-            'Maandag van 9:30 tot 13:45' . PHP_EOL . 'van 17:00 tot 20:00' . PHP_EOL
-            . 'Dinsdag van 9:30 tot 13:45' . PHP_EOL . 'van 18:00 tot 20:00' . PHP_EOL
-            . 'van 21:00 tot 23:00' . PHP_EOL
+            'Maandag van 9:30 tot 13:45' . PHP_EOL . 'en van 17:00 tot 20:00' . PHP_EOL
+            . 'Dinsdag van 9:30 tot 13:45' . PHP_EOL . 'en van 18:00 tot 20:00' . PHP_EOL
+            . 'en van 21:00 tot 23:00' . PHP_EOL
             . 'Woensdag gesloten' . PHP_EOL
             . 'Donderdag gesloten' . PHP_EOL
             . 'Vrijdag van 10:00 tot 15:00' . PHP_EOL
