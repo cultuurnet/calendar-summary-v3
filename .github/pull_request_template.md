@@ -14,6 +14,10 @@
 
 -
 
+### Version to be released if approved
+
+-
+
 ---
 
-Ticket: https://jira.uitdatabank.be/browse/...
+Ticket: https://jira.publiq.be/browse/...
