@@ -42,6 +42,11 @@ final class PlainTextSummaryBuilder
         return new self($translator);
     }
 
+    public function hasHours()
+    {
+        return count($this->workingLine) > 1;
+    }
+
     public function openAt(string ...$text): self
     {
         return $this->appendTranslation('open_at')->appendMultiple($text, ' & ');
@@ -75,7 +80,7 @@ final class PlainTextSummaryBuilder
     public function fromHour(string ...$text): self
     {
         $self = $this;
-        if ($this->lines) {
+        if ($this->hasHours()) {
             $self = $self->and();
         }
 
