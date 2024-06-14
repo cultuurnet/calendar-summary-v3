@@ -42,9 +42,9 @@ final class PlainTextSummaryBuilder
         return new self($translator);
     }
 
-    public function hasHours()
+    public function hasHours(): bool
     {
-        return in_array($this->translator->translate('from'), $this->workingLine);
+        return in_array($this->translator->translate('from'), $this->workingLine, true);
     }
 
     public function openAt(string ...$text): self
