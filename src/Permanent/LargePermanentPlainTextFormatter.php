@@ -5,11 +5,11 @@ declare(strict_types=1);
 namespace CultuurNet\CalendarSummaryV3\Permanent;
 
 use CultuurNet\CalendarSummaryV3\DateFormatter;
+use CultuurNet\CalendarSummaryV3\Offer\Offer;
 use CultuurNet\CalendarSummaryV3\Offer\OpeningHour;
 use CultuurNet\CalendarSummaryV3\OpeningHourFormatter;
 use CultuurNet\CalendarSummaryV3\PlainTextSummaryBuilder;
 use CultuurNet\CalendarSummaryV3\Translator;
-use CultuurNet\CalendarSummaryV3\Offer\Offer;
 use DateTimeImmutable;
 
 final class LargePermanentPlainTextFormatter implements PermanentFormatterInterface
@@ -67,8 +67,13 @@ final class LargePermanentPlainTextFormatter implements PermanentFormatterInterf
 
         // Add day name to the start of each day's week scheme
         $formattedDays = [];
-        foreach ($dayNames as $dayName) {
-            $formattedDays[$dayName] = PlainTextSummaryBuilder::start($this->translator)
+        foreach ($dayNames as $key => $dayName) {
+            $day = PlainTextSummaryBuilder::start($this->translator);
+            if ($key !== 0) {
+                $day = $day->startNewLine();
+            }
+
+            $formattedDays[$dayName] = $day
                 ->append($this->formatter->formatAsDayOfWeek(new DateTimeImmutable($dayName)));
         }
 
@@ -79,12 +84,9 @@ final class LargePermanentPlainTextFormatter implements PermanentFormatterInterf
         foreach ($openingHoursData as $openingHours) {
             foreach ($openingHours->getDaysOfWeek() as $dayName) {
                 $daysWithOpeningHours[] = $dayName;
-
                 $formattedDays[$dayName] = $formattedDays[$dayName]
                     ->fromHour(OpeningHourFormatter::format($openingHours->getOpens()))
-                    ->tillHour(OpeningHourFormatter::format($openingHours->getCloses()))
-                    ->startNewLine()
-                    ->lowercaseNextFirstCharacter();
+                    ->tillHour(OpeningHourFormatter::format($openingHours->getCloses()));
             }
         }
 
@@ -93,11 +95,10 @@ final class LargePermanentPlainTextFormatter implements PermanentFormatterInterf
         $closedDays = array_diff($dayNames, $daysWithOpeningHours);
         foreach ($closedDays as $closedDayName) {
             $formattedDays[$closedDayName] = $formattedDays[$closedDayName]
-                ->closed()
-                ->startNewLine();
+                ->closed();
         }
 
         // Combine the opening info of each day together into a single string.
-        return implode('', $formattedDays);
+        return implode('', $formattedDays) . PHP_EOL;
     }
 }
