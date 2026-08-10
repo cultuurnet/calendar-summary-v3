@@ -7,6 +7,7 @@ namespace CultuurNet\CalendarSummaryV3;
 use CultuurNet\CalendarSummaryV3\Offer\AdjustedDay;
 use CultuurNet\CalendarSummaryV3\Offer\BookingAvailability;
 use CultuurNet\CalendarSummaryV3\Offer\CalendarType;
+use CultuurNet\CalendarSummaryV3\Offer\ClosedDay;
 use CultuurNet\CalendarSummaryV3\Offer\Offer;
 use CultuurNet\CalendarSummaryV3\Offer\OfferType;
 use CultuurNet\CalendarSummaryV3\Offer\Status;
@@ -42,7 +43,7 @@ final class CalendarHTMLFormatterTest extends TestCase
         );
     }
 
-    public function testExtraLargeFormatRendersTheAdjustedDays(): void
+    public function testExtraLargeFormatRendersTheAdjustedAndClosedDays(): void
     {
         $place = (new Offer(
             OfferType::place(),
@@ -60,21 +61,36 @@ final class CalendarHTMLFormatterTest extends TestCase
                     ['nl' => 'Herfstvakantie']
                 ),
             ]
+        )->withOpeningHoursClosedDays(
+            [
+                new ClosedDay(
+                    new DateTimeImmutable('2030-12-25'),
+                    new DateTimeImmutable('2030-12-25'),
+                    ['nl' => 'Kerstmis']
+                ),
+            ]
         );
 
         $this->assertSame(
             '<p class="cf-openinghours">Alle dagen open</p> '
-            . '<details class="cf-exceptions"> '
+            . '<details class="cf-adjusted-days"> '
             . '<summary>Behalve tijdens</summary> '
             . '<ul class="list-unstyled"> '
             . '<li> '
             . '<span class="cf-date">Zaterdag 2 november 2030</span> '
             . '<span class="cf-description">Herfstvakantie</span> '
+            . '</li> </ul> </details> '
+            . '<details class="cf-closed-days"> '
+            . '<summary>Gesloten</summary> '
+            . '<ul class="list-unstyled"> '
+            . '<li> '
+            . '<span class="cf-date">Woensdag 25 december 2030</span> '
+            . '<span class="cf-description">Kerstmis</span> '
             . '</li> </ul> </details>',
             $this->formatter->format($place, 'xl')
         );
 
-        // The large format does not know about adjusted days.
+        // The large format does not know about adjusted or closed days.
         $this->assertSame(
             '<p class="cf-openinghours">Alle dagen open</p>',
             $this->formatter->format($place, 'lg')

@@ -9,6 +9,7 @@ use CultuurNet\CalendarSummaryV3\CalendarSummaryTester;
 use CultuurNet\CalendarSummaryV3\Offer\AdjustedDay;
 use CultuurNet\CalendarSummaryV3\Offer\BookingAvailability;
 use CultuurNet\CalendarSummaryV3\Offer\CalendarType;
+use CultuurNet\CalendarSummaryV3\Offer\ClosedDay;
 use CultuurNet\CalendarSummaryV3\Offer\Offer;
 use CultuurNet\CalendarSummaryV3\Offer\OfferType;
 use CultuurNet\CalendarSummaryV3\Offer\OpeningHour;
@@ -187,7 +188,7 @@ final class ExtraLargePeriodicHTMLFormatterTest extends TestCase
             . '<span itemprop="closes" content="17:00" class="cf-to cf-meta">tot</span> '
             . '<span class="cf-time">17:00</span> '
             . '</li> </ul> '
-            . '<details class="cf-exceptions"> '
+            . '<details class="cf-adjusted-days"> '
             . '<summary>Behalve tijdens</summary> '
             . '<ul class="list-unstyled"> '
             . '<li> '
@@ -221,7 +222,7 @@ final class ExtraLargePeriodicHTMLFormatterTest extends TestCase
             . '<span class="cf-date">30 november 2030</span> '
             . '</time> '
             . '</p> '
-            . '<details class="cf-exceptions"> '
+            . '<details class="cf-adjusted-days"> '
             . '<summary>Behalve tijdens</summary> '
             . '<ul class="list-unstyled"> '
             . '<li> '
@@ -247,6 +248,83 @@ final class ExtraLargePeriodicHTMLFormatterTest extends TestCase
                     new DateTimeImmutable('2026-08-03'),
                     new DateTimeImmutable('2026-08-09'),
                     [],
+                    ['nl' => 'Voorbij']
+                ),
+            ]
+        );
+
+        $this->assertEquals(
+            '<p class="cf-period"> '
+            . '<span class="cf-weekday cf-meta">dinsdag</span> '
+            . '<time itemprop="startDate" datetime="2025-11-25"> '
+            . '<span class="cf-date">25 november 2025</span> '
+            . '</time> '
+            . '<span class="cf-to cf-meta">tot en met</span> '
+            . '<span class="cf-weekday cf-meta">zaterdag</span> '
+            . '<time itemprop="endDate" datetime="2030-11-30"> '
+            . '<span class="cf-date">30 november 2030</span> '
+            . '</time> '
+            . '</p>',
+            $this->formatter->format($place)
+        );
+    }
+
+    public function testFormatAPeriodWithClosedDays(): void
+    {
+        $place = $this->availablePlace()
+            ->withOpeningHours([new OpeningHour(['monday'], '08:00', '17:00')])
+            ->withOpeningHoursClosedDays(
+                [
+                    new ClosedDay(
+                        new DateTimeImmutable('2026-12-24'),
+                        new DateTimeImmutable('2027-01-03'),
+                        ['nl' => 'Kerstvakantie']
+                    ),
+                ]
+            );
+
+        $this->assertEquals(
+            '<p class="cf-period"> '
+            . '<span class="cf-weekday cf-meta">dinsdag</span> '
+            . '<time itemprop="startDate" datetime="2025-11-25"> '
+            . '<span class="cf-date">25 november 2025</span> '
+            . '</time> '
+            . '<span class="cf-to cf-meta">tot en met</span> '
+            . '<span class="cf-weekday cf-meta">zaterdag</span> '
+            . '<time itemprop="endDate" datetime="2030-11-30"> '
+            . '<span class="cf-date">30 november 2030</span> '
+            . '</time> '
+            . '</p> '
+            . '<p class="cf-openinghours">Open op:</p> '
+            . '<ul class="list-unstyled"> '
+            . '<meta itemprop="openingHours" datetime="Ma 8:00-17:00"> </meta> '
+            . '<li itemprop="openingHoursSpecification"> '
+            . '<span class="cf-days">Maandag</span> '
+            . '<span itemprop="opens" content="8:00" class="cf-from cf-meta">van</span> '
+            . '<span class="cf-time">8:00</span> '
+            . '<span itemprop="closes" content="17:00" class="cf-to cf-meta">tot</span> '
+            . '<span class="cf-time">17:00</span> '
+            . '</li> </ul> '
+            . '<details class="cf-closed-days"> '
+            . '<summary>Gesloten</summary> '
+            . '<ul class="list-unstyled"> '
+            . '<li> '
+            . '<span class="cf-date">Donderdag 24 december 2026</span> '
+            . '<span class="cf-to cf-meta">tot en met</span> '
+            . '<span class="cf-date">zondag 3 januari 2027</span> '
+            . '<span class="cf-description">Kerstvakantie</span> '
+            . '</li> </ul> </details>',
+            $this->formatter->format($place)
+        );
+    }
+
+    public function testItSkipsClosedDaysThatHavePassed(): void
+    {
+        $place = $this->availablePlace()->withOpeningHoursClosedDays(
+            [
+                new ClosedDay(
+                    new DateTimeImmutable('2026-08-03'),
+                    new DateTimeImmutable('2026-08-09'),
                     ['nl' => 'Voorbij']
                 ),
             ]

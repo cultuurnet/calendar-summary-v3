@@ -9,6 +9,7 @@ use CultuurNet\CalendarSummaryV3\CalendarSummaryTester;
 use CultuurNet\CalendarSummaryV3\Offer\AdjustedDay;
 use CultuurNet\CalendarSummaryV3\Offer\BookingAvailability;
 use CultuurNet\CalendarSummaryV3\Offer\CalendarType;
+use CultuurNet\CalendarSummaryV3\Offer\ClosedDay;
 use CultuurNet\CalendarSummaryV3\Offer\Offer;
 use CultuurNet\CalendarSummaryV3\Offer\OfferType;
 use CultuurNet\CalendarSummaryV3\Offer\OpeningHour;
@@ -215,7 +216,7 @@ final class ExtraLargePermanentHTMLFormatterTest extends TestCase
             . '<span class="cf-days">Zondag</span> '
             . '<span itemprop="closed" content="closed" class="cf-closed cf-meta">gesloten</span> '
             . '</li> </ul> '
-            . '<details class="cf-exceptions"> '
+            . '<details class="cf-adjusted-days"> '
             . '<summary>Behalve tijdens</summary> '
             . '<ul class="list-unstyled"> '
             . '<li> '
@@ -239,7 +240,7 @@ final class ExtraLargePermanentHTMLFormatterTest extends TestCase
 
         $this->assertEquals(
             '<p class="cf-openinghours">Alle dagen open</p> '
-            . '<details class="cf-exceptions"> '
+            . '<details class="cf-adjusted-days"> '
             . '<summary>Behalve tijdens</summary> '
             . '<ul class="list-unstyled"> '
             . '<li> '
@@ -263,7 +264,7 @@ final class ExtraLargePermanentHTMLFormatterTest extends TestCase
 
         $this->assertEquals(
             '<p class="cf-openinghours">Ouvert tous les jours</p> '
-            . '<details class="cf-exceptions"> '
+            . '<details class="cf-adjusted-days"> '
             . '<summary>Sauf pendant</summary> '
             . '<ul class="list-unstyled"> '
             . '<li> '
@@ -295,7 +296,7 @@ final class ExtraLargePermanentHTMLFormatterTest extends TestCase
 
         $this->assertEquals(
             '<p class="cf-openinghours">Alle dagen open</p> '
-            . '<details class="cf-exceptions"> '
+            . '<details class="cf-adjusted-days"> '
             . '<summary>Behalve tijdens</summary> '
             . '<ul class="list-unstyled"> '
             . '<li> '
@@ -329,7 +330,7 @@ final class ExtraLargePermanentHTMLFormatterTest extends TestCase
 
         $this->assertEquals(
             '<p class="cf-openinghours">Alle dagen open</p> '
-            . '<details class="cf-exceptions"> '
+            . '<details class="cf-adjusted-days"> '
             . '<summary>Behalve tijdens</summary> '
             . '<ul class="list-unstyled"> '
             . '<li> '
@@ -366,7 +367,7 @@ final class ExtraLargePermanentHTMLFormatterTest extends TestCase
 
         $this->assertEquals(
             '<p class="cf-openinghours">Alle dagen open</p> '
-            . '<details class="cf-exceptions"> '
+            . '<details class="cf-adjusted-days"> '
             . '<summary>Behalve tijdens</summary> '
             . '<ul class="list-unstyled"> '
             . '<li> '
@@ -398,7 +399,7 @@ final class ExtraLargePermanentHTMLFormatterTest extends TestCase
 
         $this->assertEquals(
             '<p class="cf-openinghours">Alle dagen open</p> '
-            . '<details class="cf-exceptions"> '
+            . '<details class="cf-adjusted-days"> '
             . '<summary>Behalve tijdens</summary> '
             . '<ul class="list-unstyled"> '
             . '<li> '
@@ -426,7 +427,7 @@ final class ExtraLargePermanentHTMLFormatterTest extends TestCase
 
         $this->assertEquals(
             '<p class="cf-openinghours">Alle dagen open</p> '
-            . '<details class="cf-exceptions"> '
+            . '<details class="cf-adjusted-days"> '
             . '<summary>Behalve tijdens</summary> '
             . '<ul class="list-unstyled"> '
             . '<li> '
@@ -457,7 +458,7 @@ final class ExtraLargePermanentHTMLFormatterTest extends TestCase
 
         $this->assertEquals(
             '<p class="cf-openinghours">Alle dagen open</p> '
-            . '<details class="cf-exceptions"> '
+            . '<details class="cf-adjusted-days"> '
             . '<summary>Behalve tijdens</summary> '
             . '<ul class="list-unstyled"> '
             . '<li> '
@@ -506,7 +507,7 @@ final class ExtraLargePermanentHTMLFormatterTest extends TestCase
 
         $this->assertEquals(
             '<p class="cf-openinghours">Alle dagen open</p> '
-            . '<details class="cf-exceptions"> '
+            . '<details class="cf-adjusted-days"> '
             . '<summary>Behalve tijdens</summary> '
             . '<ul class="list-unstyled"> '
             . '<li> '
@@ -516,6 +517,172 @@ final class ExtraLargePermanentHTMLFormatterTest extends TestCase
             . '<span class="cf-description">Loopt vandaag af</span> '
             . '</li> </ul> </details>',
             $this->formatter->format($place)
+        );
+    }
+
+    public function testFormatClosedDays(): void
+    {
+        $place = $this->availablePlace()->withOpeningHoursClosedDays([$this->christmasHoliday()]);
+
+        $this->assertEquals(
+            '<p class="cf-openinghours">Alle dagen open</p> '
+            . '<details class="cf-closed-days"> '
+            . '<summary>Gesloten</summary> '
+            . '<ul class="list-unstyled"> '
+            . '<li> '
+            . '<span class="cf-date">Donderdag 24 december 2026</span> '
+            . '<span class="cf-to cf-meta">tot en met</span> '
+            . '<span class="cf-date">zondag 3 januari 2027</span> '
+            . '<span class="cf-description">Kerstvakantie</span> '
+            . '</li> </ul> </details>',
+            $this->formatter->format($place)
+        );
+    }
+
+    public function testFormatClosedDaysInFrench(): void
+    {
+        $place = $this->availablePlace()->withOpeningHoursClosedDays([$this->christmasHoliday()]);
+
+        $this->assertEquals(
+            '<p class="cf-openinghours">Ouvert tous les jours</p> '
+            . '<details class="cf-closed-days"> '
+            . '<summary>Fermé</summary> '
+            . '<ul class="list-unstyled"> '
+            . '<li> '
+            . '<span class="cf-date">Jeudi 24 décembre 2026</span> '
+            . '<span class="cf-to cf-meta">au</span> '
+            . '<span class="cf-date">dimanche 3 janvier 2027</span> '
+            . '</li> </ul> </details>',
+            (new ExtraLargePermanentHTMLFormatter(new Translator('fr_BE')))->format($place)
+        );
+    }
+
+    public function testFormatClosedDaysForASingleDay(): void
+    {
+        $place = $this->availablePlace()->withOpeningHoursClosedDays(
+            [
+                new ClosedDay(
+                    new DateTimeImmutable('2026-12-25'),
+                    new DateTimeImmutable('2026-12-25'),
+                    ['nl' => 'Kerstmis']
+                ),
+            ]
+        );
+
+        $this->assertEquals(
+            '<p class="cf-openinghours">Alle dagen open</p> '
+            . '<details class="cf-closed-days"> '
+            . '<summary>Gesloten</summary> '
+            . '<ul class="list-unstyled"> '
+            . '<li> '
+            . '<span class="cf-date">Vrijdag 25 december 2026</span> '
+            . '<span class="cf-description">Kerstmis</span> '
+            . '</li> </ul> </details>',
+            $this->formatter->format($place)
+        );
+    }
+
+    public function testItRendersMultipleClosedDays(): void
+    {
+        $place = $this->availablePlace()->withOpeningHoursClosedDays(
+            [
+                $this->christmasHoliday(),
+                new ClosedDay(
+                    new DateTimeImmutable('2027-04-05'),
+                    new DateTimeImmutable('2027-04-18'),
+                    ['nl' => 'Paasvakantie']
+                ),
+            ]
+        );
+
+        $this->assertEquals(
+            '<p class="cf-openinghours">Alle dagen open</p> '
+            . '<details class="cf-closed-days"> '
+            . '<summary>Gesloten</summary> '
+            . '<ul class="list-unstyled"> '
+            . '<li> '
+            . '<span class="cf-date">Donderdag 24 december 2026</span> '
+            . '<span class="cf-to cf-meta">tot en met</span> '
+            . '<span class="cf-date">zondag 3 januari 2027</span> '
+            . '<span class="cf-description">Kerstvakantie</span> '
+            . '</li> '
+            . '<li> '
+            . '<span class="cf-date">Maandag 5 april 2027</span> '
+            . '<span class="cf-to cf-meta">tot en met</span> '
+            . '<span class="cf-date">zondag 18 april 2027</span> '
+            . '<span class="cf-description">Paasvakantie</span> '
+            . '</li> </ul> </details>',
+            $this->formatter->format($place)
+        );
+    }
+
+    public function testItSkipsClosedDaysThatHavePassed(): void
+    {
+        $place = $this->availablePlace()->withOpeningHoursClosedDays(
+            [
+                new ClosedDay(
+                    new DateTimeImmutable('2026-08-03'),
+                    new DateTimeImmutable('2026-08-09'),
+                    ['nl' => 'Voorbij']
+                ),
+            ]
+        );
+
+        $this->assertEquals(
+            '<p class="cf-openinghours">Alle dagen open</p>',
+            $this->formatter->format($place)
+        );
+    }
+
+    public function testItRendersTheClosedDaysAfterTheAdjustedDays(): void
+    {
+        $place = $this->availablePlace()
+            ->withOpeningHoursAdjustedDays([$this->autumnHoliday()])
+            ->withOpeningHoursClosedDays([$this->christmasHoliday()]);
+
+        $this->assertEquals(
+            '<p class="cf-openinghours">Alle dagen open</p> '
+            . '<details class="cf-adjusted-days"> '
+            . '<summary>Behalve tijdens</summary> '
+            . '<ul class="list-unstyled"> '
+            . '<li> '
+            . '<span class="cf-date">Maandag 2 november 2026</span> '
+            . '<span class="cf-to cf-meta">tot en met</span> '
+            . '<span class="cf-date">zaterdag 7 november 2026</span> '
+            . '<span class="cf-days">Maandag - donderdag</span> '
+            . '<span class="cf-from cf-meta">van</span> '
+            . '<span class="cf-time">9:00</span> '
+            . '<span class="cf-to cf-meta">tot</span> '
+            . '<span class="cf-time">16:00</span> '
+            . '<span class="cf-description">Herfstvakantie</span> '
+            . '</li> </ul> </details> '
+            . '<details class="cf-closed-days"> '
+            . '<summary>Gesloten</summary> '
+            . '<ul class="list-unstyled"> '
+            . '<li> '
+            . '<span class="cf-date">Donderdag 24 december 2026</span> '
+            . '<span class="cf-to cf-meta">tot en met</span> '
+            . '<span class="cf-date">zondag 3 januari 2027</span> '
+            . '<span class="cf-description">Kerstvakantie</span> '
+            . '</li> </ul> </details>',
+            $this->formatter->format($place)
+        );
+    }
+
+    public function testItDoesNotRenderClosedDaysForAnUnavailablePermanent(): void
+    {
+        $event = (new Offer(
+            OfferType::event(),
+            new Status('Unavailable', []),
+            new BookingAvailability('Available'),
+            null,
+            null,
+            CalendarType::permanent()
+        ))->withOpeningHoursClosedDays([$this->christmasHoliday()]);
+
+        $this->assertEquals(
+            '<p class="cf-status">Geannuleerd</p>',
+            $this->formatter->format($event)
         );
     }
 
@@ -555,6 +722,15 @@ final class ExtraLargePermanentHTMLFormatterTest extends TestCase
             new DateTimeImmutable('2026-11-07'),
             [new OpeningHour(['monday', 'tuesday', 'wednesday', 'thursday'], '09:00', '16:00')],
             ['nl' => 'Herfstvakantie']
+        );
+    }
+
+    private function christmasHoliday(): ClosedDay
+    {
+        return new ClosedDay(
+            new DateTimeImmutable('2026-12-24'),
+            new DateTimeImmutable('2027-01-03'),
+            ['nl' => 'Kerstvakantie']
         );
     }
 }

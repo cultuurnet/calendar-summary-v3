@@ -115,7 +115,7 @@ final class OfferTest extends TestCase
         $this->assertEquals($expected, Offer::fromJsonLd($jsonLd));
     }
 
-    public function testCanParseOpeningHoursAdjustedDays(): void
+    public function testCanParseOpeningHoursAdjustedAndClosedDays(): void
     {
         $jsonLd = file_get_contents(__DIR__ . '/data/offer-with-adjusted-days.json');
 
@@ -163,15 +163,26 @@ final class OfferTest extends TestCase
                         ['nl' => 'Herfstvakantie']
                     ),
                 ]
+            )
+            ->withOpeningHoursClosedDays(
+                [
+                    new ClosedDay(
+                        new DateTimeImmutable('2026-12-24'),
+                        new DateTimeImmutable('2027-01-03'),
+                        ['nl' => 'Kerstvakantie']
+                    ),
+                ]
             );
 
         $this->assertEquals($expected, Offer::fromJsonLd($jsonLd));
     }
 
-    public function testHasNoAdjustedDaysWhenTheyAreAbsent(): void
+    public function testHasNoAdjustedOrClosedDaysWhenTheyAreAbsent(): void
     {
         $jsonLd = file_get_contents(__DIR__ . '/data/offer-with-opening-hours.json');
+        $offer = Offer::fromJsonLd($jsonLd);
 
-        $this->assertEquals([], Offer::fromJsonLd($jsonLd)->getOpeningHoursAdjustedDays());
+        $this->assertEquals([], $offer->getOpeningHoursAdjustedDays());
+        $this->assertEquals([], $offer->getOpeningHoursClosedDays());
     }
 }
