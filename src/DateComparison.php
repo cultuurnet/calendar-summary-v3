@@ -52,4 +52,13 @@ final class DateComparison
         $now = new CarbonImmutable();
         return $date > $now;
     }
+
+    /**
+     * Unlike isInTheFuture() this ignores the time of day, so a date-only value
+     * for today is not considered to be in the past.
+     */
+    public static function isPastDay(DateTimeImmutable $date): bool
+    {
+        return CarbonImmutable::instance($date)->endOfDay() < new CarbonImmutable();
+    }
 }

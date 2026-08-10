@@ -49,6 +49,11 @@ final class Offer
      */
     private $openingHours = [];
 
+    /**
+     * @var AdjustedDay[]
+     */
+    private $openingHoursAdjustedDays = [];
+
     public function __construct(
         OfferType $offerType,
         Status $status,
@@ -86,6 +91,12 @@ final class Offer
             $offer = $offer->withOpeningHours(self::parseOpeningHours($data['openingHours']));
         }
 
+        if (isset($data['openingHoursAdjustedDays'])) {
+            $offer = $offer->withOpeningHoursAdjustedDays(
+                self::parseOpeningHoursAdjustedDays($data['openingHoursAdjustedDays'])
+            );
+        }
+
         return $offer;
     }
 
@@ -115,14 +126,23 @@ final class Offer
     {
         $openingHours = [];
         foreach ($data as $openingHourData) {
-            $openingHours[] = new OpeningHour(
-                $openingHourData['dayOfWeek'],
-                $openingHourData['opens'],
-                $openingHourData['closes']
-            );
+            $openingHours[] = OpeningHour::fromArray($openingHourData);
         }
 
         return $openingHours;
+    }
+
+    /**
+     * @return AdjustedDay[]
+     */
+    private static function parseOpeningHoursAdjustedDays(array $data): array
+    {
+        $adjustedDays = [];
+        foreach ($data as $adjustedDayData) {
+            $adjustedDays[] = AdjustedDay::fromArray($adjustedDayData);
+        }
+
+        return $adjustedDays;
     }
 
     /**
@@ -165,6 +185,17 @@ final class Offer
 
         $clone = clone $this;
         $clone->openingHours = $individualOpeningHours;
+
+        return $clone;
+    }
+
+    /**
+     * @param AdjustedDay[] $adjustedDays
+     */
+    public function withOpeningHoursAdjustedDays(array $adjustedDays): self
+    {
+        $clone = clone $this;
+        $clone->openingHoursAdjustedDays = $adjustedDays;
 
         return $clone;
     }
@@ -233,5 +264,13 @@ final class Offer
     public function getOpeningHours(): array
     {
         return $this->openingHours;
+    }
+
+    /**
+     * @return AdjustedDay[]
+     */
+    public function getOpeningHoursAdjustedDays(): array
+    {
+        return $this->openingHoursAdjustedDays;
     }
 }

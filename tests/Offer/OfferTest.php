@@ -114,4 +114,64 @@ final class OfferTest extends TestCase
 
         $this->assertEquals($expected, Offer::fromJsonLd($jsonLd));
     }
+
+    public function testCanParseOpeningHoursAdjustedDays(): void
+    {
+        $jsonLd = file_get_contents(__DIR__ . '/data/offer-with-adjusted-days.json');
+
+        $expected = new Offer(
+            OfferType::event(),
+            new Status('Available', []),
+            new BookingAvailability('Available'),
+            null,
+            null,
+            CalendarType::permanent()
+        );
+
+        $expected = $expected
+            ->withOpeningHours(
+                [
+                    new OpeningHour(
+                        [
+                            'monday',
+                            'tuesday',
+                            'wednesday',
+                            'thursday',
+                        ],
+                        '08:00',
+                        '17:00'
+                    ),
+                ]
+            )
+            ->withOpeningHoursAdjustedDays(
+                [
+                    new AdjustedDay(
+                        new DateTimeImmutable('2026-11-02'),
+                        new DateTimeImmutable('2026-11-07'),
+                        [
+                            new OpeningHour(
+                                [
+                                    'monday',
+                                    'tuesday',
+                                    'wednesday',
+                                    'thursday',
+                                ],
+                                '09:00',
+                                '16:00'
+                            ),
+                        ],
+                        ['nl' => 'Herfstvakantie']
+                    ),
+                ]
+            );
+
+        $this->assertEquals($expected, Offer::fromJsonLd($jsonLd));
+    }
+
+    public function testHasNoAdjustedDaysWhenTheyAreAbsent(): void
+    {
+        $jsonLd = file_get_contents(__DIR__ . '/data/offer-with-opening-hours.json');
+
+        $this->assertEquals([], Offer::fromJsonLd($jsonLd)->getOpeningHoursAdjustedDays());
+    }
 }

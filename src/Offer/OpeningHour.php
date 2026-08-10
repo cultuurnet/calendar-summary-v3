@@ -51,6 +51,15 @@ final class OpeningHour
         $this->closes = $closes;
     }
 
+    public static function fromArray(array $data): self
+    {
+        return new self(
+            $data['dayOfWeek'],
+            $data['opens'],
+            $data['closes']
+        );
+    }
+
     /**
      * @return string[]
      */
