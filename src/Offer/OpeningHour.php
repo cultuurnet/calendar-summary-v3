@@ -34,12 +34,18 @@ final class OpeningHour
     private $closes;
 
     /**
+     * @var Childcare|null
+     */
+    private $childcare;
+
+    /**
      * @param string[] $daysOfWeek
      */
     public function __construct(
         array $daysOfWeek,
         string $opens,
-        string $closes
+        string $closes,
+        ?Childcare $childcare = null
     ) {
         foreach ($daysOfWeek as $day) {
             if (!in_array($day, self::ALLOWED_DAYS)) {
@@ -49,6 +55,7 @@ final class OpeningHour
         $this->daysOfWeek = $daysOfWeek;
         $this->opens = $opens;
         $this->closes = $closes;
+        $this->childcare = $childcare;
     }
 
     public static function fromArray(array $data): self
@@ -56,8 +63,19 @@ final class OpeningHour
         return new self(
             $data['dayOfWeek'],
             $data['opens'],
-            $data['closes']
+            $data['closes'],
+            self::parseChildcare($data)
         );
+    }
+
+    private static function parseChildcare(array $data): ?Childcare
+    {
+        // Childcare needs at least a start or an end, anything else counts as no childcare.
+        if (!isset($data['childcare']['start']) && !isset($data['childcare']['end'])) {
+            return null;
+        }
+
+        return Childcare::fromArray($data['childcare']);
     }
 
     /**
@@ -76,5 +94,10 @@ final class OpeningHour
     public function getCloses(): string
     {
         return $this->closes;
+    }
+
+    public function getChildcare(): ?Childcare
+    {
+        return $this->childcare;
     }
 }

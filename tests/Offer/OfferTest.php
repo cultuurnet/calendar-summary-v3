@@ -139,7 +139,8 @@ final class OfferTest extends TestCase
                             'thursday',
                         ],
                         '08:00',
-                        '17:00'
+                        '17:00',
+                        new Childcare('07:00', '18:00')
                     ),
                 ]
             )

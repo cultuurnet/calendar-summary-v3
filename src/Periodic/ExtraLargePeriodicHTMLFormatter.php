@@ -4,9 +4,11 @@ declare(strict_types=1);
 
 namespace CultuurNet\CalendarSummaryV3\Periodic;
 
+use CultuurNet\CalendarSummaryV3\ChildcareFormatter;
 use CultuurNet\CalendarSummaryV3\DateFormatter;
 use CultuurNet\CalendarSummaryV3\HtmlAvailabilityFormatter;
 use CultuurNet\CalendarSummaryV3\HtmlOpeningHoursExceptionsFormatter;
+use CultuurNet\CalendarSummaryV3\Offer\Childcare;
 use CultuurNet\CalendarSummaryV3\Offer\OpeningHour;
 use CultuurNet\CalendarSummaryV3\OpeningHourFormatter;
 use CultuurNet\CalendarSummaryV3\Translator;
@@ -30,11 +32,17 @@ final class ExtraLargePeriodicHTMLFormatter implements PeriodicFormatterInterfac
      */
     private $exceptionsFormatter;
 
+    /**
+     * @var ChildcareFormatter
+     */
+    private $childcareFormatter;
+
     public function __construct(Translator $translator)
     {
         $this->formatter = new DateFormatter($translator->getLocale());
         $this->translator = $translator;
         $this->exceptionsFormatter = new HtmlOpeningHoursExceptionsFormatter($translator);
+        $this->childcareFormatter = new ChildcareFormatter($translator);
     }
 
     public function format(Offer $offer): string
@@ -139,12 +147,17 @@ final class ExtraLargePeriodicHTMLFormatter implements PeriodicFormatterInterfac
         // Create an array with formatted timespans.
         $formattedTimespans = [];
 
+        // When every day has the same childcare it is summarized in a single list item
+        // instead of being repeated on every day.
+        $sharedChildcare = Childcare::sharedByAll($openingHoursData);
+
         foreach ($openingHoursData as $openingHours) {
             $daysOfWeek = $openingHours->getDaysOfWeek();
             $firstOpens = OpeningHourFormatter::format($this->getEarliestTime($openingHoursData, $daysOfWeek));
             $lastCloses = OpeningHourFormatter::format($this->getLatestTime($openingHoursData, $daysOfWeek));
             $opens = OpeningHourFormatter::format($openingHours->getOpens());
             $closes = OpeningHourFormatter::format($openingHours->getCloses());
+            $childcare = $sharedChildcare === null ? $this->generateChildcare($openingHours) : '';
 
             foreach ($daysOfWeek as $dayOfWeek) {
                 $daySpanShort = ucfirst(
@@ -165,7 +178,8 @@ final class ExtraLargePeriodicHTMLFormatter implements PeriodicFormatterInterfac
                         . "<span class=\"cf-time\">$opens</span> "
                         . "<span itemprop=\"closes\" content=\"$closes\" class=\"cf-to cf-meta\">"
                         . $this->translator->translate('till_hour') . '</span> '
-                        . "<span class=\"cf-time\">$closes</span>";
+                        . "<span class=\"cf-time\">$closes</span>"
+                        . $childcare;
                 } else {
                     $formattedTimespans[$dayOfWeek] .=
                         "<span itemprop=\"opens\" content=\"$opens\" class=\"cf-from cf-meta\">"
@@ -174,7 +188,8 @@ final class ExtraLargePeriodicHTMLFormatter implements PeriodicFormatterInterfac
                         . "<span class=\"cf-time\">$opens</span> "
                         . "<span itemprop=\"closes\" content=\"$closes\" class=\"cf-to cf-meta\">"
                         . $this->translator->translate('till_hour') . '</span> '
-                        . "<span class=\"cf-time\">$closes</span>";
+                        . "<span class=\"cf-time\">$closes</span>"
+                        . $childcare;
                 }
             }
         }
@@ -183,6 +198,26 @@ final class ExtraLargePeriodicHTMLFormatter implements PeriodicFormatterInterfac
         foreach ($formattedTimespans as $formattedTimespan) {
             $outputWeek .= $formattedTimespan . '</li>';
         }
+
+        if ($sharedChildcare !== null) {
+            $outputWeek .= '<li class="cf-childcare">'
+                . $this->childcareFormatter->formatForEveryDay($sharedChildcare)
+                . '</li>';
+        }
+
         return $outputWeek . '</ul>';
+    }
+
+    private function generateChildcare(OpeningHour $openingHours): string
+    {
+        $childcare = $openingHours->getChildcare();
+
+        if ($childcare === null) {
+            return '';
+        }
+
+        return ' <span class="cf-childcare">'
+            . $this->childcareFormatter->formatBetweenParentheses($childcare)
+            . '</span>';
     }
 }

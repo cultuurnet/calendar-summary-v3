@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace CultuurNet\CalendarSummaryV3;
 
 use CultuurNet\CalendarSummaryV3\Offer\AdjustedDay;
+use CultuurNet\CalendarSummaryV3\Offer\Childcare;
 use CultuurNet\CalendarSummaryV3\Offer\ClosedDay;
 use CultuurNet\CalendarSummaryV3\Offer\OpeningHour;
 use CultuurNet\CalendarSummaryV3\Offer\OpeningHoursPeriod;
@@ -28,10 +29,16 @@ final class HtmlOpeningHoursExceptionsFormatter
      */
     private $translator;
 
+    /**
+     * @var ChildcareFormatter
+     */
+    private $childcareFormatter;
+
     public function __construct(Translator $translator)
     {
         $this->formatter = new DateFormatter($translator->getLocale());
         $this->translator = $translator;
+        $this->childcareFormatter = new ChildcareFormatter($translator);
     }
 
     /**
@@ -115,8 +122,18 @@ final class HtmlOpeningHoursExceptionsFormatter
                 . '</span>';
         }
 
+        // When every day of this period has the same childcare it is mentioned once
+        // instead of being repeated after every timespan.
+        $sharedChildcare = Childcare::sharedByAll($openingHours);
+
         foreach ($openingHours as $openingHour) {
-            $output .= $this->generateOpeningHours($openingHour);
+            $output .= $this->generateOpeningHours($openingHour, $sharedChildcare === null);
+        }
+
+        if ($sharedChildcare !== null) {
+            $output .= '<span class="cf-childcare">'
+                . $this->childcareFormatter->formatForEveryDay($sharedChildcare)
+                . '</span>';
         }
 
         $description = $period->getDescriptionForLanguage($this->translator->getLanguageCode());
@@ -127,16 +144,25 @@ final class HtmlOpeningHoursExceptionsFormatter
         return $output . '</li>';
     }
 
-    private function generateOpeningHours(OpeningHour $openingHours): string
+    private function generateOpeningHours(OpeningHour $openingHours, bool $withChildcare): string
     {
         $opens = OpeningHourFormatter::format($openingHours->getOpens());
         $closes = OpeningHourFormatter::format($openingHours->getCloses());
+        $childcare = $openingHours->getChildcare();
 
-        return '<span class="cf-days">' . $this->generateDaysOfWeek($openingHours->getDaysOfWeek()) . '</span>'
+        $output = '<span class="cf-days">' . $this->generateDaysOfWeek($openingHours->getDaysOfWeek()) . '</span>'
             . '<span class="cf-from cf-meta">' . $this->translator->translate('from_hour') . '</span>'
             . '<span class="cf-time">' . $opens . '</span>'
             . '<span class="cf-to cf-meta">' . $this->translator->translate('till_hour') . '</span>'
             . '<span class="cf-time">' . $closes . '</span>';
+
+        if ($withChildcare && $childcare !== null) {
+            $output .= '<span class="cf-childcare">'
+                . $this->childcareFormatter->formatBetweenParentheses($childcare)
+                . '</span>';
+        }
+
+        return $output;
     }
 
     /**

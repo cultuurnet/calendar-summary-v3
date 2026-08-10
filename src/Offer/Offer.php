@@ -192,7 +192,8 @@ final class Offer
                 $individualOpeningHours[] = new OpeningHour(
                     [$dayOfWeek],
                     $openingHour->getOpens(),
-                    $openingHour->getCloses()
+                    $openingHour->getCloses(),
+                    $openingHour->getChildcare()
                 );
             }
         }
