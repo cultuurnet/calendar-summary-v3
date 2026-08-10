@@ -38,6 +38,7 @@ final class Translator
                 'to' => 'to',
                 'open_every' => 'Open every',
                 'open_every_end' => '',
+                'except_during' => 'Except during',
             ],
             'nl' => [
                 'from' => 'van',
@@ -65,6 +66,7 @@ final class Translator
                 'to' => 'tot en met',
                 'open_every' => 'Elke',
                 'open_every_end' => 'open',
+                'except_during' => 'Behalve tijdens',
             ],
             'fr' => [
                 'from' => 'du',
@@ -92,6 +94,7 @@ final class Translator
                 'to' => 'à',
                 'open_every' => 'Ouvert chaque',
                 'open_every_end' => '',
+                'except_during' => 'Sauf pendant',
             ],
             'de' => [
                 'from' => 'von',
@@ -119,6 +122,7 @@ final class Translator
                 'to' => 'bis',
                 'open_every' => 'Jeden',
                 'open_every_end' => 'geöffnet',
+                'except_during' => 'Außer während',
             ],
         ];
 
