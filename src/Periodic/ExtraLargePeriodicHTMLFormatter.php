@@ -32,17 +32,11 @@ final class ExtraLargePeriodicHTMLFormatter implements PeriodicFormatterInterfac
      */
     private $exceptionsFormatter;
 
-    /**
-     * @var ChildcareFormatter
-     */
-    private $childcareFormatter;
-
     public function __construct(Translator $translator)
     {
         $this->formatter = new DateFormatter($translator->getLocale());
         $this->translator = $translator;
         $this->exceptionsFormatter = new HtmlOpeningHoursExceptionsFormatter($translator);
-        $this->childcareFormatter = new ChildcareFormatter($translator);
     }
 
     public function format(Offer $offer): string
@@ -201,7 +195,10 @@ final class ExtraLargePeriodicHTMLFormatter implements PeriodicFormatterInterfac
 
         if ($sharedChildcare !== null) {
             $outputWeek .= '<li class="cf-childcare">'
-                . $this->childcareFormatter->formatForEveryDay($sharedChildcare)
+                . ChildcareFormatter::forChildcare($sharedChildcare, $this->translator)
+                    ->forEveryDay()
+                    ->capitalize()
+                    ->toString()
                 . '</li>';
         }
 
@@ -217,7 +214,9 @@ final class ExtraLargePeriodicHTMLFormatter implements PeriodicFormatterInterfac
         }
 
         return ' <span class="cf-childcare">'
-            . $this->childcareFormatter->formatBetweenParentheses($childcare)
+            . ChildcareFormatter::forChildcare($childcare, $this->translator)
+                ->withBraces()
+                ->toString()
             . '</span>';
     }
 }

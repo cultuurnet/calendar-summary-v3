@@ -29,16 +29,10 @@ final class HtmlOpeningHoursExceptionsFormatter
      */
     private $translator;
 
-    /**
-     * @var ChildcareFormatter
-     */
-    private $childcareFormatter;
-
     public function __construct(Translator $translator)
     {
         $this->formatter = new DateFormatter($translator->getLocale());
         $this->translator = $translator;
-        $this->childcareFormatter = new ChildcareFormatter($translator);
     }
 
     /**
@@ -132,7 +126,10 @@ final class HtmlOpeningHoursExceptionsFormatter
 
         if ($sharedChildcare !== null) {
             $output .= '<span class="cf-childcare">'
-                . $this->childcareFormatter->formatForEveryDay($sharedChildcare)
+                . ChildcareFormatter::forChildcare($sharedChildcare, $this->translator)
+                    ->forEveryDay()
+                    ->capitalize()
+                    ->toString()
                 . '</span>';
         }
 
@@ -158,7 +155,9 @@ final class HtmlOpeningHoursExceptionsFormatter
 
         if ($withChildcare && $childcare !== null) {
             $output .= '<span class="cf-childcare">'
-                . $this->childcareFormatter->formatBetweenParentheses($childcare)
+                . ChildcareFormatter::forChildcare($childcare, $this->translator)
+                    ->withBraces()
+                    ->toString()
                 . '</span>';
         }
 

@@ -13,31 +13,92 @@ final class ChildcareFormatter
      */
     private $translator;
 
-    public function __construct(Translator $translator)
+    /**
+     * @var Childcare
+     */
+    private $childcare;
+
+    /**
+     * @var bool
+     */
+    private $forEveryDay = false;
+
+    /**
+     * @var bool
+     */
+    private $withBraces = false;
+
+    /**
+     * @var bool
+     */
+    private $capitalize = false;
+
+    private function __construct(Translator $translator)
     {
         $this->translator = $translator;
     }
 
-    /**
-     * Used when every day has the same childcare, e.g. 'Elke dag opvang van 8:00 tot 18:00'.
-     */
-    public function formatForEveryDay(Childcare $childcare): string
+    public static function forChildcare(Childcare $childcare, Translator $translator): self
     {
-        return ucfirst($this->translator->translate('every_day')) . ' ' . $this->format($childcare);
+        $formatter = new self($translator);
+        $formatter->childcare = $childcare;
+        return $formatter;
     }
 
     /**
-     * Used when the childcare differs per day, e.g. '(opvang van 8:00 tot 17:00)'.
+     * Prefixes the childcare with 'elke dag', used when every day has the same childcare.
      */
-    public function formatBetweenParentheses(Childcare $childcare): string
+    public function forEveryDay(): self
     {
-        return '(' . $this->format($childcare) . ')';
+        $c = clone $this;
+        $c->forEveryDay = true;
+        return $c;
     }
 
-    private function format(Childcare $childcare): string
+    public function withBraces(): self
     {
-        $start = $childcare->getStart();
-        $end = $childcare->getEnd();
+        $c = clone $this;
+        $c->withBraces = true;
+        return $c;
+    }
+
+    public function withoutBraces(): self
+    {
+        $c = clone $this;
+        $c->withBraces = false;
+        return $c;
+    }
+
+    public function capitalize(): self
+    {
+        $c = clone $this;
+        $c->capitalize = true;
+        return $c;
+    }
+
+    public function toString(): string
+    {
+        $childcareText = $this->getChildcareText();
+
+        if ($this->forEveryDay) {
+            $childcareText = $this->translator->translate('every_day') . ' ' . $childcareText;
+        }
+
+        if ($this->capitalize) {
+            $childcareText = ucfirst($childcareText);
+        }
+
+        if ($this->withBraces) {
+            $childcareText = '(' . $childcareText . ')';
+        }
+
+        return $childcareText;
+    }
+
+    private function getChildcareText(): string
+    {
+        $start = $this->childcare->getStart();
+        $end = $this->childcare->getEnd();
 
         // Childcare that only happens before the opening hours has no end.
         if ($end === null) {
