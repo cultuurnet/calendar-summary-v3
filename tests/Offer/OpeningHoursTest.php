@@ -124,4 +124,24 @@ final class OpeningHoursTest extends TestCase
 
         $this->assertEquals([$openingHour], iterator_to_array(new OpeningHours([$openingHour])));
     }
+
+    public function testCanBeCounted(): void
+    {
+        $openingHours = new OpeningHours(
+            [
+                new OpeningHour(['monday'], '09:00', '17:00'),
+                new OpeningHour(['tuesday'], '09:00', '17:00'),
+            ]
+        );
+
+        $this->assertCount(2, $openingHours);
+        $this->assertCount(0, new OpeningHours());
+    }
+
+    public function testCanBeConvertedToAnArray(): void
+    {
+        $openingHour = new OpeningHour(['monday'], '09:00', '17:00');
+
+        $this->assertEquals([$openingHour], (new OpeningHours([$openingHour]))->toArray());
+    }
 }

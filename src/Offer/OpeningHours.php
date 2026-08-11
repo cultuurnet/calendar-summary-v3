@@ -5,12 +5,13 @@ declare(strict_types=1);
 namespace CultuurNet\CalendarSummaryV3\Offer;
 
 use ArrayIterator;
+use Countable;
 use IteratorAggregate;
 
 /**
  * @implements IteratorAggregate<int, OpeningHour>
  */
-final class OpeningHours implements IteratorAggregate
+final class OpeningHours implements IteratorAggregate, Countable
 {
     /**
      * @var OpeningHour[]
@@ -126,6 +127,19 @@ final class OpeningHours implements IteratorAggregate
     public function isEmpty(): bool
     {
         return $this->openingHours === [];
+    }
+
+    /**
+     * @return OpeningHour[]
+     */
+    public function toArray(): array
+    {
+        return $this->openingHours;
+    }
+
+    public function count(): int
+    {
+        return count($this->openingHours);
     }
 
     public function getIterator(): ArrayIterator
