@@ -9,7 +9,7 @@ use CultuurNet\CalendarSummaryV3\DateFormatter;
 use CultuurNet\CalendarSummaryV3\HtmlAdjustedDaysFormatter;
 use CultuurNet\CalendarSummaryV3\HtmlAvailabilityFormatter;
 use CultuurNet\CalendarSummaryV3\HtmlClosedDaysFormatter;
-use CultuurNet\CalendarSummaryV3\Offer\OpeningHour;
+use CultuurNet\CalendarSummaryV3\Offer\Childcare;
 use CultuurNet\CalendarSummaryV3\Offer\OpeningHours;
 use CultuurNet\CalendarSummaryV3\OpeningHourFormatter;
 use CultuurNet\CalendarSummaryV3\Translator;
@@ -96,15 +96,28 @@ final class ExtraLargePermanentHTMLFormatter implements PermanentFormatterInterf
         // instead of being repeated on every day.
         $sharedChildcare = $openingHours->sharedChildcare();
 
+        // The childcare of a day is mentioned once after its last timespan, so it is
+        // collected while the timespans are rendered.
+        $childcarePerDay = [];
+
         foreach ($openingHours as $openingHour) {
             $daysOfWeek = $openingHour->getDaysOfWeek();
             $firstOpens = OpeningHourFormatter::format($openingHours->earliestTimeOn($daysOfWeek));
             $lastCloses = OpeningHourFormatter::format($openingHours->latestTimeOn($daysOfWeek));
             $opens = OpeningHourFormatter::format($openingHour->getOpens());
             $closes = OpeningHourFormatter::format($openingHour->getCloses());
-            $childcare = $sharedChildcare === null ? $this->generateChildcare($openingHour) : '';
 
             foreach ($daysOfWeek as $dayOfWeek) {
+                $childcarePerDay[$dayOfWeek] = $sharedChildcare === null
+                    ? $openingHours->onDayOfWeek($dayOfWeek)->sharedChildcare()
+                    : null;
+
+                // Only when the timespans of this day have a different childcare it is
+                // repeated after every single one of them.
+                $childcare = $sharedChildcare === null && $childcarePerDay[$dayOfWeek] === null
+                    ? $this->generateChildcare($openingHour->getChildcare())
+                    : '';
+
                 $daySpanShort = ucfirst($this->formatter->formatAsAbbreviatedDayOfWeek(
                     new DateTimeImmutable($dayOfWeek)
                 ));
@@ -135,6 +148,10 @@ final class ExtraLargePermanentHTMLFormatter implements PermanentFormatterInterf
                         . $childcare;
                 }
             }
+        }
+
+        foreach ($childcarePerDay as $dayOfWeek => $childcareOfDay) {
+            $formattedTimespans[$dayOfWeek] .= $this->generateChildcare($childcareOfDay);
         }
 
         // Create an array with formatted closed days.
@@ -177,10 +194,8 @@ final class ExtraLargePermanentHTMLFormatter implements PermanentFormatterInterf
         return $outputWeek . '</ul>';
     }
 
-    private function generateChildcare(OpeningHour $openingHour): string
+    private function generateChildcare(?Childcare $childcare): string
     {
-        $childcare = $openingHour->getChildcare();
-
         if ($childcare === null) {
             return '';
         }

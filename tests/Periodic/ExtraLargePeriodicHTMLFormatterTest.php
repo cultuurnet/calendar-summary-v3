@@ -430,6 +430,76 @@ final class ExtraLargePeriodicHTMLFormatterTest extends TestCase
         $this->assertStringNotContainsString('cf-childcare">Elke dag', $summary);
     }
 
+    public function testFormatTheChildcareOfADayWithMultipleTimespansOnlyOnce(): void
+    {
+        $place = $this->availablePlace()->withOpeningHours(
+            [
+                new OpeningHour(['monday'], '09:00', '12:00', new Childcare('08:00', '18:00')),
+                new OpeningHour(['monday'], '13:00', '17:00', new Childcare('08:00', '18:00')),
+                new OpeningHour(['tuesday'], '09:00', '16:00'),
+            ]
+        );
+
+        $this->assertEquals(
+            $this->period()
+            . '<p class="cf-openinghours">Open op:</p> '
+            . '<ul class="list-unstyled"> '
+            . '<meta itemprop="openingHours" datetime="Ma 9:00-17:00"> </meta> '
+            . '<li itemprop="openingHoursSpecification"> '
+            . '<span class="cf-days">Maandag</span> '
+            . '<span itemprop="opens" content="9:00" class="cf-from cf-meta">van</span> '
+            . '<span class="cf-time">9:00</span> '
+            . '<span itemprop="closes" content="12:00" class="cf-to cf-meta">tot</span> '
+            . '<span class="cf-time">12:00</span> '
+            . '<span itemprop="opens" content="13:00" class="cf-from cf-meta">en van</span> '
+            . '<span class="cf-time">13:00</span> '
+            . '<span itemprop="closes" content="17:00" class="cf-to cf-meta">tot</span> '
+            . '<span class="cf-time">17:00</span> '
+            . '<span class="cf-childcare">(Opvang van 8:00 tot 18:00)</span> '
+            . '</li> '
+            . '<meta itemprop="openingHours" datetime="Di 9:00-16:00"> </meta> '
+            . '<li itemprop="openingHoursSpecification"> '
+            . '<span class="cf-days">Dinsdag</span> '
+            . '<span itemprop="opens" content="9:00" class="cf-from cf-meta">van</span> '
+            . '<span class="cf-time">9:00</span> '
+            . '<span itemprop="closes" content="16:00" class="cf-to cf-meta">tot</span> '
+            . '<span class="cf-time">16:00</span> '
+            . '</li> </ul>',
+            $this->formatter->format($place)
+        );
+    }
+
+    public function testFormatTheChildcareOfEveryTimespanWhenItDiffersOnTheSameDay(): void
+    {
+        $place = $this->availablePlace()->withOpeningHours(
+            [
+                new OpeningHour(['monday'], '09:00', '12:00', new Childcare('08:00', '13:00')),
+                new OpeningHour(['monday'], '13:00', '17:00', new Childcare('12:00', '18:00')),
+            ]
+        );
+
+        $this->assertEquals(
+            $this->period()
+            . '<p class="cf-openinghours">Open op:</p> '
+            . '<ul class="list-unstyled"> '
+            . '<meta itemprop="openingHours" datetime="Ma 9:00-17:00"> </meta> '
+            . '<li itemprop="openingHoursSpecification"> '
+            . '<span class="cf-days">Maandag</span> '
+            . '<span itemprop="opens" content="9:00" class="cf-from cf-meta">van</span> '
+            . '<span class="cf-time">9:00</span> '
+            . '<span itemprop="closes" content="12:00" class="cf-to cf-meta">tot</span> '
+            . '<span class="cf-time">12:00</span> '
+            . '<span class="cf-childcare">(Opvang van 8:00 tot 13:00)</span> '
+            . '<span itemprop="opens" content="13:00" class="cf-from cf-meta">en van</span> '
+            . '<span class="cf-time">13:00</span> '
+            . '<span itemprop="closes" content="17:00" class="cf-to cf-meta">tot</span> '
+            . '<span class="cf-time">17:00</span> '
+            . '<span class="cf-childcare">(Opvang van 12:00 tot 18:00)</span> '
+            . '</li> </ul>',
+            $this->formatter->format($place)
+        );
+    }
+
     public function testFormatASharedChildcareWithoutAnEnd(): void
     {
         $place = $this->availablePlace()->withOpeningHours(

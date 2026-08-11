@@ -63,6 +63,21 @@ final class OpeningHours implements IteratorAggregate, Countable
     }
 
     /**
+     * Returns the opening hours that apply on the given day of the week.
+     */
+    public function onDayOfWeek(string $dayOfWeek): self
+    {
+        return new self(
+            array_filter(
+                $this->openingHours,
+                static function (OpeningHour $openingHour) use ($dayOfWeek): bool {
+                    return in_array($dayOfWeek, $openingHour->getDaysOfWeek(), true);
+                }
+            )
+        );
+    }
+
+    /**
      * Returns the childcare that every opening hour has in common, or null when they
      * differ or when at least one opening hour has no childcare at all.
      */
@@ -98,7 +113,7 @@ final class OpeningHours implements IteratorAggregate, Countable
     public function earliestTimeOn(array $daysOfWeek): string
     {
         $earliest = '';
-        foreach ($this->onDaysOfWeek($daysOfWeek) as $openingHour) {
+        foreach ($this->withExactlyTheseDaysOfWeek($daysOfWeek) as $openingHour) {
             if ($earliest === '' || $openingHour->getOpens() < $earliest) {
                 $earliest = $openingHour->getOpens();
             }
@@ -115,7 +130,7 @@ final class OpeningHours implements IteratorAggregate, Countable
     public function latestTimeOn(array $daysOfWeek): string
     {
         $latest = '';
-        foreach ($this->onDaysOfWeek($daysOfWeek) as $openingHour) {
+        foreach ($this->withExactlyTheseDaysOfWeek($daysOfWeek) as $openingHour) {
             if ($latest === '' || $openingHour->getCloses() > $latest) {
                 $latest = $openingHour->getCloses();
             }
@@ -151,7 +166,7 @@ final class OpeningHours implements IteratorAggregate, Countable
      * @param string[] $daysOfWeek
      * @return OpeningHour[]
      */
-    private function onDaysOfWeek(array $daysOfWeek): array
+    private function withExactlyTheseDaysOfWeek(array $daysOfWeek): array
     {
         return array_filter(
             $this->openingHours,

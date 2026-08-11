@@ -112,6 +112,25 @@ final class OpeningHoursTest extends TestCase
         );
     }
 
+    public function testOnDayOfWeekKeepsEveryOpeningHourThatAppliesOnThatDay(): void
+    {
+        $mondayMorning = new OpeningHour(['monday'], '09:00', '12:00');
+        $mondayAndTuesday = new OpeningHour(['monday', 'tuesday'], '13:00', '17:00');
+        $openingHours = new OpeningHours(
+            [
+                $mondayMorning,
+                $mondayAndTuesday,
+                new OpeningHour(['wednesday'], '09:00', '17:00'),
+            ]
+        );
+
+        $this->assertEquals(
+            new OpeningHours([$mondayMorning, $mondayAndTuesday]),
+            $openingHours->onDayOfWeek('monday')
+        );
+        $this->assertEquals(new OpeningHours(), $openingHours->onDayOfWeek('sunday'));
+    }
+
     public function testIsEmptyWithoutOpeningHours(): void
     {
         $this->assertTrue((new OpeningHours())->isEmpty());
