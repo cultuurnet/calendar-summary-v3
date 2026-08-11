@@ -16,7 +16,7 @@ final class OpeningHours implements IteratorAggregate, Countable
     /**
      * @var OpeningHour[]
      */
-    private $openingHours;
+    private array $openingHours;
 
     /**
      * @param OpeningHour[] $openingHours

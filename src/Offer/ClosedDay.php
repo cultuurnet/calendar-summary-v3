@@ -8,20 +8,14 @@ use DateTimeImmutable;
 
 final class ClosedDay implements Period
 {
-    /**
-     * @var DateTimeImmutable
-     */
-    private $startDate;
+    private DateTimeImmutable $startDate;
 
-    /**
-     * @var DateTimeImmutable
-     */
-    private $endDate;
+    private DateTimeImmutable $endDate;
 
     /**
      * @var string[]
      */
-    private $description;
+    private array $description;
 
     /**
      * @param string[] $description

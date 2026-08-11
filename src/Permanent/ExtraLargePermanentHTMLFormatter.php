@@ -13,20 +13,11 @@ use CultuurNet\CalendarSummaryV3\Offer\Offer;
 
 final class ExtraLargePermanentHTMLFormatter implements PermanentFormatterInterface
 {
-    /**
-     * @var Translator
-     */
-    private $translator;
+    private Translator $translator;
 
-    /**
-     * @var HtmlAdjustedDaysFormatter
-     */
-    private $adjustedDaysFormatter;
+    private HtmlAdjustedDaysFormatter $adjustedDaysFormatter;
 
-    /**
-     * @var HtmlClosedDaysFormatter
-     */
-    private $closedDaysFormatter;
+    private HtmlClosedDaysFormatter $closedDaysFormatter;
 
     public function __construct(Translator $translator)
     {

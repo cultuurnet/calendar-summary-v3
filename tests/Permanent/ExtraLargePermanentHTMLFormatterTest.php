@@ -21,10 +21,7 @@ use PHPUnit\Framework\TestCase;
 
 final class ExtraLargePermanentHTMLFormatterTest extends TestCase
 {
-    /**
-     * @var ExtraLargePermanentHTMLFormatter
-     */
-    protected $formatter;
+    protected ExtraLargePermanentHTMLFormatter $formatter;
 
     protected function setUp(): void
     {

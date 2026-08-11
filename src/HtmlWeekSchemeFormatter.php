@@ -14,35 +14,17 @@ use DateTimeImmutable;
  */
 final class HtmlWeekSchemeFormatter
 {
-    /**
-     * @var DateFormatter
-     */
-    private $formatter;
+    private DateFormatter $formatter;
 
-    /**
-     * @var Translator
-     */
-    private $translator;
+    private Translator $translator;
 
-    /**
-     * @var OpeningHours
-     */
-    private $openingHours;
+    private OpeningHours $openingHours;
 
-    /**
-     * @var bool
-     */
-    private $withChildcare = false;
+    private bool $withChildcare = false;
 
-    /**
-     * @var bool
-     */
-    private $withEveryDayOfTheWeek = false;
+    private bool $withEveryDayOfTheWeek = false;
 
-    /**
-     * @var bool
-     */
-    private $withHeading = false;
+    private bool $withHeading = false;
 
     private function __construct(Translator $translator)
     {

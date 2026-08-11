@@ -8,30 +8,15 @@ use CultuurNet\CalendarSummaryV3\Offer\Childcare;
 
 final class ChildcareFormatter
 {
-    /**
-     * @var Translator
-     */
-    private $translator;
+    private Translator $translator;
 
-    /**
-     * @var Childcare
-     */
-    private $childcare;
+    private Childcare $childcare;
 
-    /**
-     * @var bool
-     */
-    private $forEveryDay = false;
+    private bool $forEveryDay = false;
 
-    /**
-     * @var bool
-     */
-    private $withBraces = false;
+    private bool $withBraces = false;
 
-    /**
-     * @var bool
-     */
-    private $capitalize = false;
+    private bool $capitalize = false;
 
     private function __construct(Translator $translator)
     {

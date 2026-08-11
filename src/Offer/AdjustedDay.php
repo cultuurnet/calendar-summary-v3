@@ -8,25 +8,16 @@ use DateTimeImmutable;
 
 final class AdjustedDay implements Period
 {
-    /**
-     * @var DateTimeImmutable
-     */
-    private $startDate;
+    private DateTimeImmutable $startDate;
 
-    /**
-     * @var DateTimeImmutable
-     */
-    private $endDate;
+    private DateTimeImmutable $endDate;
 
-    /**
-     * @var OpeningHours
-     */
-    private $openingHours;
+    private OpeningHours $openingHours;
 
     /**
      * @var string[]
      */
-    private $description;
+    private array $description;
 
     /**
      * @param OpeningHour[] $openingHours

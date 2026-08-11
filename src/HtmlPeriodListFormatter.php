@@ -11,15 +11,9 @@ use CultuurNet\CalendarSummaryV3\Offer\Period;
  */
 final class HtmlPeriodListFormatter
 {
-    /**
-     * @var DateFormatter
-     */
-    private $formatter;
+    private DateFormatter $formatter;
 
-    /**
-     * @var Translator
-     */
-    private $translator;
+    private Translator $translator;
 
     public function __construct(Translator $translator)
     {

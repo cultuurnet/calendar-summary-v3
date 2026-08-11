@@ -15,25 +15,13 @@ use DateTimeImmutable;
 
 final class ExtraLargePeriodicHTMLFormatter implements PeriodicFormatterInterface
 {
-    /**
-     * @var DateFormatter
-     */
-    private $formatter;
+    private DateFormatter $formatter;
 
-    /**
-     * @var Translator
-     */
-    private $translator;
+    private Translator $translator;
 
-    /**
-     * @var HtmlAdjustedDaysFormatter
-     */
-    private $adjustedDaysFormatter;
+    private HtmlAdjustedDaysFormatter $adjustedDaysFormatter;
 
-    /**
-     * @var HtmlClosedDaysFormatter
-     */
-    private $closedDaysFormatter;
+    private HtmlClosedDaysFormatter $closedDaysFormatter;
 
     public function __construct(Translator $translator)
     {

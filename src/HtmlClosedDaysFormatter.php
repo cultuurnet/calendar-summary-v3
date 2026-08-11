@@ -11,10 +11,7 @@ use CultuurNet\CalendarSummaryV3\Offer\ClosedDay;
  */
 final class HtmlClosedDaysFormatter
 {
-    /**
-     * @var HtmlPeriodListFormatter
-     */
-    private $periodListFormatter;
+    private HtmlPeriodListFormatter $periodListFormatter;
 
     public function __construct(Translator $translator)
     {

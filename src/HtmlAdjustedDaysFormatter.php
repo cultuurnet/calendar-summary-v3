@@ -18,20 +18,11 @@ final class HtmlAdjustedDaysFormatter
 {
     use MediumPermanentWeekScheme;
 
-    /**
-     * @var DateFormatter
-     */
-    private $formatter;
+    private DateFormatter $formatter;
 
-    /**
-     * @var Translator
-     */
-    private $translator;
+    private Translator $translator;
 
-    /**
-     * @var HtmlPeriodListFormatter
-     */
-    private $periodListFormatter;
+    private HtmlPeriodListFormatter $periodListFormatter;
 
     public function __construct(Translator $translator)
     {

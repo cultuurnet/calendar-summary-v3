@@ -8,15 +8,9 @@ use InvalidArgumentException;
 
 final class Childcare
 {
-    /**
-     * @var string|null
-     */
-    private $start;
+    private ?string $start;
 
-    /**
-     * @var string|null
-     */
-    private $end;
+    private ?string $end;
 
     /**
      * Either the start or the end can be missing, but not both: childcare only
