@@ -6,8 +6,9 @@ namespace CultuurNet\CalendarSummaryV3\Periodic;
 
 use CultuurNet\CalendarSummaryV3\ChildcareFormatter;
 use CultuurNet\CalendarSummaryV3\DateFormatter;
+use CultuurNet\CalendarSummaryV3\HtmlAdjustedDaysFormatter;
 use CultuurNet\CalendarSummaryV3\HtmlAvailabilityFormatter;
-use CultuurNet\CalendarSummaryV3\HtmlOpeningHoursExceptionsFormatter;
+use CultuurNet\CalendarSummaryV3\HtmlClosedDaysFormatter;
 use CultuurNet\CalendarSummaryV3\Offer\Childcare;
 use CultuurNet\CalendarSummaryV3\Offer\OpeningHour;
 use CultuurNet\CalendarSummaryV3\OpeningHourFormatter;
@@ -28,15 +29,21 @@ final class ExtraLargePeriodicHTMLFormatter implements PeriodicFormatterInterfac
     private $translator;
 
     /**
-     * @var HtmlOpeningHoursExceptionsFormatter
+     * @var HtmlAdjustedDaysFormatter
      */
-    private $exceptionsFormatter;
+    private $adjustedDaysFormatter;
+
+    /**
+     * @var HtmlClosedDaysFormatter
+     */
+    private $closedDaysFormatter;
 
     public function __construct(Translator $translator)
     {
         $this->formatter = new DateFormatter($translator->getLocale());
         $this->translator = $translator;
-        $this->exceptionsFormatter = new HtmlOpeningHoursExceptionsFormatter($translator);
+        $this->adjustedDaysFormatter = new HtmlAdjustedDaysFormatter($translator);
+        $this->closedDaysFormatter = new HtmlClosedDaysFormatter($translator);
     }
 
     public function format(Offer $offer): string
@@ -55,8 +62,8 @@ final class ExtraLargePeriodicHTMLFormatter implements PeriodicFormatterInterfac
             $output .= $this->generateWeekScheme($offer->getOpeningHours());
         }
 
-        $output .= $this->exceptionsFormatter->formatAdjustedDays($offer->getAdjustedDays());
-        $output .= $this->exceptionsFormatter->formatClosedDays($offer->getClosedDays());
+        $output .= $this->adjustedDaysFormatter->format($offer->getAdjustedDays());
+        $output .= $this->closedDaysFormatter->format($offer->getClosedDays());
 
         return trim($this->formatSummary($output));
     }

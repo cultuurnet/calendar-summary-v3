@@ -6,16 +6,15 @@ namespace CultuurNet\CalendarSummaryV3;
 
 use CultuurNet\CalendarSummaryV3\Offer\AdjustedDay;
 use CultuurNet\CalendarSummaryV3\Offer\Childcare;
-use CultuurNet\CalendarSummaryV3\Offer\ClosedDay;
 use CultuurNet\CalendarSummaryV3\Offer\OpeningHour;
 use CultuurNet\CalendarSummaryV3\Offer\Period;
 use CultuurNet\CalendarSummaryV3\Permanent\MediumPermanentWeekScheme;
 
 /**
- * Renders the periods during which the regular opening hours do not apply
- * as collapsible lists.
+ * Renders the periods during which the regular opening hours are replaced by
+ * other opening hours as a collapsible list.
  */
-final class HtmlOpeningHoursExceptionsFormatter
+final class HtmlAdjustedDaysFormatter
 {
     use MediumPermanentWeekScheme;
 
@@ -29,97 +28,45 @@ final class HtmlOpeningHoursExceptionsFormatter
      */
     private $translator;
 
+    /**
+     * @var HtmlPeriodListFormatter
+     */
+    private $periodListFormatter;
+
     public function __construct(Translator $translator)
     {
         $this->formatter = new DateFormatter($translator->getLocale());
         $this->translator = $translator;
+        $this->periodListFormatter = new HtmlPeriodListFormatter($translator);
     }
 
     /**
      * @param AdjustedDay[] $adjustedDays
      */
-    public function formatAdjustedDays(array $adjustedDays): string
+    public function format(array $adjustedDays): string
     {
-        $upcomingAdjustedDays = $this->withoutPastPeriods($adjustedDays);
-
-        if (!$upcomingAdjustedDays) {
-            return '';
-        }
-
-        $output = $this->openDetails('cf-adjusted-days', 'except_during');
-
-        foreach ($upcomingAdjustedDays as $adjustedDay) {
-            $output .= $this->generatePeriod($adjustedDay, $adjustedDay->getOpeningHours());
-        }
-
-        return $output . '</ul></details>';
-    }
-
-    /**
-     * @param ClosedDay[] $closedDays
-     */
-    public function formatClosedDays(array $closedDays): string
-    {
-        $upcomingClosedDays = $this->withoutPastPeriods($closedDays);
-
-        if (!$upcomingClosedDays) {
-            return '';
-        }
-
-        $output = $this->openDetails('cf-closed-days', 'closed');
-
-        foreach ($upcomingClosedDays as $closedDay) {
-            $output .= $this->generatePeriod($closedDay);
-        }
-
-        return $output . '</ul></details>';
-    }
-
-    /**
-     * @template T of Period
-     * @param T[] $periods
-     * @return T[]
-     */
-    private function withoutPastPeriods(array $periods): array
-    {
-        return array_filter($periods, static function (Period $period): bool {
-            return !DateComparison::isPastDay($period->getEndDate());
-        });
-    }
-
-    private function openDetails(string $class, string $summaryTranslationKey): string
-    {
-        return '<details class="' . $class . '">'
-            . '<summary>' . ucfirst($this->translator->translate($summaryTranslationKey)) . '</summary>'
-            . '<ul class="list-unstyled">';
+        return $this->periodListFormatter->format(
+            $adjustedDays,
+            'cf-adjusted-days',
+            'except_during',
+            function (Period $adjustedDay): string {
+                return $adjustedDay instanceof AdjustedDay
+                    ? $this->generateOpeningHoursOfPeriod($adjustedDay->getOpeningHours())
+                    : '';
+            }
+        );
     }
 
     /**
      * @param OpeningHour[] $openingHours
      */
-    private function generatePeriod(Period $period, array $openingHours = []): string
+    private function generateOpeningHoursOfPeriod(array $openingHours): string
     {
-        $startDate = $period->getStartDate();
-        $endDate = $period->getEndDate();
-
-        $output = '<li>'
-            . '<span class="cf-date">'
-            . ucfirst($this->formatter->formatAsDayOfWeek($startDate))
-            . ' ' . $this->formatter->formatAsFullDate($startDate)
-            . '</span>';
-
-        if (!DateComparison::onSameDay($startDate, $endDate)) {
-            $output .= '<span class="cf-to cf-meta">' . $this->translator->translate('till_included') . '</span>'
-                . '<span class="cf-date">'
-                . $this->formatter->formatAsDayOfWeek($endDate)
-                . ' ' . $this->formatter->formatAsFullDate($endDate)
-                . '</span>';
-        }
-
         // When every day of this period has the same childcare it is mentioned once
         // instead of being repeated after every timespan.
         $sharedChildcare = Childcare::sharedByAll($openingHours);
 
+        $output = '';
         foreach ($openingHours as $openingHour) {
             $output .= $this->generateOpeningHours($openingHour, $sharedChildcare === null);
         }
@@ -133,12 +80,7 @@ final class HtmlOpeningHoursExceptionsFormatter
                 . '</span>';
         }
 
-        $description = $period->getDescriptionForLanguage($this->translator->getLanguageCode());
-        if ($description !== '') {
-            $output .= '<span class="cf-description">' . $description . '</span>';
-        }
-
-        return $output . '</li>';
+        return $output;
     }
 
     private function generateOpeningHours(OpeningHour $openingHours, bool $withChildcare): string
