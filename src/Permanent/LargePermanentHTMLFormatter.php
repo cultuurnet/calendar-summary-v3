@@ -6,7 +6,7 @@ namespace CultuurNet\CalendarSummaryV3\Permanent;
 
 use CultuurNet\CalendarSummaryV3\DateFormatter;
 use CultuurNet\CalendarSummaryV3\HtmlAvailabilityFormatter;
-use CultuurNet\CalendarSummaryV3\Offer\OpeningHour;
+use CultuurNet\CalendarSummaryV3\Offer\OpeningHours;
 use CultuurNet\CalendarSummaryV3\OpeningHourFormatter;
 use CultuurNet\CalendarSummaryV3\Translator;
 use CultuurNet\CalendarSummaryV3\Offer\Offer;
@@ -50,7 +50,7 @@ final class LargePermanentHTMLFormatter implements PermanentFormatterInterface
                 ->toString();
         }
 
-        if ($offer->getOpeningHours()) {
+        if (!$offer->getOpeningHours()->isEmpty()) {
             return $this->formatSummary($this->generateWeekScheme($offer->getOpeningHours()));
         }
 
@@ -67,48 +67,6 @@ final class LargePermanentHTMLFormatter implements PermanentFormatterInterface
         return str_replace('  ', ' ', $calsum);
     }
 
-    /**
-     * Retrieve the earliest time for the specified daysOfWeek.
-     *
-     * @param OpeningHour[] $openingHoursData
-     * @param string[] $daysOfWeek
-     */
-    private function getEarliestTime(array $openingHoursData, array $daysOfWeek): string
-    {
-        $earliest = '';
-        foreach ($openingHoursData as $openingHours) {
-            if ($daysOfWeek === $openingHours->getDaysOfWeek()) {
-                if (!empty($earliest)) {
-                    $earliest = ($openingHours->getOpens() < $earliest ? $openingHours->getOpens() : $earliest);
-                } else {
-                    $earliest = $openingHours->getOpens();
-                }
-            };
-        }
-        return $earliest;
-    }
-
-    /**
-     * Retrieve the latest time for the specified daysOfWeek.
-     *
-     * @param OpeningHour[] $openingHoursData
-     * @param string[] $daysOfWeek
-     */
-    private function getLatestTime(array $openingHoursData, array $daysOfWeek): string
-    {
-        $latest = '';
-        foreach ($openingHoursData as $openingHours) {
-            if ($daysOfWeek === $openingHours->getDaysOfWeek()) {
-                if (!empty($latest)) {
-                    $latest = ($openingHours->getCloses() > $latest ? $openingHours->getCloses() : $latest);
-                } else {
-                    $latest = $openingHours->getCloses();
-                }
-            };
-        }
-        return $latest;
-    }
-
     private function generateFormattedTimespan(string $dayOfWeek, bool $long = false): string
     {
         if ($long) {
@@ -119,21 +77,18 @@ final class LargePermanentHTMLFormatter implements PermanentFormatterInterface
         }
     }
 
-    /**
-     * @param OpeningHour[] $openingHoursData
-     */
-    private function generateWeekScheme(array $openingHoursData): string
+    private function generateWeekScheme(OpeningHours $openingHours): string
     {
         $outputWeek = '<ul class="list-unstyled">';
         // Create an array with formatted timespans.
         $formattedTimespans = [];
 
-        foreach ($openingHoursData as $openingHours) {
-            $daysOfWeek = $openingHours->getDaysOfWeek();
-            $firstOpens = OpeningHourFormatter::format($this->getEarliestTime($openingHoursData, $daysOfWeek));
-            $lastCloses = OpeningHourFormatter::format($this->getLatestTime($openingHoursData, $daysOfWeek));
-            $opens = OpeningHourFormatter::format($openingHours->getOpens());
-            $closes = OpeningHourFormatter::format($openingHours->getCloses());
+        foreach ($openingHours as $openingHour) {
+            $daysOfWeek = $openingHour->getDaysOfWeek();
+            $firstOpens = OpeningHourFormatter::format($openingHours->earliestTimeOn($daysOfWeek));
+            $lastCloses = OpeningHourFormatter::format($openingHours->latestTimeOn($daysOfWeek));
+            $opens = OpeningHourFormatter::format($openingHour->getOpens());
+            $closes = OpeningHourFormatter::format($openingHour->getCloses());
 
             foreach ($daysOfWeek as $dayOfWeek) {
                 $daySpanShort = ucfirst($this->formatter->formatAsAbbreviatedDayOfWeek(

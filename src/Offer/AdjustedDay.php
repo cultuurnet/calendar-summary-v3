@@ -19,7 +19,7 @@ final class AdjustedDay implements Period
     private $endDate;
 
     /**
-     * @var OpeningHour[]
+     * @var OpeningHours
      */
     private $openingHours;
 
@@ -40,7 +40,7 @@ final class AdjustedDay implements Period
     ) {
         $this->startDate = $startDate;
         $this->endDate = $endDate;
-        $this->openingHours = $openingHours;
+        $this->openingHours = new OpeningHours($openingHours);
         $this->description = $description;
     }
 
@@ -71,10 +71,7 @@ final class AdjustedDay implements Period
         return $this->endDate;
     }
 
-    /**
-     * @return OpeningHour[]
-     */
-    public function getOpeningHours(): array
+    public function getOpeningHours(): OpeningHours
     {
         return $this->openingHours;
     }

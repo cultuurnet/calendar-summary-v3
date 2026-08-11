@@ -45,9 +45,9 @@ final class Offer
     private $subEvents = [];
 
     /**
-     * @var OpeningHour[]
+     * @var OpeningHours
      */
-    private $openingHours = [];
+    private $openingHours;
 
     /**
      * @var AdjustedDay[]
@@ -73,6 +73,7 @@ final class Offer
         $this->startDate = $startDate;
         $this->endDate = $endDate;
         $this->calendarType = $calendarType;
+        $this->openingHours = new OpeningHours();
     }
 
     public static function fromJsonLd(string $json): self
@@ -185,31 +186,10 @@ final class Offer
      */
     public function withOpeningHours(array $openingHours): self
     {
-        // Split off opening hours per day
-        $individualOpeningHours = [];
-        foreach ($openingHours as $openingHour) {
-            foreach ($openingHour->getDaysOfWeek() as $dayOfWeek) {
-                $individualOpeningHours[] = new OpeningHour(
-                    [$dayOfWeek],
-                    $openingHour->getOpens(),
-                    $openingHour->getCloses(),
-                    $openingHour->getChildcare()
-                );
-            }
-        }
-
-        // Sort by earliest opening hour and day
-        usort($individualOpeningHours, static function (OpeningHour $a, OpeningHour $b) {
-            $weekdayA = array_search($a->getDaysOfWeek()[0], OpeningHour::ALLOWED_DAYS);
-            $weekdayB = array_search($b->getDaysOfWeek()[0], OpeningHour::ALLOWED_DAYS);
-            $fullHoursA = $weekdayA * 24 + (int) $a->getOpens();
-            $fullHoursB = $weekdayB * 24 + (int) $b->getOpens();
-
-            return $fullHoursA <=> $fullHoursB;
-        });
-
         $clone = clone $this;
-        $clone->openingHours = $individualOpeningHours;
+        $clone->openingHours = (new OpeningHours($openingHours))
+            ->splitPerDay()
+            ->sortedByDayAndOpeningTime();
 
         return $clone;
     }
@@ -294,10 +274,7 @@ final class Offer
         return $this->subEvents;
     }
 
-    /**
-     * @return OpeningHour[]
-     */
-    public function getOpeningHours(): array
+    public function getOpeningHours(): OpeningHours
     {
         return $this->openingHours;
     }

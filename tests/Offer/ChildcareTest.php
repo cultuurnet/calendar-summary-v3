@@ -9,47 +9,6 @@ use PHPUnit\Framework\TestCase;
 
 final class ChildcareTest extends TestCase
 {
-    public function testSharedByAllReturnsTheChildcareWhenEveryOpeningHourHasTheSameOne(): void
-    {
-        $shared = Childcare::sharedByAll(
-            [
-                new OpeningHour(['monday'], '09:00', '16:00', new Childcare('08:00', '17:00')),
-                new OpeningHour(['tuesday'], '10:00', '15:00', new Childcare('08:00', '17:00')),
-            ]
-        );
-
-        $this->assertEquals(new Childcare('08:00', '17:00'), $shared);
-    }
-
-    public function testSharedByAllReturnsNullWhenTheChildcareDiffers(): void
-    {
-        $this->assertNull(
-            Childcare::sharedByAll(
-                [
-                    new OpeningHour(['monday'], '09:00', '16:00', new Childcare('08:00', '17:00')),
-                    new OpeningHour(['tuesday'], '09:00', '16:00', new Childcare('08:00', '13:00')),
-                ]
-            )
-        );
-    }
-
-    public function testSharedByAllReturnsNullWhenAnOpeningHourHasNoChildcare(): void
-    {
-        $this->assertNull(
-            Childcare::sharedByAll(
-                [
-                    new OpeningHour(['monday'], '09:00', '16:00', new Childcare('08:00', '17:00')),
-                    new OpeningHour(['tuesday'], '09:00', '16:00'),
-                ]
-            )
-        );
-    }
-
-    public function testSharedByAllReturnsNullWithoutOpeningHours(): void
-    {
-        $this->assertNull(Childcare::sharedByAll([]));
-    }
-
     public function testCanHaveNoEnd(): void
     {
         $childcare = new Childcare('09:00', null);

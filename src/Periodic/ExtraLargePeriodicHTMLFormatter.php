@@ -9,8 +9,8 @@ use CultuurNet\CalendarSummaryV3\DateFormatter;
 use CultuurNet\CalendarSummaryV3\HtmlAdjustedDaysFormatter;
 use CultuurNet\CalendarSummaryV3\HtmlAvailabilityFormatter;
 use CultuurNet\CalendarSummaryV3\HtmlClosedDaysFormatter;
-use CultuurNet\CalendarSummaryV3\Offer\Childcare;
 use CultuurNet\CalendarSummaryV3\Offer\OpeningHour;
+use CultuurNet\CalendarSummaryV3\Offer\OpeningHours;
 use CultuurNet\CalendarSummaryV3\OpeningHourFormatter;
 use CultuurNet\CalendarSummaryV3\Translator;
 use CultuurNet\CalendarSummaryV3\Offer\Offer;
@@ -58,7 +58,7 @@ final class ExtraLargePeriodicHTMLFormatter implements PeriodicFormatterInterfac
             $optionalAvailability
         );
 
-        if ($offer->getOpeningHours()) {
+        if (!$offer->getOpeningHours()->isEmpty()) {
             $output .= $this->generateWeekScheme($offer->getOpeningHours());
         }
 
@@ -72,48 +72,6 @@ final class ExtraLargePeriodicHTMLFormatter implements PeriodicFormatterInterfac
     {
         $calsum = str_replace('><', '> <', $calsum);
         return str_replace('  ', ' ', $calsum);
-    }
-
-    /**
-     * Retrieve the earliest time for the specified daysOfWeek.
-     *
-     * @param OpeningHour[] $openingHoursData
-     * @param string[] $daysOfWeek
-     */
-    private function getEarliestTime(array $openingHoursData, array $daysOfWeek): string
-    {
-        $earliest = '';
-        foreach ($openingHoursData as $openingHours) {
-            if ($daysOfWeek === $openingHours->getDaysOfWeek()) {
-                if (!empty($earliest)) {
-                    $earliest = ($openingHours->getOpens() < $earliest ? $openingHours->getOpens() : $earliest);
-                } else {
-                    $earliest = $openingHours->getOpens();
-                }
-            };
-        }
-        return $earliest;
-    }
-
-    /**
-     * Retrieve the latest time for the specified daysOfWeek.
-     *
-     * @param OpeningHour[] $openingHoursData
-     * @param string[] $daysOfWeek
-     */
-    private function getLatestTime(array $openingHoursData, array $daysOfWeek): string
-    {
-        $latest = '';
-        foreach ($openingHoursData as $openingHours) {
-            if ($daysOfWeek === $openingHours->getDaysOfWeek()) {
-                if (!empty($latest)) {
-                    $latest = ($openingHours->getCloses() > $latest ? $openingHours->getCloses() : $latest);
-                } else {
-                    $latest = $openingHours->getCloses();
-                }
-            };
-        }
-        return $latest;
     }
 
     /**
@@ -137,10 +95,9 @@ final class ExtraLargePeriodicHTMLFormatter implements PeriodicFormatterInterfac
     }
 
     /**
-     * @param OpeningHour[] $openingHoursData
      * @return string
      */
-    private function generateWeekScheme($openingHoursData)
+    private function generateWeekScheme(OpeningHours $openingHours)
     {
         $outputWeek = '<p class="cf-openinghours">' . ucfirst($this->translator->translate('open_at')) . ':</p>';
         $outputWeek .= '<ul class="list-unstyled">';
@@ -150,15 +107,15 @@ final class ExtraLargePeriodicHTMLFormatter implements PeriodicFormatterInterfac
 
         // When every day has the same childcare it is summarized in a single list item
         // instead of being repeated on every day.
-        $sharedChildcare = Childcare::sharedByAll($openingHoursData);
+        $sharedChildcare = $openingHours->sharedChildcare();
 
-        foreach ($openingHoursData as $openingHours) {
-            $daysOfWeek = $openingHours->getDaysOfWeek();
-            $firstOpens = OpeningHourFormatter::format($this->getEarliestTime($openingHoursData, $daysOfWeek));
-            $lastCloses = OpeningHourFormatter::format($this->getLatestTime($openingHoursData, $daysOfWeek));
-            $opens = OpeningHourFormatter::format($openingHours->getOpens());
-            $closes = OpeningHourFormatter::format($openingHours->getCloses());
-            $childcare = $sharedChildcare === null ? $this->generateChildcare($openingHours) : '';
+        foreach ($openingHours as $openingHour) {
+            $daysOfWeek = $openingHour->getDaysOfWeek();
+            $firstOpens = OpeningHourFormatter::format($openingHours->earliestTimeOn($daysOfWeek));
+            $lastCloses = OpeningHourFormatter::format($openingHours->latestTimeOn($daysOfWeek));
+            $opens = OpeningHourFormatter::format($openingHour->getOpens());
+            $closes = OpeningHourFormatter::format($openingHour->getCloses());
+            $childcare = $sharedChildcare === null ? $this->generateChildcare($openingHour) : '';
 
             foreach ($daysOfWeek as $dayOfWeek) {
                 $daySpanShort = ucfirst(
@@ -212,9 +169,9 @@ final class ExtraLargePeriodicHTMLFormatter implements PeriodicFormatterInterfac
         return $outputWeek . '</ul>';
     }
 
-    private function generateChildcare(OpeningHour $openingHours): string
+    private function generateChildcare(OpeningHour $openingHour): string
     {
-        $childcare = $openingHours->getChildcare();
+        $childcare = $openingHour->getChildcare();
 
         if ($childcare === null) {
             return '';

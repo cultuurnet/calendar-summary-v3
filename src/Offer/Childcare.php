@@ -37,36 +37,6 @@ final class Childcare
         return new self($data['start'] ?? null, $data['end'] ?? null);
     }
 
-    /**
-     * Returns the childcare that every opening hour has in common, or null when they
-     * differ or when at least one opening hour has no childcare at all.
-     *
-     * @param OpeningHour[] $openingHours
-     */
-    public static function sharedByAll(array $openingHours): ?self
-    {
-        $shared = null;
-
-        foreach ($openingHours as $openingHour) {
-            $childcare = $openingHour->getChildcare();
-
-            if ($childcare === null) {
-                return null;
-            }
-
-            if ($shared === null) {
-                $shared = $childcare;
-                continue;
-            }
-
-            if (!$shared->equals($childcare)) {
-                return null;
-            }
-        }
-
-        return $shared;
-    }
-
     public function getStart(): ?string
     {
         return $this->start;

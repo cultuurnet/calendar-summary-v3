@@ -5,8 +5,8 @@ declare(strict_types=1);
 namespace CultuurNet\CalendarSummaryV3;
 
 use CultuurNet\CalendarSummaryV3\Offer\AdjustedDay;
-use CultuurNet\CalendarSummaryV3\Offer\Childcare;
 use CultuurNet\CalendarSummaryV3\Offer\OpeningHour;
+use CultuurNet\CalendarSummaryV3\Offer\OpeningHours;
 use CultuurNet\CalendarSummaryV3\Offer\Period;
 use CultuurNet\CalendarSummaryV3\Permanent\MediumPermanentWeekScheme;
 
@@ -57,14 +57,11 @@ final class HtmlAdjustedDaysFormatter
         );
     }
 
-    /**
-     * @param OpeningHour[] $openingHours
-     */
-    private function generateOpeningHoursOfPeriod(array $openingHours): string
+    private function generateOpeningHoursOfPeriod(OpeningHours $openingHours): string
     {
         // When every day of this period has the same childcare it is mentioned once
         // instead of being repeated after every timespan.
-        $sharedChildcare = Childcare::sharedByAll($openingHours);
+        $sharedChildcare = $openingHours->sharedChildcare();
 
         $output = '';
         foreach ($openingHours as $openingHour) {
@@ -83,13 +80,13 @@ final class HtmlAdjustedDaysFormatter
         return $output;
     }
 
-    private function generateOpeningHours(OpeningHour $openingHours, bool $withChildcare): string
+    private function generateOpeningHours(OpeningHour $openingHour, bool $withChildcare): string
     {
-        $opens = OpeningHourFormatter::format($openingHours->getOpens());
-        $closes = OpeningHourFormatter::format($openingHours->getCloses());
-        $childcare = $openingHours->getChildcare();
+        $opens = OpeningHourFormatter::format($openingHour->getOpens());
+        $closes = OpeningHourFormatter::format($openingHour->getCloses());
+        $childcare = $openingHour->getChildcare();
 
-        $output = '<span class="cf-days">' . $this->generateDaysOfWeek($openingHours->getDaysOfWeek()) . '</span>'
+        $output = '<span class="cf-days">' . $this->generateDaysOfWeek($openingHour->getDaysOfWeek()) . '</span>'
             . '<span class="cf-from cf-meta">' . $this->translator->translate('from_hour') . '</span>'
             . '<span class="cf-time">' . $opens . '</span>'
             . '<span class="cf-to cf-meta">' . $this->translator->translate('till_hour') . '</span>'

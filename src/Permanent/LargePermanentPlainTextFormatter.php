@@ -6,7 +6,7 @@ namespace CultuurNet\CalendarSummaryV3\Permanent;
 
 use CultuurNet\CalendarSummaryV3\DateFormatter;
 use CultuurNet\CalendarSummaryV3\Offer\Offer;
-use CultuurNet\CalendarSummaryV3\Offer\OpeningHour;
+use CultuurNet\CalendarSummaryV3\Offer\OpeningHours;
 use CultuurNet\CalendarSummaryV3\OpeningHourFormatter;
 use CultuurNet\CalendarSummaryV3\PlainTextSummaryBuilder;
 use CultuurNet\CalendarSummaryV3\Translator;
@@ -40,7 +40,7 @@ final class LargePermanentPlainTextFormatter implements PermanentFormatterInterf
             return ucfirst($this->translator->translate('postponed'));
         }
 
-        if ($offer->getOpeningHours()) {
+        if (!$offer->getOpeningHours()->isEmpty()) {
             return $this->generateWeekScheme($offer->getOpeningHours());
         }
 
@@ -50,10 +50,7 @@ final class LargePermanentPlainTextFormatter implements PermanentFormatterInterf
             ->toString();
     }
 
-    /**
-     * @param OpeningHour[] $openingHoursData
-     */
-    private function generateWeekScheme(array $openingHoursData): string
+    private function generateWeekScheme(OpeningHours $openingHours): string
     {
         $dayNames = [
             'monday',
@@ -81,12 +78,12 @@ final class LargePermanentPlainTextFormatter implements PermanentFormatterInterf
         $daysWithOpeningHours = [];
 
         // Loop over every 'from ... till ...' and add it to the right day(s)
-        foreach ($openingHoursData as $openingHours) {
-            foreach ($openingHours->getDaysOfWeek() as $dayName) {
+        foreach ($openingHours as $openingHour) {
+            foreach ($openingHour->getDaysOfWeek() as $dayName) {
                 $daysWithOpeningHours[] = $dayName;
                 $formattedDays[$dayName] = $formattedDays[$dayName]
-                    ->fromHour(OpeningHourFormatter::format($openingHours->getOpens()))
-                    ->tillHour(OpeningHourFormatter::format($openingHours->getCloses()));
+                    ->fromHour(OpeningHourFormatter::format($openingHour->getOpens()))
+                    ->tillHour(OpeningHourFormatter::format($openingHour->getCloses()));
             }
         }
 
