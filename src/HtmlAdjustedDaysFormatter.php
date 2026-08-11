@@ -96,6 +96,7 @@ final class HtmlAdjustedDaysFormatter
             $output .= '<span class="cf-childcare">'
                 . ChildcareFormatter::forChildcare($childcare, $this->translator)
                     ->withBraces()
+                    ->capitalize()
                     ->toString()
                 . '</span>';
         }

@@ -188,6 +188,7 @@ final class ExtraLargePermanentHTMLFormatter implements PermanentFormatterInterf
         return ' <span class="cf-childcare">'
             . ChildcareFormatter::forChildcare($childcare, $this->translator)
                 ->withBraces()
+                ->capitalize()
                 ->toString()
             . '</span>';
     }

@@ -166,7 +166,7 @@ final class ExtraLargePermanentHTMLFormatterTest extends TestCase
             . '<span class="cf-time">9:00</span> '
             . '<span itemprop="closes" content="16:00" class="cf-to cf-meta">tot</span> '
             . '<span class="cf-time">16:00</span> '
-            . '<span class="cf-childcare">(opvang van 8:00 tot 17:00)</span> '
+            . '<span class="cf-childcare">(Opvang van 8:00 tot 17:00)</span> '
             . '</li> '
             . $this->closedDay('Dinsdag')
             . '<meta itemprop="openingHours" datetime="Wo 9:00-12:00"> </meta> '
@@ -176,7 +176,7 @@ final class ExtraLargePermanentHTMLFormatterTest extends TestCase
             . '<span class="cf-time">9:00</span> '
             . '<span itemprop="closes" content="12:00" class="cf-to cf-meta">tot</span> '
             . '<span class="cf-time">12:00</span> '
-            . '<span class="cf-childcare">(opvang van 8:00 tot 13:00)</span> '
+            . '<span class="cf-childcare">(Opvang van 8:00 tot 13:00)</span> '
             . '</li> '
             . $this->closedDay('Donderdag')
             . $this->closedDay('Vrijdag')
@@ -205,7 +205,7 @@ final class ExtraLargePermanentHTMLFormatterTest extends TestCase
             . '<span class="cf-time">9:00</span> '
             . '<span itemprop="closes" content="16:00" class="cf-to cf-meta">tot</span> '
             . '<span class="cf-time">16:00</span> '
-            . '<span class="cf-childcare">(opvang van 8:00 tot 17:00)</span> '
+            . '<span class="cf-childcare">(Opvang van 8:00 tot 17:00)</span> '
             . '</li> '
             . '<meta itemprop="openingHours" datetime="Di 9:00-16:00"> </meta> '
             . '<li itemprop="openingHoursSpecification"> '
@@ -296,13 +296,13 @@ final class ExtraLargePermanentHTMLFormatterTest extends TestCase
             . '<span class="cf-time">9:00</span> '
             . '<span class="cf-to cf-meta">tot</span> '
             . '<span class="cf-time">12:00</span> '
-            . '<span class="cf-childcare">(opvang van 8:00 tot 13:00)</span> '
+            . '<span class="cf-childcare">(Opvang van 8:00 tot 13:00)</span> '
             . '<span class="cf-days">Donderdag</span> '
             . '<span class="cf-from cf-meta">van</span> '
             . '<span class="cf-time">13:00</span> '
             . '<span class="cf-to cf-meta">tot</span> '
             . '<span class="cf-time">17:00</span> '
-            . '<span class="cf-childcare">(opvang van 12:00 tot 18:00)</span> '
+            . '<span class="cf-childcare">(Opvang van 12:00 tot 18:00)</span> '
             . '</li> </ul> </details>',
             $this->formatter->format($place)
         );

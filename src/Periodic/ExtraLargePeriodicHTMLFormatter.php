@@ -180,6 +180,7 @@ final class ExtraLargePeriodicHTMLFormatter implements PeriodicFormatterInterfac
         return ' <span class="cf-childcare">'
             . ChildcareFormatter::forChildcare($childcare, $this->translator)
                 ->withBraces()
+                ->capitalize()
                 ->toString()
             . '</span>';
     }

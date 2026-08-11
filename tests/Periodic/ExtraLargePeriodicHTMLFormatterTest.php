@@ -400,7 +400,7 @@ final class ExtraLargePeriodicHTMLFormatterTest extends TestCase
             . '<span class="cf-time">9:00</span> '
             . '<span itemprop="closes" content="16:00" class="cf-to cf-meta">tot</span> '
             . '<span class="cf-time">16:00</span> '
-            . '<span class="cf-childcare">(opvang van 8:00 tot 17:00)</span> '
+            . '<span class="cf-childcare">(Opvang van 8:00 tot 17:00)</span> '
             . '</li> '
             . '<meta itemprop="openingHours" datetime="Di 9:00-12:00"> </meta> '
             . '<li itemprop="openingHoursSpecification"> '
@@ -409,7 +409,7 @@ final class ExtraLargePeriodicHTMLFormatterTest extends TestCase
             . '<span class="cf-time">9:00</span> '
             . '<span itemprop="closes" content="12:00" class="cf-to cf-meta">tot</span> '
             . '<span class="cf-time">12:00</span> '
-            . '<span class="cf-childcare">(opvang van 8:00 tot 13:00)</span> '
+            . '<span class="cf-childcare">(Opvang van 8:00 tot 13:00)</span> '
             . '</li> </ul>',
             $this->formatter->format($place)
         );
@@ -426,7 +426,7 @@ final class ExtraLargePeriodicHTMLFormatterTest extends TestCase
 
         $summary = $this->formatter->format($place);
 
-        $this->assertStringContainsString('<span class="cf-childcare">(opvang van 8:00 tot 17:00)</span>', $summary);
+        $this->assertStringContainsString('<span class="cf-childcare">(Opvang van 8:00 tot 17:00)</span>', $summary);
         $this->assertStringNotContainsString('cf-childcare">Elke dag', $summary);
     }
 
@@ -478,7 +478,7 @@ final class ExtraLargePeriodicHTMLFormatterTest extends TestCase
             . '<span class="cf-time">10:00</span> '
             . '<span itemprop="closes" content="16:00" class="cf-to cf-meta">tot</span> '
             . '<span class="cf-time">16:00</span> '
-            . '<span class="cf-childcare">(vooropvang vanaf 9:00)</span> '
+            . '<span class="cf-childcare">(Vooropvang vanaf 9:00)</span> '
             . '</li> '
             . '<meta itemprop="openingHours" datetime="Di 10:00-16:00"> </meta> '
             . '<li itemprop="openingHoursSpecification"> '
@@ -487,7 +487,7 @@ final class ExtraLargePeriodicHTMLFormatterTest extends TestCase
             . '<span class="cf-time">10:00</span> '
             . '<span itemprop="closes" content="16:00" class="cf-to cf-meta">tot</span> '
             . '<span class="cf-time">16:00</span> '
-            . '<span class="cf-childcare">(naopvang tot 18:00)</span> '
+            . '<span class="cf-childcare">(Naopvang tot 18:00)</span> '
             . '</li> </ul>',
             $this->formatter->format($place)
         );
