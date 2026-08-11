@@ -6,8 +6,7 @@ namespace CultuurNet\CalendarSummaryV3\Periodic;
 
 use CultuurNet\CalendarSummaryV3\DateFormatter;
 use CultuurNet\CalendarSummaryV3\HtmlAvailabilityFormatter;
-use CultuurNet\CalendarSummaryV3\Offer\OpeningHours;
-use CultuurNet\CalendarSummaryV3\OpeningHourFormatter;
+use CultuurNet\CalendarSummaryV3\HtmlWeekSchemeFormatter;
 use CultuurNet\CalendarSummaryV3\Translator;
 use CultuurNet\CalendarSummaryV3\Offer\Offer;
 use DateTimeImmutable;
@@ -43,7 +42,9 @@ final class LargePeriodicHTMLFormatter implements PeriodicFormatterInterface
         );
 
         if (!$offer->getOpeningHours()->isEmpty()) {
-            $output .= $this->generateWeekScheme($offer->getOpeningHours());
+            $output .= HtmlWeekSchemeFormatter::forOpeningHours($offer->getOpeningHours(), $this->translator)
+                ->withHeading()
+                ->toString();
         }
 
         return trim($this->formatSummary($output));
@@ -73,63 +74,5 @@ final class LargePeriodicHTMLFormatter implements PeriodicFormatterInterface
             . '<span class="cf-date">' . $intlDateTo . '</span> </time>'
             . $optionalStatus
             . '</p>';
-    }
-
-    /**
-     * @return string
-     */
-    private function generateWeekScheme(OpeningHours $openingHours)
-    {
-        $outputWeek = '<p class="cf-openinghours">' . ucfirst($this->translator->translate('open_at')) . ':</p>';
-        $outputWeek .= '<ul class="list-unstyled">';
-
-        // Create an array with formatted timespans.
-        $formattedTimespans = [];
-
-        foreach ($openingHours as $openingHour) {
-            $daysOfWeek = $openingHour->getDaysOfWeek();
-            $firstOpens = OpeningHourFormatter::format($openingHours->earliestTimeOn($daysOfWeek));
-            $lastCloses = OpeningHourFormatter::format($openingHours->latestTimeOn($daysOfWeek));
-            $opens = OpeningHourFormatter::format($openingHour->getOpens());
-            $closes = OpeningHourFormatter::format($openingHour->getCloses());
-
-            foreach ($daysOfWeek as $dayOfWeek) {
-                $daySpanShort = ucfirst(
-                    $this->formatter->formatAsAbbreviatedDayOfWeek(
-                        new DateTimeImmutable($dayOfWeek)
-                    )
-                );
-                $daySpanLong = ucfirst($this->formatter->formatAsDayOfWeek(new DateTimeImmutable($dayOfWeek)));
-
-                if (!isset($formattedTimespans[$dayOfWeek])) {
-                    $formattedTimespans[$dayOfWeek] =
-                        "<meta itemprop=\"openingHours\" datetime=\"$daySpanShort $firstOpens-$lastCloses\"> "
-                        . '</meta> '
-                        . '<li itemprop="openingHoursSpecification"> '
-                        . "<span class=\"cf-days\">$daySpanLong</span> "
-                        . "<span itemprop=\"opens\" content=\"$opens\" class=\"cf-from cf-meta\">"
-                        . $this->translator->translate('from_hour') . '</span> '
-                        . "<span class=\"cf-time\">$opens</span> "
-                        . "<span itemprop=\"closes\" content=\"$closes\" class=\"cf-to cf-meta\">"
-                        . $this->translator->translate('till_hour') . '</span> '
-                        . "<span class=\"cf-time\">$closes</span>";
-                } else {
-                    $formattedTimespans[$dayOfWeek] .=
-                        "<span itemprop=\"opens\" content=\"$opens\" class=\"cf-from cf-meta\">"
-                        . $this->translator->translate('and') . ' '
-                        . $this->translator->translate('from_hour') . '</span> '
-                        . "<span class=\"cf-time\">$opens</span> "
-                        . "<span itemprop=\"closes\" content=\"$closes\" class=\"cf-to cf-meta\">"
-                        . $this->translator->translate('till_hour') . '</span> '
-                        . "<span class=\"cf-time\">$closes</span>";
-                }
-            }
-        }
-
-        // Render the rest of the week scheme output.
-        foreach ($formattedTimespans as $formattedTimespan) {
-            $outputWeek .= $formattedTimespan . '</li>';
-        }
-        return $outputWeek . '</ul>';
     }
 }
