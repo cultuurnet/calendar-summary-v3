@@ -55,7 +55,7 @@ final class ExtraLargePeriodicHTMLFormatter implements PeriodicFormatterInterfac
             $output .= $this->generateWeekScheme($offer->getOpeningHours());
         }
 
-        $output .= $this->exceptionsFormatter->formatAdjustedDays($offer->getOpeningHoursAdjustedDays());
+        $output .= $this->exceptionsFormatter->formatAdjustedDays($offer->getAdjustedDays());
         $output .= $this->exceptionsFormatter->formatClosedDays($offer->getOpeningHoursClosedDays());
 
         return trim($this->formatSummary($output));

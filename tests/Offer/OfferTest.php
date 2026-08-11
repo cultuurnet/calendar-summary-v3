@@ -183,7 +183,7 @@ final class OfferTest extends TestCase
         $jsonLd = file_get_contents(__DIR__ . '/data/offer-with-opening-hours.json');
         $offer = Offer::fromJsonLd($jsonLd);
 
-        $this->assertEquals([], $offer->getOpeningHoursAdjustedDays());
+        $this->assertEquals([], $offer->getAdjustedDays());
         $this->assertEquals([], $offer->getOpeningHoursClosedDays());
     }
 }

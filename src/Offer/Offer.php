@@ -52,7 +52,7 @@ final class Offer
     /**
      * @var AdjustedDay[]
      */
-    private $openingHoursAdjustedDays = [];
+    private $adjustedDays = [];
 
     /**
      * @var ClosedDay[]
@@ -98,7 +98,7 @@ final class Offer
 
         if (isset($data['openingHoursAdjustedDays'])) {
             $offer = $offer->withAdjustedDays(
-                self::parseOpeningHoursAdjustedDays($data['openingHoursAdjustedDays'])
+                self::parseAdjustedDays($data['openingHoursAdjustedDays'])
             );
         }
 
@@ -146,7 +146,7 @@ final class Offer
     /**
      * @return AdjustedDay[]
      */
-    private static function parseOpeningHoursAdjustedDays(array $data): array
+    private static function parseAdjustedDays(array $data): array
     {
         $adjustedDays = [];
         foreach ($data as $adjustedDayData) {
@@ -220,7 +220,7 @@ final class Offer
     public function withAdjustedDays(array $adjustedDays): self
     {
         $clone = clone $this;
-        $clone->openingHoursAdjustedDays = $adjustedDays;
+        $clone->adjustedDays = $adjustedDays;
 
         return $clone;
     }
@@ -305,9 +305,9 @@ final class Offer
     /**
      * @return AdjustedDay[]
      */
-    public function getOpeningHoursAdjustedDays(): array
+    public function getAdjustedDays(): array
     {
-        return $this->openingHoursAdjustedDays;
+        return $this->adjustedDays;
     }
 
     /**
