@@ -274,7 +274,7 @@ final class ExtraLargePeriodicHTMLFormatterTest extends TestCase
     {
         $place = $this->availablePlace()
             ->withOpeningHours([new OpeningHour(['monday'], '08:00', '17:00')])
-            ->withOpeningHoursClosedDays(
+            ->withClosedDays(
                 [
                     new ClosedDay(
                         new DateTimeImmutable('2026-12-24'),
@@ -321,7 +321,7 @@ final class ExtraLargePeriodicHTMLFormatterTest extends TestCase
 
     public function testItSkipsClosedDaysThatHavePassed(): void
     {
-        $place = $this->availablePlace()->withOpeningHoursClosedDays(
+        $place = $this->availablePlace()->withClosedDays(
             [
                 new ClosedDay(
                     new DateTimeImmutable('2026-08-03'),

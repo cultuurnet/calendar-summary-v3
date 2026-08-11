@@ -103,7 +103,7 @@ final class Offer
         }
 
         if (isset($data['openingHoursClosedDays'])) {
-            $offer = $offer->withOpeningHoursClosedDays(
+            $offer = $offer->withClosedDays(
                 self::parseOpeningHoursClosedDays($data['openingHoursClosedDays'])
             );
         }
@@ -228,7 +228,7 @@ final class Offer
     /**
      * @param ClosedDay[] $closedDays
      */
-    public function withOpeningHoursClosedDays(array $closedDays): self
+    public function withClosedDays(array $closedDays): self
     {
         $clone = clone $this;
         $clone->openingHoursClosedDays = $closedDays;

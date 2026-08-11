@@ -733,7 +733,7 @@ final class ExtraLargePermanentHTMLFormatterTest extends TestCase
 
     public function testFormatClosedDays(): void
     {
-        $place = $this->availablePlace()->withOpeningHoursClosedDays([$this->christmasHoliday()]);
+        $place = $this->availablePlace()->withClosedDays([$this->christmasHoliday()]);
 
         $this->assertEquals(
             '<p class="cf-openinghours">Alle dagen open</p> '
@@ -752,7 +752,7 @@ final class ExtraLargePermanentHTMLFormatterTest extends TestCase
 
     public function testFormatClosedDaysInFrench(): void
     {
-        $place = $this->availablePlace()->withOpeningHoursClosedDays([$this->christmasHoliday()]);
+        $place = $this->availablePlace()->withClosedDays([$this->christmasHoliday()]);
 
         $this->assertEquals(
             '<p class="cf-openinghours">Ouvert tous les jours</p> '
@@ -770,7 +770,7 @@ final class ExtraLargePermanentHTMLFormatterTest extends TestCase
 
     public function testFormatClosedDaysForASingleDay(): void
     {
-        $place = $this->availablePlace()->withOpeningHoursClosedDays(
+        $place = $this->availablePlace()->withClosedDays(
             [
                 new ClosedDay(
                     new DateTimeImmutable('2026-12-25'),
@@ -795,7 +795,7 @@ final class ExtraLargePermanentHTMLFormatterTest extends TestCase
 
     public function testItRendersMultipleClosedDays(): void
     {
-        $place = $this->availablePlace()->withOpeningHoursClosedDays(
+        $place = $this->availablePlace()->withClosedDays(
             [
                 $this->christmasHoliday(),
                 new ClosedDay(
@@ -829,7 +829,7 @@ final class ExtraLargePermanentHTMLFormatterTest extends TestCase
 
     public function testItSkipsClosedDaysThatHavePassed(): void
     {
-        $place = $this->availablePlace()->withOpeningHoursClosedDays(
+        $place = $this->availablePlace()->withClosedDays(
             [
                 new ClosedDay(
                     new DateTimeImmutable('2026-08-03'),
@@ -849,7 +849,7 @@ final class ExtraLargePermanentHTMLFormatterTest extends TestCase
     {
         $place = $this->availablePlace()
             ->withAdjustedDays([$this->autumnHoliday()])
-            ->withOpeningHoursClosedDays([$this->christmasHoliday()]);
+            ->withClosedDays([$this->christmasHoliday()]);
 
         $this->assertEquals(
             '<p class="cf-openinghours">Alle dagen open</p> '
@@ -889,7 +889,7 @@ final class ExtraLargePermanentHTMLFormatterTest extends TestCase
             null,
             null,
             CalendarType::permanent()
-        ))->withOpeningHoursClosedDays([$this->christmasHoliday()]);
+        ))->withClosedDays([$this->christmasHoliday()]);
 
         $this->assertEquals(
             '<p class="cf-status">Geannuleerd</p>',

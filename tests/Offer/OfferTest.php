@@ -165,7 +165,7 @@ final class OfferTest extends TestCase
                     ),
                 ]
             )
-            ->withOpeningHoursClosedDays(
+            ->withClosedDays(
                 [
                     new ClosedDay(
                         new DateTimeImmutable('2026-12-24'),

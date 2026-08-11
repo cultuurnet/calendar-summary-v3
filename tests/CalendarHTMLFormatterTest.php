@@ -61,7 +61,7 @@ final class CalendarHTMLFormatterTest extends TestCase
                     ['nl' => 'Herfstvakantie']
                 ),
             ]
-        )->withOpeningHoursClosedDays(
+        )->withClosedDays(
             [
                 new ClosedDay(
                     new DateTimeImmutable('2030-12-25'),
