@@ -68,7 +68,7 @@ final class ExtraLargePermanentHTMLFormatter implements PermanentFormatterInterf
         }
 
         $output .= $this->exceptionsFormatter->formatAdjustedDays($offer->getAdjustedDays());
-        $output .= $this->exceptionsFormatter->formatClosedDays($offer->getOpeningHoursClosedDays());
+        $output .= $this->exceptionsFormatter->formatClosedDays($offer->getClosedDays());
 
         return $this->formatSummary($output);
     }

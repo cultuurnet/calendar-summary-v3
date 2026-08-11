@@ -184,6 +184,6 @@ final class OfferTest extends TestCase
         $offer = Offer::fromJsonLd($jsonLd);
 
         $this->assertEquals([], $offer->getAdjustedDays());
-        $this->assertEquals([], $offer->getOpeningHoursClosedDays());
+        $this->assertEquals([], $offer->getClosedDays());
     }
 }

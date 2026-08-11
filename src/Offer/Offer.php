@@ -57,7 +57,7 @@ final class Offer
     /**
      * @var ClosedDay[]
      */
-    private $openingHoursClosedDays = [];
+    private $closedDays = [];
 
     public function __construct(
         OfferType $offerType,
@@ -104,7 +104,7 @@ final class Offer
 
         if (isset($data['openingHoursClosedDays'])) {
             $offer = $offer->withClosedDays(
-                self::parseOpeningHoursClosedDays($data['openingHoursClosedDays'])
+                self::parseClosedDays($data['openingHoursClosedDays'])
             );
         }
 
@@ -159,7 +159,7 @@ final class Offer
     /**
      * @return ClosedDay[]
      */
-    private static function parseOpeningHoursClosedDays(array $data): array
+    private static function parseClosedDays(array $data): array
     {
         $closedDays = [];
         foreach ($data as $closedDayData) {
@@ -231,7 +231,7 @@ final class Offer
     public function withClosedDays(array $closedDays): self
     {
         $clone = clone $this;
-        $clone->openingHoursClosedDays = $closedDays;
+        $clone->closedDays = $closedDays;
 
         return $clone;
     }
@@ -313,8 +313,8 @@ final class Offer
     /**
      * @return ClosedDay[]
      */
-    public function getOpeningHoursClosedDays(): array
+    public function getClosedDays(): array
     {
-        return $this->openingHoursClosedDays;
+        return $this->closedDays;
     }
 }
