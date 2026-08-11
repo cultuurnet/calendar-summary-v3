@@ -6,7 +6,7 @@ namespace CultuurNet\CalendarSummaryV3\Offer;
 
 use DateTimeImmutable;
 
-interface OpeningHoursPeriod
+interface Period
 {
     public function getStartDate(): DateTimeImmutable;
 

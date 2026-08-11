@@ -6,7 +6,7 @@ namespace CultuurNet\CalendarSummaryV3\Offer;
 
 use DateTimeImmutable;
 
-final class AdjustedDay implements OpeningHoursPeriod
+final class AdjustedDay implements Period
 {
     /**
      * @var DateTimeImmutable

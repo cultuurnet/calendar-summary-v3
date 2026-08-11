@@ -8,7 +8,7 @@ use CultuurNet\CalendarSummaryV3\Offer\AdjustedDay;
 use CultuurNet\CalendarSummaryV3\Offer\Childcare;
 use CultuurNet\CalendarSummaryV3\Offer\ClosedDay;
 use CultuurNet\CalendarSummaryV3\Offer\OpeningHour;
-use CultuurNet\CalendarSummaryV3\Offer\OpeningHoursPeriod;
+use CultuurNet\CalendarSummaryV3\Offer\Period;
 use CultuurNet\CalendarSummaryV3\Permanent\MediumPermanentWeekScheme;
 
 /**
@@ -76,13 +76,13 @@ final class HtmlOpeningHoursExceptionsFormatter
     }
 
     /**
-     * @template T of OpeningHoursPeriod
+     * @template T of Period
      * @param T[] $periods
      * @return T[]
      */
     private function withoutPastPeriods(array $periods): array
     {
-        return array_filter($periods, static function (OpeningHoursPeriod $period): bool {
+        return array_filter($periods, static function (Period $period): bool {
             return !DateComparison::isPastDay($period->getEndDate());
         });
     }
@@ -97,7 +97,7 @@ final class HtmlOpeningHoursExceptionsFormatter
     /**
      * @param OpeningHour[] $openingHours
      */
-    private function generatePeriod(OpeningHoursPeriod $period, array $openingHours = []): string
+    private function generatePeriod(Period $period, array $openingHours = []): string
     {
         $startDate = $period->getStartDate();
         $endDate = $period->getEndDate();
