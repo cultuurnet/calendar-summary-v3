@@ -52,7 +52,7 @@ final class CalendarHTMLFormatterTest extends TestCase
             null,
             null,
             CalendarType::permanent()
-        ))->withOpeningHoursAdjustedDays(
+        ))->withAdjustedDays(
             [
                 new AdjustedDay(
                     new DateTimeImmutable('2030-11-02'),

@@ -227,7 +227,7 @@ final class ExtraLargePermanentHTMLFormatterTest extends TestCase
 
     public function testFormatASharedChildcareInAnAdjustedDay(): void
     {
-        $place = $this->availablePlace()->withOpeningHoursAdjustedDays(
+        $place = $this->availablePlace()->withAdjustedDays(
             [
                 new AdjustedDay(
                     new DateTimeImmutable('2026-11-02'),
@@ -269,7 +269,7 @@ final class ExtraLargePermanentHTMLFormatterTest extends TestCase
 
     public function testFormatADifferingChildcareInAnAdjustedDay(): void
     {
-        $place = $this->availablePlace()->withOpeningHoursAdjustedDays(
+        $place = $this->availablePlace()->withAdjustedDays(
             [
                 new AdjustedDay(
                     new DateTimeImmutable('2026-11-02'),
@@ -385,7 +385,7 @@ final class ExtraLargePermanentHTMLFormatterTest extends TestCase
     {
         $place = $this->availablePlace()
             ->withOpeningHours([new OpeningHour(['monday'], '09:00', '13:00')])
-            ->withOpeningHoursAdjustedDays([$this->autumnHoliday()]);
+            ->withAdjustedDays([$this->autumnHoliday()]);
 
         $this->assertEquals(
             '<ul class="list-unstyled"> '
@@ -447,7 +447,7 @@ final class ExtraLargePermanentHTMLFormatterTest extends TestCase
 
     public function testFormatAdjustedDaysForASinglePeriod(): void
     {
-        $place = $this->availablePlace()->withOpeningHoursAdjustedDays([$this->autumnHoliday()]);
+        $place = $this->availablePlace()->withAdjustedDays([$this->autumnHoliday()]);
 
         $this->assertEquals(
             '<p class="cf-openinghours">Alle dagen open</p> '
@@ -471,7 +471,7 @@ final class ExtraLargePermanentHTMLFormatterTest extends TestCase
 
     public function testFormatAdjustedDaysForASinglePeriodInFrench(): void
     {
-        $place = $this->availablePlace()->withOpeningHoursAdjustedDays([$this->autumnHoliday()]);
+        $place = $this->availablePlace()->withAdjustedDays([$this->autumnHoliday()]);
 
         $this->assertEquals(
             '<p class="cf-openinghours">Ouvert tous les jours</p> '
@@ -494,7 +494,7 @@ final class ExtraLargePermanentHTMLFormatterTest extends TestCase
 
     public function testFormatAdjustedDaysForASingleDay(): void
     {
-        $place = $this->availablePlace()->withOpeningHoursAdjustedDays(
+        $place = $this->availablePlace()->withAdjustedDays(
             [
                 new AdjustedDay(
                     new DateTimeImmutable('2026-11-02'),
@@ -525,7 +525,7 @@ final class ExtraLargePermanentHTMLFormatterTest extends TestCase
 
     public function testFormatAdjustedDaysWithMultipleOpeningHours(): void
     {
-        $place = $this->availablePlace()->withOpeningHoursAdjustedDays(
+        $place = $this->availablePlace()->withAdjustedDays(
             [
                 new AdjustedDay(
                     new DateTimeImmutable('2026-11-02'),
@@ -566,7 +566,7 @@ final class ExtraLargePermanentHTMLFormatterTest extends TestCase
 
     public function testFormatAdjustedDaysWithNonConsecutiveDays(): void
     {
-        $place = $this->availablePlace()->withOpeningHoursAdjustedDays(
+        $place = $this->availablePlace()->withAdjustedDays(
             [
                 new AdjustedDay(
                     new DateTimeImmutable('2026-11-02'),
@@ -597,7 +597,7 @@ final class ExtraLargePermanentHTMLFormatterTest extends TestCase
 
     public function testFormatAdjustedDaysWithoutOpeningHours(): void
     {
-        $place = $this->availablePlace()->withOpeningHoursAdjustedDays(
+        $place = $this->availablePlace()->withAdjustedDays(
             [
                 new AdjustedDay(
                     new DateTimeImmutable('2026-12-24'),
@@ -625,7 +625,7 @@ final class ExtraLargePermanentHTMLFormatterTest extends TestCase
 
     public function testItDoesNotRenderTheDescriptionWhenTranslationIsUnavailable(): void
     {
-        $place = $this->availablePlace()->withOpeningHoursAdjustedDays(
+        $place = $this->availablePlace()->withAdjustedDays(
             [
                 new AdjustedDay(
                     new DateTimeImmutable('2026-11-02'),
@@ -650,7 +650,7 @@ final class ExtraLargePermanentHTMLFormatterTest extends TestCase
 
     public function testItRendersMultipleAdjustedDays(): void
     {
-        $place = $this->availablePlace()->withOpeningHoursAdjustedDays(
+        $place = $this->availablePlace()->withAdjustedDays(
             [
                 new AdjustedDay(
                     new DateTimeImmutable('2026-11-02'),
@@ -686,7 +686,7 @@ final class ExtraLargePermanentHTMLFormatterTest extends TestCase
 
     public function testItSkipsAdjustedDaysThatHavePassed(): void
     {
-        $place = $this->availablePlace()->withOpeningHoursAdjustedDays(
+        $place = $this->availablePlace()->withAdjustedDays(
             [
                 new AdjustedDay(
                     new DateTimeImmutable('2026-08-03'),
@@ -705,7 +705,7 @@ final class ExtraLargePermanentHTMLFormatterTest extends TestCase
 
     public function testItRendersAdjustedDaysThatEndToday(): void
     {
-        $place = $this->availablePlace()->withOpeningHoursAdjustedDays(
+        $place = $this->availablePlace()->withAdjustedDays(
             [
                 new AdjustedDay(
                     new DateTimeImmutable('2026-08-03'),
@@ -848,7 +848,7 @@ final class ExtraLargePermanentHTMLFormatterTest extends TestCase
     public function testItRendersTheClosedDaysAfterTheAdjustedDays(): void
     {
         $place = $this->availablePlace()
-            ->withOpeningHoursAdjustedDays([$this->autumnHoliday()])
+            ->withAdjustedDays([$this->autumnHoliday()])
             ->withOpeningHoursClosedDays([$this->christmasHoliday()]);
 
         $this->assertEquals(
@@ -906,7 +906,7 @@ final class ExtraLargePermanentHTMLFormatterTest extends TestCase
             null,
             null,
             CalendarType::permanent()
-        ))->withOpeningHoursAdjustedDays([$this->autumnHoliday()]);
+        ))->withAdjustedDays([$this->autumnHoliday()]);
 
         $this->assertEquals(
             '<p class="cf-status">Geannuleerd</p>',

@@ -165,7 +165,7 @@ final class ExtraLargePeriodicHTMLFormatterTest extends TestCase
     {
         $place = $this->availablePlace()
             ->withOpeningHours([new OpeningHour(['monday'], '08:00', '17:00')])
-            ->withOpeningHoursAdjustedDays([$this->autumnHoliday()]);
+            ->withAdjustedDays([$this->autumnHoliday()]);
 
         $this->assertEquals(
             '<p class="cf-period"> '
@@ -209,7 +209,7 @@ final class ExtraLargePeriodicHTMLFormatterTest extends TestCase
 
     public function testFormatAPeriodWithAdjustedDaysButWithoutTimeBlocks(): void
     {
-        $place = $this->availablePlace()->withOpeningHoursAdjustedDays([$this->autumnHoliday()]);
+        $place = $this->availablePlace()->withAdjustedDays([$this->autumnHoliday()]);
 
         $this->assertEquals(
             '<p class="cf-period"> '
@@ -243,7 +243,7 @@ final class ExtraLargePeriodicHTMLFormatterTest extends TestCase
 
     public function testItSkipsAdjustedDaysThatHavePassed(): void
     {
-        $place = $this->availablePlace()->withOpeningHoursAdjustedDays(
+        $place = $this->availablePlace()->withAdjustedDays(
             [
                 new AdjustedDay(
                     new DateTimeImmutable('2026-08-03'),

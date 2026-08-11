@@ -144,7 +144,7 @@ final class OfferTest extends TestCase
                     ),
                 ]
             )
-            ->withOpeningHoursAdjustedDays(
+            ->withAdjustedDays(
                 [
                     new AdjustedDay(
                         new DateTimeImmutable('2026-11-02'),

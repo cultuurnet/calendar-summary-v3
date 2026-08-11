@@ -97,7 +97,7 @@ final class Offer
         }
 
         if (isset($data['openingHoursAdjustedDays'])) {
-            $offer = $offer->withOpeningHoursAdjustedDays(
+            $offer = $offer->withAdjustedDays(
                 self::parseOpeningHoursAdjustedDays($data['openingHoursAdjustedDays'])
             );
         }
@@ -217,7 +217,7 @@ final class Offer
     /**
      * @param AdjustedDay[] $adjustedDays
      */
-    public function withOpeningHoursAdjustedDays(array $adjustedDays): self
+    public function withAdjustedDays(array $adjustedDays): self
     {
         $clone = clone $this;
         $clone->openingHoursAdjustedDays = $adjustedDays;
