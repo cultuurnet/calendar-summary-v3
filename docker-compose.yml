@@ -1,0 +1,11 @@
+services:
+
+  calsum:
+    build: docker8
+    container_name: calsum8
+    volumes:
+      - .:/var/www/html:cached
+    working_dir: /var/www/html
+    command: php -S 0.0.0.0:8123 -t .
+    ports:
+      - "8123:8123"
