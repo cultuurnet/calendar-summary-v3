@@ -1,0 +1,94 @@
+<?php
+
+declare(strict_types=1);
+
+namespace CultuurNet\CalendarSummaryV3;
+
+use CultuurNet\CalendarSummaryV3\Offer\Period;
+
+/**
+ * Renders a list of periods as a heading followed by a line per period.
+ */
+final class PlainTextPeriodListFormatter
+{
+    private DateFormatter $formatter;
+
+    private Translator $translator;
+
+    public function __construct(Translator $translator)
+    {
+        $this->formatter = new DateFormatter($translator->getLocale());
+        $this->translator = $translator;
+    }
+
+    /**
+     * @param Period[] $periods
+     * @param callable(Period): string|null $formatContent
+     *   Renders the lines between the dates and the description of a period.
+     */
+    public function format(
+        array $periods,
+        string $headingTranslationKey,
+        ?callable $formatContent = null
+    ): string {
+        $upcomingPeriods = $this->withoutPastPeriods($periods);
+
+        if (!$upcomingPeriods) {
+            return '';
+        }
+
+        $lines = [ucfirst($this->translator->translate($headingTranslationKey))];
+
+        foreach ($upcomingPeriods as $period) {
+            $lines[] = $this->generatePeriod($period, $formatContent);
+        }
+
+        return implode(PHP_EOL, $lines);
+    }
+
+    /**
+     * @template T of Period
+     * @param T[] $periods
+     * @return T[]
+     */
+    private function withoutPastPeriods(array $periods): array
+    {
+        return array_filter($periods, static function (Period $period): bool {
+            return !DateComparison::isPastDay($period->getEndDate());
+        });
+    }
+
+    /**
+     * @param callable(Period): string|null $formatContent
+     */
+    private function generatePeriod(Period $period, ?callable $formatContent): string
+    {
+        $startDate = $period->getStartDate();
+        $endDate = $period->getEndDate();
+
+        $dates = PlainTextSummaryBuilder::start($this->translator)
+            ->append($this->formatter->formatAsDayOfWeek($startDate))
+            ->append($this->formatter->formatAsFullDate($startDate));
+
+        if (!DateComparison::onSameDay($startDate, $endDate)) {
+            $dates = $dates->tillIncluded(
+                $this->formatter->formatAsDayOfWeek($endDate),
+                $this->formatter->formatAsFullDate($endDate)
+            );
+        }
+
+        $lines = [$dates->toString()];
+
+        $content = $formatContent !== null ? $formatContent($period) : '';
+        if ($content !== '') {
+            $lines[] = $content;
+        }
+
+        $description = $period->getDescriptionForLanguage($this->translator->getLanguageCode());
+        if ($description !== '') {
+            $lines[] = $description;
+        }
+
+        return implode(PHP_EOL, $lines);
+    }
+}
