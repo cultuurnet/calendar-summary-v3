@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace CultuurNet\CalendarSummaryV3;
 
+use CultuurNet\CalendarSummaryV3\Offer\Childcare;
 use CultuurNet\CalendarSummaryV3\Offer\OpeningHour;
 use CultuurNet\CalendarSummaryV3\Offer\OpeningHours;
 use DateTimeImmutable;
@@ -20,6 +21,8 @@ final class PlainTextWeekSchemeFormatter
     private OpeningHours $openingHours;
 
     private bool $asSingleLine = false;
+
+    private bool $withChildcare = false;
 
     private function __construct(Translator $translator)
     {
@@ -46,72 +49,162 @@ final class PlainTextWeekSchemeFormatter
         return $c;
     }
 
+    /**
+     * Mentions the childcare of the opening hours.
+     */
+    public function withChildcare(): self
+    {
+        $c = clone $this;
+        $c->withChildcare = true;
+        return $c;
+    }
+
     public function toString(): string
     {
-        return $this->asSingleLine ? $this->formatAsSingleLine() : $this->formatAsALinePerDay();
+        // When every day has the same childcare it is summarized in a single line
+        // instead of being repeated on every day.
+        $sharedChildcare = $this->withChildcare ? $this->openingHours->sharedChildcare() : null;
+
+        $timespansPerDay = $this->timespansPerDay();
+
+        $lines = $this->asSingleLine
+            ? $this->formatAsSingleLine($timespansPerDay, $sharedChildcare)
+            : $this->formatAsALinePerDay($timespansPerDay, $sharedChildcare);
+
+        if ($sharedChildcare !== null) {
+            $lines[] = ' ' . ChildcareFormatter::forChildcare($sharedChildcare, $this->translator)
+                ->forEveryDay()
+                ->withBraces()
+                ->toString();
+        }
+
+        return implode(PHP_EOL, $lines);
     }
 
-    private function formatAsSingleLine(): string
+    /**
+     * @param array<string, OpeningHour[]> $timespansPerDay
+     * @return string[]
+     */
+    private function formatAsSingleLine(array $timespansPerDay, ?Childcare $sharedChildcare): array
     {
         $formattedDays = [];
+        foreach ($timespansPerDay as $dayOfWeek => $timespans) {
+            $formattedDays[] = $this->formatDay($dayOfWeek, $timespans)
+                ->lowercaseNextFirstCharacter()
+                ->toString();
+        }
+
+        $lines = ['(' . implode(', ', $formattedDays) . ')'];
+
+        // The days share a single line, so their childcare cannot follow them
+        // directly and needs to mention the day it applies to.
+        if ($sharedChildcare === null) {
+            foreach ($timespansPerDay as $dayOfWeek => $timespans) {
+                $lines = array_merge($lines, $this->childcareLines($dayOfWeek, $timespans, true));
+            }
+        }
+
+        return $lines;
+    }
+
+    /**
+     * @param array<string, OpeningHour[]> $timespansPerDay
+     * @return string[]
+     */
+    private function formatAsALinePerDay(array $timespansPerDay, ?Childcare $sharedChildcare): array
+    {
+        $lines = [];
+
+        foreach (OpeningHour::ALLOWED_DAYS as $dayOfWeek) {
+            $timespans = $timespansPerDay[$dayOfWeek] ?? [];
+
+            $lines[] = $this->formatDay($dayOfWeek, $timespans)->toString();
+
+            if ($sharedChildcare === null) {
+                $lines = array_merge($lines, $this->childcareLines($dayOfWeek, $timespans, false));
+            }
+        }
+
+        return $lines;
+    }
+
+    /**
+     * @param OpeningHour[] $timespans
+     */
+    private function formatDay(string $dayOfWeek, array $timespans): PlainTextSummaryBuilder
+    {
+        $day = PlainTextSummaryBuilder::start($this->translator)
+            ->append($this->translateDayOfWeek($dayOfWeek));
+
+        if (!$timespans) {
+            return $day->closed();
+        }
+
+        foreach ($timespans as $timespan) {
+            $day = $day
+                ->fromHour(OpeningHourFormatter::format($timespan->getOpens()))
+                ->tillHour(OpeningHourFormatter::format($timespan->getCloses()));
+        }
+
+        return $day;
+    }
+
+    /**
+     * @param OpeningHour[] $timespans
+     * @return string[]
+     */
+    private function childcareLines(string $dayOfWeek, array $timespans, bool $withDayOfWeek): array
+    {
+        if (!$this->withChildcare) {
+            return [];
+        }
+
+        // Only when the timespans of this day have a different childcare it is
+        // repeated after every single one of them.
+        $childcareOfDay = $this->openingHours->onDayOfWeek($dayOfWeek)->sharedChildcare();
+        if ($childcareOfDay !== null) {
+            return [$this->childcareLine($childcareOfDay, $withDayOfWeek ? $dayOfWeek : '')];
+        }
+
+        $lines = [];
+        foreach ($timespans as $timespan) {
+            $childcare = $timespan->getChildcare();
+            if ($childcare !== null) {
+                $lines[] = $this->childcareLine($childcare, $withDayOfWeek ? $dayOfWeek : '');
+            }
+        }
+
+        return $lines;
+    }
+
+    /**
+     * Childcare gets a line of its own, indented with a single space and between braces.
+     */
+    private function childcareLine(Childcare $childcare, string $dayOfWeek): string
+    {
+        $childcareFormatter = ChildcareFormatter::forChildcare($childcare, $this->translator)->withBraces();
+
+        if ($dayOfWeek !== '') {
+            $childcareFormatter = $childcareFormatter->precededBy($this->translateDayOfWeek($dayOfWeek));
+        }
+
+        return ' ' . $childcareFormatter->toString();
+    }
+
+    /**
+     * @return array<string, OpeningHour[]>
+     */
+    private function timespansPerDay(): array
+    {
+        $timespansPerDay = [];
 
         foreach ($this->openingHours as $openingHour) {
             foreach ($openingHour->getDaysOfWeek() as $dayOfWeek) {
-                if (!isset($formattedDays[$dayOfWeek])) {
-                    $formattedDays[$dayOfWeek] = PlainTextSummaryBuilder::start($this->translator)
-                        ->lowercaseNextFirstCharacter()
-                        ->append($this->translateDayOfWeek($dayOfWeek));
-                } else {
-                    $formattedDays[$dayOfWeek] = $formattedDays[$dayOfWeek]->and();
-                }
-
-                $formattedDays[$dayOfWeek] = $this->addTimespan($formattedDays[$dayOfWeek], $openingHour);
+                $timespansPerDay[$dayOfWeek][] = $openingHour;
             }
         }
 
-        return '(' . implode(', ', array_map([$this, 'toLine'], $formattedDays)) . ')';
-    }
-
-    private function formatAsALinePerDay(): string
-    {
-        // Every day of the week is listed, so start from all of them and mark the
-        // ones that never get opening hours as closed afterwards.
-        $formattedDays = [];
-        foreach (OpeningHour::ALLOWED_DAYS as $key => $dayOfWeek) {
-            $day = PlainTextSummaryBuilder::start($this->translator);
-            if ($key !== 0) {
-                $day = $day->startNewLine();
-            }
-
-            $formattedDays[$dayOfWeek] = $day->append($this->translateDayOfWeek($dayOfWeek));
-        }
-
-        $daysWithOpeningHours = [];
-        foreach ($this->openingHours as $openingHour) {
-            foreach ($openingHour->getDaysOfWeek() as $dayOfWeek) {
-                $daysWithOpeningHours[] = $dayOfWeek;
-                $formattedDays[$dayOfWeek] = $this->addTimespan($formattedDays[$dayOfWeek], $openingHour);
-            }
-        }
-
-        $closedDays = array_diff(OpeningHour::ALLOWED_DAYS, array_unique($daysWithOpeningHours));
-        foreach ($closedDays as $closedDay) {
-            $formattedDays[$closedDay] = $formattedDays[$closedDay]->closed();
-        }
-
-        return implode('', array_map([$this, 'toLine'], $formattedDays));
-    }
-
-    private function addTimespan(PlainTextSummaryBuilder $day, OpeningHour $openingHour): PlainTextSummaryBuilder
-    {
-        return $day
-            ->fromHour(OpeningHourFormatter::format($openingHour->getOpens()))
-            ->tillHour(OpeningHourFormatter::format($openingHour->getCloses()));
-    }
-
-    private function toLine(PlainTextSummaryBuilder $day): string
-    {
-        return $day->toString();
+        return $timespansPerDay;
     }
 
     private function translateDayOfWeek(string $dayOfWeek): string
