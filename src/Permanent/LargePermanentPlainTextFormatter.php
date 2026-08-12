@@ -4,21 +4,13 @@ declare(strict_types=1);
 
 namespace CultuurNet\CalendarSummaryV3\Permanent;
 
-use CultuurNet\CalendarSummaryV3\DateFormatter;
 use CultuurNet\CalendarSummaryV3\Offer\Offer;
-use CultuurNet\CalendarSummaryV3\Offer\OpeningHours;
-use CultuurNet\CalendarSummaryV3\OpeningHourFormatter;
 use CultuurNet\CalendarSummaryV3\PlainTextSummaryBuilder;
+use CultuurNet\CalendarSummaryV3\PlainTextWeekSchemeFormatter;
 use CultuurNet\CalendarSummaryV3\Translator;
-use DateTimeImmutable;
 
 final class LargePermanentPlainTextFormatter implements PermanentFormatterInterface
 {
-    /**
-     * @var DateFormatter
-     */
-    private $formatter;
-
     /**
      * @var Translator
      */
@@ -26,7 +18,6 @@ final class LargePermanentPlainTextFormatter implements PermanentFormatterInterf
 
     public function __construct(Translator $translator)
     {
-        $this->formatter = new DateFormatter($translator->getLocale());
         $this->translator = $translator;
     }
 
@@ -41,61 +32,13 @@ final class LargePermanentPlainTextFormatter implements PermanentFormatterInterf
         }
 
         if (!$offer->getOpeningHours()->isEmpty()) {
-            return $this->generateWeekScheme($offer->getOpeningHours());
+            return PlainTextWeekSchemeFormatter::forOpeningHours($offer->getOpeningHours(), $this->translator)
+                ->toString() . PHP_EOL;
         }
 
         return PlainTextSummaryBuilder::start($this->translator)
             ->alwaysOpen()
             ->startNewLine()
             ->toString();
-    }
-
-    private function generateWeekScheme(OpeningHours $openingHours): string
-    {
-        $dayNames = [
-            'monday',
-            'tuesday',
-            'wednesday',
-            'thursday',
-            'friday',
-            'saturday',
-            'sunday',
-        ];
-
-        // Add day name to the start of each day's week scheme
-        $formattedDays = [];
-        foreach ($dayNames as $key => $dayName) {
-            $day = PlainTextSummaryBuilder::start($this->translator);
-            if ($key !== 0) {
-                $day = $day->startNewLine();
-            }
-
-            $formattedDays[$dayName] = $day
-                ->append($this->formatter->formatAsDayOfWeek(new DateTimeImmutable($dayName)));
-        }
-
-        // Keep track of which day (names) have opening hours, so we know which days are closed.
-        $daysWithOpeningHours = [];
-
-        // Loop over every 'from ... till ...' and add it to the right day(s)
-        foreach ($openingHours as $openingHour) {
-            foreach ($openingHour->getDaysOfWeek() as $dayName) {
-                $daysWithOpeningHours[] = $dayName;
-                $formattedDays[$dayName] = $formattedDays[$dayName]
-                    ->fromHour(OpeningHourFormatter::format($openingHour->getOpens()))
-                    ->tillHour(OpeningHourFormatter::format($openingHour->getCloses()));
-            }
-        }
-
-        // Add 'closed' to every day without opening hours.
-        $daysWithOpeningHours = array_unique($daysWithOpeningHours);
-        $closedDays = array_diff($dayNames, $daysWithOpeningHours);
-        foreach ($closedDays as $closedDayName) {
-            $formattedDays[$closedDayName] = $formattedDays[$closedDayName]
-                ->closed();
-        }
-
-        // Combine the opening info of each day together into a single string.
-        return implode('', $formattedDays) . PHP_EOL;
     }
 }
