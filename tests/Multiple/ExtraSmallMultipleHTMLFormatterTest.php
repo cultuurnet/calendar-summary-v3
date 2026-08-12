@@ -6,6 +6,7 @@ namespace CultuurNet\CalendarSummaryV3\Multiple;
 
 use Carbon\CarbonImmutable;
 use CultuurNet\CalendarSummaryV3\CalendarSummaryTester;
+use CultuurNet\CalendarSummaryV3\HtmlFixture;
 use CultuurNet\CalendarSummaryV3\Offer\BookingAvailability;
 use CultuurNet\CalendarSummaryV3\Offer\CalendarType;
 use CultuurNet\CalendarSummaryV3\Offer\Offer;
@@ -17,6 +18,8 @@ use PHPUnit\Framework\TestCase;
 
 final class ExtraSmallMultipleHTMLFormatterTest extends TestCase
 {
+    use HtmlFixture;
+
     /**
      * @var ExtraSmallMultipleHTMLFormatter
      */
@@ -40,9 +43,7 @@ final class ExtraSmallMultipleHTMLFormatterTest extends TestCase
         );
 
         $this->assertEquals(
-            '<span class="cf-date">25</span> <span class="cf-month">nov</span> <span class="cf-year">2025</span>'
-            . ' - '
-            . '<span class="cf-date">30</span> <span class="cf-month">nov</span> <span class="cf-year">2030</span>',
+            $this->expectedHtml('multipleWithoutLeadingZeroes'),
             $this->formatter->format($offer)
         );
     }
@@ -59,9 +60,7 @@ final class ExtraSmallMultipleHTMLFormatterTest extends TestCase
         );
 
         $this->assertEquals(
-            '<span class="cf-date">4</span> <span class="cf-month">mrt</span> <span class="cf-year">2025</span>'
-            . ' - '
-            . '<span class="cf-date">8</span> <span class="cf-month">mrt</span> <span class="cf-year">2030</span>',
+            $this->expectedHtml('multipleWithLeadingZeroes'),
             $this->formatter->format($offer)
         );
     }
@@ -78,10 +77,7 @@ final class ExtraSmallMultipleHTMLFormatterTest extends TestCase
         );
 
         $this->assertEquals(
-            '<span class="cf-date">25</span> <span class="cf-month">nov</span> <span class="cf-year">2025</span>'
-            . ' - '
-            . '<span class="cf-date">30</span> <span class="cf-month">nov</span> <span class="cf-year">2030</span>'
-            . ' <span class="cf-status">(geannuleerd)</span>',
+            $this->expectedHtml('multipleWithoutLeadingZeroesWithUnavailableStatus'),
             $this->formatter->format($offer)
         );
     }
@@ -98,10 +94,7 @@ final class ExtraSmallMultipleHTMLFormatterTest extends TestCase
         );
 
         $this->assertEquals(
-            '<span class="cf-date">25</span> <span class="cf-month">nov</span> <span class="cf-year">2025</span>'
-            . ' - '
-            . '<span class="cf-date">30</span> <span class="cf-month">nov</span> <span class="cf-year">2030</span>'
-            . ' <span class="cf-status">(geannuleerd)</span>',
+            $this->expectedHtml('multipleWithoutLeadingZeroesWithUnavailableStatusAndUnavailableBooking'),
             $this->formatter->format($offer)
         );
     }
@@ -118,10 +111,7 @@ final class ExtraSmallMultipleHTMLFormatterTest extends TestCase
         );
 
         $this->assertEquals(
-            '<span class="cf-date">25</span> <span class="cf-month">nov</span> <span class="cf-year">2025</span>'
-            . ' - '
-            . '<span class="cf-date">30</span> <span class="cf-month">nov</span> <span class="cf-year">2030</span>'
-            . ' <span class="cf-status">(Volzet of uitverkocht)</span>',
+            $this->expectedHtml('multipleWithoutLeadingZeroesWithAvailableStatusAndUnavailableBooking'),
             $this->formatter->format($offer)
         );
     }
@@ -138,8 +128,7 @@ final class ExtraSmallMultipleHTMLFormatterTest extends TestCase
         );
 
         $this->assertEquals(
-            '<span class="cf-date">4</span> <span class="cf-month">okt</span> <span class="cf-year">2025</span>' .
-            ' - <span class="cf-date">8</span> <span class="cf-month">okt</span> <span class="cf-year">2030</span>',
+            $this->expectedHtml('multipleMonthWithoutLeadingZero'),
             $this->formatter->format($offer)
         );
     }

@@ -6,6 +6,7 @@ namespace CultuurNet\CalendarSummaryV3\Permanent;
 
 use Carbon\CarbonImmutable;
 use CultuurNet\CalendarSummaryV3\CalendarSummaryTester;
+use CultuurNet\CalendarSummaryV3\HtmlFixture;
 use CultuurNet\CalendarSummaryV3\Offer\AdjustedDay;
 use CultuurNet\CalendarSummaryV3\Offer\BookingAvailability;
 use CultuurNet\CalendarSummaryV3\Offer\CalendarType;
@@ -22,6 +23,8 @@ use PHPUnit\Framework\TestCase;
 
 final class ExtraLargePermanentHTMLFormatterTest extends TestCase
 {
+    use HtmlFixture;
+
     protected ExtraLargePermanentHTMLFormatter $formatter;
 
     protected function setUp(): void
@@ -48,64 +51,7 @@ final class ExtraLargePermanentHTMLFormatterTest extends TestCase
         );
 
         $this->assertEquals(
-            '<ul class="list-unstyled"> '
-            . '<meta itemprop="openingHours" datetime="Ma 0:01-20:00"> </meta> '
-            . '<li itemprop="openingHoursSpecification"> '
-            . '<span class="cf-days">Maandag</span> '
-            . '<span itemprop="opens" content="0:01" class="cf-from cf-meta">van</span> '
-            . '<span class="cf-time">0:01</span> '
-            . '<span itemprop="closes" content="13:00" class="cf-to cf-meta">tot</span> '
-            . '<span class="cf-time">13:00</span> '
-            . '<span itemprop="opens" content="14:00" class="cf-from cf-meta">en van</span> '
-            . '<span class="cf-time">14:00</span> '
-            . '<span itemprop="closes" content="20:00" class="cf-to cf-meta">tot</span> '
-            . '<span class="cf-time">20:00</span> '
-            . '</li> '
-            . '<meta itemprop="openingHours" datetime="Di 0:01-13:00"> </meta> '
-            . '<li itemprop="openingHoursSpecification"> '
-            . '<span class="cf-days">Dinsdag</span> '
-            . '<span itemprop="opens" content="0:01" class="cf-from cf-meta">van</span> '
-            . '<span class="cf-time">0:01</span> '
-            . '<span itemprop="closes" content="13:00" class="cf-to cf-meta">tot</span> '
-            . '<span class="cf-time">13:00</span> '
-            . '</li> '
-            . '<meta itemprop="openingHours" datetime="Wo 0:01-13:00"> </meta> '
-            . '<li itemprop="openingHoursSpecification"> '
-            . '<span class="cf-days">Woensdag</span> '
-            . '<span itemprop="opens" content="0:01" class="cf-from cf-meta">van</span> '
-            . '<span class="cf-time">0:01</span> '
-            . '<span itemprop="closes" content="13:00" class="cf-to cf-meta">tot</span> '
-            . '<span class="cf-time">13:00</span> '
-            . '</li> '
-            . '<meta itemprop="openingHours" datetime="Donderdag"> </meta> '
-            . '<li itemprop="openingHoursSpecification"> '
-            . '<span class="cf-days">Donderdag</span> '
-            . '<span itemprop="closed" content="closed" class="cf-closed cf-meta">gesloten</span> '
-            . '</li> '
-            . '<meta itemprop="openingHours" datetime="Vr 9:00-13:00"> </meta> '
-            . '<li itemprop="openingHoursSpecification"> '
-            . '<span class="cf-days">Vrijdag</span> '
-            . '<span itemprop="opens" content="9:00" class="cf-from cf-meta">van</span> '
-            . '<span class="cf-time">9:00</span> '
-            . '<span itemprop="closes" content="13:00" class="cf-to cf-meta">tot</span> '
-            . '<span class="cf-time">13:00</span> '
-            . '</li> '
-            . '<meta itemprop="openingHours" datetime="Za 9:00-19:00"> </meta> '
-            . '<li itemprop="openingHoursSpecification"> '
-            . '<span class="cf-days">Zaterdag</span> '
-            . '<span itemprop="opens" content="9:00" class="cf-from cf-meta">van</span> '
-            . '<span class="cf-time">9:00</span> '
-            . '<span itemprop="closes" content="19:00" class="cf-to cf-meta">tot</span> '
-            . '<span class="cf-time">19:00</span> '
-            . '</li> '
-            . '<meta itemprop="openingHours" datetime="Zo 9:00-19:00"> </meta> '
-            . '<li itemprop="openingHoursSpecification"> '
-            . '<span class="cf-days">Zondag</span> '
-            . '<span itemprop="opens" content="9:00" class="cf-from cf-meta">van</span> '
-            . '<span class="cf-time">9:00</span> '
-            . '<span itemprop="closes" content="19:00" class="cf-to cf-meta">tot</span> '
-            . '<span class="cf-time">19:00</span> '
-            . '</li> </ul>',
+            $this->expectedHtml('simplePermanent'),
             $this->formatter->format($place)
         );
     }
@@ -119,29 +65,7 @@ final class ExtraLargePermanentHTMLFormatterTest extends TestCase
         );
 
         $this->assertEquals(
-            '<ul class="list-unstyled"> '
-            . '<meta itemprop="openingHours" datetime="Ma 9:00-16:00"> </meta> '
-            . '<li itemprop="openingHoursSpecification"> '
-            . '<span class="cf-days">Maandag</span> '
-            . '<span itemprop="opens" content="9:00" class="cf-from cf-meta">van</span> '
-            . '<span class="cf-time">9:00</span> '
-            . '<span itemprop="closes" content="16:00" class="cf-to cf-meta">tot</span> '
-            . '<span class="cf-time">16:00</span> '
-            . '</li> '
-            . '<meta itemprop="openingHours" datetime="Di 9:00-16:00"> </meta> '
-            . '<li itemprop="openingHoursSpecification"> '
-            . '<span class="cf-days">Dinsdag</span> '
-            . '<span itemprop="opens" content="9:00" class="cf-from cf-meta">van</span> '
-            . '<span class="cf-time">9:00</span> '
-            . '<span itemprop="closes" content="16:00" class="cf-to cf-meta">tot</span> '
-            . '<span class="cf-time">16:00</span> '
-            . '</li> '
-            . $this->closedDay('Woensdag')
-            . $this->closedDay('Donderdag')
-            . $this->closedDay('Vrijdag')
-            . $this->closedDay('Zaterdag')
-            . $this->closedDay('Zondag')
-            . '<li class="cf-childcare">Elke dag opvang van 8:00 tot 17:00</li> </ul>',
+            $this->expectedHtml('sharedChildcareAsASingleListItem'),
             $this->formatter->format($place)
         );
     }
@@ -156,31 +80,7 @@ final class ExtraLargePermanentHTMLFormatterTest extends TestCase
         );
 
         $this->assertEquals(
-            '<ul class="list-unstyled"> '
-            . '<meta itemprop="openingHours" datetime="Ma 9:00-16:00"> </meta> '
-            . '<li itemprop="openingHoursSpecification"> '
-            . '<span class="cf-days">Maandag</span> '
-            . '<span itemprop="opens" content="9:00" class="cf-from cf-meta">van</span> '
-            . '<span class="cf-time">9:00</span> '
-            . '<span itemprop="closes" content="16:00" class="cf-to cf-meta">tot</span> '
-            . '<span class="cf-time">16:00</span> '
-            . '<span class="cf-childcare">(Opvang van 8:00 tot 17:00)</span> '
-            . '</li> '
-            . $this->closedDay('Dinsdag')
-            . '<meta itemprop="openingHours" datetime="Wo 9:00-12:00"> </meta> '
-            . '<li itemprop="openingHoursSpecification"> '
-            . '<span class="cf-days">Woensdag</span> '
-            . '<span itemprop="opens" content="9:00" class="cf-from cf-meta">van</span> '
-            . '<span class="cf-time">9:00</span> '
-            . '<span itemprop="closes" content="12:00" class="cf-to cf-meta">tot</span> '
-            . '<span class="cf-time">12:00</span> '
-            . '<span class="cf-childcare">(Opvang van 8:00 tot 13:00)</span> '
-            . '</li> '
-            . $this->closedDay('Donderdag')
-            . $this->closedDay('Vrijdag')
-            . $this->closedDay('Zaterdag')
-            . $this->closedDay('Zondag')
-            . '</ul>',
+            $this->expectedHtml('differingChildcareOnTheDayItself'),
             $this->formatter->format($place)
         );
     }
@@ -195,30 +95,7 @@ final class ExtraLargePermanentHTMLFormatterTest extends TestCase
         );
 
         $this->assertEquals(
-            '<ul class="list-unstyled"> '
-            . '<meta itemprop="openingHours" datetime="Ma 9:00-16:00"> </meta> '
-            . '<li itemprop="openingHoursSpecification"> '
-            . '<span class="cf-days">Maandag</span> '
-            . '<span itemprop="opens" content="9:00" class="cf-from cf-meta">van</span> '
-            . '<span class="cf-time">9:00</span> '
-            . '<span itemprop="closes" content="16:00" class="cf-to cf-meta">tot</span> '
-            . '<span class="cf-time">16:00</span> '
-            . '<span class="cf-childcare">(Opvang van 8:00 tot 17:00)</span> '
-            . '</li> '
-            . '<meta itemprop="openingHours" datetime="Di 9:00-16:00"> </meta> '
-            . '<li itemprop="openingHoursSpecification"> '
-            . '<span class="cf-days">Dinsdag</span> '
-            . '<span itemprop="opens" content="9:00" class="cf-from cf-meta">van</span> '
-            . '<span class="cf-time">9:00</span> '
-            . '<span itemprop="closes" content="16:00" class="cf-to cf-meta">tot</span> '
-            . '<span class="cf-time">16:00</span> '
-            . '</li> '
-            . $this->closedDay('Woensdag')
-            . $this->closedDay('Donderdag')
-            . $this->closedDay('Vrijdag')
-            . $this->closedDay('Zaterdag')
-            . $this->closedDay('Zondag')
-            . '</ul>',
+            $this->expectedHtml('childcareOnTheDayItselfWhenNotEveryDayHasIt'),
             $this->formatter->format($place)
         );
     }
@@ -234,34 +111,7 @@ final class ExtraLargePermanentHTMLFormatterTest extends TestCase
         );
 
         $this->assertEquals(
-            '<ul class="list-unstyled"> '
-            . '<meta itemprop="openingHours" datetime="Ma 9:00-17:00"> </meta> '
-            . '<li itemprop="openingHoursSpecification"> '
-            . '<span class="cf-days">Maandag</span> '
-            . '<span itemprop="opens" content="9:00" class="cf-from cf-meta">van</span> '
-            . '<span class="cf-time">9:00</span> '
-            . '<span itemprop="closes" content="12:00" class="cf-to cf-meta">tot</span> '
-            . '<span class="cf-time">12:00</span> '
-            . '<span itemprop="opens" content="13:00" class="cf-from cf-meta">en van</span> '
-            . '<span class="cf-time">13:00</span> '
-            . '<span itemprop="closes" content="17:00" class="cf-to cf-meta">tot</span> '
-            . '<span class="cf-time">17:00</span> '
-            . '<span class="cf-childcare">(Opvang van 8:00 tot 18:00)</span> '
-            . '</li> '
-            . '<meta itemprop="openingHours" datetime="Di 9:00-16:00"> </meta> '
-            . '<li itemprop="openingHoursSpecification"> '
-            . '<span class="cf-days">Dinsdag</span> '
-            . '<span itemprop="opens" content="9:00" class="cf-from cf-meta">van</span> '
-            . '<span class="cf-time">9:00</span> '
-            . '<span itemprop="closes" content="16:00" class="cf-to cf-meta">tot</span> '
-            . '<span class="cf-time">16:00</span> '
-            . '</li> '
-            . $this->closedDay('Woensdag')
-            . $this->closedDay('Donderdag')
-            . $this->closedDay('Vrijdag')
-            . $this->closedDay('Zaterdag')
-            . $this->closedDay('Zondag')
-            . '</ul>',
+            $this->expectedHtml('childcareOfADayWithMultipleTimespansOnlyOnce'),
             $this->formatter->format($place)
         );
     }
@@ -276,28 +126,7 @@ final class ExtraLargePermanentHTMLFormatterTest extends TestCase
         );
 
         $this->assertEquals(
-            '<ul class="list-unstyled"> '
-            . '<meta itemprop="openingHours" datetime="Ma 9:00-17:00"> </meta> '
-            . '<li itemprop="openingHoursSpecification"> '
-            . '<span class="cf-days">Maandag</span> '
-            . '<span itemprop="opens" content="9:00" class="cf-from cf-meta">van</span> '
-            . '<span class="cf-time">9:00</span> '
-            . '<span itemprop="closes" content="12:00" class="cf-to cf-meta">tot</span> '
-            . '<span class="cf-time">12:00</span> '
-            . '<span class="cf-childcare">(Opvang van 8:00 tot 13:00)</span> '
-            . '<span itemprop="opens" content="13:00" class="cf-from cf-meta">en van</span> '
-            . '<span class="cf-time">13:00</span> '
-            . '<span itemprop="closes" content="17:00" class="cf-to cf-meta">tot</span> '
-            . '<span class="cf-time">17:00</span> '
-            . '<span class="cf-childcare">(Opvang van 12:00 tot 18:00)</span> '
-            . '</li> '
-            . $this->closedDay('Dinsdag')
-            . $this->closedDay('Woensdag')
-            . $this->closedDay('Donderdag')
-            . $this->closedDay('Vrijdag')
-            . $this->closedDay('Zaterdag')
-            . $this->closedDay('Zondag')
-            . '</ul>',
+            $this->expectedHtml('childcareOfEveryTimespanWhenItDiffersOnTheSameDay'),
             $this->formatter->format($place)
         );
     }
@@ -319,27 +148,7 @@ final class ExtraLargePermanentHTMLFormatterTest extends TestCase
         );
 
         $this->assertEquals(
-            '<p class="cf-openinghours">Alle dagen open</p> '
-            . '<details class="cf-adjusted-days"> '
-            . '<summary>Behalve tijdens</summary> '
-            . '<ul class="list-unstyled"> '
-            . '<li> '
-            . '<span class="cf-date">Maandag 2 november 2026</span> '
-            . '<span class="cf-to cf-meta">tot en met</span> '
-            . '<span class="cf-date">zaterdag 7 november 2026</span> '
-            . '<span class="cf-days">Maandag - dinsdag</span> '
-            . '<span class="cf-from cf-meta">van</span> '
-            . '<span class="cf-time">9:00</span> '
-            . '<span class="cf-to cf-meta">tot</span> '
-            . '<span class="cf-time">12:00</span> '
-            . '<span class="cf-days">Donderdag</span> '
-            . '<span class="cf-from cf-meta">van</span> '
-            . '<span class="cf-time">13:00</span> '
-            . '<span class="cf-to cf-meta">tot</span> '
-            . '<span class="cf-time">17:00</span> '
-            . '<span class="cf-childcare">Elke dag opvang van 8:00 tot 18:00</span> '
-            . '<span class="cf-description">Herfstvakantie</span> '
-            . '</li> </ul> </details>',
+            $this->expectedHtml('sharedChildcareInAnAdjustedDay'),
             $this->formatter->format($place)
         );
     }
@@ -360,27 +169,7 @@ final class ExtraLargePermanentHTMLFormatterTest extends TestCase
         );
 
         $this->assertEquals(
-            '<p class="cf-openinghours">Alle dagen open</p> '
-            . '<details class="cf-adjusted-days"> '
-            . '<summary>Behalve tijdens</summary> '
-            . '<ul class="list-unstyled"> '
-            . '<li> '
-            . '<span class="cf-date">Maandag 2 november 2026</span> '
-            . '<span class="cf-to cf-meta">tot en met</span> '
-            . '<span class="cf-date">zaterdag 7 november 2026</span> '
-            . '<span class="cf-days">Maandag - dinsdag</span> '
-            . '<span class="cf-from cf-meta">van</span> '
-            . '<span class="cf-time">9:00</span> '
-            . '<span class="cf-to cf-meta">tot</span> '
-            . '<span class="cf-time">12:00</span> '
-            . '<span class="cf-childcare">(Opvang van 8:00 tot 13:00)</span> '
-            . '<span class="cf-days">Donderdag</span> '
-            . '<span class="cf-from cf-meta">van</span> '
-            . '<span class="cf-time">13:00</span> '
-            . '<span class="cf-to cf-meta">tot</span> '
-            . '<span class="cf-time">17:00</span> '
-            . '<span class="cf-childcare">(Opvang van 12:00 tot 18:00)</span> '
-            . '</li> </ul> </details>',
+            $this->expectedHtml('differingChildcareInAnAdjustedDay'),
             $this->formatter->format($place)
         );
     }
@@ -465,59 +254,7 @@ final class ExtraLargePermanentHTMLFormatterTest extends TestCase
             ->withAdjustedDays([$this->autumnHoliday()]);
 
         $this->assertEquals(
-            '<ul class="list-unstyled"> '
-            . '<meta itemprop="openingHours" datetime="Ma 9:00-13:00"> </meta> '
-            . '<li itemprop="openingHoursSpecification"> '
-            . '<span class="cf-days">Maandag</span> '
-            . '<span itemprop="opens" content="9:00" class="cf-from cf-meta">van</span> '
-            . '<span class="cf-time">9:00</span> '
-            . '<span itemprop="closes" content="13:00" class="cf-to cf-meta">tot</span> '
-            . '<span class="cf-time">13:00</span> '
-            . '</li> '
-            . '<meta itemprop="openingHours" datetime="Dinsdag"> </meta> '
-            . '<li itemprop="openingHoursSpecification"> '
-            . '<span class="cf-days">Dinsdag</span> '
-            . '<span itemprop="closed" content="closed" class="cf-closed cf-meta">gesloten</span> '
-            . '</li> '
-            . '<meta itemprop="openingHours" datetime="Woensdag"> </meta> '
-            . '<li itemprop="openingHoursSpecification"> '
-            . '<span class="cf-days">Woensdag</span> '
-            . '<span itemprop="closed" content="closed" class="cf-closed cf-meta">gesloten</span> '
-            . '</li> '
-            . '<meta itemprop="openingHours" datetime="Donderdag"> </meta> '
-            . '<li itemprop="openingHoursSpecification"> '
-            . '<span class="cf-days">Donderdag</span> '
-            . '<span itemprop="closed" content="closed" class="cf-closed cf-meta">gesloten</span> '
-            . '</li> '
-            . '<meta itemprop="openingHours" datetime="Vrijdag"> </meta> '
-            . '<li itemprop="openingHoursSpecification"> '
-            . '<span class="cf-days">Vrijdag</span> '
-            . '<span itemprop="closed" content="closed" class="cf-closed cf-meta">gesloten</span> '
-            . '</li> '
-            . '<meta itemprop="openingHours" datetime="Zaterdag"> </meta> '
-            . '<li itemprop="openingHoursSpecification"> '
-            . '<span class="cf-days">Zaterdag</span> '
-            . '<span itemprop="closed" content="closed" class="cf-closed cf-meta">gesloten</span> '
-            . '</li> '
-            . '<meta itemprop="openingHours" datetime="Zondag"> </meta> '
-            . '<li itemprop="openingHoursSpecification"> '
-            . '<span class="cf-days">Zondag</span> '
-            . '<span itemprop="closed" content="closed" class="cf-closed cf-meta">gesloten</span> '
-            . '</li> </ul> '
-            . '<details class="cf-adjusted-days"> '
-            . '<summary>Behalve tijdens</summary> '
-            . '<ul class="list-unstyled"> '
-            . '<li> '
-            . '<span class="cf-date">Maandag 2 november 2026</span> '
-            . '<span class="cf-to cf-meta">tot en met</span> '
-            . '<span class="cf-date">zaterdag 7 november 2026</span> '
-            . '<span class="cf-days">Maandag - donderdag</span> '
-            . '<span class="cf-from cf-meta">van</span> '
-            . '<span class="cf-time">9:00</span> '
-            . '<span class="cf-to cf-meta">tot</span> '
-            . '<span class="cf-time">16:00</span> '
-            . '<span class="cf-description">Herfstvakantie</span> '
-            . '</li> </ul> </details>',
+            $this->expectedHtml('adjustedDaysAfterTheWeekScheme'),
             $this->formatter->format($place)
         );
     }
@@ -527,21 +264,7 @@ final class ExtraLargePermanentHTMLFormatterTest extends TestCase
         $place = $this->availablePlace()->withAdjustedDays([$this->autumnHoliday()]);
 
         $this->assertEquals(
-            '<p class="cf-openinghours">Alle dagen open</p> '
-            . '<details class="cf-adjusted-days"> '
-            . '<summary>Behalve tijdens</summary> '
-            . '<ul class="list-unstyled"> '
-            . '<li> '
-            . '<span class="cf-date">Maandag 2 november 2026</span> '
-            . '<span class="cf-to cf-meta">tot en met</span> '
-            . '<span class="cf-date">zaterdag 7 november 2026</span> '
-            . '<span class="cf-days">Maandag - donderdag</span> '
-            . '<span class="cf-from cf-meta">van</span> '
-            . '<span class="cf-time">9:00</span> '
-            . '<span class="cf-to cf-meta">tot</span> '
-            . '<span class="cf-time">16:00</span> '
-            . '<span class="cf-description">Herfstvakantie</span> '
-            . '</li> </ul> </details>',
+            $this->expectedHtml('adjustedDaysForASinglePeriod'),
             $this->formatter->format($place)
         );
     }
@@ -551,20 +274,7 @@ final class ExtraLargePermanentHTMLFormatterTest extends TestCase
         $place = $this->availablePlace()->withAdjustedDays([$this->autumnHoliday()]);
 
         $this->assertEquals(
-            '<p class="cf-openinghours">Ouvert tous les jours</p> '
-            . '<details class="cf-adjusted-days"> '
-            . '<summary>Sauf pendant</summary> '
-            . '<ul class="list-unstyled"> '
-            . '<li> '
-            . '<span class="cf-date">Lundi 2 novembre 2026</span> '
-            . '<span class="cf-to cf-meta">au</span> '
-            . '<span class="cf-date">samedi 7 novembre 2026</span> '
-            . '<span class="cf-days">Lundi - jeudi</span> '
-            . '<span class="cf-from cf-meta">de</span> '
-            . '<span class="cf-time">9:00</span> '
-            . '<span class="cf-to cf-meta">à</span> '
-            . '<span class="cf-time">16:00</span> '
-            . '</li> </ul> </details>',
+            $this->expectedHtml('adjustedDaysForASinglePeriodInFrench'),
             (new ExtraLargePermanentHTMLFormatter(new Translator('fr_BE')))->format($place)
         );
     }
@@ -583,19 +293,7 @@ final class ExtraLargePermanentHTMLFormatterTest extends TestCase
         );
 
         $this->assertEquals(
-            '<p class="cf-openinghours">Alle dagen open</p> '
-            . '<details class="cf-adjusted-days"> '
-            . '<summary>Behalve tijdens</summary> '
-            . '<ul class="list-unstyled"> '
-            . '<li> '
-            . '<span class="cf-date">Maandag 2 november 2026</span> '
-            . '<span class="cf-days">Maandag</span> '
-            . '<span class="cf-from cf-meta">van</span> '
-            . '<span class="cf-time">10:00</span> '
-            . '<span class="cf-to cf-meta">tot</span> '
-            . '<span class="cf-time">12:00</span> '
-            . '<span class="cf-description">Feestdag</span> '
-            . '</li> </ul> </details>',
+            $this->expectedHtml('adjustedDaysForASingleDay'),
             $this->formatter->format($place)
         );
     }
@@ -617,26 +315,7 @@ final class ExtraLargePermanentHTMLFormatterTest extends TestCase
         );
 
         $this->assertEquals(
-            '<p class="cf-openinghours">Alle dagen open</p> '
-            . '<details class="cf-adjusted-days"> '
-            . '<summary>Behalve tijdens</summary> '
-            . '<ul class="list-unstyled"> '
-            . '<li> '
-            . '<span class="cf-date">Maandag 2 november 2026</span> '
-            . '<span class="cf-to cf-meta">tot en met</span> '
-            . '<span class="cf-date">zaterdag 7 november 2026</span> '
-            . '<span class="cf-days">Maandag - dinsdag</span> '
-            . '<span class="cf-from cf-meta">van</span> '
-            . '<span class="cf-time">9:00</span> '
-            . '<span class="cf-to cf-meta">tot</span> '
-            . '<span class="cf-time">12:00</span> '
-            . '<span class="cf-days">Donderdag - zaterdag</span> '
-            . '<span class="cf-from cf-meta">van</span> '
-            . '<span class="cf-time">13:00</span> '
-            . '<span class="cf-to cf-meta">tot</span> '
-            . '<span class="cf-time">17:00</span> '
-            . '<span class="cf-description">Herfstvakantie</span> '
-            . '</li> </ul> </details>',
+            $this->expectedHtml('adjustedDaysWithMultipleOpeningHours'),
             $this->formatter->format($place)
         );
     }
@@ -654,20 +333,7 @@ final class ExtraLargePermanentHTMLFormatterTest extends TestCase
         );
 
         $this->assertEquals(
-            '<p class="cf-openinghours">Alle dagen open</p> '
-            . '<details class="cf-adjusted-days"> '
-            . '<summary>Behalve tijdens</summary> '
-            . '<ul class="list-unstyled"> '
-            . '<li> '
-            . '<span class="cf-date">Maandag 2 november 2026</span> '
-            . '<span class="cf-to cf-meta">tot en met</span> '
-            . '<span class="cf-date">zaterdag 7 november 2026</span> '
-            . '<span class="cf-days">Maandag, woensdag</span> '
-            . '<span class="cf-from cf-meta">van</span> '
-            . '<span class="cf-time">9:00</span> '
-            . '<span class="cf-to cf-meta">tot</span> '
-            . '<span class="cf-time">16:00</span> '
-            . '</li> </ul> </details>',
+            $this->expectedHtml('adjustedDaysWithNonConsecutiveDays'),
             $this->formatter->format($place)
         );
     }
@@ -686,16 +352,7 @@ final class ExtraLargePermanentHTMLFormatterTest extends TestCase
         );
 
         $this->assertEquals(
-            '<p class="cf-openinghours">Alle dagen open</p> '
-            . '<details class="cf-adjusted-days"> '
-            . '<summary>Behalve tijdens</summary> '
-            . '<ul class="list-unstyled"> '
-            . '<li> '
-            . '<span class="cf-date">Donderdag 24 december 2026</span> '
-            . '<span class="cf-to cf-meta">tot en met</span> '
-            . '<span class="cf-date">zondag 3 januari 2027</span> '
-            . '<span class="cf-description">Kerstvakantie</span> '
-            . '</li> </ul> </details>',
+            $this->expectedHtml('adjustedDaysWithoutOpeningHours'),
             $this->formatter->format($place)
         );
     }
@@ -714,13 +371,7 @@ final class ExtraLargePermanentHTMLFormatterTest extends TestCase
         );
 
         $this->assertEquals(
-            '<p class="cf-openinghours">Alle dagen open</p> '
-            . '<details class="cf-adjusted-days"> '
-            . '<summary>Behalve tijdens</summary> '
-            . '<ul class="list-unstyled"> '
-            . '<li> '
-            . '<span class="cf-date">Maandag 2 november 2026</span> '
-            . '</li> </ul> </details>',
+            $this->expectedHtml('itDoesNotRenderTheDescriptionWhenTranslationIsUnavailable'),
             $this->formatter->format($place)
         );
     }
@@ -745,18 +396,7 @@ final class ExtraLargePermanentHTMLFormatterTest extends TestCase
         );
 
         $this->assertEquals(
-            '<p class="cf-openinghours">Alle dagen open</p> '
-            . '<details class="cf-adjusted-days"> '
-            . '<summary>Behalve tijdens</summary> '
-            . '<ul class="list-unstyled"> '
-            . '<li> '
-            . '<span class="cf-date">Maandag 2 november 2026</span> '
-            . '<span class="cf-description">Herfstvakantie</span> '
-            . '</li> '
-            . '<li> '
-            . '<span class="cf-date">Donderdag 24 december 2026</span> '
-            . '<span class="cf-description">Kerstavond</span> '
-            . '</li> </ul> </details>',
+            $this->expectedHtml('itRendersMultipleAdjustedDays'),
             $this->formatter->format($place)
         );
     }
@@ -794,16 +434,7 @@ final class ExtraLargePermanentHTMLFormatterTest extends TestCase
         );
 
         $this->assertEquals(
-            '<p class="cf-openinghours">Alle dagen open</p> '
-            . '<details class="cf-adjusted-days"> '
-            . '<summary>Behalve tijdens</summary> '
-            . '<ul class="list-unstyled"> '
-            . '<li> '
-            . '<span class="cf-date">Maandag 3 augustus 2026</span> '
-            . '<span class="cf-to cf-meta">tot en met</span> '
-            . '<span class="cf-date">maandag 10 augustus 2026</span> '
-            . '<span class="cf-description">Loopt vandaag af</span> '
-            . '</li> </ul> </details>',
+            $this->expectedHtml('itRendersAdjustedDaysThatEndToday'),
             $this->formatter->format($place)
         );
     }
@@ -813,16 +444,7 @@ final class ExtraLargePermanentHTMLFormatterTest extends TestCase
         $place = $this->availablePlace()->withClosedDays([$this->christmasHoliday()]);
 
         $this->assertEquals(
-            '<p class="cf-openinghours">Alle dagen open</p> '
-            . '<details class="cf-closed-days"> '
-            . '<summary>Gesloten</summary> '
-            . '<ul class="list-unstyled"> '
-            . '<li> '
-            . '<span class="cf-date">Donderdag 24 december 2026</span> '
-            . '<span class="cf-to cf-meta">tot en met</span> '
-            . '<span class="cf-date">zondag 3 januari 2027</span> '
-            . '<span class="cf-description">Kerstvakantie</span> '
-            . '</li> </ul> </details>',
+            $this->expectedHtml('closedDays'),
             $this->formatter->format($place)
         );
     }
@@ -832,15 +454,7 @@ final class ExtraLargePermanentHTMLFormatterTest extends TestCase
         $place = $this->availablePlace()->withClosedDays([$this->christmasHoliday()]);
 
         $this->assertEquals(
-            '<p class="cf-openinghours">Ouvert tous les jours</p> '
-            . '<details class="cf-closed-days"> '
-            . '<summary>Fermé</summary> '
-            . '<ul class="list-unstyled"> '
-            . '<li> '
-            . '<span class="cf-date">Jeudi 24 décembre 2026</span> '
-            . '<span class="cf-to cf-meta">au</span> '
-            . '<span class="cf-date">dimanche 3 janvier 2027</span> '
-            . '</li> </ul> </details>',
+            $this->expectedHtml('closedDaysInFrench'),
             (new ExtraLargePermanentHTMLFormatter(new Translator('fr_BE')))->format($place)
         );
     }
@@ -858,14 +472,7 @@ final class ExtraLargePermanentHTMLFormatterTest extends TestCase
         );
 
         $this->assertEquals(
-            '<p class="cf-openinghours">Alle dagen open</p> '
-            . '<details class="cf-closed-days"> '
-            . '<summary>Gesloten</summary> '
-            . '<ul class="list-unstyled"> '
-            . '<li> '
-            . '<span class="cf-date">Vrijdag 25 december 2026</span> '
-            . '<span class="cf-description">Kerstmis</span> '
-            . '</li> </ul> </details>',
+            $this->expectedHtml('closedDaysForASingleDay'),
             $this->formatter->format($place)
         );
     }
@@ -884,22 +491,7 @@ final class ExtraLargePermanentHTMLFormatterTest extends TestCase
         );
 
         $this->assertEquals(
-            '<p class="cf-openinghours">Alle dagen open</p> '
-            . '<details class="cf-closed-days"> '
-            . '<summary>Gesloten</summary> '
-            . '<ul class="list-unstyled"> '
-            . '<li> '
-            . '<span class="cf-date">Donderdag 24 december 2026</span> '
-            . '<span class="cf-to cf-meta">tot en met</span> '
-            . '<span class="cf-date">zondag 3 januari 2027</span> '
-            . '<span class="cf-description">Kerstvakantie</span> '
-            . '</li> '
-            . '<li> '
-            . '<span class="cf-date">Maandag 5 april 2027</span> '
-            . '<span class="cf-to cf-meta">tot en met</span> '
-            . '<span class="cf-date">zondag 18 april 2027</span> '
-            . '<span class="cf-description">Paasvakantie</span> '
-            . '</li> </ul> </details>',
+            $this->expectedHtml('itRendersMultipleClosedDays'),
             $this->formatter->format($place)
         );
     }
@@ -929,30 +521,7 @@ final class ExtraLargePermanentHTMLFormatterTest extends TestCase
             ->withClosedDays([$this->christmasHoliday()]);
 
         $this->assertEquals(
-            '<p class="cf-openinghours">Alle dagen open</p> '
-            . '<details class="cf-adjusted-days"> '
-            . '<summary>Behalve tijdens</summary> '
-            . '<ul class="list-unstyled"> '
-            . '<li> '
-            . '<span class="cf-date">Maandag 2 november 2026</span> '
-            . '<span class="cf-to cf-meta">tot en met</span> '
-            . '<span class="cf-date">zaterdag 7 november 2026</span> '
-            . '<span class="cf-days">Maandag - donderdag</span> '
-            . '<span class="cf-from cf-meta">van</span> '
-            . '<span class="cf-time">9:00</span> '
-            . '<span class="cf-to cf-meta">tot</span> '
-            . '<span class="cf-time">16:00</span> '
-            . '<span class="cf-description">Herfstvakantie</span> '
-            . '</li> </ul> </details> '
-            . '<details class="cf-closed-days"> '
-            . '<summary>Gesloten</summary> '
-            . '<ul class="list-unstyled"> '
-            . '<li> '
-            . '<span class="cf-date">Donderdag 24 december 2026</span> '
-            . '<span class="cf-to cf-meta">tot en met</span> '
-            . '<span class="cf-date">zondag 3 januari 2027</span> '
-            . '<span class="cf-description">Kerstvakantie</span> '
-            . '</li> </ul> </details>',
+            $this->expectedHtml('itRendersTheClosedDaysAfterTheAdjustedDays'),
             $this->formatter->format($place)
         );
     }
@@ -989,15 +558,6 @@ final class ExtraLargePermanentHTMLFormatterTest extends TestCase
             '<p class="cf-status">Geannuleerd</p>',
             $this->formatter->format($event)
         );
-    }
-
-    private function closedDay(string $translatedDay): string
-    {
-        return '<meta itemprop="openingHours" datetime="' . $translatedDay . '"> </meta> '
-            . '<li itemprop="openingHoursSpecification"> '
-            . '<span class="cf-days">' . $translatedDay . '</span> '
-            . '<span itemprop="closed" content="closed" class="cf-closed cf-meta">gesloten</span> '
-            . '</li> ';
     }
 
     private function availablePlace(): Offer

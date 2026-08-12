@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace CultuurNet\CalendarSummaryV3\Single;
 
+use CultuurNet\CalendarSummaryV3\HtmlFixture;
 use CultuurNet\CalendarSummaryV3\Offer\BookingAvailability;
 use CultuurNet\CalendarSummaryV3\Offer\Offer;
 use CultuurNet\CalendarSummaryV3\Offer\OfferType;
@@ -14,6 +15,8 @@ use PHPUnit\Framework\TestCase;
 
 final class MediumSingleHTMLFormatterTest extends TestCase
 {
+    use HtmlFixture;
+
     /**
      * @var MediumSingleHTMLFormatter
      */
@@ -82,20 +85,8 @@ final class MediumSingleHTMLFormatterTest extends TestCase
             new DateTimeImmutable('2018-01-28T21:30:00+01:00')
         );
 
-        $expectedOutput = '<span class="cf-from cf-meta">Van</span>';
-        $expectedOutput .= ' ';
-        $expectedOutput .= '<span class="cf-weekday cf-meta">do</span>';
-        $expectedOutput .= ' ';
-        $expectedOutput .= '<span class="cf-date">25 januari 2018</span>';
-        $expectedOutput .= ' ';
-        $expectedOutput .= '<span class="cf-to cf-meta">tot</span>';
-        $expectedOutput .= ' ';
-        $expectedOutput .= '<span class="cf-weekday cf-meta">zo</span>';
-        $expectedOutput .= ' ';
-        $expectedOutput .= '<span class="cf-date">28 januari 2018</span>';
-
         $this->assertEquals(
-            $expectedOutput,
+            $this->expectedHtml('singleDateMediumMoreDays'),
             $this->formatter->format($event)
         );
     }
@@ -110,20 +101,8 @@ final class MediumSingleHTMLFormatterTest extends TestCase
             new DateTimeImmutable('2018-01-08T21:30:00+01:00')
         );
 
-        $expectedOutput = '<span class="cf-from cf-meta">Van</span>';
-        $expectedOutput .= ' ';
-        $expectedOutput .= '<span class="cf-weekday cf-meta">za</span>';
-        $expectedOutput .= ' ';
-        $expectedOutput .= '<span class="cf-date">6 januari 2018</span>';
-        $expectedOutput .= ' ';
-        $expectedOutput .= '<span class="cf-to cf-meta">tot</span>';
-        $expectedOutput .= ' ';
-        $expectedOutput .= '<span class="cf-weekday cf-meta">ma</span>';
-        $expectedOutput .= ' ';
-        $expectedOutput .= '<span class="cf-date">8 januari 2018</span>';
-
         $this->assertEquals(
-            $expectedOutput,
+            $this->expectedHtml('singleDateMediumWithLeadingZeroMoreDays'),
             $this->formatter->format($event)
         );
     }
