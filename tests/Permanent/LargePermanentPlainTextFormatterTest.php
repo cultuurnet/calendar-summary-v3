@@ -73,7 +73,7 @@ final class LargePermanentPlainTextFormatterTest extends TestCase
         );
 
         $this->assertEquals(
-            $this->expectedText('simplePermanent'),
+            $this->expectedText('simplePermanent') . PHP_EOL,
             $this->formatter->format($place)
         );
     }
@@ -108,7 +108,7 @@ final class LargePermanentPlainTextFormatterTest extends TestCase
         );
 
         $this->assertEquals(
-            $this->expectedText('simplePermanentInFrench'),
+            $this->expectedText('simplePermanentInFrench') . PHP_EOL,
             (new LargePermanentPlainTextFormatter(new Translator('fr')))->format($place)
         );
     }
@@ -157,7 +157,7 @@ final class LargePermanentPlainTextFormatterTest extends TestCase
         );
 
         $this->assertEquals(
-            $this->expectedText('mixedPermanent'),
+            $this->expectedText('mixedPermanent') . PHP_EOL,
             $this->formatter->format($place)
         );
     }
@@ -213,7 +213,7 @@ final class LargePermanentPlainTextFormatterTest extends TestCase
         );
 
         $this->assertEquals(
-            $this->expectedText('complexPermanent'),
+            $this->expectedText('complexPermanent') . PHP_EOL,
             $this->formatter->format($place)
         );
     }
