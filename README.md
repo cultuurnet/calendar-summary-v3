@@ -40,9 +40,13 @@ Supported timezones can be found in this [list](http://php.net/manual/en/timezon
 ## Formats
 After initializing the formatter, you call the format method with the following 2 parameters:
 * Instance of the `Offer` object provided by this library
-* The desired output format ('xs', 'sm', 'md' or 'lg')
+* The desired output format ('xs', 'sm', 'md', 'lg' or 'xl')
 
 Using an unsupported format will throw an exception.
+
+Only the periodic and permanent calendar types have an 'xl' output of their own: on top of the 'lg'
+output it mentions the childcare, the adjusted days and the closed days. For the single and multiple
+calendar types 'xl' is the same as 'lg'.
 
 ## Example
 ```php

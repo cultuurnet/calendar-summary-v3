@@ -4,16 +4,21 @@ declare(strict_types=1);
 
 namespace CultuurNet\CalendarSummaryV3;
 
+use CultuurNet\CalendarSummaryV3\Offer\AdjustedDay;
 use CultuurNet\CalendarSummaryV3\Offer\BookingAvailability;
 use CultuurNet\CalendarSummaryV3\Offer\CalendarType;
+use CultuurNet\CalendarSummaryV3\Offer\ClosedDay;
 use CultuurNet\CalendarSummaryV3\Offer\Offer;
 use CultuurNet\CalendarSummaryV3\Offer\OfferType;
+use CultuurNet\CalendarSummaryV3\Offer\OpeningHours;
 use CultuurNet\CalendarSummaryV3\Offer\Status;
 use DateTimeImmutable;
 use PHPUnit\Framework\TestCase;
 
 final class CalendarPlainTextFormatterTest extends TestCase
 {
+    use PlainTextFixture;
+
     /**
      * @var CalendarPlainTextFormatter
      */
@@ -36,6 +41,46 @@ final class CalendarPlainTextFormatterTest extends TestCase
         );
 
         $this->assertSame('25 jan 2018', $this->formatter->format($offer, 'xs'));
+    }
+
+    public function testExtraLargeFormatRendersTheAdjustedAndClosedDays(): void
+    {
+        $place = (new Offer(
+            OfferType::place(),
+            new Status('Available', []),
+            new BookingAvailability('Available'),
+            null,
+            null,
+            CalendarType::permanent()
+        ))->withAdjustedDays(
+            [
+                new AdjustedDay(
+                    new DateTimeImmutable('2030-11-02'),
+                    new DateTimeImmutable('2030-11-02'),
+                    new OpeningHours(),
+                    ['nl' => 'Herfstvakantie']
+                ),
+            ]
+        )->withClosedDays(
+            [
+                new ClosedDay(
+                    new DateTimeImmutable('2030-12-25'),
+                    new DateTimeImmutable('2030-12-25'),
+                    ['nl' => 'Kerstmis']
+                ),
+            ]
+        );
+
+        $this->assertSame(
+            $this->expectedText('extraLargeFormatRendersTheAdjustedAndClosedDays') . PHP_EOL,
+            $this->formatter->format($place, 'xl')
+        );
+
+        // The large format does not know about adjusted or closed days.
+        $this->assertSame(
+            'Alle dagen open' . PHP_EOL,
+            $this->formatter->format($place, 'lg')
+        );
     }
 
     public function testGeneralFormatMethodAndCatchException(): void
