@@ -20,18 +20,17 @@ final class AdjustedDay implements Period
     private array $description;
 
     /**
-     * @param OpeningHour[] $openingHours
      * @param string[] $description
      */
     public function __construct(
         DateTimeImmutable $startDate,
         DateTimeImmutable $endDate,
-        array $openingHours = [],
+        ?OpeningHours $openingHours = null,
         array $description = []
     ) {
         $this->startDate = $startDate;
         $this->endDate = $endDate;
-        $this->openingHours = new OpeningHours($openingHours);
+        $this->openingHours = $openingHours ?? new OpeningHours();
         $this->description = $description;
     }
 
@@ -47,7 +46,7 @@ final class AdjustedDay implements Period
         return new self(
             new DateTimeImmutable($data['startDate']),
             new DateTimeImmutable($data['endDate']),
-            $openingHours,
+            new OpeningHours($openingHours),
             $data['description'] ?? []
         );
     }

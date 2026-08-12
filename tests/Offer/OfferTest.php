@@ -149,7 +149,7 @@ final class OfferTest extends TestCase
                     new AdjustedDay(
                         new DateTimeImmutable('2026-11-02'),
                         new DateTimeImmutable('2026-11-07'),
-                        [
+                        new OpeningHours([
                             new OpeningHour(
                                 [
                                     'monday',
@@ -160,7 +160,7 @@ final class OfferTest extends TestCase
                                 '09:00',
                                 '16:00'
                             ),
-                        ],
+                        ]),
                         ['nl' => 'Herfstvakantie']
                     ),
                 ]

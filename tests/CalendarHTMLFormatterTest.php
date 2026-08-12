@@ -10,6 +10,7 @@ use CultuurNet\CalendarSummaryV3\Offer\CalendarType;
 use CultuurNet\CalendarSummaryV3\Offer\ClosedDay;
 use CultuurNet\CalendarSummaryV3\Offer\Offer;
 use CultuurNet\CalendarSummaryV3\Offer\OfferType;
+use CultuurNet\CalendarSummaryV3\Offer\OpeningHours;
 use CultuurNet\CalendarSummaryV3\Offer\Status;
 use DateTimeImmutable;
 use PHPUnit\Framework\TestCase;
@@ -57,7 +58,7 @@ final class CalendarHTMLFormatterTest extends TestCase
                 new AdjustedDay(
                     new DateTimeImmutable('2030-11-02'),
                     new DateTimeImmutable('2030-11-02'),
-                    [],
+                    new OpeningHours(),
                     ['nl' => 'Herfstvakantie']
                 ),
             ]

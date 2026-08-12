@@ -14,6 +14,7 @@ use CultuurNet\CalendarSummaryV3\Offer\ClosedDay;
 use CultuurNet\CalendarSummaryV3\Offer\Offer;
 use CultuurNet\CalendarSummaryV3\Offer\OfferType;
 use CultuurNet\CalendarSummaryV3\Offer\OpeningHour;
+use CultuurNet\CalendarSummaryV3\Offer\OpeningHours;
 use CultuurNet\CalendarSummaryV3\Offer\Status;
 use CultuurNet\CalendarSummaryV3\Translator;
 use DateTimeImmutable;
@@ -245,7 +246,7 @@ final class ExtraLargePeriodicHTMLFormatterTest extends TestCase
                 new AdjustedDay(
                     new DateTimeImmutable('2026-08-03'),
                     new DateTimeImmutable('2026-08-09'),
-                    [],
+                    new OpeningHours(),
                     ['nl' => 'Voorbij']
                 ),
             ]
@@ -606,7 +607,7 @@ final class ExtraLargePeriodicHTMLFormatterTest extends TestCase
         return new AdjustedDay(
             new DateTimeImmutable('2026-11-02'),
             new DateTimeImmutable('2026-11-07'),
-            [new OpeningHour(['monday', 'tuesday', 'wednesday', 'thursday'], '09:00', '16:00')],
+            new OpeningHours([new OpeningHour(['monday', 'tuesday', 'wednesday', 'thursday'], '09:00', '16:00')]),
             ['nl' => 'Herfstvakantie']
         );
     }

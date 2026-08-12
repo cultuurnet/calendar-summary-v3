@@ -14,6 +14,7 @@ use CultuurNet\CalendarSummaryV3\Offer\ClosedDay;
 use CultuurNet\CalendarSummaryV3\Offer\Offer;
 use CultuurNet\CalendarSummaryV3\Offer\OfferType;
 use CultuurNet\CalendarSummaryV3\Offer\OpeningHour;
+use CultuurNet\CalendarSummaryV3\Offer\OpeningHours;
 use CultuurNet\CalendarSummaryV3\Offer\Status;
 use CultuurNet\CalendarSummaryV3\Translator;
 use DateTimeImmutable;
@@ -308,10 +309,10 @@ final class ExtraLargePermanentHTMLFormatterTest extends TestCase
                 new AdjustedDay(
                     new DateTimeImmutable('2026-11-02'),
                     new DateTimeImmutable('2026-11-07'),
-                    [
+                    new OpeningHours([
                         new OpeningHour(['monday', 'tuesday'], '09:00', '12:00', new Childcare('08:00', '18:00')),
                         new OpeningHour(['thursday'], '13:00', '17:00', new Childcare('08:00', '18:00')),
-                    ],
+                    ]),
                     ['nl' => 'Herfstvakantie']
                 ),
             ]
@@ -350,10 +351,10 @@ final class ExtraLargePermanentHTMLFormatterTest extends TestCase
                 new AdjustedDay(
                     new DateTimeImmutable('2026-11-02'),
                     new DateTimeImmutable('2026-11-07'),
-                    [
+                    new OpeningHours([
                         new OpeningHour(['monday', 'tuesday'], '09:00', '12:00', new Childcare('08:00', '13:00')),
                         new OpeningHour(['thursday'], '13:00', '17:00', new Childcare('12:00', '18:00')),
-                    ]
+                    ])
                 ),
             ]
         );
@@ -575,7 +576,7 @@ final class ExtraLargePermanentHTMLFormatterTest extends TestCase
                 new AdjustedDay(
                     new DateTimeImmutable('2026-11-02'),
                     new DateTimeImmutable('2026-11-02'),
-                    [new OpeningHour(['monday'], '10:00', '12:00')],
+                    new OpeningHours([new OpeningHour(['monday'], '10:00', '12:00')]),
                     ['nl' => 'Feestdag']
                 ),
             ]
@@ -606,10 +607,10 @@ final class ExtraLargePermanentHTMLFormatterTest extends TestCase
                 new AdjustedDay(
                     new DateTimeImmutable('2026-11-02'),
                     new DateTimeImmutable('2026-11-07'),
-                    [
+                    new OpeningHours([
                         new OpeningHour(['monday', 'tuesday'], '09:00', '12:00'),
                         new OpeningHour(['thursday', 'friday', 'saturday'], '13:00', '17:00'),
-                    ],
+                    ]),
                     ['nl' => 'Herfstvakantie']
                 ),
             ]
@@ -647,7 +648,7 @@ final class ExtraLargePermanentHTMLFormatterTest extends TestCase
                 new AdjustedDay(
                     new DateTimeImmutable('2026-11-02'),
                     new DateTimeImmutable('2026-11-07'),
-                    [new OpeningHour(['wednesday', 'monday'], '09:00', '16:00')]
+                    new OpeningHours([new OpeningHour(['wednesday', 'monday'], '09:00', '16:00')])
                 ),
             ]
         );
@@ -678,7 +679,7 @@ final class ExtraLargePermanentHTMLFormatterTest extends TestCase
                 new AdjustedDay(
                     new DateTimeImmutable('2026-12-24'),
                     new DateTimeImmutable('2027-01-03'),
-                    [],
+                    new OpeningHours(),
                     ['nl' => 'Kerstvakantie']
                 ),
             ]
@@ -706,7 +707,7 @@ final class ExtraLargePermanentHTMLFormatterTest extends TestCase
                 new AdjustedDay(
                     new DateTimeImmutable('2026-11-02'),
                     new DateTimeImmutable('2026-11-02'),
-                    [],
+                    new OpeningHours(),
                     ['fr' => 'Congé d\'automne']
                 ),
             ]
@@ -731,13 +732,13 @@ final class ExtraLargePermanentHTMLFormatterTest extends TestCase
                 new AdjustedDay(
                     new DateTimeImmutable('2026-11-02'),
                     new DateTimeImmutable('2026-11-02'),
-                    [],
+                    new OpeningHours(),
                     ['nl' => 'Herfstvakantie']
                 ),
                 new AdjustedDay(
                     new DateTimeImmutable('2026-12-24'),
                     new DateTimeImmutable('2026-12-24'),
-                    [],
+                    new OpeningHours(),
                     ['nl' => 'Kerstavond']
                 ),
             ]
@@ -767,7 +768,7 @@ final class ExtraLargePermanentHTMLFormatterTest extends TestCase
                 new AdjustedDay(
                     new DateTimeImmutable('2026-08-03'),
                     new DateTimeImmutable('2026-08-09'),
-                    [],
+                    new OpeningHours(),
                     ['nl' => 'Voorbij']
                 ),
             ]
@@ -786,7 +787,7 @@ final class ExtraLargePermanentHTMLFormatterTest extends TestCase
                 new AdjustedDay(
                     new DateTimeImmutable('2026-08-03'),
                     new DateTimeImmutable('2026-08-10'),
-                    [],
+                    new OpeningHours(),
                     ['nl' => 'Loopt vandaag af']
                 ),
             ]
@@ -1016,7 +1017,7 @@ final class ExtraLargePermanentHTMLFormatterTest extends TestCase
         return new AdjustedDay(
             new DateTimeImmutable('2026-11-02'),
             new DateTimeImmutable('2026-11-07'),
-            [new OpeningHour(['monday', 'tuesday', 'wednesday', 'thursday'], '09:00', '16:00')],
+            new OpeningHours([new OpeningHour(['monday', 'tuesday', 'wednesday', 'thursday'], '09:00', '16:00')]),
             ['nl' => 'Herfstvakantie']
         );
     }
