@@ -35,8 +35,6 @@ final class ExtraLargePeriodicPlainTextFormatter implements PeriodicFormatterInt
         $startDate = $offer->getStartDate();
         $endDate = $offer->getEndDate();
 
-        // The week scheme can span multiple lines, so unlike the large format the
-        // availability follows the dates instead of the opening hours.
         $summary = PlainTextSummaryBuilder::start($this->translator)
             ->from(
                 $this->formatter->formatAsDayOfWeek($startDate),
@@ -45,8 +43,7 @@ final class ExtraLargePeriodicPlainTextFormatter implements PeriodicFormatterInt
             ->to(
                 $this->formatter->formatAsDayOfWeek($endDate),
                 $this->formatter->formatAsFullDate($endDate)
-            )
-            ->appendAvailability($offer->getStatus(), $offer->getBookingAvailability());
+            );
 
         if (!$offer->getOpeningHours()->isEmpty()) {
             $summary = $summary
@@ -58,6 +55,8 @@ final class ExtraLargePeriodicPlainTextFormatter implements PeriodicFormatterInt
                         ->toString()
                 );
         }
+
+        $summary = $summary->appendAvailability($offer->getStatus(), $offer->getBookingAvailability());
 
         return $summary->toString() . $this->generatePeriods($offer);
     }

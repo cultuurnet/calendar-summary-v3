@@ -79,6 +79,25 @@ final class ExtraLargePeriodicPlainTextFormatterTest extends TestCase
         );
     }
 
+    public function testFormatAPeriodWithChildcareWithUnavailableStatus(): void
+    {
+        $event = (new Offer(
+            OfferType::event(),
+            new Status('Unavailable', []),
+            new BookingAvailability('Available'),
+            new DateTimeImmutable('25-11-2025'),
+            new DateTimeImmutable('30-11-2030'),
+            CalendarType::periodic()
+        ))->withOpeningHours(
+            [new OpeningHour(['monday'], '09:00', '16:00', new Childcare('08:00', '17:00'))]
+        );
+
+        $this->assertEquals(
+            $this->expectedText('periodWithChildcareWithUnavailableStatus'),
+            $this->formatter->format($event)
+        );
+    }
+
     public function testFormatAPeriodWithAdjustedDays(): void
     {
         $place = $this->availablePlace()
