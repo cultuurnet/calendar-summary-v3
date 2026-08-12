@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace CultuurNet\CalendarSummaryV3\Permanent;
 
 use CultuurNet\CalendarSummaryV3\DateFormatter;
-use CultuurNet\CalendarSummaryV3\Offer\OpeningHour;
+use CultuurNet\CalendarSummaryV3\Offer\OpeningHours;
 use CultuurNet\CalendarSummaryV3\PlainTextSummaryBuilder;
 use CultuurNet\CalendarSummaryV3\Translator;
 use CultuurNet\CalendarSummaryV3\Offer\Offer;
@@ -41,7 +41,7 @@ final class MediumPermanentPlainTextFormatter implements PermanentFormatterInter
             return ucfirst($this->translator->translate('postponed'));
         }
 
-        if ($offer->getOpeningHours()) {
+        if (!$offer->getOpeningHours()->isEmpty()) {
             return $this->generateWeekScheme($offer->getOpeningHours());
         }
 
@@ -51,15 +51,12 @@ final class MediumPermanentPlainTextFormatter implements PermanentFormatterInter
             ->toString();
     }
 
-    /**
-     * @param OpeningHour[] $openingHoursData
-     */
-    private function generateWeekScheme(array $openingHoursData): string
+    private function generateWeekScheme(OpeningHours $openingHours): string
     {
         $weekDaysOpen = [];
         // Create a list of all day names that have opening hours
-        foreach ($openingHoursData as $openingHours) {
-            foreach ($openingHours->getDaysOfWeek() as $dayName) {
+        foreach ($openingHours as $openingHour) {
+            foreach ($openingHour->getDaysOfWeek() as $dayName) {
                 if (!in_array($dayName, $weekDaysOpen, true)) {
                     $weekDaysOpen[(int) $this->formatter->formatAsDayOfWeekNumber(new DateTimeImmutable($dayName))] = $dayName;
                 }

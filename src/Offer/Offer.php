@@ -45,9 +45,19 @@ final class Offer
     private $subEvents = [];
 
     /**
-     * @var OpeningHour[]
+     * @var OpeningHours
      */
-    private $openingHours = [];
+    private $openingHours;
+
+    /**
+     * @var AdjustedDay[]
+     */
+    private $adjustedDays = [];
+
+    /**
+     * @var ClosedDay[]
+     */
+    private $closedDays = [];
 
     public function __construct(
         OfferType $offerType,
@@ -63,6 +73,7 @@ final class Offer
         $this->startDate = $startDate;
         $this->endDate = $endDate;
         $this->calendarType = $calendarType;
+        $this->openingHours = new OpeningHours();
     }
 
     public static function fromJsonLd(string $json): self
@@ -84,6 +95,18 @@ final class Offer
 
         if (isset($data['openingHours'])) {
             $offer = $offer->withOpeningHours(self::parseOpeningHours($data['openingHours']));
+        }
+
+        if (isset($data['openingHoursAdjustedDays'])) {
+            $offer = $offer->withAdjustedDays(
+                self::parseAdjustedDays($data['openingHoursAdjustedDays'])
+            );
+        }
+
+        if (isset($data['openingHoursClosedDays'])) {
+            $offer = $offer->withClosedDays(
+                self::parseClosedDays($data['openingHoursClosedDays'])
+            );
         }
 
         return $offer;
@@ -115,14 +138,36 @@ final class Offer
     {
         $openingHours = [];
         foreach ($data as $openingHourData) {
-            $openingHours[] = new OpeningHour(
-                $openingHourData['dayOfWeek'],
-                $openingHourData['opens'],
-                $openingHourData['closes']
-            );
+            $openingHours[] = OpeningHour::fromArray($openingHourData);
         }
 
         return $openingHours;
+    }
+
+    /**
+     * @return AdjustedDay[]
+     */
+    private static function parseAdjustedDays(array $data): array
+    {
+        $adjustedDays = [];
+        foreach ($data as $adjustedDayData) {
+            $adjustedDays[] = AdjustedDay::fromArray($adjustedDayData);
+        }
+
+        return $adjustedDays;
+    }
+
+    /**
+     * @return ClosedDay[]
+     */
+    private static function parseClosedDays(array $data): array
+    {
+        $closedDays = [];
+        foreach ($data as $closedDayData) {
+            $closedDays[] = ClosedDay::fromArray($closedDayData);
+        }
+
+        return $closedDays;
     }
 
     /**
@@ -141,30 +186,32 @@ final class Offer
      */
     public function withOpeningHours(array $openingHours): self
     {
-        // Split off opening hours per day
-        $individualOpeningHours = [];
-        foreach ($openingHours as $openingHour) {
-            foreach ($openingHour->getDaysOfWeek() as $dayOfWeek) {
-                $individualOpeningHours[] = new OpeningHour(
-                    [$dayOfWeek],
-                    $openingHour->getOpens(),
-                    $openingHour->getCloses()
-                );
-            }
-        }
-
-        // Sort by earliest opening hour and day
-        usort($individualOpeningHours, static function (OpeningHour $a, OpeningHour $b) {
-            $weekdayA = array_search($a->getDaysOfWeek()[0], OpeningHour::ALLOWED_DAYS);
-            $weekdayB = array_search($b->getDaysOfWeek()[0], OpeningHour::ALLOWED_DAYS);
-            $fullHoursA = $weekdayA * 24 + (int) $a->getOpens();
-            $fullHoursB = $weekdayB * 24 + (int) $b->getOpens();
-
-            return $fullHoursA <=> $fullHoursB;
-        });
-
         $clone = clone $this;
-        $clone->openingHours = $individualOpeningHours;
+        $clone->openingHours = (new OpeningHours($openingHours))
+            ->splitPerDay()
+            ->sortedByDayAndOpeningTime();
+
+        return $clone;
+    }
+
+    /**
+     * @param AdjustedDay[] $adjustedDays
+     */
+    public function withAdjustedDays(array $adjustedDays): self
+    {
+        $clone = clone $this;
+        $clone->adjustedDays = $adjustedDays;
+
+        return $clone;
+    }
+
+    /**
+     * @param ClosedDay[] $closedDays
+     */
+    public function withClosedDays(array $closedDays): self
+    {
+        $clone = clone $this;
+        $clone->closedDays = $closedDays;
 
         return $clone;
     }
@@ -227,11 +274,24 @@ final class Offer
         return $this->subEvents;
     }
 
-    /**
-     * @return OpeningHour[]
-     */
-    public function getOpeningHours(): array
+    public function getOpeningHours(): OpeningHours
     {
         return $this->openingHours;
+    }
+
+    /**
+     * @return AdjustedDay[]
+     */
+    public function getAdjustedDays(): array
+    {
+        return $this->adjustedDays;
+    }
+
+    /**
+     * @return ClosedDay[]
+     */
+    public function getClosedDays(): array
+    {
+        return $this->closedDays;
     }
 }

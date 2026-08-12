@@ -1,0 +1,102 @@
+<?php
+
+declare(strict_types=1);
+
+namespace CultuurNet\CalendarSummaryV3;
+
+use CultuurNet\CalendarSummaryV3\Offer\Period;
+
+/**
+ * Renders a list of periods as a collapsible list.
+ */
+final class HtmlPeriodListFormatter
+{
+    private DateFormatter $formatter;
+
+    private Translator $translator;
+
+    public function __construct(Translator $translator)
+    {
+        $this->formatter = new DateFormatter($translator->getLocale());
+        $this->translator = $translator;
+    }
+
+    /**
+     * @param Period[] $periods
+     * @param callable(Period): string|null $formatContent
+     *   Renders the markup between the dates and the description of a period.
+     */
+    public function format(
+        array $periods,
+        string $cssClass,
+        string $summaryTranslationKey,
+        ?callable $formatContent = null
+    ): string {
+        $upcomingPeriods = $this->withoutPastPeriods($periods);
+
+        if (!$upcomingPeriods) {
+            return '';
+        }
+
+        $output = $this->openDetails($cssClass, $summaryTranslationKey);
+
+        foreach ($upcomingPeriods as $period) {
+            $output .= $this->generatePeriod($period, $formatContent);
+        }
+
+        return $output . '</ul></details>';
+    }
+
+    /**
+     * @template T of Period
+     * @param T[] $periods
+     * @return T[]
+     */
+    private function withoutPastPeriods(array $periods): array
+    {
+        return array_filter($periods, static function (Period $period): bool {
+            return !DateComparison::isPastDay($period->getEndDate());
+        });
+    }
+
+    private function openDetails(string $class, string $summaryTranslationKey): string
+    {
+        return '<details class="' . $class . '">'
+            . '<summary>' . ucfirst($this->translator->translate($summaryTranslationKey)) . '</summary>'
+            . '<ul class="list-unstyled">';
+    }
+
+    /**
+     * @param callable(Period): string|null $formatContent
+     */
+    private function generatePeriod(Period $period, ?callable $formatContent): string
+    {
+        $startDate = $period->getStartDate();
+        $endDate = $period->getEndDate();
+
+        $output = '<li>'
+            . '<span class="cf-date">'
+            . ucfirst($this->formatter->formatAsDayOfWeek($startDate))
+            . ' ' . $this->formatter->formatAsFullDate($startDate)
+            . '</span>';
+
+        if (!DateComparison::onSameDay($startDate, $endDate)) {
+            $output .= '<span class="cf-to cf-meta">' . $this->translator->translate('till_included') . '</span>'
+                . '<span class="cf-date">'
+                . $this->formatter->formatAsDayOfWeek($endDate)
+                . ' ' . $this->formatter->formatAsFullDate($endDate)
+                . '</span>';
+        }
+
+        if ($formatContent !== null) {
+            $output .= $formatContent($period);
+        }
+
+        $description = $period->getDescriptionForLanguage($this->translator->getLanguageCode());
+        if ($description !== '') {
+            $output .= '<span class="cf-description">' . $description . '</span>';
+        }
+
+        return $output . '</li>';
+    }
+}

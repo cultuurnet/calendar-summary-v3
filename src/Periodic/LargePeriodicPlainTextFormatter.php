@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace CultuurNet\CalendarSummaryV3\Periodic;
 
 use CultuurNet\CalendarSummaryV3\DateFormatter;
-use CultuurNet\CalendarSummaryV3\Offer\OpeningHour;
+use CultuurNet\CalendarSummaryV3\Offer\OpeningHours;
 use CultuurNet\CalendarSummaryV3\OpeningHourFormatter;
 use CultuurNet\CalendarSummaryV3\PlainTextSummaryBuilder;
 use CultuurNet\CalendarSummaryV3\Translator;
@@ -44,7 +44,7 @@ final class LargePeriodicPlainTextFormatter implements PeriodicFormatterInterfac
             ->from($formattedStartDayName, $formattedStartDate)
             ->to($formattedEndDayName, $formattedEndDate);
 
-        if ($offer->getOpeningHours()) {
+        if (!$offer->getOpeningHours()->isEmpty()) {
             $summary = $summary
                 ->startNewLine()
                 ->append($this->generateWeekScheme($offer->getOpeningHours()));
@@ -53,32 +53,29 @@ final class LargePeriodicPlainTextFormatter implements PeriodicFormatterInterfac
         return $summary->appendAvailability($offer->getStatus(), $offer->getBookingAvailability())->toString();
     }
 
-    /**
-     * @param OpeningHour[] $openingHoursData
-     */
-    private function generateWeekScheme(array $openingHoursData): string
+    private function generateWeekScheme(OpeningHours $openingHours): string
     {
         /** @var PlainTextSummaryBuilder[] $formattedDays */
         $formattedDays = [];
 
-        foreach ($openingHoursData as $openingHours) {
-            foreach ($openingHours->getDaysOfWeek() as $dayName) {
+        foreach ($openingHours as $openingHour) {
+            foreach ($openingHour->getDaysOfWeek() as $dayName) {
                 if (!isset($formattedDays[$dayName])) {
                     $translatedDay = $this->formatter->formatAsDayOfWeek(new DateTimeImmutable($dayName));
 
                     $formattedDays[$dayName] = PlainTextSummaryBuilder::start($this->translator)
                         ->lowercaseNextFirstCharacter()
                         ->append($translatedDay)
-                        ->fromHour(OpeningHourFormatter::format($openingHours->getOpens()))
-                        ->tillHour(OpeningHourFormatter::format($openingHours->getCloses()));
+                        ->fromHour(OpeningHourFormatter::format($openingHour->getOpens()))
+                        ->tillHour(OpeningHourFormatter::format($openingHour->getCloses()));
 
                     continue;
                 }
 
                 $formattedDays[$dayName] = $formattedDays[$dayName]
                     ->and()
-                    ->fromHour(OpeningHourFormatter::format($openingHours->getOpens()))
-                    ->tillHour(OpeningHourFormatter::format($openingHours->getCloses()));
+                    ->fromHour(OpeningHourFormatter::format($openingHour->getOpens()))
+                    ->tillHour(OpeningHourFormatter::format($openingHour->getCloses()));
             }
         }
 

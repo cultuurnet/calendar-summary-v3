@@ -12,6 +12,8 @@ use CultuurNet\CalendarSummaryV3\Multiple\LargeMultipleHTMLFormatter;
 use CultuurNet\CalendarSummaryV3\Multiple\SmallMultipleHTMLFormatter;
 use CultuurNet\CalendarSummaryV3\Offer\CalendarType;
 use CultuurNet\CalendarSummaryV3\Offer\Offer;
+use CultuurNet\CalendarSummaryV3\Periodic\ExtraLargePeriodicHTMLFormatter;
+use CultuurNet\CalendarSummaryV3\Permanent\ExtraLargePermanentHTMLFormatter;
 use CultuurNet\CalendarSummaryV3\Permanent\MediumPermanentHTMLFormatter;
 use CultuurNet\CalendarSummaryV3\Single\LargeSingleHTMLFormatter;
 use CultuurNet\CalendarSummaryV3\Single\MediumSingleHTMLFormatter;
@@ -46,6 +48,7 @@ final class CalendarHTMLFormatter implements CalendarFormatterInterface
         $this->mapping = [
             CalendarType::single()->toString() =>
                 [
+                    'xl' => new LargeSingleHTMLFormatter($translator),
                     'lg' => new LargeSingleHTMLFormatter($translator),
                     'md' => new MediumSingleHTMLFormatter($translator),
                     'sm' => new SmallSingleHTMLFormatter($translator),
@@ -53,6 +56,7 @@ final class CalendarHTMLFormatter implements CalendarFormatterInterface
                 ],
             CalendarType::multiple()->toString() =>
                 [
+                    'xl' => new LargeMultipleHTMLFormatter($translator, $hidePastDates),
                     'lg' => new LargeMultipleHTMLFormatter($translator, $hidePastDates),
                     'md' => new MediumMultipleHTMLFormatter($translator, $hidePastDates),
                     'sm' => new SmallMultipleHTMLFormatter($translator),
@@ -60,6 +64,7 @@ final class CalendarHTMLFormatter implements CalendarFormatterInterface
                 ],
             CalendarType::periodic()->toString() =>
                 [
+                    'xl' => new ExtraLargePeriodicHTMLFormatter($translator),
                     'lg' => new LargePeriodicHTMLFormatter($translator),
                     'md' => new MediumPeriodicHTMLFormatter($translator),
                     'sm' => new SmallPeriodicHTMLFormatter($translator),
@@ -67,6 +72,7 @@ final class CalendarHTMLFormatter implements CalendarFormatterInterface
                 ],
             CalendarType::permanent()->toString() =>
                 [
+                    'xl' => new ExtraLargePermanentHTMLFormatter($translator),
                     'lg' => new LargePermanentHTMLFormatter($translator),
                     'md' => new MediumPermanentHTMLFormatter($translator),
                     'sm' => new MediumPermanentHTMLFormatter($translator),

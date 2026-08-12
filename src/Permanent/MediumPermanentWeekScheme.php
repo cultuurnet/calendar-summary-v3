@@ -9,8 +9,14 @@ use DateTimeImmutable;
 
 trait MediumPermanentWeekScheme
 {
-    public function getWeekScheme(array $weekDaysOpen, DateFormatter $formatter): array
+    public function getWeekScheme(array $weekDaysOpen, DateFormatter $formatter, bool $abbreviated = true): array
     {
+        $formatDayName = static function (string $dayName) use ($formatter, $abbreviated): string {
+            return $abbreviated
+                ? $formatter->formatAsAbbreviatedDayOfWeek(new DateTimeImmutable($dayName))
+                : $formatter->formatAsDayOfWeek(new DateTimeImmutable($dayName));
+        };
+
         // Do no assume people will order the days consecutive
         ksort($weekDaysOpen);
         $translatedDayNamesWithOpeningHours = [];
@@ -20,16 +26,16 @@ trait MediumPermanentWeekScheme
         foreach ($weekDaysOpen as $weekDayNumber => $dayName) {
             // We start a new period, but the following day is closed
             if ($startNewPeriod && !array_key_exists($weekDayNumber + 1, $weekDaysOpen)) {
-                $translatedDayNamesWithOpeningHours[] = $formatter->formatAsAbbreviatedDayOfWeek(new DateTimeImmutable($dayName));
+                $translatedDayNamesWithOpeningHours[] = $formatDayName($dayName);
             }
             // Start a new period and the following day is open
             if ($startNewPeriod && array_key_exists($weekDayNumber + 1, $weekDaysOpen)) {
-                $dayPeriod = $formatter->formatAsAbbreviatedDayOfWeek(new DateTimeImmutable($dayName));
+                $dayPeriod = $formatDayName($dayName);
                 $startNewPeriod = false;
             }
             // The previous day was open but the following day isn't
             if (!$startNewPeriod && !array_key_exists($weekDayNumber + 1, $weekDaysOpen)) {
-                $dayPeriod .= ' - ' . $formatter->formatAsAbbreviatedDayOfWeek(new DateTimeImmutable($dayName));
+                $dayPeriod .= ' - ' . $formatDayName($dayName);
                 $translatedDayNamesWithOpeningHours[] = $dayPeriod;
                 $startNewPeriod = true;
                 $dayPeriod = '';

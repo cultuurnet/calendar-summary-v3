@@ -5,28 +5,30 @@ declare(strict_types=1);
 namespace CultuurNet\CalendarSummaryV3\Periodic;
 
 use CultuurNet\CalendarSummaryV3\DateFormatter;
+use CultuurNet\CalendarSummaryV3\HtmlAdjustedDaysFormatter;
 use CultuurNet\CalendarSummaryV3\HtmlAvailabilityFormatter;
+use CultuurNet\CalendarSummaryV3\HtmlClosedDaysFormatter;
 use CultuurNet\CalendarSummaryV3\HtmlWeekSchemeFormatter;
 use CultuurNet\CalendarSummaryV3\Translator;
 use CultuurNet\CalendarSummaryV3\Offer\Offer;
 use DateTimeImmutable;
 
-final class LargePeriodicHTMLFormatter implements PeriodicFormatterInterface
+final class ExtraLargePeriodicHTMLFormatter implements PeriodicFormatterInterface
 {
-    /**
-     * @var DateFormatter
-     */
-    private $formatter;
+    private DateFormatter $formatter;
 
-    /**
-     * @var Translator
-     */
-    private $translator;
+    private Translator $translator;
+
+    private HtmlAdjustedDaysFormatter $adjustedDaysFormatter;
+
+    private HtmlClosedDaysFormatter $closedDaysFormatter;
 
     public function __construct(Translator $translator)
     {
         $this->formatter = new DateFormatter($translator->getLocale());
         $this->translator = $translator;
+        $this->adjustedDaysFormatter = new HtmlAdjustedDaysFormatter($translator);
+        $this->closedDaysFormatter = new HtmlClosedDaysFormatter($translator);
     }
 
     public function format(Offer $offer): string
@@ -44,8 +46,12 @@ final class LargePeriodicHTMLFormatter implements PeriodicFormatterInterface
         if (!$offer->getOpeningHours()->isEmpty()) {
             $output .= HtmlWeekSchemeFormatter::forOpeningHours($offer->getOpeningHours(), $this->translator)
                 ->withHeading()
+                ->withChildcare()
                 ->toString();
         }
+
+        $output .= $this->adjustedDaysFormatter->format($offer->getAdjustedDays());
+        $output .= $this->closedDaysFormatter->format($offer->getClosedDays());
 
         return trim($this->formatSummary($output));
     }
