@@ -9,12 +9,15 @@ use CultuurNet\CalendarSummaryV3\Offer\CalendarType;
 use CultuurNet\CalendarSummaryV3\Offer\Offer;
 use CultuurNet\CalendarSummaryV3\Offer\OfferType;
 use CultuurNet\CalendarSummaryV3\Offer\Status;
+use CultuurNet\CalendarSummaryV3\PlainTextFixture;
 use CultuurNet\CalendarSummaryV3\Translator;
 use DateTimeImmutable;
 use PHPUnit\Framework\TestCase;
 
 final class MediumMultiplePlainTextFormatterTest extends TestCase
 {
+    use PlainTextFixture;
+
     /**
      * @var MediumMultiplePlainTextFormatter
      */
@@ -50,13 +53,8 @@ final class MediumMultiplePlainTextFormatterTest extends TestCase
 
         $event = $event->withSubEvents($newEvents);
 
-        $expectedOutput = 'Do 9 november 2017' . PHP_EOL;
-        $expectedOutput .= 'Do 16 november 2017' . PHP_EOL;
-        $expectedOutput .= 'Do 23 november 2017' . PHP_EOL;
-        $expectedOutput .= 'Do 30 november 2017';
-
         $this->assertEquals(
-            $expectedOutput,
+            $this->expectedText('multipleDateMediumOneDay'),
             $this->formatter->format($event)
         );
     }
@@ -119,13 +117,8 @@ final class MediumMultiplePlainTextFormatterTest extends TestCase
 
         $event = $event->withSubEvents($newEvents);
 
-        $expectedOutput = 'Van ma 6 november 2017 tot do 9 november 2017' . PHP_EOL;
-        $expectedOutput .= 'Van di 14 november 2017 tot do 16 november 2017' . PHP_EOL;
-        $expectedOutput .= 'Van di 21 november 2017 tot do 23 november 2017' . PHP_EOL;
-        $expectedOutput .= 'Van di 28 november 2017 tot do 30 november 2017';
-
         $this->assertEquals(
-            $expectedOutput,
+            $this->expectedText('multipleDateMediumMoreDays'),
             $this->formatter->format($event)
         );
     }
@@ -155,13 +148,8 @@ final class MediumMultiplePlainTextFormatterTest extends TestCase
 
         $event = $event->withSubEvents($newEvents);
 
-        $expectedOutput = 'Do 9 november 2017 (geannuleerd)' . PHP_EOL;
-        $expectedOutput .= 'Do 16 november 2017 (geannuleerd)' . PHP_EOL;
-        $expectedOutput .= 'Do 23 november 2017 (geannuleerd)' . PHP_EOL;
-        $expectedOutput .= 'Do 30 november 2017 (geannuleerd)';
-
         $this->assertEquals(
-            $expectedOutput,
+            $this->expectedText('multipleDateMediumOneDayWithUnavailableStatus'),
             $this->formatter->format($event)
         );
     }
@@ -200,13 +188,8 @@ final class MediumMultiplePlainTextFormatterTest extends TestCase
 
         $event = $event->withSubEvents($newEvents);
 
-        $expectedOutput = 'Do 9 november 2017' . PHP_EOL;
-        $expectedOutput .= 'Do 16 november 2017 (geannuleerd)' . PHP_EOL;
-        $expectedOutput .= 'Do 23 november 2017 (Volzet of uitverkocht)' . PHP_EOL;
-        $expectedOutput .= 'Do 30 november 2017';
-
         $this->assertEquals(
-            $expectedOutput,
+            $this->expectedText('multipleDateMediumOneDayWithUnavailableStatusForSingleSubEvent'),
             $this->formatter->format($event)
         );
     }
