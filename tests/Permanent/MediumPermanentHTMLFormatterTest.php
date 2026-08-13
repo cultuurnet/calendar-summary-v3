@@ -405,7 +405,7 @@ final class MediumPermanentHTMLFormatterTest extends TestCase
         );
     }
 
-    public function testFormatPermanentHtmlFirstPeriodIsASingleDay(): void
+    public function testFormatPermanentFirstPeriodIsASingleDay(): void
     {
         $place = new Offer(
             OfferType::place(),
@@ -442,7 +442,7 @@ final class MediumPermanentHTMLFormatterTest extends TestCase
         );
 
         $this->assertEquals(
-            $this->expectedHtml('permanentHtmlFirstPeriodIsASingleDay'),
+            $this->expectedHtml('permanentFirstPeriodIsASingleDay'),
             $this->formatter->format($place)
         );
     }
