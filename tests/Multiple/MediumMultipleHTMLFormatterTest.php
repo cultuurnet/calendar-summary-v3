@@ -59,7 +59,7 @@ final class MediumMultipleHTMLFormatterTest extends TestCase
         );
     }
 
-    public function testFormatPlainTextMultipleOnSameDay(): void
+    public function testFormatHTMLMultipleOnSameDay(): void
     {
         $subEvents = json_decode(file_get_contents(__DIR__ . '/data/subEventsSameDay.json'), true);
         $event = new Offer(
@@ -85,7 +85,7 @@ final class MediumMultipleHTMLFormatterTest extends TestCase
         $event = $event->withSubEvents($newEvents);
 
         $this->assertEquals(
-            $this->expectedHtml('plainTextMultipleOnSameDay'),
+            $this->expectedHtml('multipleOnSameDay'),
             $this->formatter->format($event)
         );
     }

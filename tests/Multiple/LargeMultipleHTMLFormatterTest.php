@@ -61,7 +61,7 @@ final class LargeMultipleHTMLFormatterTest extends TestCase
         );
     }
 
-    public function testFormatPlainTextMultipleDaysFrench(): void
+    public function testFormatHtmlMultipleDaysFrench(): void
     {
         $subEvents = json_decode(file_get_contents(__DIR__ . '/data/subEventsMoreDays.json'), true);
         $event = new Offer(
@@ -85,7 +85,7 @@ final class LargeMultipleHTMLFormatterTest extends TestCase
         $event = $event->withSubEvents($newEvents);
 
         $this->assertEquals(
-            $this->expectedHtml('plainTextMultipleDaysFrench'),
+            $this->expectedHtml('multipleDaysFrench'),
             (new LargeMultipleHTMLFormatter(new Translator('fr'), false))->format($event)
         );
     }
