@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace CultuurNet\CalendarSummaryV3\Permanent;
 
 use CultuurNet\CalendarSummaryV3\HtmlAvailabilityFormatter;
+use CultuurNet\CalendarSummaryV3\HtmlSummaryFormatter;
 use CultuurNet\CalendarSummaryV3\HtmlWeekSchemeFormatter;
 use CultuurNet\CalendarSummaryV3\Translator;
 use CultuurNet\CalendarSummaryV3\Offer\Offer;
@@ -32,23 +33,17 @@ final class LargePermanentHTMLFormatter implements PermanentFormatterInterface
         }
 
         if (!$offer->getOpeningHours()->isEmpty()) {
-            return $this->formatSummary(
+            return HtmlSummaryFormatter::format(
                 HtmlWeekSchemeFormatter::forOpeningHours($offer->getOpeningHours(), $this->translator)
                     ->withEveryDayOfTheWeek()
                     ->toString()
             );
         }
 
-        return $this->formatSummary(
+        return HtmlSummaryFormatter::format(
             '<p class="cf-openinghours">'
             . ucfirst($this->translator->translate('open_every_day'))
             . '</p>'
         );
-    }
-
-    private function formatSummary(string $calsum): string
-    {
-        $calsum = str_replace('><', '> <', $calsum);
-        return str_replace('  ', ' ', $calsum);
     }
 }

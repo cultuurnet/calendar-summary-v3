@@ -6,8 +6,7 @@ namespace CultuurNet\CalendarSummaryV3\Periodic;
 
 use CultuurNet\CalendarSummaryV3\DateFormatter;
 use CultuurNet\CalendarSummaryV3\Offer\Offer;
-use CultuurNet\CalendarSummaryV3\PlainTextAdjustedDaysFormatter;
-use CultuurNet\CalendarSummaryV3\PlainTextClosedDaysFormatter;
+use CultuurNet\CalendarSummaryV3\PlainTextPeriodsFormatter;
 use CultuurNet\CalendarSummaryV3\PlainTextSummaryBuilder;
 use CultuurNet\CalendarSummaryV3\PlainTextWeekSchemeFormatter;
 use CultuurNet\CalendarSummaryV3\Translator;
@@ -18,16 +17,13 @@ final class ExtraLargePeriodicPlainTextFormatter implements PeriodicFormatterInt
 
     private Translator $translator;
 
-    private PlainTextAdjustedDaysFormatter $adjustedDaysFormatter;
-
-    private PlainTextClosedDaysFormatter $closedDaysFormatter;
+    private PlainTextPeriodsFormatter $periodsFormatter;
 
     public function __construct(Translator $translator)
     {
         $this->formatter = new DateFormatter($translator->getLocale());
         $this->translator = $translator;
-        $this->adjustedDaysFormatter = new PlainTextAdjustedDaysFormatter($translator);
-        $this->closedDaysFormatter = new PlainTextClosedDaysFormatter($translator);
+        $this->periodsFormatter = new PlainTextPeriodsFormatter($translator);
     }
 
     public function format(Offer $offer): string
@@ -58,26 +54,6 @@ final class ExtraLargePeriodicPlainTextFormatter implements PeriodicFormatterInt
 
         $summary = $summary->appendAvailability($offer->getStatus(), $offer->getBookingAvailability());
 
-        return $summary->toString() . $this->generatePeriods($offer);
-    }
-
-    /**
-     * The adjusted and closed days get some visual space, both from the opening
-     * hours above them and from each other.
-     */
-    private function generatePeriods(Offer $offer): string
-    {
-        $periods = array_filter([
-            $this->adjustedDaysFormatter->format($offer->getAdjustedDays()),
-            $this->closedDaysFormatter->format($offer->getClosedDays()),
-        ]);
-
-        if (!$periods) {
-            return '';
-        }
-
-        $separator = PHP_EOL . PHP_EOL;
-
-        return $separator . implode($separator, $periods);
+        return $summary->toString() . $this->periodsFormatter->format($offer);
     }
 }
