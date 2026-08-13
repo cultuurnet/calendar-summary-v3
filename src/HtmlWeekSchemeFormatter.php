@@ -71,6 +71,13 @@ final class HtmlWeekSchemeFormatter
 
     public function toString(): string
     {
+        // Without opening hours there is no week scheme to show. Saying nothing beats
+        // an empty list or a week of closed days, which would claim the place is never
+        // open while empty opening hours mean the opposite.
+        if ($this->openingHours->isEmpty()) {
+            return '';
+        }
+
         // When every day has the same childcare it is summarized in a single list item
         // instead of being repeated on every day.
         $sharedChildcare = $this->withChildcare ? $this->openingHours->sharedChildcare() : null;
