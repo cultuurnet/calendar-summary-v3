@@ -30,7 +30,7 @@ final class MediumMultipleHTMLFormatterTest extends TestCase
 
     public function testFormatHTMLMultipleDateMediumOneDay(): void
     {
-        $subEvents = json_decode(file_get_contents(__DIR__ . '/data/subEvents.json'), true);
+        $subEvents = json_decode(file_get_contents(__DIR__ . '/data/sub-events.json'), true);
         $event = new Offer(
             OfferType::event(),
             new Status('Available', []),
@@ -61,7 +61,7 @@ final class MediumMultipleHTMLFormatterTest extends TestCase
 
     public function testFormatHTMLMultipleOnSameDay(): void
     {
-        $subEvents = json_decode(file_get_contents(__DIR__ . '/data/subEventsSameDay.json'), true);
+        $subEvents = json_decode(file_get_contents(__DIR__ . '/data/sub-events-same-day.json'), true);
         $event = new Offer(
             OfferType::event(),
             new Status('Available', []),
@@ -93,7 +93,7 @@ final class MediumMultipleHTMLFormatterTest extends TestCase
 
     public function testFormatHTMLMultipleDateMediumOneDayWithUnavailableStatus(): void
     {
-        $subEvents = json_decode(file_get_contents(__DIR__ . '/data/subEvents.json'), true);
+        $subEvents = json_decode(file_get_contents(__DIR__ . '/data/sub-events.json'), true);
         $event = new Offer(
             OfferType::event(),
             new Status('Available', []),
@@ -131,7 +131,7 @@ final class MediumMultipleHTMLFormatterTest extends TestCase
 
     public function testFormatHTMLMultipleDateMediumMoreDays(): void
     {
-        $subEvents = json_decode(file_get_contents(__DIR__ . '/data/subEventsMoreDays.json'), true);
+        $subEvents = json_decode(file_get_contents(__DIR__ . '/data/sub-events-more-days.json'), true);
         $event = new Offer(
             OfferType::event(),
             new Status('Available', []),
@@ -163,7 +163,7 @@ final class MediumMultipleHTMLFormatterTest extends TestCase
     public function testItWillShowEventHasConcludedWhenAllPastDatesAreHidden(): void
     {
         $formatter = new MediumMultipleHTMLFormatter(new Translator('nl_NL'), true);
-        $subEvents = json_decode(file_get_contents(__DIR__ . '/data/subEvents.json'), true);
+        $subEvents = json_decode(file_get_contents(__DIR__ . '/data/sub-events.json'), true);
         $event = new Offer(
             OfferType::event(),
             new Status('Available', []),
