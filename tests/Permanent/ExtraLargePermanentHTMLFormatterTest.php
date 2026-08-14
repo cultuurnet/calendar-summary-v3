@@ -51,7 +51,7 @@ final class ExtraLargePermanentHTMLFormatterTest extends TestCase
         );
 
         $this->assertEquals(
-            $this->expectedHtml('simplePermanent'),
+            $this->expectedHtml('simple-permanent'),
             $this->formatter->format($place)
         );
     }
@@ -65,7 +65,7 @@ final class ExtraLargePermanentHTMLFormatterTest extends TestCase
         );
 
         $this->assertEquals(
-            $this->expectedHtml('sharedChildcareAsASingleListItem'),
+            $this->expectedHtml('shared-childcare-as-a-single-list-item'),
             $this->formatter->format($place)
         );
     }
@@ -80,7 +80,7 @@ final class ExtraLargePermanentHTMLFormatterTest extends TestCase
         );
 
         $this->assertEquals(
-            $this->expectedHtml('differingChildcareOnTheDayItself'),
+            $this->expectedHtml('differing-childcare-on-the-day-itself'),
             $this->formatter->format($place)
         );
     }
@@ -95,7 +95,7 @@ final class ExtraLargePermanentHTMLFormatterTest extends TestCase
         );
 
         $this->assertEquals(
-            $this->expectedHtml('childcareOnTheDayItselfWhenNotEveryDayHasIt'),
+            $this->expectedHtml('childcare-on-the-day-itself-when-not-every-day-has-it'),
             $this->formatter->format($place)
         );
     }
@@ -111,7 +111,7 @@ final class ExtraLargePermanentHTMLFormatterTest extends TestCase
         );
 
         $this->assertEquals(
-            $this->expectedHtml('childcareOfADayWithMultipleTimespansOnlyOnce'),
+            $this->expectedHtml('childcare-of-a-day-with-multiple-timespans-only-once'),
             $this->formatter->format($place)
         );
     }
@@ -126,7 +126,7 @@ final class ExtraLargePermanentHTMLFormatterTest extends TestCase
         );
 
         $this->assertEquals(
-            $this->expectedHtml('childcareOfEveryTimespanWhenItDiffersOnTheSameDay'),
+            $this->expectedHtml('childcare-of-every-timespan-when-it-differs-on-the-same-day'),
             $this->formatter->format($place)
         );
     }
@@ -148,7 +148,7 @@ final class ExtraLargePermanentHTMLFormatterTest extends TestCase
         );
 
         $this->assertEquals(
-            $this->expectedHtml('sharedChildcareInAnAdjustedDay'),
+            $this->expectedHtml('shared-childcare-in-an-adjusted-day'),
             $this->formatter->format($place)
         );
     }
@@ -169,7 +169,7 @@ final class ExtraLargePermanentHTMLFormatterTest extends TestCase
         );
 
         $this->assertEquals(
-            $this->expectedHtml('differingChildcareInAnAdjustedDay'),
+            $this->expectedHtml('differing-childcare-in-an-adjusted-day'),
             $this->formatter->format($place)
         );
     }
@@ -254,7 +254,7 @@ final class ExtraLargePermanentHTMLFormatterTest extends TestCase
             ->withAdjustedDays([$this->autumnHoliday()]);
 
         $this->assertEquals(
-            $this->expectedHtml('adjustedDaysAfterTheWeekScheme'),
+            $this->expectedHtml('adjusted-days-after-the-week-scheme'),
             $this->formatter->format($place)
         );
     }
@@ -264,7 +264,7 @@ final class ExtraLargePermanentHTMLFormatterTest extends TestCase
         $place = $this->availablePlace()->withAdjustedDays([$this->autumnHoliday()]);
 
         $this->assertEquals(
-            $this->expectedHtml('adjustedDaysForASinglePeriod'),
+            $this->expectedHtml('adjusted-days-for-a-single-period'),
             $this->formatter->format($place)
         );
     }
@@ -274,7 +274,7 @@ final class ExtraLargePermanentHTMLFormatterTest extends TestCase
         $place = $this->availablePlace()->withAdjustedDays([$this->autumnHoliday()]);
 
         $this->assertEquals(
-            $this->expectedHtml('adjustedDaysForASinglePeriodInFrench'),
+            $this->expectedHtml('adjusted-days-for-a-single-period-in-french'),
             (new ExtraLargePermanentHTMLFormatter(new Translator('fr_BE')))->format($place)
         );
     }
@@ -293,7 +293,7 @@ final class ExtraLargePermanentHTMLFormatterTest extends TestCase
         );
 
         $this->assertEquals(
-            $this->expectedHtml('adjustedDaysForASingleDay'),
+            $this->expectedHtml('adjusted-days-for-a-single-day'),
             $this->formatter->format($place)
         );
     }
@@ -315,7 +315,7 @@ final class ExtraLargePermanentHTMLFormatterTest extends TestCase
         );
 
         $this->assertEquals(
-            $this->expectedHtml('adjustedDaysWithMultipleOpeningHours'),
+            $this->expectedHtml('adjusted-days-with-multiple-opening-hours'),
             $this->formatter->format($place)
         );
     }
@@ -333,7 +333,7 @@ final class ExtraLargePermanentHTMLFormatterTest extends TestCase
         );
 
         $this->assertEquals(
-            $this->expectedHtml('adjustedDaysWithNonConsecutiveDays'),
+            $this->expectedHtml('adjusted-days-with-non-consecutive-days'),
             $this->formatter->format($place)
         );
     }
@@ -352,7 +352,7 @@ final class ExtraLargePermanentHTMLFormatterTest extends TestCase
         );
 
         $this->assertEquals(
-            $this->expectedHtml('adjustedDaysWithoutOpeningHours'),
+            $this->expectedHtml('adjusted-days-without-opening-hours'),
             $this->formatter->format($place)
         );
     }
@@ -371,7 +371,7 @@ final class ExtraLargePermanentHTMLFormatterTest extends TestCase
         );
 
         $this->assertEquals(
-            $this->expectedHtml('itDoesNotRenderTheDescriptionWhenTranslationIsUnavailable'),
+            $this->expectedHtml('it-does-not-render-the-description-when-translation-is-unavailable'),
             $this->formatter->format($place)
         );
     }
@@ -396,7 +396,7 @@ final class ExtraLargePermanentHTMLFormatterTest extends TestCase
         );
 
         $this->assertEquals(
-            $this->expectedHtml('itRendersMultipleAdjustedDays'),
+            $this->expectedHtml('it-renders-multiple-adjusted-days'),
             $this->formatter->format($place)
         );
     }
@@ -434,7 +434,7 @@ final class ExtraLargePermanentHTMLFormatterTest extends TestCase
         );
 
         $this->assertEquals(
-            $this->expectedHtml('itRendersAdjustedDaysThatEndToday'),
+            $this->expectedHtml('it-renders-adjusted-days-that-end-today'),
             $this->formatter->format($place)
         );
     }
@@ -444,7 +444,7 @@ final class ExtraLargePermanentHTMLFormatterTest extends TestCase
         $place = $this->availablePlace()->withClosedDays([$this->christmasHoliday()]);
 
         $this->assertEquals(
-            $this->expectedHtml('closedDays'),
+            $this->expectedHtml('closed-days'),
             $this->formatter->format($place)
         );
     }
@@ -454,7 +454,7 @@ final class ExtraLargePermanentHTMLFormatterTest extends TestCase
         $place = $this->availablePlace()->withClosedDays([$this->christmasHoliday()]);
 
         $this->assertEquals(
-            $this->expectedHtml('closedDaysInFrench'),
+            $this->expectedHtml('closed-days-in-french'),
             (new ExtraLargePermanentHTMLFormatter(new Translator('fr_BE')))->format($place)
         );
     }
@@ -472,7 +472,7 @@ final class ExtraLargePermanentHTMLFormatterTest extends TestCase
         );
 
         $this->assertEquals(
-            $this->expectedHtml('closedDaysForASingleDay'),
+            $this->expectedHtml('closed-days-for-a-single-day'),
             $this->formatter->format($place)
         );
     }
@@ -491,7 +491,7 @@ final class ExtraLargePermanentHTMLFormatterTest extends TestCase
         );
 
         $this->assertEquals(
-            $this->expectedHtml('itRendersMultipleClosedDays'),
+            $this->expectedHtml('it-renders-multiple-closed-days'),
             $this->formatter->format($place)
         );
     }
@@ -521,7 +521,7 @@ final class ExtraLargePermanentHTMLFormatterTest extends TestCase
             ->withClosedDays([$this->christmasHoliday()]);
 
         $this->assertEquals(
-            $this->expectedHtml('itRendersTheClosedDaysAfterTheAdjustedDays'),
+            $this->expectedHtml('it-renders-the-closed-days-after-the-adjusted-days'),
             $this->formatter->format($place)
         );
     }

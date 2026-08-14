@@ -186,7 +186,7 @@ final class SmallSingleHTMLFormatterTest extends TestCase
         );
 
         $this->assertEquals(
-            $this->expectedHtml('singleDateXsMoreDays'),
+            $this->expectedHtml('single-date-xs-more-days'),
             $this->formatter->format($event)
         );
     }
@@ -202,7 +202,7 @@ final class SmallSingleHTMLFormatterTest extends TestCase
         );
 
         $this->assertEquals(
-            $this->expectedHtml('singleDateXsMoreDaysWithUnavailableStatus'),
+            $this->expectedHtml('single-date-xs-more-days-with-unavailable-status'),
             $this->formatter->format($event)
         );
     }
@@ -218,7 +218,7 @@ final class SmallSingleHTMLFormatterTest extends TestCase
         );
 
         $this->assertEquals(
-            $this->expectedHtml('singleDateXsWithLeadingZeroMoreDays'),
+            $this->expectedHtml('single-date-xs-with-leading-zero-more-days'),
             $this->formatter->format($event)
         );
     }

@@ -75,7 +75,7 @@ final class CalendarHTMLFormatterTest extends TestCase
         );
 
         $this->assertSame(
-            $this->expectedHtml('extraLargeFormatRendersTheAdjustedAndClosedDays'),
+            $this->expectedHtml('extra-large-format-renders-the-adjusted-and-closed-days'),
             $this->formatter->format($place, 'xl')
         );
 

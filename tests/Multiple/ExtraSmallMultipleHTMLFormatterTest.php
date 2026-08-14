@@ -43,7 +43,7 @@ final class ExtraSmallMultipleHTMLFormatterTest extends TestCase
         );
 
         $this->assertEquals(
-            $this->expectedHtml('multipleWithoutLeadingZeroes'),
+            $this->expectedHtml('multiple-without-leading-zeroes'),
             $this->formatter->format($offer)
         );
     }
@@ -60,7 +60,7 @@ final class ExtraSmallMultipleHTMLFormatterTest extends TestCase
         );
 
         $this->assertEquals(
-            $this->expectedHtml('multipleWithLeadingZeroes'),
+            $this->expectedHtml('multiple-with-leading-zeroes'),
             $this->formatter->format($offer)
         );
     }
@@ -77,7 +77,7 @@ final class ExtraSmallMultipleHTMLFormatterTest extends TestCase
         );
 
         $this->assertEquals(
-            $this->expectedHtml('multipleWithoutLeadingZeroesWithUnavailableStatus'),
+            $this->expectedHtml('multiple-without-leading-zeroes-with-unavailable-status'),
             $this->formatter->format($offer)
         );
     }
@@ -94,7 +94,7 @@ final class ExtraSmallMultipleHTMLFormatterTest extends TestCase
         );
 
         $this->assertEquals(
-            $this->expectedHtml('multipleWithoutLeadingZeroesWithUnavailableStatusAndUnavailableBooking'),
+            $this->expectedHtml('multiple-without-leading-zeroes-with-unavailable-status-and-unavailable-booking'),
             $this->formatter->format($offer)
         );
     }
@@ -111,7 +111,7 @@ final class ExtraSmallMultipleHTMLFormatterTest extends TestCase
         );
 
         $this->assertEquals(
-            $this->expectedHtml('multipleWithoutLeadingZeroesWithAvailableStatusAndUnavailableBooking'),
+            $this->expectedHtml('multiple-without-leading-zeroes-with-available-status-and-unavailable-booking'),
             $this->formatter->format($offer)
         );
     }
@@ -128,7 +128,7 @@ final class ExtraSmallMultipleHTMLFormatterTest extends TestCase
         );
 
         $this->assertEquals(
-            $this->expectedHtml('multipleMonthWithoutLeadingZero'),
+            $this->expectedHtml('multiple-month-without-leading-zero'),
             $this->formatter->format($offer)
         );
     }

@@ -56,7 +56,7 @@ final class LargeMultipleHTMLFormatterTest extends TestCase
         $event = $event->withSubEvents($newEvents);
 
         $this->assertEquals(
-            $this->expectedHtml('multipleDateLargeOneDay'),
+            $this->expectedHtml('multiple-date-large-one-day'),
             $this->formatter->format($event)
         );
     }
@@ -85,7 +85,7 @@ final class LargeMultipleHTMLFormatterTest extends TestCase
         $event = $event->withSubEvents($newEvents);
 
         $this->assertEquals(
-            $this->expectedHtml('multipleDaysFrench'),
+            $this->expectedHtml('multiple-days-french'),
             (new LargeMultipleHTMLFormatter(new Translator('fr'), false))->format($event)
         );
     }
@@ -123,7 +123,7 @@ final class LargeMultipleHTMLFormatterTest extends TestCase
         $event = $event->withSubEvents($newEvents);
 
         $this->assertEquals(
-            $this->expectedHtml('multipleDateLargeOneDayWithUnavailability'),
+            $this->expectedHtml('multiple-date-large-one-day-with-unavailability'),
             $this->formatter->format($event)
         );
     }
@@ -154,7 +154,7 @@ final class LargeMultipleHTMLFormatterTest extends TestCase
         $event = $event->withSubEvents($newEvents);
 
         $this->assertEquals(
-            $this->expectedHtml('multipleDateLargeMoreDays'),
+            $this->expectedHtml('multiple-date-large-more-days'),
             $this->formatter->format($event)
         );
     }

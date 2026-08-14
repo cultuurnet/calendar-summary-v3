@@ -39,7 +39,7 @@ final class LargeSingleHTMLFormatterTest extends TestCase
         );
 
         $this->assertEquals(
-            $this->expectedHtml('singleDateLargeOneDay'),
+            $this->expectedHtml('single-date-large-one-day'),
             $this->formatter->format($event)
         );
     }
@@ -55,7 +55,7 @@ final class LargeSingleHTMLFormatterTest extends TestCase
         );
 
         $this->assertEquals(
-            $this->expectedHtml('singleDateLargeWithLeadingZeroOneDay'),
+            $this->expectedHtml('single-date-large-with-leading-zero-one-day'),
             $this->formatter->format($event)
         );
     }
@@ -71,7 +71,7 @@ final class LargeSingleHTMLFormatterTest extends TestCase
         );
 
         $this->assertEquals(
-            $this->expectedHtml('singleFrench'),
+            $this->expectedHtml('single-french'),
             (new LargeSingleHTMLFormatter(new Translator('fr')))->format($event)
         );
     }
@@ -87,7 +87,7 @@ final class LargeSingleHTMLFormatterTest extends TestCase
         );
 
         $this->assertEquals(
-            $this->expectedHtml('singleMultipleDaysFrench'),
+            $this->expectedHtml('single-multiple-days-french'),
             (new LargeSingleHTMLFormatter(new Translator('fr')))->format($event)
         );
     }
@@ -103,7 +103,7 @@ final class LargeSingleHTMLFormatterTest extends TestCase
         );
 
         $this->assertEquals(
-            $this->expectedHtml('singleDateLargeMoreDays'),
+            $this->expectedHtml('single-date-large-more-days'),
             $this->formatter->format($event)
         );
     }
@@ -119,7 +119,7 @@ final class LargeSingleHTMLFormatterTest extends TestCase
         );
 
         $this->assertEquals(
-            $this->expectedHtml('singleDateLargeWithLeadingZerosMoreDays'),
+            $this->expectedHtml('single-date-large-with-leading-zeros-more-days'),
             $this->formatter->format($event)
         );
     }
@@ -135,7 +135,7 @@ final class LargeSingleHTMLFormatterTest extends TestCase
         );
 
         $this->assertEquals(
-            $this->expectedHtml('singleDateLargeWholeDay'),
+            $this->expectedHtml('single-date-large-whole-day'),
             $this->formatter->format($event)
         );
     }
@@ -151,7 +151,7 @@ final class LargeSingleHTMLFormatterTest extends TestCase
         );
 
         $this->assertEquals(
-            $this->expectedHtml('singleDateLargeWholeDayWithStatusUnavailable'),
+            $this->expectedHtml('single-date-large-whole-day-with-status-unavailable'),
             $this->formatter->format($event)
         );
     }
@@ -167,7 +167,7 @@ final class LargeSingleHTMLFormatterTest extends TestCase
         );
 
         $this->assertEquals(
-            $this->expectedHtml('singleDateLargeWholeDayWithStatusUnavailableAndBookingUnavailable'),
+            $this->expectedHtml('single-date-large-whole-day-with-status-unavailable-and-booking-unavailable'),
             $this->formatter->format($event)
         );
     }
@@ -183,7 +183,7 @@ final class LargeSingleHTMLFormatterTest extends TestCase
         );
 
         $this->assertEquals(
-            $this->expectedHtml('singleDateLargeWholeDayWithStatusAvailableAndBookingUnavailable'),
+            $this->expectedHtml('single-date-large-whole-day-with-status-available-and-booking-unavailable'),
             $this->formatter->format($event)
         );
     }
@@ -199,7 +199,7 @@ final class LargeSingleHTMLFormatterTest extends TestCase
         );
 
         $this->assertEquals(
-            $this->expectedHtml('singleDateSameTime'),
+            $this->expectedHtml('single-date-same-time'),
             $this->formatter->format($event)
         );
     }
