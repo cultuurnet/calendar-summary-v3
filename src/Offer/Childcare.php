@@ -31,6 +31,18 @@ final class Childcare
         return new self($data['start'] ?? null, $data['end'] ?? null);
     }
 
+    /**
+     * Childcare needs at least a start or an end, anything else counts as no childcare.
+     */
+    public static function fromArrayOrNull(?array $data): ?self
+    {
+        if (!isset($data['start']) && !isset($data['end'])) {
+            return null;
+        }
+
+        return self::fromArray($data);
+    }
+
     public function getStart(): ?string
     {
         return $this->start;
