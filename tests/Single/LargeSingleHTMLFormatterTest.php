@@ -6,6 +6,7 @@ namespace CultuurNet\CalendarSummaryV3\Single;
 
 use CultuurNet\CalendarSummaryV3\HtmlFixture;
 use CultuurNet\CalendarSummaryV3\Offer\BookingAvailability;
+use CultuurNet\CalendarSummaryV3\Offer\Childcare;
 use CultuurNet\CalendarSummaryV3\Offer\Offer;
 use CultuurNet\CalendarSummaryV3\Offer\OfferType;
 use CultuurNet\CalendarSummaryV3\Offer\Status;
@@ -202,5 +203,88 @@ final class LargeSingleHTMLFormatterTest extends TestCase
             $this->expectedHtml('single-date-same-time'),
             $this->formatter->format($event)
         );
+    }
+
+    public function testItShowsTheChildcare(): void
+    {
+        $this->assertEquals(
+            $this->expectedHtml('single-with-childcare'),
+            $this->formatter->format($this->camp()->withChildcare(new Childcare('07:00', '18:00')))
+        );
+    }
+
+    public function testItShowsChildcareThatOnlyHappensBeforeTheOpeningHours(): void
+    {
+        $this->assertEquals(
+            $this->expectedHtml('single-with-childcare-before-the-opening-hours'),
+            $this->formatter->format($this->camp()->withChildcare(new Childcare('07:00', null)))
+        );
+    }
+
+    public function testItShowsChildcareThatOnlyHappensAfterTheOpeningHours(): void
+    {
+        $this->assertEquals(
+            $this->expectedHtml('single-with-childcare-after-the-opening-hours'),
+            $this->formatter->format($this->camp()->withChildcare(new Childcare(null, '18:00')))
+        );
+    }
+
+    public function testItShowsTheOvernightStayWithoutChildcare(): void
+    {
+        $this->assertEquals(
+            $this->expectedHtml('single-with-overnight'),
+            $this->formatter->format($this->camp()->withOvernight(true))
+        );
+    }
+
+    /**
+     * Only the overnight stay is capitalized when it is combined with the childcare.
+     */
+    public function testItCombinesTheOvernightStayAndTheChildcare(): void
+    {
+        $this->assertEquals(
+            $this->expectedHtml('single-with-childcare-and-overnight'),
+            $this->formatter->format($this->campWithChildcareAndOvernight())
+        );
+    }
+
+    /**
+     * The availability keeps closing the summary, so it stays the last thing that is read.
+     */
+    public function testItShowsTheChildcareBeforeTheAvailability(): void
+    {
+        $event = $this->campWithChildcareAndOvernight()
+            ->withAvailability(new Status('Unavailable', []), new BookingAvailability('Available'));
+
+        $this->assertEquals(
+            $this->expectedHtml('single-with-childcare-and-a-cancelled-status'),
+            $this->formatter->format($event)
+        );
+    }
+
+    public function testItTranslatesTheChildcareAndTheOvernightStay(): void
+    {
+        $this->assertEquals(
+            $this->expectedHtml('single-with-childcare-and-overnight-in-french'),
+            (new LargeSingleHTMLFormatter(new Translator('fr')))->format($this->campWithChildcareAndOvernight())
+        );
+    }
+
+    private function camp(): Offer
+    {
+        return new Offer(
+            OfferType::event(),
+            new Status('Available', []),
+            new BookingAvailability('Available'),
+            new DateTimeImmutable('2026-08-13T08:00:00+02:00'),
+            new DateTimeImmutable('2026-08-13T17:00:00+02:00')
+        );
+    }
+
+    private function campWithChildcareAndOvernight(): Offer
+    {
+        return $this->camp()
+            ->withChildcare(new Childcare('07:00', '18:00'))
+            ->withOvernight(true);
     }
 }
