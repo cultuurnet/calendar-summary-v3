@@ -76,7 +76,8 @@ final class CalendarPlainTextFormatterTest extends TestCase
             $this->formatter->format($place, 'xl')
         );
 
-        // The large format does not know about adjusted or closed days.
+        // The large format does not know about closed days, and without opening hours it
+        // has nothing the adjusted days could differ from either.
         $this->assertSame(
             'Alle dagen open' . PHP_EOL,
             $this->formatter->format($place, 'lg')

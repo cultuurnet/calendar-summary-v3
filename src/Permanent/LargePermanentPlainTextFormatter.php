@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace CultuurNet\CalendarSummaryV3\Permanent;
 
+use CultuurNet\CalendarSummaryV3\DateComparison;
 use CultuurNet\CalendarSummaryV3\Offer\Offer;
 use CultuurNet\CalendarSummaryV3\PlainTextSummaryBuilder;
 use CultuurNet\CalendarSummaryV3\PlainTextWeekSchemeFormatter;
@@ -32,8 +33,17 @@ final class LargePermanentPlainTextFormatter implements PermanentFormatterInterf
         }
 
         if (!$offer->getOpeningHours()->isEmpty()) {
-            return PlainTextWeekSchemeFormatter::forOpeningHours($offer->getOpeningHours(), $this->translator)
-                ->toString() . PHP_EOL;
+            $weekScheme = PlainTextWeekSchemeFormatter::forOpeningHours($offer->getOpeningHours(), $this->translator)
+                ->withChildcare()
+                ->toString();
+
+            // The adjusted days themselves are only listed in the extra large format, so
+            // here their existence is only hinted at.
+            if (DateComparison::withoutPastPeriods($offer->getAdjustedDays()) !== []) {
+                $weekScheme .= PHP_EOL . $this->translator->translate('adjusted_hours_notice');
+            }
+
+            return $weekScheme . PHP_EOL;
         }
 
         return PlainTextSummaryBuilder::start($this->translator)
