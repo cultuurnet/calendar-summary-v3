@@ -5,12 +5,15 @@ declare(strict_types=1);
 namespace CultuurNet\CalendarSummaryV3;
 
 use CultuurNet\CalendarSummaryV3\Offer\Childcare;
+use CultuurNet\CalendarSummaryV3\Offer\Offer;
 
 final class ChildcareFormatter
 {
     private Translator $translator;
 
-    private Childcare $childcare;
+    private ?Childcare $childcare = null;
+
+    private bool $overnight = false;
 
     private string $prefix = '';
 
@@ -27,6 +30,25 @@ final class ChildcareFormatter
     {
         $formatter = new self($translator);
         $formatter->childcare = $childcare;
+        return $formatter;
+    }
+
+    /**
+     * Combines the childcare of a (sub)event with its overnight stay. Renders nothing
+     * when it has neither of them.
+     */
+    public static function forOffer(Offer $offer, Translator $translator): self
+    {
+        $formatter = new self($translator);
+        $formatter->childcare = $offer->getChildcare();
+        $formatter->overnight = $offer->hasOvernight();
+
+        // Only the overnight stay starts the sentence, so the childcare that follows it
+        // keeps its lowercase.
+        if ($formatter->overnight && $formatter->childcare !== null) {
+            return $formatter->precededBy($translator->translate('overnight') . ',');
+        }
+
         return $formatter;
     }
 
@@ -73,6 +95,10 @@ final class ChildcareFormatter
     {
         $childcareText = $this->getChildcareText();
 
+        if ($childcareText === '') {
+            return '';
+        }
+
         if ($this->prefix !== '') {
             $childcareText = $this->prefix . ' ' . $childcareText;
         }
@@ -90,6 +116,10 @@ final class ChildcareFormatter
 
     private function getChildcareText(): string
     {
+        if ($this->childcare === null) {
+            return $this->overnight ? $this->translator->translate('overnight') : '';
+        }
+
         $start = $this->childcare->getStart();
         $end = $this->childcare->getEnd();
 

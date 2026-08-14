@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace CultuurNet\CalendarSummaryV3;
 
-use CultuurNet\CalendarSummaryV3\Offer\Childcare;
 use CultuurNet\CalendarSummaryV3\Offer\Offer;
 
 /**
@@ -12,25 +11,20 @@ use CultuurNet\CalendarSummaryV3\Offer\Offer;
  */
 final class HtmlChildcareFormatter
 {
-    private Translator $translator;
-
-    private ?Childcare $childcare = null;
-
-    private bool $overnight = false;
+    private ChildcareFormatter $childcareFormatter;
 
     private bool $asNestedList = false;
 
-    private function __construct(Translator $translator)
+    private function __construct(ChildcareFormatter $childcareFormatter)
     {
-        $this->translator = $translator;
+        $this->childcareFormatter = $childcareFormatter;
     }
 
     public static function forOffer(Offer $offer, Translator $translator): self
     {
-        $formatter = new self($translator);
-        $formatter->childcare = $offer->getChildcare();
-        $formatter->overnight = $offer->hasOvernight();
-        return $formatter;
+        return new self(
+            ChildcareFormatter::forOffer($offer, $translator)->capitalize()->withBraces()
+        );
     }
 
     /**
@@ -45,7 +39,7 @@ final class HtmlChildcareFormatter
 
     public function toString(): string
     {
-        $childcareText = $this->getChildcareText();
+        $childcareText = $this->childcareFormatter->toString();
 
         if ($childcareText === '') {
             return '';
@@ -58,22 +52,5 @@ final class HtmlChildcareFormatter
         }
 
         return '<span class="cf-childcare">' . $childcareText . '</span>';
-    }
-
-    private function getChildcareText(): string
-    {
-        if ($this->childcare === null) {
-            // Only the first word is capitalized, so an overnight stay without childcare
-            // is the only case where the overnight itself starts the sentence on its own.
-            return $this->overnight ? '(' . ucfirst($this->translator->translate('overnight')) . ')' : '';
-        }
-
-        $formatter = ChildcareFormatter::forChildcare($this->childcare, $this->translator);
-
-        if ($this->overnight) {
-            $formatter = $formatter->precededBy($this->translator->translate('overnight') . ',');
-        }
-
-        return $formatter->capitalize()->withBraces()->toString();
     }
 }
