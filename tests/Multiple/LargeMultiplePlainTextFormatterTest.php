@@ -9,12 +9,15 @@ use CultuurNet\CalendarSummaryV3\Offer\CalendarType;
 use CultuurNet\CalendarSummaryV3\Offer\Offer;
 use CultuurNet\CalendarSummaryV3\Offer\OfferType;
 use CultuurNet\CalendarSummaryV3\Offer\Status;
+use CultuurNet\CalendarSummaryV3\PlainTextFixture;
 use CultuurNet\CalendarSummaryV3\Translator;
 use DateTimeImmutable;
 use PHPUnit\Framework\TestCase;
 
 final class LargeMultiplePlainTextFormatterTest extends TestCase
 {
+    use PlainTextFixture;
+
     /**
      * @var LargeMultiplePlainTextFormatter
      */
@@ -51,20 +54,8 @@ final class LargeMultiplePlainTextFormatterTest extends TestCase
 
         $event = $event->withSubEvents($newEvents);
 
-        $expectedOutput = 'Donderdag 9 november 2017';
-        $expectedOutput .= ' van 20:00 tot 22:00' . PHP_EOL;
-
-        $expectedOutput .= 'Donderdag 16 november 2017';
-        $expectedOutput .= ' van 20:00 tot 22:00' . PHP_EOL;
-
-        $expectedOutput .= 'Donderdag 23 november 2017';
-        $expectedOutput .= ' van 20:00 tot 22:00' . PHP_EOL;
-
-        $expectedOutput .= 'Donderdag 30 november 2017';
-        $expectedOutput .= ' van 20:00 tot 22:00';
-
         $this->assertEquals(
-            $expectedOutput,
+            $this->expectedText('multiple-date-large-one-day'),
             $this->formatter->format($event)
         );
     }
@@ -94,20 +85,8 @@ final class LargeMultiplePlainTextFormatterTest extends TestCase
 
         $event = $event->withSubEvents($newEvents);
 
-        $expectedOutput = 'Donderdag 9 november 2017';
-        $expectedOutput .= ' van 20:00 tot 22:00 (geannuleerd)' . PHP_EOL;
-
-        $expectedOutput .= 'Donderdag 16 november 2017';
-        $expectedOutput .= ' van 20:00 tot 22:00 (geannuleerd)' . PHP_EOL;
-
-        $expectedOutput .= 'Donderdag 23 november 2017';
-        $expectedOutput .= ' van 20:00 tot 22:00 (geannuleerd)' . PHP_EOL;
-
-        $expectedOutput .= 'Donderdag 30 november 2017';
-        $expectedOutput .= ' van 20:00 tot 22:00 (geannuleerd)';
-
         $this->assertEquals(
-            $expectedOutput,
+            $this->expectedText('multiple-date-large-one-day-with-unavailable-status'),
             $this->formatter->format($event)
         );
     }
@@ -137,13 +116,8 @@ final class LargeMultiplePlainTextFormatterTest extends TestCase
 
         $event = $event->withSubEvents($newEvents);
 
-        $expectedOutput = 'Van maandag 6 november 2017 om 20:00 tot en met donderdag 9 november 2017 om 22:00' . PHP_EOL;
-        $expectedOutput .= 'Van dinsdag 14 november 2017 om 20:00 tot en met donderdag 16 november 2017 om 22:00' . PHP_EOL;
-        $expectedOutput .= 'Van dinsdag 21 november 2017 om 20:00 tot en met donderdag 23 november 2017 om 22:00' . PHP_EOL;
-        $expectedOutput .= 'Van dinsdag 28 november 2017 om 20:00 tot en met donderdag 30 november 2017 om 22:00';
-
         $this->assertEquals(
-            $expectedOutput,
+            $this->expectedText('multiple-date-large-more-days'),
             $this->formatter->format($event)
         );
     }
@@ -171,13 +145,8 @@ final class LargeMultiplePlainTextFormatterTest extends TestCase
         }
         $event = $event->withSubEvents($newEvents);
 
-        $expectedOutput = 'Du lundi 6 novembre 2017 à 20:00 au jeudi 9 novembre 2017 à 22:00' . PHP_EOL;
-        $expectedOutput .= 'Du mardi 14 novembre 2017 à 20:00 au jeudi 16 novembre 2017 à 22:00' . PHP_EOL;
-        $expectedOutput .= 'Du mardi 21 novembre 2017 à 20:00 au jeudi 23 novembre 2017 à 22:00' . PHP_EOL;
-        $expectedOutput .= 'Du mardi 28 novembre 2017 à 20:00 au jeudi 30 novembre 2017 à 22:00';
-
         $this->assertEquals(
-            $expectedOutput,
+            $this->expectedText('multiple-days-french'),
             (new LargeMultiplePlainTextFormatter(new Translator('fr'), false))->format($event)
         );
     }

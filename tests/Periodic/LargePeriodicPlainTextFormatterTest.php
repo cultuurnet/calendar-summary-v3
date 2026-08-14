@@ -10,12 +10,15 @@ use CultuurNet\CalendarSummaryV3\Offer\Offer;
 use CultuurNet\CalendarSummaryV3\Offer\OfferType;
 use CultuurNet\CalendarSummaryV3\Offer\OpeningHour;
 use CultuurNet\CalendarSummaryV3\Offer\Status;
+use CultuurNet\CalendarSummaryV3\PlainTextFixture;
 use CultuurNet\CalendarSummaryV3\Translator;
 use DateTimeImmutable;
 use PHPUnit\Framework\TestCase;
 
 final class LargePeriodicPlainTextFormatterTest extends TestCase
 {
+    use PlainTextFixture;
+
     /**
      * @var LargePeriodicPlainTextFormatter
      */
@@ -53,12 +56,7 @@ final class LargePeriodicPlainTextFormatterTest extends TestCase
         );
 
         $this->assertEquals(
-            'Van dinsdag 25 november 2025 tot en met zaterdag 30 november 2030' . PHP_EOL
-            . '(maandag van 0:01 tot 17:00, '
-            . 'dinsdag van 0:01 tot 17:00, '
-            . 'woensdag van 0:01 tot 17:00, '
-            . 'vrijdag van 10:00 tot 18:00, '
-            . 'zaterdag van 10:00 tot 18:00)',
+            $this->expectedText('period-with-single-time-blocks'),
             $this->formatter->format($place)
         );
     }
@@ -90,9 +88,7 @@ final class LargePeriodicPlainTextFormatterTest extends TestCase
         );
 
         $this->assertEquals(
-            'Du mardi 25 novembre 2025 à samedi 30 novembre 2030' . PHP_EOL
-            . '(lundi de 0:01 à 17:00, '
-            . 'vendredi de 10:00 à 18:00)',
+            $this->expectedText('period-with-single-time-blocks-in-french'),
             (new LargePeriodicPlainTextFormatter(new Translator('fr')))->format($place)
         );
     }
@@ -124,12 +120,7 @@ final class LargePeriodicPlainTextFormatterTest extends TestCase
         );
 
         $this->assertEquals(
-            'Van dinsdag 25 november 2025 tot en met zaterdag 30 november 2030' . PHP_EOL
-            . '(maandag van 0:01 tot 17:00, '
-            . 'dinsdag van 0:01 tot 17:00, '
-            . 'woensdag van 0:01 tot 17:00, '
-            . 'vrijdag van 10:00 tot 18:00, '
-            . 'zaterdag van 10:00 tot 18:00) (geannuleerd)',
+            $this->expectedText('period-with-single-time-blocks-with-unavailable-status'),
             $this->formatter->format($event)
         );
     }
@@ -171,12 +162,7 @@ final class LargePeriodicPlainTextFormatterTest extends TestCase
         );
 
         $this->assertEquals(
-            'Van dinsdag 25 november 2025 tot en met zaterdag 30 november 2030' . PHP_EOL
-            . '(maandag van 9:00 tot 13:00 en van 17:00 tot 20:00, '
-            . 'dinsdag van 9:00 tot 13:00 en van 17:00 tot 20:00, '
-            . 'woensdag van 9:00 tot 13:00 en van 17:00 tot 20:00, '
-            . 'vrijdag van 10:00 tot 15:00 en van 18:00 tot 21:00, '
-            . 'zaterdag van 10:00 tot 15:00 en van 18:00 tot 21:00)',
+            $this->expectedText('period-with-split-time-blocks'),
             $this->formatter->format($place)
         );
     }
@@ -223,11 +209,7 @@ final class LargePeriodicPlainTextFormatterTest extends TestCase
         );
 
         $this->assertEquals(
-            'Van dinsdag 25 november 2025 tot en met zaterdag 30 november 2030' . PHP_EOL
-            . '(maandag van 9:30 tot 13:45 en van 17:00 tot 20:00, '
-            . 'dinsdag van 9:30 tot 13:45 en van 18:00 tot 20:00 en van 21:00 tot 23:00, '
-            . 'vrijdag van 10:00 tot 15:00, '
-            . 'zaterdag van 10:00 tot 15:00)',
+            $this->expectedText('period-with-complex-time-blocks'),
             $this->formatter->format($place)
         );
     }

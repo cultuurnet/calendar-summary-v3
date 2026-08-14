@@ -10,12 +10,15 @@ use CultuurNet\CalendarSummaryV3\Offer\Offer;
 use CultuurNet\CalendarSummaryV3\Offer\OfferType;
 use CultuurNet\CalendarSummaryV3\Offer\OpeningHour;
 use CultuurNet\CalendarSummaryV3\Offer\Status;
+use CultuurNet\CalendarSummaryV3\PlainTextFixture;
 use CultuurNet\CalendarSummaryV3\Translator;
 use DateTimeImmutable;
 use PHPUnit\Framework\TestCase;
 
 final class LargePermanentPlainTextFormatterTest extends TestCase
 {
+    use PlainTextFixture;
+
     /**
      * @var LargePermanentPlainTextFormatter
      */
@@ -70,13 +73,7 @@ final class LargePermanentPlainTextFormatterTest extends TestCase
         );
 
         $this->assertEquals(
-            'Maandag van 9:00 tot 13:00 en van 14:00 tot 20:00' . PHP_EOL
-            . 'Dinsdag van 9:00 tot 13:00' . PHP_EOL
-            . 'Woensdag van 9:00 tot 13:00' . PHP_EOL
-            . 'Donderdag gesloten' . PHP_EOL
-            . 'Vrijdag van 0:01 tot 13:00' . PHP_EOL
-            . 'Zaterdag van 9:00 tot 19:00' . PHP_EOL
-            . 'Zondag van 9:00 tot 19:00' . PHP_EOL,
+            $this->expectedText('simple-permanent') . PHP_EOL,
             $this->formatter->format($place)
         );
     }
@@ -111,13 +108,7 @@ final class LargePermanentPlainTextFormatterTest extends TestCase
         );
 
         $this->assertEquals(
-            'Lundi de 9:00 à 13:00' . PHP_EOL
-            . 'Mardi fermé' . PHP_EOL
-            . 'Mercredi fermé' . PHP_EOL
-            . 'Jeudi fermé' . PHP_EOL
-            . 'Vendredi de 0:01 à 13:00' . PHP_EOL
-            . 'Samedi fermé' . PHP_EOL
-            . 'Dimanche fermé' . PHP_EOL,
+            $this->expectedText('simple-permanent-in-french') . PHP_EOL,
             (new LargePermanentPlainTextFormatter(new Translator('fr')))->format($place)
         );
     }
@@ -166,13 +157,7 @@ final class LargePermanentPlainTextFormatterTest extends TestCase
         );
 
         $this->assertEquals(
-            'Maandag van 9:00 tot 13:00 en van 17:00 tot 20:00' . PHP_EOL
-            . 'Dinsdag van 9:00 tot 13:00 en van 17:00 tot 20:00' . PHP_EOL
-            . 'Woensdag van 9:00 tot 13:00 en van 17:00 tot 20:00' . PHP_EOL
-            . 'Donderdag gesloten' . PHP_EOL
-            . 'Vrijdag van 10:00 tot 15:00 en van 18:00 tot 21:00' . PHP_EOL
-            . 'Zaterdag van 10:00 tot 15:00 en van 18:00 tot 21:00' . PHP_EOL
-            . 'Zondag gesloten' . PHP_EOL,
+            $this->expectedText('mixed-permanent') . PHP_EOL,
             $this->formatter->format($place)
         );
     }
@@ -228,13 +213,7 @@ final class LargePermanentPlainTextFormatterTest extends TestCase
         );
 
         $this->assertEquals(
-            'Maandag van 9:30 tot 13:45 en van 17:00 tot 20:00' . PHP_EOL
-            . 'Dinsdag van 9:30 tot 13:45 en van 18:00 tot 20:00 en van 21:00 tot 23:00' . PHP_EOL
-            . 'Woensdag gesloten' . PHP_EOL
-            . 'Donderdag gesloten' . PHP_EOL
-            . 'Vrijdag van 10:00 tot 15:00' . PHP_EOL
-            . 'Zaterdag van 10:00 tot 15:00' . PHP_EOL
-            . 'Zondag gesloten' . PHP_EOL,
+            $this->expectedText('complex-permanent') . PHP_EOL,
             $this->formatter->format($place)
         );
     }
