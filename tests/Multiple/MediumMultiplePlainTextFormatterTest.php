@@ -54,7 +54,7 @@ final class MediumMultiplePlainTextFormatterTest extends TestCase
         $event = $event->withSubEvents($newEvents);
 
         $this->assertEquals(
-            $this->expectedText('multipleDateMediumOneDay'),
+            $this->expectedText('multiple-date-medium-one-day'),
             $this->formatter->format($event)
         );
     }
@@ -118,7 +118,7 @@ final class MediumMultiplePlainTextFormatterTest extends TestCase
         $event = $event->withSubEvents($newEvents);
 
         $this->assertEquals(
-            $this->expectedText('multipleDateMediumMoreDays'),
+            $this->expectedText('multiple-date-medium-more-days'),
             $this->formatter->format($event)
         );
     }
@@ -149,7 +149,7 @@ final class MediumMultiplePlainTextFormatterTest extends TestCase
         $event = $event->withSubEvents($newEvents);
 
         $this->assertEquals(
-            $this->expectedText('multipleDateMediumOneDayWithUnavailableStatus'),
+            $this->expectedText('multiple-date-medium-one-day-with-unavailable-status'),
             $this->formatter->format($event)
         );
     }
@@ -189,7 +189,7 @@ final class MediumMultiplePlainTextFormatterTest extends TestCase
         $event = $event->withSubEvents($newEvents);
 
         $this->assertEquals(
-            $this->expectedText('multipleDateMediumOneDayWithUnavailableStatusForSingleSubEvent'),
+            $this->expectedText('multiple-date-medium-one-day-with-unavailable-status-for-single-sub-event'),
             $this->formatter->format($event)
         );
     }

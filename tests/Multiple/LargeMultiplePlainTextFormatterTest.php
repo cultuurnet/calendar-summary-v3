@@ -55,7 +55,7 @@ final class LargeMultiplePlainTextFormatterTest extends TestCase
         $event = $event->withSubEvents($newEvents);
 
         $this->assertEquals(
-            $this->expectedText('multipleDateLargeOneDay'),
+            $this->expectedText('multiple-date-large-one-day'),
             $this->formatter->format($event)
         );
     }
@@ -86,7 +86,7 @@ final class LargeMultiplePlainTextFormatterTest extends TestCase
         $event = $event->withSubEvents($newEvents);
 
         $this->assertEquals(
-            $this->expectedText('multipleDateLargeOneDayWithUnavailableStatus'),
+            $this->expectedText('multiple-date-large-one-day-with-unavailable-status'),
             $this->formatter->format($event)
         );
     }
@@ -117,7 +117,7 @@ final class LargeMultiplePlainTextFormatterTest extends TestCase
         $event = $event->withSubEvents($newEvents);
 
         $this->assertEquals(
-            $this->expectedText('multipleDateLargeMoreDays'),
+            $this->expectedText('multiple-date-large-more-days'),
             $this->formatter->format($event)
         );
     }
@@ -146,7 +146,7 @@ final class LargeMultiplePlainTextFormatterTest extends TestCase
         $event = $event->withSubEvents($newEvents);
 
         $this->assertEquals(
-            $this->expectedText('multipleDaysFrench'),
+            $this->expectedText('multiple-days-french'),
             (new LargeMultiplePlainTextFormatter(new Translator('fr'), false))->format($event)
         );
     }

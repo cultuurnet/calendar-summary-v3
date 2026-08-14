@@ -56,7 +56,7 @@ final class LargePeriodicPlainTextFormatterTest extends TestCase
         );
 
         $this->assertEquals(
-            $this->expectedText('periodWithSingleTimeBlocks'),
+            $this->expectedText('period-with-single-time-blocks'),
             $this->formatter->format($place)
         );
     }
@@ -88,7 +88,7 @@ final class LargePeriodicPlainTextFormatterTest extends TestCase
         );
 
         $this->assertEquals(
-            $this->expectedText('periodWithSingleTimeBlocksInFrench'),
+            $this->expectedText('period-with-single-time-blocks-in-french'),
             (new LargePeriodicPlainTextFormatter(new Translator('fr')))->format($place)
         );
     }
@@ -120,7 +120,7 @@ final class LargePeriodicPlainTextFormatterTest extends TestCase
         );
 
         $this->assertEquals(
-            $this->expectedText('periodWithSingleTimeBlocksWithUnavailableStatus'),
+            $this->expectedText('period-with-single-time-blocks-with-unavailable-status'),
             $this->formatter->format($event)
         );
     }
@@ -162,7 +162,7 @@ final class LargePeriodicPlainTextFormatterTest extends TestCase
         );
 
         $this->assertEquals(
-            $this->expectedText('periodWithSplitTimeBlocks'),
+            $this->expectedText('period-with-split-time-blocks'),
             $this->formatter->format($place)
         );
     }
@@ -209,7 +209,7 @@ final class LargePeriodicPlainTextFormatterTest extends TestCase
         );
 
         $this->assertEquals(
-            $this->expectedText('periodWithComplexTimeBlocks'),
+            $this->expectedText('period-with-complex-time-blocks'),
             $this->formatter->format($place)
         );
     }
