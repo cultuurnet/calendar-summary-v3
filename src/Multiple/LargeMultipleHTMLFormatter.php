@@ -30,7 +30,8 @@ final class LargeMultipleHTMLFormatter implements MultipleFormatterInterface
     public function format(Offer $offer): string
     {
         $subEvents = $offer->getSubEvents();
-        $formatter = new LargeSingleHTMLFormatter($this->translator);
+        // Every sub-event gets its own list item, so its childcare is nested inside of it.
+        $formatter = new LargeSingleHTMLFormatter($this->translator, true);
 
         $subEventSummaries = [];
         foreach ($subEvents as $subEvent) {
