@@ -24,7 +24,7 @@ final class HtmlPeriodListFormatter
     /**
      * @param Period[] $periods
      * @param callable(Period): string|null $formatContent
-     *   Renders the markup between the dates and the description of a period.
+     *   Renders the markup that follows the dates and the description of a period.
      */
     public function format(
         array $periods,
@@ -88,13 +88,13 @@ final class HtmlPeriodListFormatter
                 . '</span>';
         }
 
-        if ($formatContent !== null) {
-            $output .= $formatContent($period);
-        }
-
         $description = $period->getDescriptionForLanguage($this->translator->getLanguageCode());
         if ($description !== '') {
             $output .= '<span class="cf-description">(' . $description . ')</span>';
+        }
+
+        if ($formatContent !== null) {
+            $output .= $formatContent($period);
         }
 
         return $output . '</li>';
