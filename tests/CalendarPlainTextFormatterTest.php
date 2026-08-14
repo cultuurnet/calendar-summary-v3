@@ -72,7 +72,7 @@ final class CalendarPlainTextFormatterTest extends TestCase
         );
 
         $this->assertSame(
-            $this->expectedText('extraLargeFormatRendersTheAdjustedAndClosedDays') . PHP_EOL,
+            $this->expectedText('extra-large-format-renders-the-adjusted-and-closed-days') . PHP_EOL,
             $this->formatter->format($place, 'xl')
         );
 

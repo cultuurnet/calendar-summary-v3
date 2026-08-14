@@ -51,7 +51,7 @@ final class ExtraLargePermanentPlainTextFormatterTest extends TestCase
         );
 
         $this->assertEquals(
-            $this->expectedText('simplePermanent') . PHP_EOL,
+            $this->expectedText('simple-permanent') . PHP_EOL,
             $this->formatter->format($place)
         );
     }
@@ -65,7 +65,7 @@ final class ExtraLargePermanentPlainTextFormatterTest extends TestCase
         );
 
         $this->assertEquals(
-            $this->expectedText('sharedChildcareAsASingleLine') . PHP_EOL,
+            $this->expectedText('shared-childcare-as-a-single-line') . PHP_EOL,
             $this->formatter->format($place)
         );
     }
@@ -80,7 +80,7 @@ final class ExtraLargePermanentPlainTextFormatterTest extends TestCase
         );
 
         $this->assertEquals(
-            $this->expectedText('differingChildcareOnTheDayItself') . PHP_EOL,
+            $this->expectedText('differing-childcare-on-the-day-itself') . PHP_EOL,
             $this->formatter->format($place)
         );
     }
@@ -95,7 +95,7 @@ final class ExtraLargePermanentPlainTextFormatterTest extends TestCase
         );
 
         $this->assertEquals(
-            $this->expectedText('childcareOnTheDayItselfWhenNotEveryDayHasIt') . PHP_EOL,
+            $this->expectedText('childcare-on-the-day-itself-when-not-every-day-has-it') . PHP_EOL,
             $this->formatter->format($place)
         );
     }
@@ -111,7 +111,7 @@ final class ExtraLargePermanentPlainTextFormatterTest extends TestCase
         );
 
         $this->assertEquals(
-            $this->expectedText('childcareOfADayWithMultipleTimespansOnlyOnce') . PHP_EOL,
+            $this->expectedText('childcare-of-a-day-with-multiple-timespans-only-once') . PHP_EOL,
             $this->formatter->format($place)
         );
     }
@@ -126,7 +126,7 @@ final class ExtraLargePermanentPlainTextFormatterTest extends TestCase
         );
 
         $this->assertEquals(
-            $this->expectedText('childcareOfEveryTimespanWhenItDiffersOnTheSameDay') . PHP_EOL,
+            $this->expectedText('childcare-of-every-timespan-when-it-differs-on-the-same-day') . PHP_EOL,
             $this->formatter->format($place)
         );
     }
@@ -141,7 +141,7 @@ final class ExtraLargePermanentPlainTextFormatterTest extends TestCase
         );
 
         $this->assertEquals(
-            $this->expectedText('childcareWithoutAnEndOrWithoutAStart') . PHP_EOL,
+            $this->expectedText('childcare-without-an-end-or-without-a-start') . PHP_EOL,
             $this->formatter->format($place)
         );
     }
@@ -177,7 +177,7 @@ final class ExtraLargePermanentPlainTextFormatterTest extends TestCase
         );
 
         $this->assertEquals(
-            $this->expectedText('sharedChildcareInAnAdjustedDay') . PHP_EOL,
+            $this->expectedText('shared-childcare-in-an-adjusted-day') . PHP_EOL,
             $this->formatter->format($place)
         );
     }
@@ -198,7 +198,7 @@ final class ExtraLargePermanentPlainTextFormatterTest extends TestCase
         );
 
         $this->assertEquals(
-            $this->expectedText('differingChildcareInAnAdjustedDay') . PHP_EOL,
+            $this->expectedText('differing-childcare-in-an-adjusted-day') . PHP_EOL,
             $this->formatter->format($place)
         );
     }
@@ -243,7 +243,7 @@ final class ExtraLargePermanentPlainTextFormatterTest extends TestCase
             ->withAdjustedDays([$this->autumnHoliday()]);
 
         $this->assertEquals(
-            $this->expectedText('adjustedDaysAfterTheWeekScheme') . PHP_EOL,
+            $this->expectedText('adjusted-days-after-the-week-scheme') . PHP_EOL,
             $this->formatter->format($place)
         );
     }
@@ -253,7 +253,7 @@ final class ExtraLargePermanentPlainTextFormatterTest extends TestCase
         $place = $this->availablePlace()->withAdjustedDays([$this->autumnHoliday()]);
 
         $this->assertEquals(
-            $this->expectedText('adjustedDaysForASinglePeriod') . PHP_EOL,
+            $this->expectedText('adjusted-days-for-a-single-period') . PHP_EOL,
             $this->formatter->format($place)
         );
     }
@@ -263,7 +263,7 @@ final class ExtraLargePermanentPlainTextFormatterTest extends TestCase
         $place = $this->availablePlace()->withAdjustedDays([$this->autumnHoliday()]);
 
         $this->assertEquals(
-            $this->expectedText('adjustedDaysForASinglePeriodInFrench') . PHP_EOL,
+            $this->expectedText('adjusted-days-for-a-single-period-in-french') . PHP_EOL,
             (new ExtraLargePermanentPlainTextFormatter(new Translator('fr_BE')))->format($place)
         );
     }
@@ -282,7 +282,7 @@ final class ExtraLargePermanentPlainTextFormatterTest extends TestCase
         );
 
         $this->assertEquals(
-            $this->expectedText('adjustedDaysForASingleDay') . PHP_EOL,
+            $this->expectedText('adjusted-days-for-a-single-day') . PHP_EOL,
             $this->formatter->format($place)
         );
     }
@@ -304,7 +304,7 @@ final class ExtraLargePermanentPlainTextFormatterTest extends TestCase
         );
 
         $this->assertEquals(
-            $this->expectedText('adjustedDaysWithMultipleOpeningHours') . PHP_EOL,
+            $this->expectedText('adjusted-days-with-multiple-opening-hours') . PHP_EOL,
             $this->formatter->format($place)
         );
     }
@@ -322,7 +322,7 @@ final class ExtraLargePermanentPlainTextFormatterTest extends TestCase
         );
 
         $this->assertEquals(
-            $this->expectedText('adjustedDaysWithNonConsecutiveDays') . PHP_EOL,
+            $this->expectedText('adjusted-days-with-non-consecutive-days') . PHP_EOL,
             $this->formatter->format($place)
         );
     }
@@ -341,7 +341,7 @@ final class ExtraLargePermanentPlainTextFormatterTest extends TestCase
         );
 
         $this->assertEquals(
-            $this->expectedText('adjustedDaysWithoutOpeningHours') . PHP_EOL,
+            $this->expectedText('adjusted-days-without-opening-hours') . PHP_EOL,
             $this->formatter->format($place)
         );
     }
@@ -360,7 +360,7 @@ final class ExtraLargePermanentPlainTextFormatterTest extends TestCase
         );
 
         $this->assertEquals(
-            $this->expectedText('itDoesNotRenderTheDescriptionWhenTranslationIsUnavailable') . PHP_EOL,
+            $this->expectedText('it-does-not-render-the-description-when-translation-is-unavailable') . PHP_EOL,
             $this->formatter->format($place)
         );
     }
@@ -385,7 +385,7 @@ final class ExtraLargePermanentPlainTextFormatterTest extends TestCase
         );
 
         $this->assertEquals(
-            $this->expectedText('itRendersMultipleAdjustedDays') . PHP_EOL,
+            $this->expectedText('it-renders-multiple-adjusted-days') . PHP_EOL,
             $this->formatter->format($place)
         );
     }
@@ -423,7 +423,7 @@ final class ExtraLargePermanentPlainTextFormatterTest extends TestCase
         );
 
         $this->assertEquals(
-            $this->expectedText('itRendersAdjustedDaysThatEndToday') . PHP_EOL,
+            $this->expectedText('it-renders-adjusted-days-that-end-today') . PHP_EOL,
             $this->formatter->format($place)
         );
     }
@@ -433,7 +433,7 @@ final class ExtraLargePermanentPlainTextFormatterTest extends TestCase
         $place = $this->availablePlace()->withClosedDays([$this->christmasHoliday()]);
 
         $this->assertEquals(
-            $this->expectedText('closedDays') . PHP_EOL,
+            $this->expectedText('closed-days') . PHP_EOL,
             $this->formatter->format($place)
         );
     }
@@ -443,7 +443,7 @@ final class ExtraLargePermanentPlainTextFormatterTest extends TestCase
         $place = $this->availablePlace()->withClosedDays([$this->christmasHoliday()]);
 
         $this->assertEquals(
-            $this->expectedText('closedDaysInFrench') . PHP_EOL,
+            $this->expectedText('closed-days-in-french') . PHP_EOL,
             (new ExtraLargePermanentPlainTextFormatter(new Translator('fr_BE')))->format($place)
         );
     }
@@ -461,7 +461,7 @@ final class ExtraLargePermanentPlainTextFormatterTest extends TestCase
         );
 
         $this->assertEquals(
-            $this->expectedText('closedDaysForASingleDay') . PHP_EOL,
+            $this->expectedText('closed-days-for-a-single-day') . PHP_EOL,
             $this->formatter->format($place)
         );
     }
@@ -480,7 +480,7 @@ final class ExtraLargePermanentPlainTextFormatterTest extends TestCase
         );
 
         $this->assertEquals(
-            $this->expectedText('itRendersMultipleClosedDays') . PHP_EOL,
+            $this->expectedText('it-renders-multiple-closed-days') . PHP_EOL,
             $this->formatter->format($place)
         );
     }
@@ -510,7 +510,7 @@ final class ExtraLargePermanentPlainTextFormatterTest extends TestCase
             ->withClosedDays([$this->christmasHoliday()]);
 
         $this->assertEquals(
-            $this->expectedText('itRendersTheClosedDaysAfterTheAdjustedDays') . PHP_EOL,
+            $this->expectedText('it-renders-the-closed-days-after-the-adjusted-days') . PHP_EOL,
             $this->formatter->format($place)
         );
     }
