@@ -59,6 +59,16 @@ final class Offer
      */
     private $closedDays = [];
 
+    /**
+     * @var Childcare|null
+     */
+    private $childcare;
+
+    /**
+     * @var bool
+     */
+    private $overnight = false;
+
     public function __construct(
         OfferType $offerType,
         Status $status,
@@ -91,6 +101,14 @@ final class Offer
 
         if (isset($data['subEvent'])) {
             $offer = $offer->withSubEvents(self::parseSubEvents($data['subEvent']));
+
+            // A single event repeats its only sub-event, but the childcare and overnight
+            // are only stored on that sub-event while the formatters get the offer itself.
+            if ($data['calendarType'] === CalendarType::single()->toString() && isset($offer->subEvents[0])) {
+                $offer = $offer
+                    ->withChildcare($offer->subEvents[0]->childcare)
+                    ->withOvernight($offer->subEvents[0]->overnight);
+            }
         }
 
         if (isset($data['openingHours'])) {
@@ -119,13 +137,17 @@ final class Offer
     {
         $subEvents = [];
         foreach ($data as $subEventData) {
-            $subEvents[] = new self(
+            $subEvent = new self(
                 OfferType::event(),
                 Status::fromArray($subEventData['status']),
                 BookingAvailability::fromArray($subEventData['bookingAvailability']),
                 new DateTimeImmutable($subEventData['startDate']),
                 new DateTimeImmutable($subEventData['endDate'])
             );
+
+            $subEvents[] = $subEvent
+                ->withChildcare(Childcare::fromArrayOrNull($subEventData['childcare'] ?? null))
+                ->withOvernight((bool) ($subEventData['overnight'] ?? false));
         }
 
         return $subEvents;
@@ -216,6 +238,22 @@ final class Offer
         return $clone;
     }
 
+    public function withChildcare(?Childcare $childcare): self
+    {
+        $clone = clone $this;
+        $clone->childcare = $childcare;
+
+        return $clone;
+    }
+
+    public function withOvernight(bool $overnight): self
+    {
+        $clone = clone $this;
+        $clone->overnight = $overnight;
+
+        return $clone;
+    }
+
     public function withAvailability(Status $status, BookingAvailability $bookingAvailability): self
     {
         $clone = clone $this;
@@ -293,5 +331,15 @@ final class Offer
     public function getClosedDays(): array
     {
         return $this->closedDays;
+    }
+
+    public function getChildcare(): ?Childcare
+    {
+        return $this->childcare;
+    }
+
+    public function hasOvernight(): bool
+    {
+        return $this->overnight;
     }
 }
