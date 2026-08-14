@@ -77,16 +77,18 @@ final class PlainTextPeriodListFormatter
             );
         }
 
+        // The description names the period, e.g. 'Herfstvakantie', so it belongs with the dates
+        // instead of after the opening hours that follow them.
+        $description = $period->getDescriptionForLanguage($this->translator->getLanguageCode());
+        if ($description !== '') {
+            $dates = $dates->append('(' . $description . ')');
+        }
+
         $lines = [$dates->toString()];
 
         $content = $formatContent !== null ? $formatContent($period) : '';
         if ($content !== '') {
             $lines[] = $content;
-        }
-
-        $description = $period->getDescriptionForLanguage($this->translator->getLanguageCode());
-        if ($description !== '') {
-            $lines[] = $description;
         }
 
         return implode(PHP_EOL, $lines);
