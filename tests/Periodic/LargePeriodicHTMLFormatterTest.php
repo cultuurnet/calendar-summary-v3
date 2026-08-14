@@ -260,6 +260,26 @@ final class LargePeriodicHTMLFormatterTest extends TestCase
     }
 
     /**
+     * A nested list is a block of its own and would push the timespans that follow it onto
+     * a line of their own, so the childcare of a day is listed after its last timespan even
+     * when it differs per timespan.
+     */
+    public function testItListsTheChildcareOfEveryTimespanAfterTheLastOne(): void
+    {
+        $place = $this->availablePlace()->withOpeningHours(
+            [
+                new OpeningHour(['monday'], '09:00', '12:00', new Childcare('08:00', '13:00')),
+                new OpeningHour(['monday'], '14:00', '18:00', new Childcare('13:00', '19:00')),
+            ]
+        );
+
+        $this->assertEquals(
+            $this->expectedHtml('period-with-childcare-that-differs-per-timespan'),
+            $this->formatter->format($place)
+        );
+    }
+
+    /**
      * Childcare that every day has in common is summarized in a single list item, which
      * already is a list item of its own and therefore is not nested any further.
      */

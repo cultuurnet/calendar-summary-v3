@@ -316,11 +316,16 @@ final class LargePermanentHTMLFormatterTest extends TestCase
         );
     }
 
+    /**
+     * A nested list is a block of its own, so the childcare of a day is listed after its
+     * last timespan even when it differs per timespan, instead of splitting them up.
+     */
     public function testItNestsTheChildcareInsideTheDayItBelongsTo(): void
     {
         $place = $this->availablePlace()->withOpeningHours(
             [
-                new OpeningHour(['monday'], '09:00', '16:00', new Childcare('08:00', '17:00')),
+                new OpeningHour(['monday'], '09:00', '12:00', new Childcare('08:00', '13:00')),
+                new OpeningHour(['monday'], '14:00', '18:00', new Childcare('13:00', '19:00')),
                 new OpeningHour(['saturday'], '10:00', '18:00', new Childcare(null, '19:00')),
             ]
         );
