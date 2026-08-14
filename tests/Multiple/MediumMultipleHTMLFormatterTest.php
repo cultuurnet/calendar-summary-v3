@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace CultuurNet\CalendarSummaryV3\Multiple;
 
+use CultuurNet\CalendarSummaryV3\HtmlFixture;
 use CultuurNet\CalendarSummaryV3\Offer\BookingAvailability;
 use CultuurNet\CalendarSummaryV3\Offer\CalendarType;
 use CultuurNet\CalendarSummaryV3\Offer\Offer;
@@ -15,6 +16,8 @@ use PHPUnit\Framework\TestCase;
 
 final class MediumMultipleHTMLFormatterTest extends TestCase
 {
+    use HtmlFixture;
+
     /**
      * @var MediumMultipleHTMLFormatter
      */
@@ -50,23 +53,13 @@ final class MediumMultipleHTMLFormatterTest extends TestCase
 
         $event = $event->withSubEvents($newEvents);
 
-        $expectedOutput = '<ul class="cnw-event-date-info"><li>';
-        $expectedOutput .= '<span class="cf-weekday cf-meta">Do</span> ';
-        $expectedOutput .= '<span class="cf-date">9 november 2017</span></li>';
-        $expectedOutput .= '<li><span class="cf-weekday cf-meta">Do</span> ';
-        $expectedOutput .= '<span class="cf-date">16 november 2017</span></li>';
-        $expectedOutput .= '<li><span class="cf-weekday cf-meta">Do</span> ';
-        $expectedOutput .= '<span class="cf-date">23 november 2017</span></li>';
-        $expectedOutput .= '<li><span class="cf-weekday cf-meta">Do</span> ';
-        $expectedOutput .= '<span class="cf-date">30 november 2017</span></li></ul>';
-
         $this->assertEquals(
-            $expectedOutput,
+            $this->expectedHtml('multiple-date-medium-one-day'),
             $this->formatter->format($event)
         );
     }
 
-    public function testFormatPlainTextMultipleOnSameDay(): void
+    public function testFormatHTMLMultipleOnSameDay(): void
     {
         $subEvents = json_decode(file_get_contents(__DIR__ . '/data/subEventsSameDay.json'), true);
         $event = new Offer(
@@ -91,12 +84,8 @@ final class MediumMultipleHTMLFormatterTest extends TestCase
 
         $event = $event->withSubEvents($newEvents);
 
-        $expectedOutput = '<ul class="cnw-event-date-info">';
-        $expectedOutput .=  '<li><span class="cf-weekday cf-meta">Ma</span> ';
-        $expectedOutput .= '<span class="cf-date">6 november 2017</span></li></ul>';
-
         $this->assertEquals(
-            $expectedOutput,
+            $this->expectedHtml('multiple-on-same-day'),
             $this->formatter->format($event)
         );
     }
@@ -134,18 +123,8 @@ final class MediumMultipleHTMLFormatterTest extends TestCase
         );
         $event = $event->withSubEvents($newEvents);
 
-        $expectedOutput = '<ul class="cnw-event-date-info"><li>';
-        $expectedOutput .= '<span class="cf-weekday cf-meta">Do</span> ';
-        $expectedOutput .= '<span class="cf-date">9 november 2017</span></li>';
-        $expectedOutput .= '<li><span class="cf-weekday cf-meta">Do</span> ';
-        $expectedOutput .= '<span class="cf-date">16 november 2017</span> <span class="cf-status">(geannuleerd)</span></li>';
-        $expectedOutput .= '<li><span class="cf-weekday cf-meta">Do</span> ';
-        $expectedOutput .= '<span class="cf-date">23 november 2017</span> <span class="cf-status">(Volzet of uitverkocht)</span></li>';
-        $expectedOutput .= '<li><span class="cf-weekday cf-meta">Do</span> ';
-        $expectedOutput .= '<span class="cf-date">30 november 2017</span></li></ul>';
-
         $this->assertEquals(
-            $expectedOutput,
+            $this->expectedHtml('multiple-date-medium-one-day-with-unavailable-status'),
             $this->formatter->format($event)
         );
     }
@@ -175,34 +154,8 @@ final class MediumMultipleHTMLFormatterTest extends TestCase
 
         $event = $event->withSubEvents($newEvents);
 
-        $expectedOutput = '<ul class="cnw-event-date-info"><li>';
-        $expectedOutput .= '<span class="cf-from cf-meta">Van</span> ';
-        $expectedOutput .= '<span class="cf-weekday cf-meta">ma</span> ';
-        $expectedOutput .= '<span class="cf-date">6 november 2017</span> ';
-        $expectedOutput .= '<span class="cf-to cf-meta">tot</span> ';
-        $expectedOutput .= '<span class="cf-weekday cf-meta">do</span> ';
-        $expectedOutput .= '<span class="cf-date">9 november 2017</span></li>';
-        $expectedOutput .= '<li><span class="cf-from cf-meta">Van</span> ';
-        $expectedOutput .= '<span class="cf-weekday cf-meta">di</span> ';
-        $expectedOutput .= '<span class="cf-date">14 november 2017</span> ';
-        $expectedOutput .= '<span class="cf-to cf-meta">tot</span> ';
-        $expectedOutput .= '<span class="cf-weekday cf-meta">do</span> ';
-        $expectedOutput .= '<span class="cf-date">16 november 2017</span></li>';
-        $expectedOutput .= '<li><span class="cf-from cf-meta">Van</span> ';
-        $expectedOutput .= '<span class="cf-weekday cf-meta">di</span> ';
-        $expectedOutput .= '<span class="cf-date">21 november 2017</span> ';
-        $expectedOutput .= '<span class="cf-to cf-meta">tot</span> ';
-        $expectedOutput .= '<span class="cf-weekday cf-meta">do</span> ';
-        $expectedOutput .= '<span class="cf-date">23 november 2017</span></li>';
-        $expectedOutput .= '<li><span class="cf-from cf-meta">Van</span> ';
-        $expectedOutput .= '<span class="cf-weekday cf-meta">di</span> ';
-        $expectedOutput .= '<span class="cf-date">28 november 2017</span> ';
-        $expectedOutput .= '<span class="cf-to cf-meta">tot</span> ';
-        $expectedOutput .= '<span class="cf-weekday cf-meta">do</span> ';
-        $expectedOutput .= '<span class="cf-date">30 november 2017</span></li></ul>';
-
         $this->assertEquals(
-            $expectedOutput,
+            $this->expectedHtml('multiple-date-medium-more-days'),
             $this->formatter->format($event)
         );
     }

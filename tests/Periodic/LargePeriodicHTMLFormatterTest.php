@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace CultuurNet\CalendarSummaryV3\Periodic;
 
+use CultuurNet\CalendarSummaryV3\HtmlFixture;
 use CultuurNet\CalendarSummaryV3\Offer\BookingAvailability;
 use CultuurNet\CalendarSummaryV3\Offer\CalendarType;
 use CultuurNet\CalendarSummaryV3\Offer\Offer;
@@ -16,6 +17,8 @@ use PHPUnit\Framework\TestCase;
 
 final class LargePeriodicHTMLFormatterTest extends TestCase
 {
+    use HtmlFixture;
+
     /**
      * @var LargePeriodicHTMLFormatter
      */
@@ -53,59 +56,7 @@ final class LargePeriodicHTMLFormatterTest extends TestCase
         );
 
         $this->assertEquals(
-            '<p class="cf-period"> '
-            . '<span class="cf-weekday cf-meta">dinsdag</span> '
-            . '<time itemprop="startDate" datetime="2025-11-25"> '
-            . '<span class="cf-date">25 november 2025</span> '
-            . '</time> '
-            . '<span class="cf-to cf-meta">tot en met</span> '
-            . '<span class="cf-weekday cf-meta">zaterdag</span> '
-            . '<time itemprop="endDate" datetime="2030-11-30"> '
-            . '<span class="cf-date">30 november 2030</span> '
-            . '</time> '
-            . '</p> '
-            . '<p class="cf-openinghours">Open op:</p> '
-            . '<ul class="list-unstyled"> '
-            . '<meta itemprop="openingHours" datetime="Ma 0:00-17:00"> </meta> '
-            . '<li itemprop="openingHoursSpecification"> '
-            . '<span class="cf-days">Maandag</span> '
-            . '<span itemprop="opens" content="0:00" class="cf-from cf-meta">van</span> '
-            . '<span class="cf-time">0:00</span> '
-            . '<span itemprop="closes" content="17:00" class="cf-to cf-meta">tot</span> '
-            . '<span class="cf-time">17:00</span> '
-            . '</li> '
-            . '<meta itemprop="openingHours" datetime="Di 0:00-17:00"> </meta> '
-            . '<li itemprop="openingHoursSpecification"> '
-            . '<span class="cf-days">Dinsdag</span> '
-            . '<span itemprop="opens" content="0:00" class="cf-from cf-meta">van</span> '
-            . '<span class="cf-time">0:00</span> '
-            . '<span itemprop="closes" content="17:00" class="cf-to cf-meta">tot</span> '
-            . '<span class="cf-time">17:00</span> '
-            . '</li> '
-            . '<meta itemprop="openingHours" datetime="Wo 0:00-17:00"> </meta> '
-            . '<li itemprop="openingHoursSpecification"> '
-            . '<span class="cf-days">Woensdag</span> '
-            . '<span itemprop="opens" content="0:00" class="cf-from cf-meta">van</span> '
-            . '<span class="cf-time">0:00</span> '
-            . '<span itemprop="closes" content="17:00" class="cf-to cf-meta">tot</span> '
-            . '<span class="cf-time">17:00</span> '
-            . '</li> '
-            . '<meta itemprop="openingHours" datetime="Vr 10:00-18:00"> </meta> '
-            . '<li itemprop="openingHoursSpecification"> '
-            . '<span class="cf-days">Vrijdag</span> '
-            . '<span itemprop="opens" content="10:00" class="cf-from cf-meta">van</span> '
-            . '<span class="cf-time">10:00</span> '
-            . '<span itemprop="closes" content="18:00" class="cf-to cf-meta">tot</span> '
-            . '<span class="cf-time">18:00</span> '
-            . '</li> '
-            . '<meta itemprop="openingHours" datetime="Za 10:00-18:00"> </meta> '
-            . '<li itemprop="openingHoursSpecification"> '
-            . '<span class="cf-days">Zaterdag</span> '
-            . '<span itemprop="opens" content="10:00" class="cf-from cf-meta">van</span> '
-            . '<span class="cf-time">10:00</span> '
-            . '<span itemprop="closes" content="18:00" class="cf-to cf-meta">tot</span> '
-            . '<span class="cf-time">18:00</span> '
-            . '</li> </ul>',
+            $this->expectedHtml('period-with-single-time-blocks'),
             $this->formatter->format($place)
         );
     }
@@ -137,35 +88,7 @@ final class LargePeriodicHTMLFormatterTest extends TestCase
         );
 
         $this->assertEquals(
-            '<p class="cf-period"> '
-            . '<span class="cf-weekday cf-meta">mardi</span> '
-            . '<time itemprop="startDate" datetime="2025-11-25"> '
-            . '<span class="cf-date">25 novembre 2025</span> '
-            . '</time> '
-            . '<span class="cf-to cf-meta">à</span> '
-            . '<span class="cf-weekday cf-meta">samedi</span> '
-            . '<time itemprop="endDate" datetime="2030-11-30"> '
-            . '<span class="cf-date">30 novembre 2030</span> '
-            . '</time> '
-            . '</p> '
-            . '<p class="cf-openinghours">Ouvert le:</p> '
-            . '<ul class="list-unstyled"> '
-            . '<meta itemprop="openingHours" datetime="Lun. 0:00-17:00"> </meta> '
-            . '<li itemprop="openingHoursSpecification"> '
-            . '<span class="cf-days">Lundi</span> '
-            . '<span itemprop="opens" content="0:00" class="cf-from cf-meta">de</span> '
-            . '<span class="cf-time">0:00</span> '
-            . '<span itemprop="closes" content="17:00" class="cf-to cf-meta">à</span> '
-            . '<span class="cf-time">17:00</span> '
-            . '</li> '
-            . '<meta itemprop="openingHours" datetime="Ven. 10:00-18:00"> </meta> '
-            . '<li itemprop="openingHoursSpecification"> '
-            . '<span class="cf-days">Vendredi</span> '
-            . '<span itemprop="opens" content="10:00" class="cf-from cf-meta">de</span> '
-            . '<span class="cf-time">10:00</span> '
-            . '<span itemprop="closes" content="18:00" class="cf-to cf-meta">à</span> '
-            . '<span class="cf-time">18:00</span> '
-            . '</li> </ul>',
+            $this->expectedHtml('period-with-single-time-blocks-in-french'),
             (new LargePeriodicHTMLFormatter(new Translator('fr')))->format($place)
         );
     }
@@ -197,60 +120,7 @@ final class LargePeriodicHTMLFormatterTest extends TestCase
         );
 
         $this->assertEquals(
-            '<p class="cf-period"> '
-            . '<span class="cf-weekday cf-meta">dinsdag</span> '
-            . '<time itemprop="startDate" datetime="2025-11-25"> '
-            . '<span class="cf-date">25 november 2025</span> '
-            . '</time> '
-            . '<span class="cf-to cf-meta">tot en met</span> '
-            . '<span class="cf-weekday cf-meta">zaterdag</span> '
-            . '<time itemprop="endDate" datetime="2030-11-30"> '
-            . '<span class="cf-date">30 november 2030</span> '
-            . '</time> '
-            . '<span class="cf-status">(geannuleerd)</span> '
-            . '</p> '
-            . '<p class="cf-openinghours">Open op:</p> '
-            . '<ul class="list-unstyled"> '
-            . '<meta itemprop="openingHours" datetime="Ma 0:00-17:00"> </meta> '
-            . '<li itemprop="openingHoursSpecification"> '
-            . '<span class="cf-days">Maandag</span> '
-            . '<span itemprop="opens" content="0:00" class="cf-from cf-meta">van</span> '
-            . '<span class="cf-time">0:00</span> '
-            . '<span itemprop="closes" content="17:00" class="cf-to cf-meta">tot</span> '
-            . '<span class="cf-time">17:00</span> '
-            . '</li> '
-            . '<meta itemprop="openingHours" datetime="Di 0:00-17:00"> </meta> '
-            . '<li itemprop="openingHoursSpecification"> '
-            . '<span class="cf-days">Dinsdag</span> '
-            . '<span itemprop="opens" content="0:00" class="cf-from cf-meta">van</span> '
-            . '<span class="cf-time">0:00</span> '
-            . '<span itemprop="closes" content="17:00" class="cf-to cf-meta">tot</span> '
-            . '<span class="cf-time">17:00</span> '
-            . '</li> '
-            . '<meta itemprop="openingHours" datetime="Wo 0:00-17:00"> </meta> '
-            . '<li itemprop="openingHoursSpecification"> '
-            . '<span class="cf-days">Woensdag</span> '
-            . '<span itemprop="opens" content="0:00" class="cf-from cf-meta">van</span> '
-            . '<span class="cf-time">0:00</span> '
-            . '<span itemprop="closes" content="17:00" class="cf-to cf-meta">tot</span> '
-            . '<span class="cf-time">17:00</span> '
-            . '</li> '
-            . '<meta itemprop="openingHours" datetime="Vr 10:00-18:00"> </meta> '
-            . '<li itemprop="openingHoursSpecification"> '
-            . '<span class="cf-days">Vrijdag</span> '
-            . '<span itemprop="opens" content="10:00" class="cf-from cf-meta">van</span> '
-            . '<span class="cf-time">10:00</span> '
-            . '<span itemprop="closes" content="18:00" class="cf-to cf-meta">tot</span> '
-            . '<span class="cf-time">18:00</span> '
-            . '</li> '
-            . '<meta itemprop="openingHours" datetime="Za 10:00-18:00"> </meta> '
-            . '<li itemprop="openingHoursSpecification"> '
-            . '<span class="cf-days">Zaterdag</span> '
-            . '<span itemprop="opens" content="10:00" class="cf-from cf-meta">van</span> '
-            . '<span class="cf-time">10:00</span> '
-            . '<span itemprop="closes" content="18:00" class="cf-to cf-meta">tot</span> '
-            . '<span class="cf-time">18:00</span> '
-            . '</li> </ul>',
+            $this->expectedHtml('period-with-single-time-blocks-with-unavailable-status'),
             $this->formatter->format($event)
         );
     }
@@ -292,79 +162,7 @@ final class LargePeriodicHTMLFormatterTest extends TestCase
         );
 
         $this->assertEquals(
-            '<p class="cf-period"> '
-            . '<span class="cf-weekday cf-meta">dinsdag</span> '
-            . '<time itemprop="startDate" datetime="2025-11-25"> '
-            . '<span class="cf-date">25 november 2025</span> '
-            . '</time> '
-            . '<span class="cf-to cf-meta">tot en met</span> '
-            . '<span class="cf-weekday cf-meta">zaterdag</span> '
-            . '<time itemprop="endDate" datetime="2030-11-30"> '
-            . '<span class="cf-date">30 november 2030</span> '
-            . '</time> '
-            . '</p> '
-            . '<p class="cf-openinghours">Open op:</p> '
-            . '<ul class="list-unstyled"> '
-            . '<meta itemprop="openingHours" datetime="Ma 9:00-20:00"> </meta> '
-            . '<li itemprop="openingHoursSpecification"> '
-            . '<span class="cf-days">Maandag</span> '
-            . '<span itemprop="opens" content="9:00" class="cf-from cf-meta">van</span> '
-            . '<span class="cf-time">9:00</span> '
-            . '<span itemprop="closes" content="13:00" class="cf-to cf-meta">tot</span> '
-            . '<span class="cf-time">13:00</span> '
-            . '<span itemprop="opens" content="17:00" class="cf-from cf-meta">en van</span> '
-            . '<span class="cf-time">17:00</span> '
-            . '<span itemprop="closes" content="20:00" class="cf-to cf-meta">tot</span> '
-            . '<span class="cf-time">20:00</span> '
-            . '</li> '
-            . '<meta itemprop="openingHours" datetime="Di 9:00-20:00"> </meta> '
-            . '<li itemprop="openingHoursSpecification"> '
-            . '<span class="cf-days">Dinsdag</span> '
-            . '<span itemprop="opens" content="9:00" class="cf-from cf-meta">van</span> '
-            . '<span class="cf-time">9:00</span> '
-            . '<span itemprop="closes" content="13:00" class="cf-to cf-meta">tot</span> '
-            . '<span class="cf-time">13:00</span> '
-            . '<span itemprop="opens" content="17:00" class="cf-from cf-meta">en van</span> '
-            . '<span class="cf-time">17:00</span> '
-            . '<span itemprop="closes" content="20:00" class="cf-to cf-meta">tot</span> '
-            . '<span class="cf-time">20:00</span> '
-            . '</li> '
-            . '<meta itemprop="openingHours" datetime="Wo 9:00-20:00"> </meta> '
-            . '<li itemprop="openingHoursSpecification"> '
-            . '<span class="cf-days">Woensdag</span> '
-            . '<span itemprop="opens" content="9:00" class="cf-from cf-meta">van</span> '
-            . '<span class="cf-time">9:00</span> '
-            . '<span itemprop="closes" content="13:00" class="cf-to cf-meta">tot</span> '
-            . '<span class="cf-time">13:00</span> '
-            . '<span itemprop="opens" content="17:00" class="cf-from cf-meta">en van</span> '
-            . '<span class="cf-time">17:00</span> '
-            . '<span itemprop="closes" content="20:00" class="cf-to cf-meta">tot</span> '
-            . '<span class="cf-time">20:00</span> '
-            . '</li> '
-            . '<meta itemprop="openingHours" datetime="Vr 10:00-21:00"> </meta> '
-            . '<li itemprop="openingHoursSpecification"> '
-            . '<span class="cf-days">Vrijdag</span> '
-            . '<span itemprop="opens" content="10:00" class="cf-from cf-meta">van</span> '
-            . '<span class="cf-time">10:00</span> '
-            . '<span itemprop="closes" content="15:00" class="cf-to cf-meta">tot</span> '
-            . '<span class="cf-time">15:00</span> '
-            . '<span itemprop="opens" content="18:00" class="cf-from cf-meta">en van</span> '
-            . '<span class="cf-time">18:00</span> '
-            . '<span itemprop="closes" content="21:00" class="cf-to cf-meta">tot</span> '
-            . '<span class="cf-time">21:00</span> '
-            . '</li> '
-            . '<meta itemprop="openingHours" datetime="Za 10:00-21:00"> </meta> '
-            . '<li itemprop="openingHoursSpecification"> '
-            . '<span class="cf-days">Zaterdag</span> '
-            . '<span itemprop="opens" content="10:00" class="cf-from cf-meta">van</span> '
-            . '<span class="cf-time">10:00</span> '
-            . '<span itemprop="closes" content="15:00" class="cf-to cf-meta">tot</span> '
-            . '<span class="cf-time">15:00</span> '
-            . '<span itemprop="opens" content="18:00" class="cf-from cf-meta">en van</span> '
-            . '<span class="cf-time">18:00</span> '
-            . '<span itemprop="closes" content="21:00" class="cf-to cf-meta">tot</span> '
-            . '<span class="cf-time">21:00</span> '
-            . '</li> </ul>',
+            $this->expectedHtml('period-with-split-time-blocks'),
             $this->formatter->format($place)
         );
     }
@@ -411,63 +209,7 @@ final class LargePeriodicHTMLFormatterTest extends TestCase
         );
 
         $this->assertEquals(
-            '<p class="cf-period"> '
-            . '<span class="cf-weekday cf-meta">dinsdag</span> '
-            . '<time itemprop="startDate" datetime="2025-11-25"> '
-            . '<span class="cf-date">25 november 2025</span> '
-            . '</time> '
-            . '<span class="cf-to cf-meta">tot en met</span> '
-            . '<span class="cf-weekday cf-meta">zaterdag</span> '
-            . '<time itemprop="endDate" datetime="2030-11-30"> '
-            . '<span class="cf-date">30 november 2030</span> '
-            . '</time> '
-            . '</p> '
-            . '<p class="cf-openinghours">Open op:</p> '
-            . '<ul class="list-unstyled"> '
-            . '<meta itemprop="openingHours" datetime="Ma 9:30-20:00"> </meta> '
-            . '<li itemprop="openingHoursSpecification"> '
-            . '<span class="cf-days">Maandag</span> '
-            . '<span itemprop="opens" content="9:30" class="cf-from cf-meta">van</span> '
-            . '<span class="cf-time">9:30</span> '
-            . '<span itemprop="closes" content="13:45" class="cf-to cf-meta">tot</span> '
-            . '<span class="cf-time">13:45</span> '
-            . '<span itemprop="opens" content="17:00" class="cf-from cf-meta">en van</span> '
-            . '<span class="cf-time">17:00</span> '
-            . '<span itemprop="closes" content="20:00" class="cf-to cf-meta">tot</span> '
-            . '<span class="cf-time">20:00</span> '
-            . '</li> '
-            . '<meta itemprop="openingHours" datetime="Di 0:00-20:00"> </meta> '
-            . '<li itemprop="openingHoursSpecification"> '
-            . '<span class="cf-days">Dinsdag</span> '
-            . '<span itemprop="opens" content="0:00" class="cf-from cf-meta">van</span> '
-            . '<span class="cf-time">0:00</span> '
-            . '<span itemprop="closes" content="20:00" class="cf-to cf-meta">tot</span> '
-            . '<span class="cf-time">20:00</span> '
-            . '<span itemprop="opens" content="0:01" class="cf-from cf-meta">en van</span> '
-            . '<span class="cf-time">0:01</span> '
-            . '<span itemprop="closes" content="0:59" class="cf-to cf-meta">tot</span> '
-            . '<span class="cf-time">0:59</span> '
-            . '<span itemprop="opens" content="9:30" class="cf-from cf-meta">en van</span> '
-            . '<span class="cf-time">9:30</span> '
-            . '<span itemprop="closes" content="13:45" class="cf-to cf-meta">tot</span> '
-            . '<span class="cf-time">13:45</span> '
-            . '</li> '
-            . '<meta itemprop="openingHours" datetime="Vr 10:00-15:00"> </meta> '
-            . '<li itemprop="openingHoursSpecification"> '
-            . '<span class="cf-days">Vrijdag</span> '
-            . '<span itemprop="opens" content="10:00" class="cf-from cf-meta">van</span> '
-            . '<span class="cf-time">10:00</span> '
-            . '<span itemprop="closes" content="15:00" class="cf-to cf-meta">tot</span> '
-            . '<span class="cf-time">15:00</span> '
-            . '</li> '
-            . '<meta itemprop="openingHours" datetime="Za 10:00-15:00"> </meta> '
-            . '<li itemprop="openingHoursSpecification"> '
-            . '<span class="cf-days">Zaterdag</span> '
-            . '<span itemprop="opens" content="10:00" class="cf-from cf-meta">van</span> '
-            . '<span class="cf-time">10:00</span> '
-            . '<span itemprop="closes" content="15:00" class="cf-to cf-meta">tot</span> '
-            . '<span class="cf-time">15:00</span> '
-            . '</li> </ul>',
+            $this->expectedHtml('period-with-complex-time-blocks'),
             $this->formatter->format($place)
         );
     }
@@ -484,17 +226,7 @@ final class LargePeriodicHTMLFormatterTest extends TestCase
         );
 
         $this->assertEquals(
-            '<p class="cf-period"> '
-            . '<span class="cf-weekday cf-meta">dinsdag</span> '
-            . '<time itemprop="startDate" datetime="2025-11-25"> '
-            . '<span class="cf-date">25 november 2025</span> '
-            . '</time> '
-            . '<span class="cf-to cf-meta">tot en met</span> '
-            . '<span class="cf-weekday cf-meta">zaterdag</span> '
-            . '<time itemprop="endDate" datetime="2030-11-30"> '
-            . '<span class="cf-date">30 november 2030</span> '
-            . '</time> '
-            . '</p>',
+            $this->expectedHtml('period-without-time-blocks'),
             $this->formatter->format($place)
         );
     }

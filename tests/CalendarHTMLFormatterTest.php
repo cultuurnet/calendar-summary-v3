@@ -17,6 +17,8 @@ use PHPUnit\Framework\TestCase;
 
 final class CalendarHTMLFormatterTest extends TestCase
 {
+    use HtmlFixture;
+
     /**
      * @var CalendarHTMLFormatter
      */
@@ -73,21 +75,7 @@ final class CalendarHTMLFormatterTest extends TestCase
         );
 
         $this->assertSame(
-            '<p class="cf-openinghours">Alle dagen open</p> '
-            . '<details class="cf-adjusted-days"> '
-            . '<summary>Behalve tijdens</summary> '
-            . '<ul class="list-unstyled"> '
-            . '<li> '
-            . '<span class="cf-date">Zaterdag 2 november 2030</span> '
-            . '<span class="cf-description">Herfstvakantie</span> '
-            . '</li> </ul> </details> '
-            . '<details class="cf-closed-days"> '
-            . '<summary>Gesloten</summary> '
-            . '<ul class="list-unstyled"> '
-            . '<li> '
-            . '<span class="cf-date">Woensdag 25 december 2030</span> '
-            . '<span class="cf-description">Kerstmis</span> '
-            . '</li> </ul> </details>',
+            $this->expectedHtml('extra-large-format-renders-the-adjusted-and-closed-days'),
             $this->formatter->format($place, 'xl')
         );
 

@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace CultuurNet\CalendarSummaryV3\Periodic;
 
 use CultuurNet\CalendarSummaryV3\CalendarSummaryTester;
+use CultuurNet\CalendarSummaryV3\HtmlFixture;
 use CultuurNet\CalendarSummaryV3\Offer\BookingAvailability;
 use CultuurNet\CalendarSummaryV3\Offer\CalendarType;
 use CultuurNet\CalendarSummaryV3\Offer\Offer;
@@ -16,6 +17,8 @@ use PHPUnit\Framework\TestCase;
 
 final class SmallPeriodicHTMLFormatterTest extends TestCase
 {
+    use HtmlFixture;
+
     /**
      * @var SmallPeriodicHTMLFormatter
      */
@@ -38,19 +41,8 @@ final class SmallPeriodicHTMLFormatterTest extends TestCase
             CalendarType::periodic()
         );
 
-        $expected =
-            '<span class="from meta">Vanaf</span>' .
-            ' ' .
-            '<span class="cf-days">di</span>' .
-            ' ' .
-            '<span class="cf-date">25</span>' .
-            ' ' .
-            '<span class="cf-month">nov</span>' .
-            ' ' .
-            '<span class="cf-year">2025</span>';
-
         $this->assertEquals(
-            $expected,
+            $this->expectedHtml('period-without-leading-zeroes'),
             $this->formatter->format($offer)
         );
     }
@@ -66,19 +58,8 @@ final class SmallPeriodicHTMLFormatterTest extends TestCase
             CalendarType::periodic()
         );
 
-        $expected =
-            '<span class="from meta">Vanaf</span>' .
-            ' ' .
-            '<span class="cf-days">di</span>' .
-            ' ' .
-            '<span class="cf-date">4</span>' .
-            ' ' .
-            '<span class="cf-month">mrt</span>' .
-            ' ' .
-            '<span class="cf-year">2025</span>';
-
         $this->assertEquals(
-            $expected,
+            $this->expectedHtml('period-with-leading-zeroes'),
             $this->formatter->format($offer)
         );
     }
@@ -94,17 +75,8 @@ final class SmallPeriodicHTMLFormatterTest extends TestCase
             CalendarType::periodic()
         );
 
-        $expected =
-            '<span class="from meta">Vanaf</span>' .
-            ' ' .
-            '<span class="cf-days">do</span>' .
-            ' ' .
-            '<span class="cf-date">25</span>' .
-            ' ' .
-            '<span class="cf-month">nov</span>';
-
         $this->assertEquals(
-            $expected,
+            $this->expectedHtml('period-current-year'),
             $this->formatter->format($offer)
         );
     }
@@ -120,17 +92,8 @@ final class SmallPeriodicHTMLFormatterTest extends TestCase
             CalendarType::periodic()
         );
 
-        $expected =
-            '<span class="from meta">Vanaf</span>' .
-            ' ' .
-            '<span class="cf-days">do</span>' .
-            ' ' .
-            '<span class="cf-date">25</span>' .
-            ' ' .
-            '<span class="cf-month">nov</span>';
-
         $this->assertEquals(
-            $expected,
+            $this->expectedHtml('period-starts-current-year'),
             $this->formatter->format($offer)
         );
     }
@@ -146,17 +109,8 @@ final class SmallPeriodicHTMLFormatterTest extends TestCase
             CalendarType::periodic()
         );
 
-        $expected =
-            '<span class="to meta">Tot</span>' .
-            ' ' .
-            '<span class="cf-days">ma</span>' .
-            ' ' .
-            '<span class="cf-date">8</span>' .
-            ' ' .
-            '<span class="cf-month">mrt</span>';
-
         $this->assertEquals(
-            $expected,
+            $this->expectedHtml('period-ends-current-year'),
             $this->formatter->format($offer)
         );
     }
@@ -172,21 +126,8 @@ final class SmallPeriodicHTMLFormatterTest extends TestCase
             CalendarType::periodic()
         );
 
-        $expected =
-            '<span class="from meta">Vanaf</span>' .
-            ' ' .
-            '<span class="cf-days">di</span>' .
-            ' ' .
-            '<span class="cf-date">25</span>' .
-            ' ' .
-            '<span class="cf-month">nov</span>' .
-            ' ' .
-            '<span class="cf-year">2025</span>' .
-            ' ' .
-            '<span class="cf-status">(geannuleerd)</span>';
-
         $this->assertEquals(
-            $expected,
+            $this->expectedHtml('period-without-leading-zeroes-with-unavailable-status'),
             $this->formatter->format($offer)
         );
     }
@@ -202,19 +143,8 @@ final class SmallPeriodicHTMLFormatterTest extends TestCase
             CalendarType::periodic()
         );
 
-        $expected =
-            '<span class="from meta">Vanaf</span>' .
-            ' ' .
-            '<span class="cf-days">di</span>' .
-            ' ' .
-            '<span class="cf-date">25</span>' .
-            ' ' .
-            '<span class="cf-month">mrt</span>' .
-            ' ' .
-            '<span class="cf-year">2025</span>';
-
         $this->assertEquals(
-            $expected,
+            $this->expectedHtml('period-day-without-leading-zero'),
             $this->formatter->format($offer)
         );
     }
@@ -230,19 +160,8 @@ final class SmallPeriodicHTMLFormatterTest extends TestCase
             CalendarType::periodic()
         );
 
-        $expected =
-            '<span class="from meta">Vanaf</span>' .
-            ' ' .
-            '<span class="cf-days">za</span>' .
-            ' ' .
-            '<span class="cf-date">4</span>' .
-            ' ' .
-            '<span class="cf-month">okt</span>' .
-            ' ' .
-            '<span class="cf-year">2025</span>';
-
         $this->assertEquals(
-            $expected,
+            $this->expectedHtml('period-month-without-leading-zero'),
             $this->formatter->format($offer)
         );
     }
@@ -258,19 +177,8 @@ final class SmallPeriodicHTMLFormatterTest extends TestCase
             CalendarType::periodic()
         );
 
-        $expected =
-            '<span class="to meta">Tot</span>' .
-            ' ' .
-            '<span class="cf-days">ma</span>' .
-            ' ' .
-            '<span class="cf-date">18</span>' .
-            ' ' .
-            '<span class="cf-month">mrt</span>' .
-            ' ' .
-            '<span class="cf-year">2030</span>';
-
         $this->assertEquals(
-            $expected,
+            $this->expectedHtml('period-that-has-already-started'),
             $this->formatter->format($offer)
         );
     }

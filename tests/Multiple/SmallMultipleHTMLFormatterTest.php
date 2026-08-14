@@ -6,6 +6,7 @@ namespace CultuurNet\CalendarSummaryV3\Multiple;
 
 use Carbon\CarbonImmutable;
 use CultuurNet\CalendarSummaryV3\CalendarSummaryTester;
+use CultuurNet\CalendarSummaryV3\HtmlFixture;
 use CultuurNet\CalendarSummaryV3\Offer\BookingAvailability;
 use CultuurNet\CalendarSummaryV3\Offer\CalendarType;
 use CultuurNet\CalendarSummaryV3\Offer\Offer;
@@ -17,6 +18,8 @@ use PHPUnit\Framework\TestCase;
 
 final class SmallMultipleHTMLFormatterTest extends TestCase
 {
+    use HtmlFixture;
+
     /**
      * @var SmallMultipleHTMLFormatter
      */
@@ -108,11 +111,7 @@ final class SmallMultipleHTMLFormatterTest extends TestCase
         );
 
         $this->assertEquals(
-            '<span class="cf-weekday cf-meta">Di</span> '
-            . '<span class="cf-date">25 nov 2025</span> '
-            . '<span class="cf-to cf-meta">-</span> '
-            . '<span class="cf-weekday cf-meta">za</span> '
-            . '<span class="cf-date">30 nov 2030</span>',
+            $this->expectedHtml('multiple-without-leading-zeroes'),
             $this->formatter->format($offer)
         );
     }
@@ -129,11 +128,7 @@ final class SmallMultipleHTMLFormatterTest extends TestCase
         );
 
         $this->assertEquals(
-            '<span class="cf-weekday cf-meta">Do</span> '
-            . '<span class="cf-date">25 nov</span> '
-            . '<span class="cf-to cf-meta">-</span> '
-            . '<span class="cf-weekday cf-meta">di</span> '
-            . '<span class="cf-date">30 nov</span>',
+            $this->expectedHtml('multiple-current-year'),
             $this->formatter->format($offer)
         );
     }
@@ -150,11 +145,7 @@ final class SmallMultipleHTMLFormatterTest extends TestCase
         );
 
         $this->assertEquals(
-            '<span class="cf-weekday cf-meta">Do</span> '
-            . '<span class="cf-date">25 nov</span> '
-            . '<span class="cf-to cf-meta">-</span> '
-            . '<span class="cf-weekday cf-meta">za</span> '
-            . '<span class="cf-date">30 nov 2030</span>',
+            $this->expectedHtml('multiple-starts-current-year'),
             $this->formatter->format($offer)
         );
     }
@@ -171,11 +162,7 @@ final class SmallMultipleHTMLFormatterTest extends TestCase
         );
 
         $this->assertEquals(
-            '<span class="cf-weekday cf-meta">Wo</span> '
-            . '<span class="cf-date">25 nov 2020</span> '
-            . '<span class="cf-to cf-meta">-</span> '
-            . '<span class="cf-weekday cf-meta">di</span> '
-            . '<span class="cf-date">30 nov</span>',
+            $this->expectedHtml('multiple-ends-current-year'),
             $this->formatter->format($offer)
         );
     }
@@ -192,12 +179,7 @@ final class SmallMultipleHTMLFormatterTest extends TestCase
         );
 
         $this->assertEquals(
-            '<span class="cf-weekday cf-meta">Di</span> '
-            . '<span class="cf-date">25 nov 2025</span> '
-            . '<span class="cf-to cf-meta">-</span> '
-            . '<span class="cf-weekday cf-meta">za</span> '
-            . '<span class="cf-date">30 nov 2030</span>'
-            . ' <span class="cf-status">(geannuleerd)</span>',
+            $this->expectedHtml('multiple-without-leading-zeroes-with-unavailable-status'),
             $this->formatter->format($offer)
         );
     }
@@ -214,12 +196,7 @@ final class SmallMultipleHTMLFormatterTest extends TestCase
         );
 
         $this->assertEquals(
-            '<span class="cf-weekday cf-meta">Di</span> '
-            . '<span class="cf-date">25 nov 2025</span> '
-            . '<span class="cf-to cf-meta">-</span> '
-            . '<span class="cf-weekday cf-meta">za</span> '
-            . '<span class="cf-date">30 nov 2030</span>'
-            . ' <span class="cf-status">(Volzet of uitverkocht)</span>',
+            $this->expectedHtml('multiple-without-leading-zeroes-with-available-status-and-unavailable-booking'),
             $this->formatter->format($offer)
         );
     }
@@ -236,11 +213,7 @@ final class SmallMultipleHTMLFormatterTest extends TestCase
         );
 
         $this->assertEquals(
-            '<span class="cf-weekday cf-meta">Di</span> '
-            . '<span class="cf-date">4 mrt 2025</span> '
-            . '<span class="cf-to cf-meta">-</span> '
-            . '<span class="cf-weekday cf-meta">vr</span> '
-            . '<span class="cf-date">8 mrt 2030</span>',
+            $this->expectedHtml('multiple-with-leading-zeroes'),
             $this->formatter->format($offer)
         );
     }
@@ -257,11 +230,7 @@ final class SmallMultipleHTMLFormatterTest extends TestCase
         );
 
         $this->assertEquals(
-            '<span class="cf-weekday cf-meta">Za</span> '
-            . '<span class="cf-date">4 okt 2025</span> '
-            . '<span class="cf-to cf-meta">-</span> '
-            . '<span class="cf-weekday cf-meta">di</span> '
-            . '<span class="cf-date">8 okt 2030</span>',
+            $this->expectedHtml('multiple-month-without-leading-zero'),
             $this->formatter->format($offer)
         );
     }

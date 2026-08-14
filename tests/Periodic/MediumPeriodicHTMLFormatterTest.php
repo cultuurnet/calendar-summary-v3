@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace CultuurNet\CalendarSummaryV3\Periodic;
 
+use CultuurNet\CalendarSummaryV3\HtmlFixture;
 use CultuurNet\CalendarSummaryV3\Offer\BookingAvailability;
 use CultuurNet\CalendarSummaryV3\Offer\CalendarType;
 use CultuurNet\CalendarSummaryV3\Offer\Offer;
@@ -15,6 +16,8 @@ use PHPUnit\Framework\TestCase;
 
 final class MediumPeriodicHTMLFormatterTest extends TestCase
 {
+    use HtmlFixture;
+
     /**
      * @var MediumPeriodicHTMLFormatter
      */
@@ -37,10 +40,7 @@ final class MediumPeriodicHTMLFormatterTest extends TestCase
         );
 
         $this->assertEquals(
-            '<span class="cf-from cf-meta">Van</span> <span class="cf-weekday cf-meta">di</span> ' .
-            '<span class="cf-date">25 november 2025</span> ' .
-            '<span class="cf-to cf-meta">tot</span> <span class="cf-weekday cf-meta">za</span> ' .
-            '<span class="cf-date">30 november 2030</span>',
+            $this->expectedHtml('period-without-leading-zeroes'),
             $this->formatter->format($offer)
         );
     }
@@ -57,10 +57,7 @@ final class MediumPeriodicHTMLFormatterTest extends TestCase
         );
 
         $this->assertEquals(
-            '<span class="cf-from cf-meta">Van</span> <span class="cf-weekday cf-meta">di</span> ' .
-            '<span class="cf-date">4 maart 2025</span> ' .
-            '<span class="cf-to cf-meta">tot</span> <span class="cf-weekday cf-meta">vr</span> ' .
-            '<span class="cf-date">8 maart 2030</span>',
+            $this->expectedHtml('period-with-leading-zeroes'),
             $this->formatter->format($offer)
         );
     }
@@ -77,11 +74,7 @@ final class MediumPeriodicHTMLFormatterTest extends TestCase
         );
 
         $this->assertEquals(
-            '<span class="cf-from cf-meta">Van</span> <span class="cf-weekday cf-meta">di</span> '
-            . '<span class="cf-date">25 november 2025</span> '
-            . '<span class="cf-to cf-meta">tot</span> <span class="cf-weekday cf-meta">za</span> '
-            . '<span class="cf-date">30 november 2030</span>'
-            . ' <span class="cf-status">(geannuleerd)</span>',
+            $this->expectedHtml('period-without-leading-zeroes-with-unavailable-status'),
             $this->formatter->format($offer)
         );
     }
@@ -98,10 +91,7 @@ final class MediumPeriodicHTMLFormatterTest extends TestCase
         );
 
         $this->assertEquals(
-            '<span class="cf-from cf-meta">Van</span> <span class="cf-weekday cf-meta">di</span> ' .
-            '<span class="cf-date">25 maart 2025</span> '
-            . '<span class="cf-to cf-meta">tot</span> <span class="cf-weekday cf-meta">za</span> '
-            . '<span class="cf-date">30 maart 2030</span>',
+            $this->expectedHtml('period-day-without-leading-zero'),
             $this->formatter->format($offer)
         );
     }
@@ -118,10 +108,7 @@ final class MediumPeriodicHTMLFormatterTest extends TestCase
         );
 
         $this->assertEquals(
-            '<span class="cf-from cf-meta">Van</span> <span class="cf-weekday cf-meta">za</span>'
-            . ' <span class="cf-date">4 oktober 2025</span> '
-            . '<span class="cf-to cf-meta">tot</span> '
-            . '<span class="cf-weekday cf-meta">di</span> <span class="cf-date">8 oktober 2030</span>',
+            $this->expectedHtml('period-month-without-leading-zero'),
             $this->formatter->format($offer)
         );
     }

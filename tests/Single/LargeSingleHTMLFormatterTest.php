@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace CultuurNet\CalendarSummaryV3\Single;
 
+use CultuurNet\CalendarSummaryV3\HtmlFixture;
 use CultuurNet\CalendarSummaryV3\Offer\BookingAvailability;
 use CultuurNet\CalendarSummaryV3\Offer\Offer;
 use CultuurNet\CalendarSummaryV3\Offer\OfferType;
@@ -14,6 +15,8 @@ use PHPUnit\Framework\TestCase;
 
 final class LargeSingleHTMLFormatterTest extends TestCase
 {
+    use HtmlFixture;
+
     /**
      * @var LargeSingleHTMLFormatter
      */
@@ -35,24 +38,8 @@ final class LargeSingleHTMLFormatterTest extends TestCase
             new DateTimeImmutable('2018-01-25T21:30:00+01:00')
         );
 
-        $expectedOutput = '<time itemprop="startDate" datetime="2018-01-25T20:00:00+01:00">';
-        $expectedOutput .= '<span class="cf-weekday cf-meta">Donderdag</span>';
-        $expectedOutput .= ' ';
-        $expectedOutput .= '<span class="cf-date">25 januari 2018</span>';
-        $expectedOutput .= ' ';
-        $expectedOutput .= '<span class="cf-from cf-meta">van</span>';
-        $expectedOutput .= ' ';
-        $expectedOutput .= '<span class="cf-time">20:00</span>';
-        $expectedOutput .= '</time>';
-        $expectedOutput .= ' ';
-        $expectedOutput .= '<span class="cf-to cf-meta">tot</span>';
-        $expectedOutput .= ' ';
-        $expectedOutput .= '<time itemprop="endDate" datetime="2018-01-25T21:30:00+01:00">';
-        $expectedOutput .= '<span class="cf-time">21:30</span>';
-        $expectedOutput .= '</time>';
-
         $this->assertEquals(
-            $expectedOutput,
+            $this->expectedHtml('single-date-large-one-day'),
             $this->formatter->format($event)
         );
     }
@@ -67,24 +54,8 @@ final class LargeSingleHTMLFormatterTest extends TestCase
             new DateTimeImmutable('2018-01-08T21:30:00+01:00')
         );
 
-        $expectedOutput = '<time itemprop="startDate" datetime="2018-01-08T20:00:00+01:00">';
-        $expectedOutput .= '<span class="cf-weekday cf-meta">Maandag</span>';
-        $expectedOutput .= ' ';
-        $expectedOutput .= '<span class="cf-date">8 januari 2018</span>';
-        $expectedOutput .= ' ';
-        $expectedOutput .= '<span class="cf-from cf-meta">van</span>';
-        $expectedOutput .= ' ';
-        $expectedOutput .= '<span class="cf-time">20:00</span>';
-        $expectedOutput .= '</time>';
-        $expectedOutput .= ' ';
-        $expectedOutput .= '<span class="cf-to cf-meta">tot</span>';
-        $expectedOutput .= ' ';
-        $expectedOutput .= '<time itemprop="endDate" datetime="2018-01-08T21:30:00+01:00">';
-        $expectedOutput .= '<span class="cf-time">21:30</span>';
-        $expectedOutput .= '</time>';
-
         $this->assertEquals(
-            $expectedOutput,
+            $this->expectedHtml('single-date-large-with-leading-zero-one-day'),
             $this->formatter->format($event)
         );
     }
@@ -99,17 +70,8 @@ final class LargeSingleHTMLFormatterTest extends TestCase
             new DateTimeImmutable('2021-08-12T21:00:00+01:00')
         );
 
-        $expectedOutput = '<time itemprop="startDate" datetime="2021-08-12T17:00:00+02:00">' .
-            '<span class="cf-weekday cf-meta">Jeudi</span> ' .
-            '<span class="cf-date">12 août 2021</span> ' .
-            '<span class="cf-from cf-meta">de</span> ' .
-            '<span class="cf-time">17:00</span></time> ' .
-            '<span class="cf-to cf-meta">à</span> ' .
-            '<time itemprop="endDate" datetime="2021-08-12T22:00:00+02:00">' .
-            '<span class="cf-time">22:00</span></time>';
-
         $this->assertEquals(
-            $expectedOutput,
+            $this->expectedHtml('single-french'),
             (new LargeSingleHTMLFormatter(new Translator('fr')))->format($event)
         );
     }
@@ -124,21 +86,8 @@ final class LargeSingleHTMLFormatterTest extends TestCase
             new DateTimeImmutable('2021-08-14T21:00:00+01:00')
         );
 
-        $expectedOutput = '<time itemprop="startDate" datetime="2021-08-12T17:00:00+02:00">' .
-            '<span class="cf-from cf-meta">Du</span> ' .
-            '<span class="cf-weekday cf-meta">jeudi</span> ' .
-            '<span class="cf-date">12 août 2021</span> ' .
-            '<span class="cf-at cf-meta">à</span> ' .
-            '<span class="cf-time">17:00</span></time> ' .
-            '<span class="cf-to cf-meta">au</span> ' .
-            '<time itemprop="endDate" datetime="2021-08-14T22:00:00+02:00">' .
-            '<span class="cf-weekday cf-meta">samedi</span> ' .
-            '<span class="cf-date">14 août 2021</span> ' .
-            '<span class="cf-at cf-meta">à</span> ' .
-            '<span class="cf-time">22:00</span></time>';
-
         $this->assertEquals(
-            $expectedOutput,
+            $this->expectedHtml('single-multiple-days-french'),
             (new LargeSingleHTMLFormatter(new Translator('fr')))->format($event)
         );
     }
@@ -153,32 +102,8 @@ final class LargeSingleHTMLFormatterTest extends TestCase
             new DateTimeImmutable('2018-01-28T21:30:00+01:00')
         );
 
-        $expectedOutput = '<time itemprop="startDate" datetime="2018-01-25T20:00:00+01:00">';
-        $expectedOutput .= '<span class="cf-from cf-meta">Van</span>';
-        $expectedOutput .= ' ';
-        $expectedOutput .= '<span class="cf-weekday cf-meta">donderdag</span>';
-        $expectedOutput .= ' ';
-        $expectedOutput .= '<span class="cf-date">25 januari 2018</span>';
-        $expectedOutput .= ' ';
-        $expectedOutput .= '<span class="cf-at cf-meta">om</span>';
-        $expectedOutput .= ' ';
-        $expectedOutput .= '<span class="cf-time">20:00</span>';
-        $expectedOutput .= '</time>';
-        $expectedOutput .= ' ';
-        $expectedOutput .= '<span class="cf-to cf-meta">tot en met</span>';
-        $expectedOutput .= ' ';
-        $expectedOutput .= '<time itemprop="endDate" datetime="2018-01-28T21:30:00+01:00">';
-        $expectedOutput .= '<span class="cf-weekday cf-meta">zondag</span>';
-        $expectedOutput .= ' ';
-        $expectedOutput .= '<span class="cf-date">28 januari 2018</span>';
-        $expectedOutput .= ' ';
-        $expectedOutput .= '<span class="cf-at cf-meta">om</span>';
-        $expectedOutput .= ' ';
-        $expectedOutput .= '<span class="cf-time">21:30</span>';
-        $expectedOutput .= '</time>';
-
         $this->assertEquals(
-            $expectedOutput,
+            $this->expectedHtml('single-date-large-more-days'),
             $this->formatter->format($event)
         );
     }
@@ -193,32 +118,8 @@ final class LargeSingleHTMLFormatterTest extends TestCase
             new DateTimeImmutable('2018-01-08T21:30:00+01:00')
         );
 
-        $expectedOutput = '<time itemprop="startDate" datetime="2018-01-06T20:00:00+01:00">';
-        $expectedOutput .= '<span class="cf-from cf-meta">Van</span>';
-        $expectedOutput .= ' ';
-        $expectedOutput .= '<span class="cf-weekday cf-meta">zaterdag</span>';
-        $expectedOutput .= ' ';
-        $expectedOutput .= '<span class="cf-date">6 januari 2018</span>';
-        $expectedOutput .= ' ';
-        $expectedOutput .= '<span class="cf-at cf-meta">om</span>';
-        $expectedOutput .= ' ';
-        $expectedOutput .= '<span class="cf-time">20:00</span>';
-        $expectedOutput .= '</time>';
-        $expectedOutput .= ' ';
-        $expectedOutput .= '<span class="cf-to cf-meta">tot en met</span>';
-        $expectedOutput .= ' ';
-        $expectedOutput .= '<time itemprop="endDate" datetime="2018-01-08T21:30:00+01:00">';
-        $expectedOutput .= '<span class="cf-weekday cf-meta">maandag</span>';
-        $expectedOutput .= ' ';
-        $expectedOutput .= '<span class="cf-date">8 januari 2018</span>';
-        $expectedOutput .= ' ';
-        $expectedOutput .= '<span class="cf-at cf-meta">om</span>';
-        $expectedOutput .= ' ';
-        $expectedOutput .= '<span class="cf-time">21:30</span>';
-        $expectedOutput .= '</time>';
-
         $this->assertEquals(
-            $expectedOutput,
+            $this->expectedHtml('single-date-large-with-leading-zeros-more-days'),
             $this->formatter->format($event)
         );
     }
@@ -233,14 +134,8 @@ final class LargeSingleHTMLFormatterTest extends TestCase
             new DateTimeImmutable('2018-01-06T23:59:59+01:00')
         );
 
-        $expectedOutput = '<time itemprop="startDate" datetime="2018-01-06T00:00:00+01:00">';
-        $expectedOutput .= '<span class="cf-weekday cf-meta">Zaterdag</span>';
-        $expectedOutput .= ' ';
-        $expectedOutput .= '<span class="cf-date">6 januari 2018</span>';
-        $expectedOutput .= '</time>';
-
         $this->assertEquals(
-            $expectedOutput,
+            $this->expectedHtml('single-date-large-whole-day'),
             $this->formatter->format($event)
         );
     }
@@ -255,16 +150,8 @@ final class LargeSingleHTMLFormatterTest extends TestCase
             new DateTimeImmutable('2018-01-06T23:59:59+01:00')
         );
 
-        $expectedOutput = '<time itemprop="startDate" datetime="2018-01-06T00:00:00+01:00">';
-        $expectedOutput .= '<span class="cf-weekday cf-meta">Zaterdag</span>';
-        $expectedOutput .= ' ';
-        $expectedOutput .= '<span class="cf-date">6 januari 2018</span>';
-        $expectedOutput .= '</time>';
-        $expectedOutput .= ' ';
-        $expectedOutput .= '<span class="cf-status">(geannuleerd)</span>';
-
         $this->assertEquals(
-            $expectedOutput,
+            $this->expectedHtml('single-date-large-whole-day-with-status-unavailable'),
             $this->formatter->format($event)
         );
     }
@@ -279,16 +166,8 @@ final class LargeSingleHTMLFormatterTest extends TestCase
             new DateTimeImmutable('2018-01-06T23:59:59+01:00')
         );
 
-        $expectedOutput = '<time itemprop="startDate" datetime="2018-01-06T00:00:00+01:00">';
-        $expectedOutput .= '<span class="cf-weekday cf-meta">Zaterdag</span>';
-        $expectedOutput .= ' ';
-        $expectedOutput .= '<span class="cf-date">6 januari 2018</span>';
-        $expectedOutput .= '</time>';
-        $expectedOutput .= ' ';
-        $expectedOutput .= '<span class="cf-status">(geannuleerd)</span>';
-
         $this->assertEquals(
-            $expectedOutput,
+            $this->expectedHtml('single-date-large-whole-day-with-status-unavailable-and-booking-unavailable'),
             $this->formatter->format($event)
         );
     }
@@ -303,16 +182,8 @@ final class LargeSingleHTMLFormatterTest extends TestCase
             new DateTimeImmutable('2018-01-06T23:59:59+01:00')
         );
 
-        $expectedOutput = '<time itemprop="startDate" datetime="2018-01-06T00:00:00+01:00">';
-        $expectedOutput .= '<span class="cf-weekday cf-meta">Zaterdag</span>';
-        $expectedOutput .= ' ';
-        $expectedOutput .= '<span class="cf-date">6 januari 2018</span>';
-        $expectedOutput .= '</time>';
-        $expectedOutput .= ' ';
-        $expectedOutput .= '<span class="cf-status">(Volzet of uitverkocht)</span>';
-
         $this->assertEquals(
-            $expectedOutput,
+            $this->expectedHtml('single-date-large-whole-day-with-status-available-and-booking-unavailable'),
             $this->formatter->format($event)
         );
     }
@@ -327,18 +198,8 @@ final class LargeSingleHTMLFormatterTest extends TestCase
             new DateTimeImmutable('2018-01-06T13:30:00+01:00')
         );
 
-        $expectedOutput = '<time itemprop="startDate" datetime="2018-01-06T13:30:00+01:00">';
-        $expectedOutput .= '<span class="cf-weekday cf-meta">Zaterdag</span>';
-        $expectedOutput .= ' ';
-        $expectedOutput .= '<span class="cf-date">6 januari 2018</span>';
-        $expectedOutput .= ' ';
-        $expectedOutput .= '<span class="cf-from cf-meta">om</span>';
-        $expectedOutput .= ' ';
-        $expectedOutput .= '<span class="cf-time">13:30</span>';
-        $expectedOutput .= '</time>';
-
         $this->assertEquals(
-            $expectedOutput,
+            $this->expectedHtml('single-date-same-time'),
             $this->formatter->format($event)
         );
     }

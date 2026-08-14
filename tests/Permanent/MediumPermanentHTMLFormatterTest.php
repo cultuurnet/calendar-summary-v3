@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace CultuurNet\CalendarSummaryV3\Permanent;
 
+use CultuurNet\CalendarSummaryV3\HtmlFixture;
 use CultuurNet\CalendarSummaryV3\Offer\BookingAvailability;
 use CultuurNet\CalendarSummaryV3\Offer\CalendarType;
 use CultuurNet\CalendarSummaryV3\Offer\Offer;
@@ -16,6 +17,8 @@ use PHPUnit\Framework\TestCase;
 
 final class MediumPermanentHTMLFormatterTest extends TestCase
 {
+    use HtmlFixture;
+
     /**
      * @var MediumPermanentHTMLFormatter
      */
@@ -63,10 +66,7 @@ final class MediumPermanentHTMLFormatterTest extends TestCase
         );
 
         $this->assertEquals(
-            '<span>Open van <span class="cf-weekdays">'
-            . '<span class="cf-weekday-open">ma - wo</span> & '
-            . '<span class="cf-weekday-open">vr - zo</span>'
-            . '</span></span>',
+            $this->expectedHtml('simple-permanent'),
             $this->formatter->format($place)
         );
     }
@@ -115,10 +115,7 @@ final class MediumPermanentHTMLFormatterTest extends TestCase
         );
 
         $this->assertEquals(
-            '<span>Open van <span class="cf-weekdays">'
-            . '<span class="cf-weekday-open">ma - wo</span> & '
-            . '<span class="cf-weekday-open">vr - za</span>'
-            . '</span></span>',
+            $this->expectedHtml('mixed-permanent'),
             $this->formatter->format($place)
         );
     }
@@ -174,10 +171,7 @@ final class MediumPermanentHTMLFormatterTest extends TestCase
         );
 
         $this->assertEquals(
-            '<span>Open van <span class="cf-weekdays">'
-            . '<span class="cf-weekday-open">ma - di</span> & '
-            . '<span class="cf-weekday-open">vr - za</span>'
-            . '</span></span>',
+            $this->expectedHtml('complex-permanent'),
             $this->formatter->format($place)
         );
     }
@@ -219,9 +213,7 @@ final class MediumPermanentHTMLFormatterTest extends TestCase
         );
 
         $this->assertEquals(
-            '<span>Open van <span class="cf-weekdays">' .
-            '<span class="cf-weekday-open">wo - vr</span> & ' .
-            '<span class="cf-weekday-open">zo</span></span></span>',
+            $this->expectedHtml('permanent-closed-on-mondays'),
             $this->formatter->format($place)
         );
     }
@@ -340,10 +332,7 @@ final class MediumPermanentHTMLFormatterTest extends TestCase
         );
 
         $this->assertEquals(
-            '<span>Open van <span class="cf-weekdays">' .
-            '<span class="cf-weekday-open">ma - di</span> & ' .
-            '<span class="cf-weekday-open">do - vr</span> & ' .
-            '<span class="cf-weekday-open">zo</span></span></span>',
+            $this->expectedHtml('permanent-three-periods'),
             $this->formatter->format($place)
         );
     }
@@ -416,7 +405,7 @@ final class MediumPermanentHTMLFormatterTest extends TestCase
         );
     }
 
-    public function testFormatPermanentHtmlFirstPeriodIsASingleDay(): void
+    public function testFormatPermanentFirstPeriodIsASingleDay(): void
     {
         $place = new Offer(
             OfferType::place(),
@@ -453,10 +442,7 @@ final class MediumPermanentHTMLFormatterTest extends TestCase
         );
 
         $this->assertEquals(
-            '<span>Open op <span class="cf-weekdays">' .
-            '<span class="cf-weekday-open">ma</span> & ' .
-            '<span class="cf-weekday-open">vr - zo</span>' .
-            '</span></span>',
+            $this->expectedHtml('permanent-first-period-is-a-single-day'),
             $this->formatter->format($place)
         );
     }
@@ -499,10 +485,7 @@ final class MediumPermanentHTMLFormatterTest extends TestCase
         );
 
         $this->assertEquals(
-            '<span>Open van <span class="cf-weekdays">' .
-            '<span class="cf-weekday-open">ma - wo</span> & ' .
-            '<span class="cf-weekday-open">vr - za</span>' .
-            '</span></span>',
+            $this->expectedHtml('permanent-three-periods-mixed-sorting'),
             $this->formatter->format($place)
         );
     }
@@ -544,10 +527,7 @@ final class MediumPermanentHTMLFormatterTest extends TestCase
         );
 
         $this->assertEquals(
-            '<span>Open van <span class="cf-weekdays">' .
-            '<span class="cf-weekday-open">ma - di</span> & ' .
-            '<span class="cf-weekday-open">za - zo</span>' .
-            '</span></span>',
+            $this->expectedHtml('permanent-break-the-week'),
             $this->formatter->format($place)
         );
     }
