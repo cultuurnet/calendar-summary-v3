@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace CultuurNet\CalendarSummaryV3\Periodic;
 
+use CultuurNet\CalendarSummaryV3\DateComparison;
 use CultuurNet\CalendarSummaryV3\DateFormatter;
 use CultuurNet\CalendarSummaryV3\HtmlAvailabilityFormatter;
 use CultuurNet\CalendarSummaryV3\HtmlSummaryFormatter;
@@ -43,9 +44,17 @@ final class LargePeriodicHTMLFormatter implements PeriodicFormatterInterface
         );
 
         if (!$offer->getOpeningHours()->isEmpty()) {
-            $output .= HtmlWeekSchemeFormatter::forOpeningHours($offer->getOpeningHours(), $this->translator)
+            $weekScheme = HtmlWeekSchemeFormatter::forOpeningHours($offer->getOpeningHours(), $this->translator)
                 ->withHeading()
-                ->toString();
+                ->withChildcareInNestedList();
+
+            // The adjusted days themselves are only listed in the extra large format, so
+            // here their existence is only hinted at.
+            if (DateComparison::withoutPastPeriods($offer->getAdjustedDays()) !== []) {
+                $weekScheme = $weekScheme->withAdjustedHoursNotice();
+            }
+
+            $output .= $weekScheme->toString();
         }
 
         return trim(HtmlSummaryFormatter::format($output));

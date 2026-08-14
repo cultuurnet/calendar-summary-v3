@@ -22,6 +22,10 @@ final class HtmlWeekSchemeFormatter
 
     private bool $withChildcare = false;
 
+    private bool $childcareInNestedList = false;
+
+    private bool $withAdjustedHoursNotice = false;
+
     private bool $withEveryDayOfTheWeek = false;
 
     private bool $withHeading = false;
@@ -46,6 +50,28 @@ final class HtmlWeekSchemeFormatter
     {
         $c = clone $this;
         $c->withChildcare = true;
+        return $c;
+    }
+
+    /**
+     * Mentions the childcare of the opening hours as a list nested inside the day it belongs to.
+     */
+    public function withChildcareInNestedList(): self
+    {
+        $c = clone $this;
+        $c->withChildcare = true;
+        $c->childcareInNestedList = true;
+        return $c;
+    }
+
+    /**
+     * Warns that the listed hours do not hold during the adjusted days, which are not
+     * listed themselves.
+     */
+    public function withAdjustedHoursNotice(): self
+    {
+        $c = clone $this;
+        $c->withAdjustedHoursNotice = true;
         return $c;
     }
 
@@ -133,6 +159,12 @@ final class HtmlWeekSchemeFormatter
                 . '</li>';
         }
 
+        if ($this->withAdjustedHoursNotice) {
+            $output .= '<li class="cf-adjusted-days">'
+                . $this->translator->translate('adjusted_hours_notice')
+                . '</li>';
+        }
+
         return $output . '</ul>';
     }
 
@@ -183,12 +215,18 @@ final class HtmlWeekSchemeFormatter
             return '';
         }
 
-        return ' <span class="cf-childcare">'
-            . ChildcareFormatter::forChildcare($childcare, $this->translator)
-                ->withBraces()
-                ->capitalize()
-                ->toString()
-            . '</span>';
+        $childcareText = ChildcareFormatter::forChildcare($childcare, $this->translator)
+            ->withBraces()
+            ->capitalize()
+            ->toString();
+
+        if ($this->childcareInNestedList) {
+            return ' <ul class="list-unstyled">'
+                . '<li class="cf-childcare">' . $childcareText . '</li>'
+                . '</ul>';
+        }
+
+        return ' <span class="cf-childcare">' . $childcareText . '</span>';
     }
 
     /**
