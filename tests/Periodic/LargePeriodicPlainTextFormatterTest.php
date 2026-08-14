@@ -323,6 +323,30 @@ final class LargePeriodicPlainTextFormatterTest extends TestCase
     }
 
     /**
+     * The whole week scheme is a single string, so the availability lands after the last
+     * childcare line rather than after the opening hours, and only the notice starts a
+     * line of its own. The extra large format has always read that way.
+     */
+    public function testItShowsTheChildcareTheAvailabilityAndTheNoticeTogether(): void
+    {
+        $place = $this->availablePlace()
+            ->withOpeningHours(
+                [
+                    new OpeningHour(['monday'], '09:00', '12:00', new Childcare('08:00', '13:00')),
+                    new OpeningHour(['monday'], '14:00', '18:00', new Childcare('13:00', '19:00')),
+                    new OpeningHour(['tuesday'], '09:00', '16:00', new Childcare('08:00', null)),
+                ]
+            )
+            ->withAdjustedDays([$this->autumnHoliday()])
+            ->withAvailability(new Status('Unavailable', []), new BookingAvailability('Available'));
+
+        $this->assertEquals(
+            $this->expectedText('period-with-childcare-and-adjusted-days-with-unavailable-status'),
+            $this->formatter->format($place)
+        );
+    }
+
+    /**
      * The large format does not list the adjusted days, so it only warns that they exist.
      */
     public function testItWarnsThatTheHoursCanDifferDuringTheAdjustedDays(): void
@@ -384,15 +408,16 @@ final class LargePeriodicPlainTextFormatterTest extends TestCase
     {
         return $this->availablePlace()
             ->withOpeningHours([new OpeningHour(['monday'], '09:00', '16:00')])
-            ->withAdjustedDays(
-                [
-                    new AdjustedDay(
-                        new DateTimeImmutable('2026-11-02'),
-                        new DateTimeImmutable('2026-11-07'),
-                        new OpeningHours([new OpeningHour(['monday'], '10:00', '15:00')]),
-                        ['nl' => 'Herfstvakantie']
-                    ),
-                ]
-            );
+            ->withAdjustedDays([$this->autumnHoliday()]);
+    }
+
+    private function autumnHoliday(): AdjustedDay
+    {
+        return new AdjustedDay(
+            new DateTimeImmutable('2026-11-02'),
+            new DateTimeImmutable('2026-11-07'),
+            new OpeningHours([new OpeningHour(['monday'], '10:00', '15:00')]),
+            ['nl' => 'Herfstvakantie']
+        );
     }
 }
