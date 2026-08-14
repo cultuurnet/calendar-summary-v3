@@ -56,6 +56,26 @@ final class ExtraLargePermanentPlainTextFormatterTest extends TestCase
         );
     }
 
+    /**
+     * The 'and' between two timespans of the same day is easily lost in French, where 'from' and
+     * 'from_hour' do not translate to the same word.
+     */
+    public function testFormatMultipleTimespansOnTheSameDayInFrench(): void
+    {
+        $place = $this->availablePlace()->withOpeningHours(
+            [
+                new OpeningHour(['monday'], '09:00', '13:00'),
+                new OpeningHour(['monday'], '17:00', '20:00'),
+                new OpeningHour(['friday'], '10:00', '15:00'),
+            ]
+        );
+
+        $this->assertEquals(
+            $this->expectedText('multiple-timespans-on-the-same-day-in-french') . PHP_EOL,
+            (new ExtraLargePermanentPlainTextFormatter(new Translator('fr_BE')))->format($place)
+        );
+    }
+
     public function testFormatASharedChildcareAsASingleLine(): void
     {
         $place = $this->availablePlace()->withOpeningHours(

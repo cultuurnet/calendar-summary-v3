@@ -147,7 +147,15 @@ final class PlainTextWeekSchemeFormatter
             return $day->closed();
         }
 
+        $isFirstTimespan = true;
         foreach ($timespans as $timespan) {
+            // fromHour() only inserts the 'and' by itself when 'from' and 'from_hour' translate to
+            // the same word, which is not the case in French ('du' versus 'de').
+            if (!$isFirstTimespan) {
+                $day = $day->and();
+            }
+            $isFirstTimespan = false;
+
             $day = $day
                 ->fromHour(OpeningHourFormatter::format($timespan->getOpens()))
                 ->tillHour(OpeningHourFormatter::format($timespan->getCloses()));

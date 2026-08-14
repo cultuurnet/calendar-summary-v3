@@ -167,6 +167,47 @@ final class LargePeriodicPlainTextFormatterTest extends TestCase
         );
     }
 
+    /**
+     * The 'and' between two timespans of the same day is easily lost in French, where 'from' and
+     * 'from_hour' do not translate to the same word.
+     */
+    public function testFormatAPeriodWithSplitTimeBlocksInFrench(): void
+    {
+        $place = new Offer(
+            OfferType::place(),
+            new Status('Available', []),
+            new BookingAvailability('Available'),
+            new DateTimeImmutable('25-11-2025'),
+            new DateTimeImmutable('30-11-2030'),
+            CalendarType::periodic()
+        );
+
+        $place = $place->withOpeningHours(
+            [
+                new OpeningHour(
+                    ['monday'],
+                    '09:00',
+                    '13:00'
+                ),
+                new OpeningHour(
+                    ['monday'],
+                    '17:00',
+                    '20:00'
+                ),
+                new OpeningHour(
+                    ['friday'],
+                    '10:00',
+                    '15:00'
+                ),
+            ]
+        );
+
+        $this->assertEquals(
+            $this->expectedText('period-with-split-time-blocks-in-french'),
+            (new LargePeriodicPlainTextFormatter(new Translator('fr')))->format($place)
+        );
+    }
+
     public function testFormatAPeriodWithComplexTimeBlocks(): void
     {
         $place = new Offer(
