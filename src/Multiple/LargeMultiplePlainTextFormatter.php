@@ -33,7 +33,8 @@ final class LargeMultiplePlainTextFormatter implements MultipleFormatterInterfac
         $subEventSummaries = [];
 
         foreach ($subEvents as $key => $subEvent) {
-            $formatter = new LargeSinglePlainTextFormatter($this->translator);
+            // Every sub-event already is a line of its own, so its childcare gets one too.
+            $formatter = new LargeSinglePlainTextFormatter($this->translator, true);
 
             if (!$this->hidePast || DateComparison::isInTheFuture($subEvent->getEndDate())) {
                 $subEventSummaries[] = $formatter->format($subEvent);
