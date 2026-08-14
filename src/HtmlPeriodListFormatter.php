@@ -94,7 +94,7 @@ final class HtmlPeriodListFormatter
 
         $description = $period->getDescriptionForLanguage($this->translator->getLanguageCode());
         if ($description !== '') {
-            $output .= '<span class="cf-description">' . $description . '</span>';
+            $output .= '<span class="cf-description">(' . $description . ')</span>';
         }
 
         return $output . '</li>';
