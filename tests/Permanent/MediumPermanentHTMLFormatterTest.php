@@ -66,7 +66,7 @@ final class MediumPermanentHTMLFormatterTest extends TestCase
         );
 
         $this->assertEquals(
-            $this->expectedHtml('simplePermanent'),
+            $this->expectedHtml('simple-permanent'),
             $this->formatter->format($place)
         );
     }
@@ -115,7 +115,7 @@ final class MediumPermanentHTMLFormatterTest extends TestCase
         );
 
         $this->assertEquals(
-            $this->expectedHtml('mixedPermanent'),
+            $this->expectedHtml('mixed-permanent'),
             $this->formatter->format($place)
         );
     }
@@ -171,7 +171,7 @@ final class MediumPermanentHTMLFormatterTest extends TestCase
         );
 
         $this->assertEquals(
-            $this->expectedHtml('complexPermanent'),
+            $this->expectedHtml('complex-permanent'),
             $this->formatter->format($place)
         );
     }
@@ -213,7 +213,7 @@ final class MediumPermanentHTMLFormatterTest extends TestCase
         );
 
         $this->assertEquals(
-            $this->expectedHtml('permanentClosedOnMondays'),
+            $this->expectedHtml('permanent-closed-on-mondays'),
             $this->formatter->format($place)
         );
     }
@@ -332,7 +332,7 @@ final class MediumPermanentHTMLFormatterTest extends TestCase
         );
 
         $this->assertEquals(
-            $this->expectedHtml('permanentThreePeriods'),
+            $this->expectedHtml('permanent-three-periods'),
             $this->formatter->format($place)
         );
     }
@@ -442,7 +442,7 @@ final class MediumPermanentHTMLFormatterTest extends TestCase
         );
 
         $this->assertEquals(
-            $this->expectedHtml('permanentFirstPeriodIsASingleDay'),
+            $this->expectedHtml('permanent-first-period-is-a-single-day'),
             $this->formatter->format($place)
         );
     }
@@ -485,7 +485,7 @@ final class MediumPermanentHTMLFormatterTest extends TestCase
         );
 
         $this->assertEquals(
-            $this->expectedHtml('permanentThreePeriodsMixedSorting'),
+            $this->expectedHtml('permanent-three-periods-mixed-sorting'),
             $this->formatter->format($place)
         );
     }
@@ -527,7 +527,7 @@ final class MediumPermanentHTMLFormatterTest extends TestCase
         );
 
         $this->assertEquals(
-            $this->expectedHtml('permanentBreakTheWeek'),
+            $this->expectedHtml('permanent-break-the-week'),
             $this->formatter->format($place)
         );
     }

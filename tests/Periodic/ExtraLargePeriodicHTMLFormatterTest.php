@@ -49,7 +49,7 @@ final class ExtraLargePeriodicHTMLFormatterTest extends TestCase
         );
 
         $this->assertEquals(
-            $this->expectedHtml('periodWithSingleTimeBlocks'),
+            $this->expectedHtml('period-with-single-time-blocks'),
             $this->formatter->format($place)
         );
     }
@@ -57,7 +57,7 @@ final class ExtraLargePeriodicHTMLFormatterTest extends TestCase
     public function testFormatAPeriodWithoutTimeBlocks(): void
     {
         $this->assertEquals(
-            $this->expectedHtml('periodWithoutTimeBlocks'),
+            $this->expectedHtml('period-without-time-blocks'),
             $this->formatter->format($this->availablePlace())
         );
     }
@@ -74,7 +74,7 @@ final class ExtraLargePeriodicHTMLFormatterTest extends TestCase
         ))->withOpeningHours([new OpeningHour(['monday'], '00:00', '17:00')]);
 
         $this->assertEquals(
-            $this->expectedHtml('periodWithSingleTimeBlocksWithUnavailableStatus'),
+            $this->expectedHtml('period-with-single-time-blocks-with-unavailable-status'),
             $this->formatter->format($event)
         );
     }
@@ -86,7 +86,7 @@ final class ExtraLargePeriodicHTMLFormatterTest extends TestCase
             ->withAdjustedDays([$this->autumnHoliday()]);
 
         $this->assertEquals(
-            $this->expectedHtml('periodWithAdjustedDays'),
+            $this->expectedHtml('period-with-adjusted-days'),
             $this->formatter->format($place)
         );
     }
@@ -96,7 +96,7 @@ final class ExtraLargePeriodicHTMLFormatterTest extends TestCase
         $place = $this->availablePlace()->withAdjustedDays([$this->autumnHoliday()]);
 
         $this->assertEquals(
-            $this->expectedHtml('periodWithAdjustedDaysButWithoutTimeBlocks'),
+            $this->expectedHtml('period-with-adjusted-days-but-without-time-blocks'),
             $this->formatter->format($place)
         );
     }
@@ -115,7 +115,7 @@ final class ExtraLargePeriodicHTMLFormatterTest extends TestCase
         );
 
         $this->assertEquals(
-            $this->expectedHtml('itSkipsAdjustedDaysThatHavePassed'),
+            $this->expectedHtml('it-skips-adjusted-days-that-have-passed'),
             $this->formatter->format($place)
         );
     }
@@ -135,7 +135,7 @@ final class ExtraLargePeriodicHTMLFormatterTest extends TestCase
             );
 
         $this->assertEquals(
-            $this->expectedHtml('periodWithClosedDays'),
+            $this->expectedHtml('period-with-closed-days'),
             $this->formatter->format($place)
         );
     }
@@ -153,7 +153,7 @@ final class ExtraLargePeriodicHTMLFormatterTest extends TestCase
         );
 
         $this->assertEquals(
-            $this->expectedHtml('itSkipsClosedDaysThatHavePassed'),
+            $this->expectedHtml('it-skips-closed-days-that-have-passed'),
             $this->formatter->format($place)
         );
     }
@@ -167,7 +167,7 @@ final class ExtraLargePeriodicHTMLFormatterTest extends TestCase
         );
 
         $this->assertEquals(
-            $this->expectedHtml('sharedChildcareAsASingleListItem'),
+            $this->expectedHtml('shared-childcare-as-a-single-list-item'),
             $this->formatter->format($place)
         );
     }
@@ -182,7 +182,7 @@ final class ExtraLargePeriodicHTMLFormatterTest extends TestCase
         );
 
         $this->assertEquals(
-            $this->expectedHtml('differingChildcareOnTheDayItself'),
+            $this->expectedHtml('differing-childcare-on-the-day-itself'),
             $this->formatter->format($place)
         );
     }
@@ -213,7 +213,7 @@ final class ExtraLargePeriodicHTMLFormatterTest extends TestCase
         );
 
         $this->assertEquals(
-            $this->expectedHtml('childcareOfADayWithMultipleTimespansOnlyOnce'),
+            $this->expectedHtml('childcare-of-a-day-with-multiple-timespans-only-once'),
             $this->formatter->format($place)
         );
     }
@@ -228,7 +228,7 @@ final class ExtraLargePeriodicHTMLFormatterTest extends TestCase
         );
 
         $this->assertEquals(
-            $this->expectedHtml('childcareOfEveryTimespanWhenItDiffersOnTheSameDay'),
+            $this->expectedHtml('childcare-of-every-timespan-when-it-differs-on-the-same-day'),
             $this->formatter->format($place)
         );
     }
@@ -271,7 +271,7 @@ final class ExtraLargePeriodicHTMLFormatterTest extends TestCase
         );
 
         $this->assertEquals(
-            $this->expectedHtml('differingChildcareWithoutAnEndOrWithoutAStart'),
+            $this->expectedHtml('differing-childcare-without-an-end-or-without-a-start'),
             $this->formatter->format($place)
         );
     }

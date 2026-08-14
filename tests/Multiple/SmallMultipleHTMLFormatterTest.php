@@ -111,7 +111,7 @@ final class SmallMultipleHTMLFormatterTest extends TestCase
         );
 
         $this->assertEquals(
-            $this->expectedHtml('multipleWithoutLeadingZeroes'),
+            $this->expectedHtml('multiple-without-leading-zeroes'),
             $this->formatter->format($offer)
         );
     }
@@ -128,7 +128,7 @@ final class SmallMultipleHTMLFormatterTest extends TestCase
         );
 
         $this->assertEquals(
-            $this->expectedHtml('multipleCurrentYear'),
+            $this->expectedHtml('multiple-current-year'),
             $this->formatter->format($offer)
         );
     }
@@ -145,7 +145,7 @@ final class SmallMultipleHTMLFormatterTest extends TestCase
         );
 
         $this->assertEquals(
-            $this->expectedHtml('multipleStartsCurrentYear'),
+            $this->expectedHtml('multiple-starts-current-year'),
             $this->formatter->format($offer)
         );
     }
@@ -162,7 +162,7 @@ final class SmallMultipleHTMLFormatterTest extends TestCase
         );
 
         $this->assertEquals(
-            $this->expectedHtml('multipleEndsCurrentYear'),
+            $this->expectedHtml('multiple-ends-current-year'),
             $this->formatter->format($offer)
         );
     }
@@ -179,7 +179,7 @@ final class SmallMultipleHTMLFormatterTest extends TestCase
         );
 
         $this->assertEquals(
-            $this->expectedHtml('multipleWithoutLeadingZeroesWithUnavailableStatus'),
+            $this->expectedHtml('multiple-without-leading-zeroes-with-unavailable-status'),
             $this->formatter->format($offer)
         );
     }
@@ -196,7 +196,7 @@ final class SmallMultipleHTMLFormatterTest extends TestCase
         );
 
         $this->assertEquals(
-            $this->expectedHtml('multipleWithoutLeadingZeroesWithAvailableStatusAndUnavailableBooking'),
+            $this->expectedHtml('multiple-without-leading-zeroes-with-available-status-and-unavailable-booking'),
             $this->formatter->format($offer)
         );
     }
@@ -213,7 +213,7 @@ final class SmallMultipleHTMLFormatterTest extends TestCase
         );
 
         $this->assertEquals(
-            $this->expectedHtml('multipleWithLeadingZeroes'),
+            $this->expectedHtml('multiple-with-leading-zeroes'),
             $this->formatter->format($offer)
         );
     }
@@ -230,7 +230,7 @@ final class SmallMultipleHTMLFormatterTest extends TestCase
         );
 
         $this->assertEquals(
-            $this->expectedHtml('multipleMonthWithoutLeadingZero'),
+            $this->expectedHtml('multiple-month-without-leading-zero'),
             $this->formatter->format($offer)
         );
     }

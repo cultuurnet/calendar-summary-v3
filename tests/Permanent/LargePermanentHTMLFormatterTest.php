@@ -73,7 +73,7 @@ final class LargePermanentHTMLFormatterTest extends TestCase
         );
 
         $this->assertEquals(
-            $this->expectedHtml('simplePermanent'),
+            $this->expectedHtml('simple-permanent'),
             $this->formatter->format($place)
         );
     }
@@ -108,7 +108,7 @@ final class LargePermanentHTMLFormatterTest extends TestCase
         );
 
         $this->assertEquals(
-            $this->expectedHtml('simplePermanentInFrench'),
+            $this->expectedHtml('simple-permanent-in-french'),
             (new LargePermanentHTMLFormatter(new Translator('fr')))->format($place)
         );
     }
@@ -157,7 +157,7 @@ final class LargePermanentHTMLFormatterTest extends TestCase
         );
 
         $this->assertEquals(
-            $this->expectedHtml('mixedPermanent'),
+            $this->expectedHtml('mixed-permanent'),
             $this->formatter->format($place)
         );
     }
@@ -213,7 +213,7 @@ final class LargePermanentHTMLFormatterTest extends TestCase
         );
 
         $this->assertEquals(
-            $this->expectedHtml('complexPermanent'),
+            $this->expectedHtml('complex-permanent'),
             $this->formatter->format($place)
         );
     }

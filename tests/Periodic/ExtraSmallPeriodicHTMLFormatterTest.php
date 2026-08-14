@@ -42,7 +42,7 @@ final class ExtraSmallPeriodicHTMLFormatterTest extends TestCase
         );
 
         $this->assertEquals(
-            $this->expectedHtml('periodStartsCurrentYear'),
+            $this->expectedHtml('period-starts-current-year'),
             $this->formatter->format($offer)
         );
     }
@@ -59,7 +59,7 @@ final class ExtraSmallPeriodicHTMLFormatterTest extends TestCase
         );
 
         $this->assertEquals(
-            $this->expectedHtml('periodEndsCurrentYear'),
+            $this->expectedHtml('period-ends-current-year'),
             $this->formatter->format($offer)
         );
     }
@@ -76,7 +76,7 @@ final class ExtraSmallPeriodicHTMLFormatterTest extends TestCase
         );
 
         $this->assertEquals(
-            $this->expectedHtml('periodWithoutLeadingZeroes'),
+            $this->expectedHtml('period-without-leading-zeroes'),
             $this->formatter->format($offer)
         );
     }
@@ -93,7 +93,7 @@ final class ExtraSmallPeriodicHTMLFormatterTest extends TestCase
         );
 
         $this->assertEquals(
-            $this->expectedHtml('periodWithLeadingZeroes'),
+            $this->expectedHtml('period-with-leading-zeroes'),
             $this->formatter->format($offer)
         );
     }
@@ -110,7 +110,7 @@ final class ExtraSmallPeriodicHTMLFormatterTest extends TestCase
         );
 
         $this->assertEquals(
-            $this->expectedHtml('periodWithoutLeadingZeroesWithUnavailableStatus'),
+            $this->expectedHtml('period-without-leading-zeroes-with-unavailable-status'),
             $this->formatter->format($offer)
         );
     }
@@ -127,7 +127,7 @@ final class ExtraSmallPeriodicHTMLFormatterTest extends TestCase
         );
 
         $this->assertEquals(
-            $this->expectedHtml('periodDayWithoutLeadingZero'),
+            $this->expectedHtml('period-day-without-leading-zero'),
             $this->formatter->format($offer)
         );
     }
@@ -144,7 +144,7 @@ final class ExtraSmallPeriodicHTMLFormatterTest extends TestCase
         );
 
         $this->assertEquals(
-            $this->expectedHtml('periodMonthWithoutLeadingZero'),
+            $this->expectedHtml('period-month-without-leading-zero'),
             $this->formatter->format($offer)
         );
     }
@@ -161,7 +161,7 @@ final class ExtraSmallPeriodicHTMLFormatterTest extends TestCase
         );
 
         $this->assertEquals(
-            $this->expectedHtml('periodThatHasAlreadyStarted'),
+            $this->expectedHtml('period-that-has-already-started'),
             $this->formatter->format($offer)
         );
     }

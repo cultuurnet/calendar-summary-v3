@@ -86,7 +86,7 @@ final class MediumSingleHTMLFormatterTest extends TestCase
         );
 
         $this->assertEquals(
-            $this->expectedHtml('singleDateMediumMoreDays'),
+            $this->expectedHtml('single-date-medium-more-days'),
             $this->formatter->format($event)
         );
     }
@@ -102,7 +102,7 @@ final class MediumSingleHTMLFormatterTest extends TestCase
         );
 
         $this->assertEquals(
-            $this->expectedHtml('singleDateMediumWithLeadingZeroMoreDays'),
+            $this->expectedHtml('single-date-medium-with-leading-zero-more-days'),
             $this->formatter->format($event)
         );
     }

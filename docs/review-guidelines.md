@@ -36,6 +36,7 @@ Only provide suggestion blocks for concrete, actionable fixes.
 - Test quality and edge cases
 - Missing test scenarios
 - Every change should be evaluated for whether it needs new or updated unit tests and/or feature (acceptance) tests
+- Data files under a test's `data/` folder use kebab-case names, e.g. `period-with-closed-days.html`
 
 ### Documentation
 - Code documentation

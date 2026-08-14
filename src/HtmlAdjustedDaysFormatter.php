@@ -56,7 +56,12 @@ final class HtmlAdjustedDaysFormatter
 
         $output = '';
         foreach ($openingHours as $openingHour) {
-            $output .= $this->generateOpeningHours($openingHour, $sharedChildcare === null);
+            $output .= '<li>' . $this->generateOpeningHours($openingHour, $sharedChildcare === null) . '</li>';
+        }
+
+        if ($output !== '') {
+            // Every group of days gets its own line, like the week scheme of the regular opening hours.
+            $output = '<ul class="list-unstyled">' . $output . '</ul>';
         }
 
         if ($sharedChildcare !== null) {
