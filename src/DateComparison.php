@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace CultuurNet\CalendarSummaryV3;
 
 use Carbon\CarbonImmutable;
+use CultuurNet\CalendarSummaryV3\Offer\Period;
 use DateInterval;
 use DateTimeImmutable;
 
@@ -60,5 +61,17 @@ final class DateComparison
     public static function isPastDay(DateTimeImmutable $date): bool
     {
         return CarbonImmutable::instance($date)->endOfDay() < new CarbonImmutable();
+    }
+
+    /**
+     * @template T of Period
+     * @param T[] $periods
+     * @return T[]
+     */
+    public static function withoutPastPeriods(array $periods): array
+    {
+        return array_filter($periods, static function (Period $period): bool {
+            return !self::isPastDay($period->getEndDate());
+        });
     }
 }

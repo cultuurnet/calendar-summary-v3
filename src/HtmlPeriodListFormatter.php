@@ -32,7 +32,7 @@ final class HtmlPeriodListFormatter
         string $summaryTranslationKey,
         ?callable $formatContent = null
     ): string {
-        $upcomingPeriods = $this->withoutPastPeriods($periods);
+        $upcomingPeriods = DateComparison::withoutPastPeriods($periods);
 
         if (!$upcomingPeriods) {
             return '';
@@ -45,18 +45,6 @@ final class HtmlPeriodListFormatter
         }
 
         return $output . '</ul></details>';
-    }
-
-    /**
-     * @template T of Period
-     * @param T[] $periods
-     * @return T[]
-     */
-    private function withoutPastPeriods(array $periods): array
-    {
-        return array_filter($periods, static function (Period $period): bool {
-            return !DateComparison::isPastDay($period->getEndDate());
-        });
     }
 
     private function openDetails(string $class, string $summaryTranslationKey): string

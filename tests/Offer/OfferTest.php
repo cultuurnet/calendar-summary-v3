@@ -79,6 +79,50 @@ final class OfferTest extends TestCase
         $this->assertEquals($expected, Offer::fromJsonLd($jsonLd));
     }
 
+    public function testCanParseTheChildcareAndTheOvernightStayOfSubEvents(): void
+    {
+        $jsonLd = file_get_contents(__DIR__ . '/data/offer-with-subevent-childcare.json');
+
+        $subEvents = Offer::fromJsonLd($jsonLd)->getSubEvents();
+
+        $this->assertEquals(new Childcare('07:00', '18:00'), $subEvents[0]->getChildcare());
+        $this->assertFalse($subEvents[0]->hasOvernight());
+
+        $this->assertNull($subEvents[1]->getChildcare());
+        $this->assertTrue($subEvents[1]->hasOvernight());
+
+        // Childcare without a start and without an end counts as no childcare at all.
+        $this->assertNull($subEvents[2]->getChildcare());
+        $this->assertFalse($subEvents[2]->hasOvernight());
+    }
+
+    /**
+     * A single event repeats its only sub-event, which is where its childcare is stored.
+     */
+    public function testItTakesTheChildcareOfASingleEventFromItsOnlySubEvent(): void
+    {
+        $jsonLd = file_get_contents(__DIR__ . '/data/single-offer-with-subevent-childcare.json');
+
+        $offer = Offer::fromJsonLd($jsonLd);
+
+        $this->assertEquals(new Childcare('07:00', '21:00'), $offer->getChildcare());
+        $this->assertTrue($offer->hasOvernight());
+    }
+
+    /**
+     * The childcare of a multiple event differs per sub-event, so there is none to show
+     * for the event as a whole.
+     */
+    public function testItDoesNotTakeTheChildcareOfASubEventForAMultipleEvent(): void
+    {
+        $jsonLd = file_get_contents(__DIR__ . '/data/offer-with-subevent-childcare.json');
+
+        $offer = Offer::fromJsonLd($jsonLd);
+
+        $this->assertNull($offer->getChildcare());
+        $this->assertFalse($offer->hasOvernight());
+    }
+
     public function testCanParseOpeningHours(): void
     {
         $jsonLd = file_get_contents(__DIR__ . '/data/offer-with-opening-hours.json');

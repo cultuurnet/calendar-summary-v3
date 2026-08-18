@@ -79,7 +79,8 @@ final class CalendarHTMLFormatterTest extends TestCase
             $this->formatter->format($place, 'xl')
         );
 
-        // The large format does not know about adjusted or closed days.
+        // The large format does not know about closed days, and without opening hours it
+        // has nothing the adjusted days could differ from either.
         $this->assertSame(
             '<p class="cf-openinghours">Alle dagen open</p>',
             $this->formatter->format($place, 'lg')

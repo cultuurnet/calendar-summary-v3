@@ -29,14 +29,25 @@ final class LargeMultipleHTMLFormatter implements MultipleFormatterInterface
 
     public function format(Offer $offer): string
     {
-        $subEvents = $offer->getSubEvents();
-        $formatter = new LargeSingleHTMLFormatter($this->translator);
+        $subEvents = [];
+        foreach ($offer->getSubEvents() as $subEvent) {
+            if (!$this->hidePast || DateComparison::isInTheFuture($subEvent->getEndDate())) {
+                $subEvents[] = $subEvent;
+            }
+        }
+
+        // Every sub-event gets its own list item, so its childcare is nested inside of it. A
+        // date without childcare only reports that when a listed one does have it, otherwise
+        // an offer that never has childcare would repeat it on every single date.
+        $formatter = new LargeSingleHTMLFormatter(
+            $this->translator,
+            true,
+            $this->anyHasChildcare($subEvents)
+        );
 
         $subEventSummaries = [];
         foreach ($subEvents as $subEvent) {
-            if (!$this->hidePast || DateComparison::isInTheFuture($subEvent->getEndDate())) {
-                $subEventSummaries[] = $formatter->format($subEvent);
-            }
+            $subEventSummaries[] = $formatter->format($subEvent);
         }
 
         if (empty($subEventSummaries)) {
@@ -50,5 +61,19 @@ final class LargeMultipleHTMLFormatter implements MultipleFormatterInterface
         $output .= '</ul>';
 
         return $output;
+    }
+
+    /**
+     * @param Offer[] $subEvents
+     */
+    private function anyHasChildcare(array $subEvents): bool
+    {
+        foreach ($subEvents as $subEvent) {
+            if ($subEvent->getChildcare() !== null) {
+                return true;
+            }
+        }
+
+        return false;
     }
 }

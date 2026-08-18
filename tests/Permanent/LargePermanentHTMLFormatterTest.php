@@ -4,13 +4,17 @@ declare(strict_types=1);
 
 namespace CultuurNet\CalendarSummaryV3\Permanent;
 
+use Carbon\CarbonImmutable;
+use CultuurNet\CalendarSummaryV3\CalendarSummaryTester;
 use CultuurNet\CalendarSummaryV3\HtmlFixture;
+use CultuurNet\CalendarSummaryV3\Offer\AdjustedDay;
 use CultuurNet\CalendarSummaryV3\Offer\BookingAvailability;
 use CultuurNet\CalendarSummaryV3\Offer\CalendarType;
 use CultuurNet\CalendarSummaryV3\Offer\Childcare;
 use CultuurNet\CalendarSummaryV3\Offer\Offer;
 use CultuurNet\CalendarSummaryV3\Offer\OfferType;
 use CultuurNet\CalendarSummaryV3\Offer\OpeningHour;
+use CultuurNet\CalendarSummaryV3\Offer\OpeningHours;
 use CultuurNet\CalendarSummaryV3\Offer\Status;
 use CultuurNet\CalendarSummaryV3\Translator;
 use DateTimeImmutable;
@@ -27,7 +31,14 @@ final class LargePermanentHTMLFormatterTest extends TestCase
 
     protected function setUp(): void
     {
+        // Monday 10 August 2026, so the adjusted days in November 2026 are upcoming.
+        CalendarSummaryTester::setTestNow(2026, 8, 10);
         $this->formatter = new LargePermanentHTMLFormatter(new Translator('nl_NL'));
+    }
+
+    protected function tearDown(): void
+    {
+        CarbonImmutable::setTestNow();
     }
 
     public function testFormatASimplePermanent(): void
@@ -306,33 +317,80 @@ final class LargePermanentHTMLFormatterTest extends TestCase
     }
 
     /**
-     * This size does not call withChildcare() on the week scheme.
+     * A nested list is a block of its own, so the childcare of a day is listed after its
+     * last timespan even when it differs per timespan, instead of splitting them up.
      */
-    public function testItDoesNotRenderTheChildcareOfTheOpeningHours(): void
+    public function testItNestsTheChildcareInsideTheDayItBelongsTo(): void
     {
-        $place = new Offer(
+        $place = $this->availablePlace()->withOpeningHours(
+            [
+                new OpeningHour(['monday'], '09:00', '12:00', new Childcare('08:00', '13:00')),
+                new OpeningHour(['monday'], '14:00', '18:00', new Childcare('13:00', '19:00')),
+                new OpeningHour(['saturday'], '10:00', '18:00', new Childcare(null, '19:00')),
+            ]
+        );
+
+        $this->assertEquals(
+            $this->expectedHtml('permanent-with-childcare'),
+            $this->formatter->format($place)
+        );
+    }
+
+    /**
+     * The large format does not list the adjusted days, so it only warns that they exist.
+     */
+    public function testItWarnsThatTheHoursCanDifferDuringTheAdjustedDays(): void
+    {
+        $place = $this->availablePlace()
+            ->withOpeningHours([new OpeningHour(['monday'], '09:00', '16:00')])
+            ->withAdjustedDays(
+                [
+                    new AdjustedDay(
+                        new DateTimeImmutable('2026-11-02'),
+                        new DateTimeImmutable('2026-11-07'),
+                        new OpeningHours([new OpeningHour(['monday'], '10:00', '15:00')]),
+                        ['nl' => 'Herfstvakantie']
+                    ),
+                ]
+            );
+
+        $this->assertEquals(
+            $this->expectedHtml('permanent-with-adjusted-days-notice'),
+            $this->formatter->format($place)
+        );
+    }
+
+    /**
+     * Without opening hours there is nothing the adjusted days could differ from.
+     */
+    public function testItDoesNotWarnAboutAdjustedDaysWithoutOpeningHours(): void
+    {
+        $place = $this->availablePlace()->withAdjustedDays(
+            [
+                new AdjustedDay(
+                    new DateTimeImmutable('2026-11-02'),
+                    new DateTimeImmutable('2026-11-07'),
+                    new OpeningHours(),
+                    ['nl' => 'Herfstvakantie']
+                ),
+            ]
+        );
+
+        $this->assertEquals(
+            '<p class="cf-openinghours">Alle dagen open</p>',
+            $this->formatter->format($place)
+        );
+    }
+
+    private function availablePlace(): Offer
+    {
+        return new Offer(
             OfferType::place(),
             new Status('Available', []),
             new BookingAvailability('Available'),
             new DateTimeImmutable('25-11-2025'),
-            new DateTimeImmutable('25-11-2025')
+            new DateTimeImmutable('25-11-2025'),
+            CalendarType::permanent()
         );
-
-        $shared = $place->withOpeningHours(
-            [
-                new OpeningHour(['monday'], '09:00', '16:00', new Childcare('08:00', '17:00')),
-                new OpeningHour(['tuesday'], '09:00', '16:00', new Childcare('08:00', '17:00')),
-            ]
-        );
-
-        $differing = $place->withOpeningHours(
-            [
-                new OpeningHour(['monday'], '09:00', '16:00', new Childcare('08:00', '17:00')),
-                new OpeningHour(['tuesday'], '09:00', '16:00'),
-            ]
-        );
-
-        $this->assertStringNotContainsString('cf-childcare', $this->formatter->format($shared));
-        $this->assertStringNotContainsString('cf-childcare', $this->formatter->format($differing));
     }
 }

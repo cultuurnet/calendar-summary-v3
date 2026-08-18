@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace CultuurNet\CalendarSummaryV3\Permanent;
 
+use CultuurNet\CalendarSummaryV3\DateComparison;
 use CultuurNet\CalendarSummaryV3\HtmlAvailabilityFormatter;
 use CultuurNet\CalendarSummaryV3\HtmlSummaryFormatter;
 use CultuurNet\CalendarSummaryV3\HtmlWeekSchemeFormatter;
@@ -33,11 +34,17 @@ final class LargePermanentHTMLFormatter implements PermanentFormatterInterface
         }
 
         if (!$offer->getOpeningHours()->isEmpty()) {
-            return HtmlSummaryFormatter::format(
-                HtmlWeekSchemeFormatter::forOpeningHours($offer->getOpeningHours(), $this->translator)
-                    ->withEveryDayOfTheWeek()
-                    ->toString()
-            );
+            $weekScheme = HtmlWeekSchemeFormatter::forOpeningHours($offer->getOpeningHours(), $this->translator)
+                ->withEveryDayOfTheWeek()
+                ->withChildcareInNestedList();
+
+            // The adjusted days themselves are only listed in the extra large format, so
+            // here their existence is only hinted at.
+            if (DateComparison::withoutPastPeriods($offer->getAdjustedDays()) !== []) {
+                $weekScheme = $weekScheme->withAdjustedHoursNotice();
+            }
+
+            return HtmlSummaryFormatter::format($weekScheme->toString());
         }
 
         return HtmlSummaryFormatter::format(

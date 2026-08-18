@@ -64,18 +64,8 @@ final class OpeningHour
             $data['dayOfWeek'],
             $data['opens'],
             $data['closes'],
-            self::parseChildcare($data)
+            Childcare::fromArrayOrNull($data['childcare'] ?? null)
         );
-    }
-
-    private static function parseChildcare(array $data): ?Childcare
-    {
-        // Childcare needs at least a start or an end, anything else counts as no childcare.
-        if (!isset($data['childcare']['start']) && !isset($data['childcare']['end'])) {
-            return null;
-        }
-
-        return Childcare::fromArray($data['childcare']);
     }
 
     /**

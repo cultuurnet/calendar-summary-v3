@@ -7,6 +7,7 @@ namespace CultuurNet\CalendarSummaryV3\Single;
 use CultuurNet\CalendarSummaryV3\DateComparison;
 use CultuurNet\CalendarSummaryV3\DateFormatter;
 use CultuurNet\CalendarSummaryV3\HtmlAvailabilityFormatter;
+use CultuurNet\CalendarSummaryV3\HtmlChildcareFormatter;
 use CultuurNet\CalendarSummaryV3\Translator;
 use CultuurNet\CalendarSummaryV3\Offer\Offer;
 use DateTimeInterface;
@@ -23,10 +24,31 @@ final class LargeSingleHTMLFormatter implements SingleFormatterInterface
      */
     private $translator;
 
-    public function __construct(Translator $translator)
-    {
+    /**
+     * @var bool
+     */
+    private $childcareInNestedList;
+
+    /**
+     * @var bool
+     */
+    private $mentionAbsentChildcare;
+
+    /**
+     * @param bool $childcareInNestedList  renders the childcare as a nested list instead of
+     *                                     inline, for the sub-events of a multiple calendar
+     * @param bool $mentionAbsentChildcare reports that this date has no childcare, for when
+     *                                     other dates of the same offer do have one
+     */
+    public function __construct(
+        Translator $translator,
+        bool $childcareInNestedList = false,
+        bool $mentionAbsentChildcare = false
+    ) {
         $this->formatter = new DateFormatter($translator->getLocale());
         $this->translator = $translator;
+        $this->childcareInNestedList = $childcareInNestedList;
+        $this->mentionAbsentChildcare = $mentionAbsentChildcare;
     }
 
     public function format(Offer $offer): string
@@ -44,7 +66,30 @@ final class LargeSingleHTMLFormatter implements SingleFormatterInterface
             ->withBraces()
             ->toString();
 
-        return trim($output . ' ' . $optionalAvailability);
+        $optionalChildcare = $this->formatChildcare($offer);
+
+        // The availability stays the last inline element, but a nested list has to close
+        // the summary because it is a block on its own.
+        $parts = $this->childcareInNestedList
+            ? [$output, $optionalAvailability, $optionalChildcare]
+            : [$output, $optionalChildcare, $optionalAvailability];
+
+        return implode(' ', array_filter($parts));
+    }
+
+    private function formatChildcare(Offer $offer): string
+    {
+        $formatter = HtmlChildcareFormatter::forOffer($offer, $this->translator);
+
+        if ($this->childcareInNestedList) {
+            $formatter = $formatter->asNestedList();
+        }
+
+        if ($this->mentionAbsentChildcare) {
+            $formatter = $formatter->alsoWhenThereIsNone();
+        }
+
+        return $formatter->toString();
     }
 
     private function formatSameDay(DateTimeInterface $dateFrom, DateTimeInterface $dateEnd): string

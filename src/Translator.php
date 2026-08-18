@@ -45,6 +45,9 @@ final class Translator
                 'childcare_from' => 'from',
                 'childcare_till' => 'till',
                 'every_day' => 'every day',
+                'overnight' => 'with overnight stay',
+                'no_childcare' => 'no childcare',
+                'adjusted_hours_notice' => 'The hours may differ during this period.',
             ],
             'nl' => [
                 'from' => 'van',
@@ -79,6 +82,9 @@ final class Translator
                 'childcare_from' => 'vanaf',
                 'childcare_till' => 'tot',
                 'every_day' => 'elke dag',
+                'overnight' => 'met overnachting',
+                'no_childcare' => 'geen opvang',
+                'adjusted_hours_notice' => 'De uren kunnen afwijken tijdens deze periode.',
             ],
             'fr' => [
                 'from' => 'du',
@@ -113,6 +119,9 @@ final class Translator
                 'childcare_from' => 'dès',
                 'childcare_till' => 'jusqu\'à',
                 'every_day' => 'chaque jour',
+                'overnight' => 'avec nuitée',
+                'no_childcare' => 'pas de garderie',
+                'adjusted_hours_notice' => 'Les heures peuvent varier pendant cette période.',
             ],
             'de' => [
                 'from' => 'von',
@@ -147,6 +156,9 @@ final class Translator
                 'childcare_from' => 'ab',
                 'childcare_till' => 'bis',
                 'every_day' => 'jeden Tag',
+                'overnight' => 'mit Übernachtung',
+                'no_childcare' => 'keine Kinderbetreuung',
+                'adjusted_hours_notice' => 'Die Zeiten können in diesem Zeitraum abweichen.',
             ],
         ];
 
