@@ -6,7 +6,7 @@ namespace CultuurNet\CalendarSummaryV3\Periodic;
 
 use CultuurNet\CalendarSummaryV3\DateFormatter;
 use CultuurNet\CalendarSummaryV3\HtmlAvailabilityFormatter;
-use CultuurNet\CalendarSummaryV3\HtmlPeriodsFormatter;
+use CultuurNet\CalendarSummaryV3\HtmlDeviatingDaysFormatter;
 use CultuurNet\CalendarSummaryV3\HtmlSummaryFormatter;
 use CultuurNet\CalendarSummaryV3\HtmlWeekSchemeFormatter;
 use CultuurNet\CalendarSummaryV3\Translator;
@@ -19,13 +19,13 @@ final class ExtraLargePeriodicHTMLFormatter implements PeriodicFormatterInterfac
 
     private Translator $translator;
 
-    private HtmlPeriodsFormatter $periodsFormatter;
+    private HtmlDeviatingDaysFormatter $deviatingDaysFormatter;
 
     public function __construct(Translator $translator)
     {
         $this->formatter = new DateFormatter($translator->getLocale());
         $this->translator = $translator;
-        $this->periodsFormatter = new HtmlPeriodsFormatter($translator);
+        $this->deviatingDaysFormatter = new HtmlDeviatingDaysFormatter($translator);
     }
 
     public function format(Offer $offer): string
@@ -47,7 +47,7 @@ final class ExtraLargePeriodicHTMLFormatter implements PeriodicFormatterInterfac
                 ->toString();
         }
 
-        $output .= $this->periodsFormatter->format($offer);
+        $output .= $this->deviatingDaysFormatter->format($offer);
 
         return trim(HtmlSummaryFormatter::format($output));
     }

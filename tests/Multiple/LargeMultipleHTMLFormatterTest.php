@@ -226,4 +226,49 @@ final class LargeMultipleHTMLFormatterTest extends TestCase
             $this->formatter->format($event)
         );
     }
+
+    /**
+     * Reporting that a date has no childcare only makes sense next to a date that has one,
+     * so an offer that never has any childcare keeps quiet about it.
+     */
+    public function testItOnlyReportsAnAbsentChildcareNextToAPresentOne(): void
+    {
+        $event = new Offer(
+            OfferType::event(),
+            new Status('Available', []),
+            new BookingAvailability('Available'),
+            null,
+            null,
+            CalendarType::multiple()
+        );
+
+        $withoutAnyChildcare = $event->withSubEvents([$this->subEvent(), $this->subEvent()]);
+
+        $withOneChildcare = $event->withSubEvents(
+            [
+                $this->subEvent()->withChildcare(new Childcare('07:00', '18:00')),
+                $this->subEvent(),
+            ]
+        );
+
+        $this->assertStringNotContainsString(
+            'Geen opvang',
+            $this->formatter->format($withoutAnyChildcare)
+        );
+        $this->assertStringContainsString(
+            '<li class="cf-childcare">(Geen opvang)</li>',
+            $this->formatter->format($withOneChildcare)
+        );
+    }
+
+    private function subEvent(): Offer
+    {
+        return new Offer(
+            OfferType::event(),
+            new Status('Available', []),
+            new BookingAvailability('Available'),
+            new DateTimeImmutable('2026-08-13T08:00:00+02:00'),
+            new DateTimeImmutable('2026-08-13T17:00:00+02:00')
+        );
+    }
 }

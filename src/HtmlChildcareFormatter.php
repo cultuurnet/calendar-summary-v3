@@ -7,7 +7,7 @@ namespace CultuurNet\CalendarSummaryV3;
 use CultuurNet\CalendarSummaryV3\Offer\Offer;
 
 /**
- * Renders the childcare and the overnight stay of a (sub)event between braces.
+ * Renders the childcare and the overnight stay of a (sub)event.
  */
 final class HtmlChildcareFormatter
 {
@@ -22,9 +22,7 @@ final class HtmlChildcareFormatter
 
     public static function forOffer(Offer $offer, Translator $translator): self
     {
-        return new self(
-            ChildcareFormatter::forOffer($offer, $translator)->capitalize()->withBraces()
-        );
+        return new self(ChildcareFormatter::forOffer($offer, $translator));
     }
 
     /**
@@ -37,9 +35,28 @@ final class HtmlChildcareFormatter
         return $c;
     }
 
+    /**
+     * Mentions that there is no childcare instead of staying silent about it, for when other
+     * dates of the same offer do have one and its absence here is worth reporting.
+     */
+    public function alsoWhenThereIsNone(): self
+    {
+        $c = clone $this;
+        $c->childcareFormatter = $this->childcareFormatter->alsoWhenThereIsNone();
+        return $c;
+    }
+
     public function toString(): string
     {
-        $childcareText = $this->childcareFormatter->toString();
+        $childcareFormatter = $this->childcareFormatter;
+
+        // A nested list is a block of its own and therefore starts a sentence of its own,
+        // between braces. Inline it continues the sentence of the date it follows.
+        if ($this->asNestedList) {
+            $childcareFormatter = $childcareFormatter->capitalize()->withBraces();
+        }
+
+        $childcareText = $childcareFormatter->toString();
 
         if ($childcareText === '') {
             return '';
