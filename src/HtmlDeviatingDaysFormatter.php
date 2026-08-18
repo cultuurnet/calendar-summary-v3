@@ -7,10 +7,9 @@ namespace CultuurNet\CalendarSummaryV3;
 use CultuurNet\CalendarSummaryV3\Offer\Offer;
 
 /**
- * Renders the periods that deviate from the regular opening hours as HTML:
- * the adjusted days followed by the closed days.
+ * Renders the adjusted days followed by the closed days as HTML.
  */
-final class HtmlPeriodsFormatter
+final class HtmlDeviatingDaysFormatter
 {
     private HtmlAdjustedDaysFormatter $adjustedDaysFormatter;
 

@@ -7,10 +7,9 @@ namespace CultuurNet\CalendarSummaryV3;
 use CultuurNet\CalendarSummaryV3\Offer\Offer;
 
 /**
- * Renders the periods that deviate from the regular opening hours as plain text:
- * the adjusted days followed by the closed days.
+ * Renders the adjusted days followed by the closed days as plain text.
  */
-final class PlainTextPeriodsFormatter
+final class PlainTextDeviatingDaysFormatter
 {
     private PlainTextAdjustedDaysFormatter $adjustedDaysFormatter;
 
@@ -29,17 +28,17 @@ final class PlainTextPeriodsFormatter
      */
     public function format(Offer $offer): string
     {
-        $periods = array_filter([
+        $blocks = array_filter([
             $this->adjustedDaysFormatter->format($offer->getAdjustedDays()),
             $this->closedDaysFormatter->format($offer->getClosedDays()),
         ]);
 
-        if (!$periods) {
+        if (!$blocks) {
             return '';
         }
 
         $separator = PHP_EOL . PHP_EOL;
 
-        return $separator . implode($separator, $periods);
+        return $separator . implode($separator, $blocks);
     }
 }

@@ -228,6 +228,10 @@ final class HtmlWeekSchemeFormatter
      */
     private function generateChildcare(array $childcares): string
     {
+        if (!$this->withChildcare) {
+            return '';
+        }
+
         $childcareTexts = [];
         foreach ($childcares as $childcare) {
             $childcareTexts[] = ChildcareFormatter::forChildcare($childcare, $this->translator)

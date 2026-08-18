@@ -131,6 +131,21 @@ final class ExtraLargePermanentHTMLFormatterTest extends TestCase
         );
     }
 
+    public function testFormatAChildcareWithoutAnEndOrWithoutAStart(): void
+    {
+        $place = $this->availablePlace()->withOpeningHours(
+            [
+                new OpeningHour(['monday'], '09:00', '16:00', new Childcare('08:00', null)),
+                new OpeningHour(['tuesday'], '09:00', '16:00', new Childcare(null, '17:00')),
+            ]
+        );
+
+        $this->assertEquals(
+            $this->expectedHtml('childcare-without-an-end-or-without-a-start'),
+            $this->formatter->format($place)
+        );
+    }
+
     public function testFormatASharedChildcareInAnAdjustedDay(): void
     {
         $place = $this->availablePlace()->withAdjustedDays(
