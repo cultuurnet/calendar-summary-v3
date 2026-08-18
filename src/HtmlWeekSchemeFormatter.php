@@ -179,7 +179,7 @@ final class HtmlWeekSchemeFormatter
 
     private function generateChildcare(?Childcare $childcare): string
     {
-        if ($childcare === null) {
+        if (!$this->withChildcare || $childcare === null) {
             return '';
         }
 

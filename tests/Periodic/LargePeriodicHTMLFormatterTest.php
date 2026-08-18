@@ -7,6 +7,7 @@ namespace CultuurNet\CalendarSummaryV3\Periodic;
 use CultuurNet\CalendarSummaryV3\HtmlFixture;
 use CultuurNet\CalendarSummaryV3\Offer\BookingAvailability;
 use CultuurNet\CalendarSummaryV3\Offer\CalendarType;
+use CultuurNet\CalendarSummaryV3\Offer\Childcare;
 use CultuurNet\CalendarSummaryV3\Offer\Offer;
 use CultuurNet\CalendarSummaryV3\Offer\OfferType;
 use CultuurNet\CalendarSummaryV3\Offer\OpeningHour;
@@ -229,5 +230,37 @@ final class LargePeriodicHTMLFormatterTest extends TestCase
             $this->expectedHtml('period-without-time-blocks'),
             $this->formatter->format($place)
         );
+    }
+
+    /**
+     * This size does not call withChildcare() on the week scheme.
+     */
+    public function testItDoesNotRenderTheChildcareOfTheOpeningHours(): void
+    {
+        $place = new Offer(
+            OfferType::place(),
+            new Status('Available', []),
+            new BookingAvailability('Available'),
+            new DateTimeImmutable('25-11-2025'),
+            new DateTimeImmutable('30-11-2030'),
+            CalendarType::periodic()
+        );
+
+        $shared = $place->withOpeningHours(
+            [
+                new OpeningHour(['monday'], '09:00', '16:00', new Childcare('08:00', '17:00')),
+                new OpeningHour(['tuesday'], '09:00', '16:00', new Childcare('08:00', '17:00')),
+            ]
+        );
+
+        $differing = $place->withOpeningHours(
+            [
+                new OpeningHour(['monday'], '09:00', '16:00', new Childcare('08:00', '17:00')),
+                new OpeningHour(['tuesday'], '09:00', '16:00'),
+            ]
+        );
+
+        $this->assertStringNotContainsString('cf-childcare', $this->formatter->format($shared));
+        $this->assertStringNotContainsString('cf-childcare', $this->formatter->format($differing));
     }
 }
