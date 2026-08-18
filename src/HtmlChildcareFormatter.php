@@ -20,6 +20,8 @@ final class HtmlChildcareFormatter
 
     private bool $asNestedList = false;
 
+    private bool $alsoWhenThereIsNone = false;
+
     private function __construct(Translator $translator)
     {
         $this->translator = $translator;
@@ -40,6 +42,17 @@ final class HtmlChildcareFormatter
     {
         $c = clone $this;
         $c->asNestedList = true;
+        return $c;
+    }
+
+    /**
+     * Mentions that there is no childcare instead of staying silent about it, for when other
+     * dates of the same offer do have one and its absence here is worth reporting.
+     */
+    public function alsoWhenThereIsNone(): self
+    {
+        $c = clone $this;
+        $c->alsoWhenThereIsNone = true;
         return $c;
     }
 
@@ -67,13 +80,23 @@ final class HtmlChildcareFormatter
     private function getChildcareText(): string
     {
         if ($this->childcare === null) {
-            if (!$this->overnight) {
+            $parts = [];
+
+            if ($this->overnight) {
+                $parts[] = $this->translator->translate('overnight');
+            }
+
+            if ($this->alsoWhenThereIsNone) {
+                $parts[] = $this->translator->translate('no_childcare');
+            }
+
+            if ($parts === []) {
                 return '';
             }
 
-            $overnight = $this->translator->translate('overnight');
+            $text = implode(', ', $parts);
 
-            return $this->asNestedList ? '(' . ucfirst($overnight) . ')' : $overnight;
+            return $this->asNestedList ? '(' . ucfirst($text) . ')' : $text;
         }
 
         $formatter = ChildcareFormatter::forChildcare($this->childcare, $this->translator);
