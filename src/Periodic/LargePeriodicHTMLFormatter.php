@@ -6,6 +6,7 @@ namespace CultuurNet\CalendarSummaryV3\Periodic;
 
 use CultuurNet\CalendarSummaryV3\DateFormatter;
 use CultuurNet\CalendarSummaryV3\HtmlAvailabilityFormatter;
+use CultuurNet\CalendarSummaryV3\HtmlSummaryFormatter;
 use CultuurNet\CalendarSummaryV3\HtmlWeekSchemeFormatter;
 use CultuurNet\CalendarSummaryV3\Translator;
 use CultuurNet\CalendarSummaryV3\Offer\Offer;
@@ -47,13 +48,7 @@ final class LargePeriodicHTMLFormatter implements PeriodicFormatterInterface
                 ->toString();
         }
 
-        return trim($this->formatSummary($output));
-    }
-
-    private function formatSummary(string $calsum): string
-    {
-        $calsum = str_replace('><', '> <', $calsum);
-        return str_replace('  ', ' ', $calsum);
+        return trim(HtmlSummaryFormatter::format($output));
     }
 
     /**

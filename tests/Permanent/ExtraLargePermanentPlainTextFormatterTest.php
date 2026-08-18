@@ -6,7 +6,6 @@ namespace CultuurNet\CalendarSummaryV3\Permanent;
 
 use Carbon\CarbonImmutable;
 use CultuurNet\CalendarSummaryV3\CalendarSummaryTester;
-use CultuurNet\CalendarSummaryV3\HtmlFixture;
 use CultuurNet\CalendarSummaryV3\Offer\AdjustedDay;
 use CultuurNet\CalendarSummaryV3\Offer\BookingAvailability;
 use CultuurNet\CalendarSummaryV3\Offer\CalendarType;
@@ -17,21 +16,22 @@ use CultuurNet\CalendarSummaryV3\Offer\OfferType;
 use CultuurNet\CalendarSummaryV3\Offer\OpeningHour;
 use CultuurNet\CalendarSummaryV3\Offer\OpeningHours;
 use CultuurNet\CalendarSummaryV3\Offer\Status;
+use CultuurNet\CalendarSummaryV3\PlainTextFixture;
 use CultuurNet\CalendarSummaryV3\Translator;
 use DateTimeImmutable;
 use PHPUnit\Framework\TestCase;
 
-final class ExtraLargePermanentHTMLFormatterTest extends TestCase
+final class ExtraLargePermanentPlainTextFormatterTest extends TestCase
 {
-    use HtmlFixture;
+    use PlainTextFixture;
 
-    protected ExtraLargePermanentHTMLFormatter $formatter;
+    protected ExtraLargePermanentPlainTextFormatter $formatter;
 
     protected function setUp(): void
     {
         // Monday 10 August 2026, so the adjusted days in November 2026 are upcoming.
         CalendarSummaryTester::setTestNow(2026, 8, 10);
-        $this->formatter = new ExtraLargePermanentHTMLFormatter(new Translator('nl_NL'));
+        $this->formatter = new ExtraLargePermanentPlainTextFormatter(new Translator('nl_NL'));
     }
 
     protected function tearDown(): void
@@ -51,12 +51,32 @@ final class ExtraLargePermanentHTMLFormatterTest extends TestCase
         );
 
         $this->assertEquals(
-            $this->expectedHtml('simple-permanent'),
+            $this->expectedText('simple-permanent') . PHP_EOL,
             $this->formatter->format($place)
         );
     }
 
-    public function testFormatASharedChildcareAsASingleListItem(): void
+    /**
+     * The 'and' between two timespans of the same day is easily lost in French, where 'from' and
+     * 'from_hour' do not translate to the same word.
+     */
+    public function testFormatMultipleTimespansOnTheSameDayInFrench(): void
+    {
+        $place = $this->availablePlace()->withOpeningHours(
+            [
+                new OpeningHour(['monday'], '09:00', '13:00'),
+                new OpeningHour(['monday'], '17:00', '20:00'),
+                new OpeningHour(['friday'], '10:00', '15:00'),
+            ]
+        );
+
+        $this->assertEquals(
+            $this->expectedText('multiple-timespans-on-the-same-day-in-french') . PHP_EOL,
+            (new ExtraLargePermanentPlainTextFormatter(new Translator('fr_BE')))->format($place)
+        );
+    }
+
+    public function testFormatASharedChildcareAsASingleLine(): void
     {
         $place = $this->availablePlace()->withOpeningHours(
             [
@@ -65,7 +85,7 @@ final class ExtraLargePermanentHTMLFormatterTest extends TestCase
         );
 
         $this->assertEquals(
-            $this->expectedHtml('shared-childcare-as-a-single-list-item'),
+            $this->expectedText('shared-childcare-as-a-single-line') . PHP_EOL,
             $this->formatter->format($place)
         );
     }
@@ -80,7 +100,7 @@ final class ExtraLargePermanentHTMLFormatterTest extends TestCase
         );
 
         $this->assertEquals(
-            $this->expectedHtml('differing-childcare-on-the-day-itself'),
+            $this->expectedText('differing-childcare-on-the-day-itself') . PHP_EOL,
             $this->formatter->format($place)
         );
     }
@@ -95,7 +115,7 @@ final class ExtraLargePermanentHTMLFormatterTest extends TestCase
         );
 
         $this->assertEquals(
-            $this->expectedHtml('childcare-on-the-day-itself-when-not-every-day-has-it'),
+            $this->expectedText('childcare-on-the-day-itself-when-not-every-day-has-it') . PHP_EOL,
             $this->formatter->format($place)
         );
     }
@@ -111,7 +131,7 @@ final class ExtraLargePermanentHTMLFormatterTest extends TestCase
         );
 
         $this->assertEquals(
-            $this->expectedHtml('childcare-of-a-day-with-multiple-timespans-only-once'),
+            $this->expectedText('childcare-of-a-day-with-multiple-timespans-only-once') . PHP_EOL,
             $this->formatter->format($place)
         );
     }
@@ -126,7 +146,7 @@ final class ExtraLargePermanentHTMLFormatterTest extends TestCase
         );
 
         $this->assertEquals(
-            $this->expectedHtml('childcare-of-every-timespan-when-it-differs-on-the-same-day'),
+            $this->expectedText('childcare-of-every-timespan-when-it-differs-on-the-same-day') . PHP_EOL,
             $this->formatter->format($place)
         );
     }
@@ -141,8 +161,22 @@ final class ExtraLargePermanentHTMLFormatterTest extends TestCase
         );
 
         $this->assertEquals(
-            $this->expectedHtml('childcare-without-an-end-or-without-a-start'),
+            $this->expectedText('childcare-without-an-end-or-without-a-start') . PHP_EOL,
             $this->formatter->format($place)
+        );
+    }
+
+    public function testFormatASharedChildcareInFrench(): void
+    {
+        $place = $this->availablePlace()->withOpeningHours(
+            [
+                new OpeningHour(['monday'], '09:00', '16:00', new Childcare('08:00', '17:00')),
+            ]
+        );
+
+        $this->assertStringContainsString(
+            PHP_EOL . ' (chaque jour garderie de 8:00 à 17:00)',
+            (new ExtraLargePermanentPlainTextFormatter(new Translator('fr_BE')))->format($place)
         );
     }
 
@@ -163,7 +197,7 @@ final class ExtraLargePermanentHTMLFormatterTest extends TestCase
         );
 
         $this->assertEquals(
-            $this->expectedHtml('shared-childcare-in-an-adjusted-day'),
+            $this->expectedText('shared-childcare-in-an-adjusted-day') . PHP_EOL,
             $this->formatter->format($place)
         );
     }
@@ -184,39 +218,16 @@ final class ExtraLargePermanentHTMLFormatterTest extends TestCase
         );
 
         $this->assertEquals(
-            $this->expectedHtml('differing-childcare-in-an-adjusted-day'),
+            $this->expectedText('differing-childcare-in-an-adjusted-day') . PHP_EOL,
             $this->formatter->format($place)
-        );
-    }
-
-    public function testFormatASharedChildcareInFrench(): void
-    {
-        $place = $this->availablePlace()->withOpeningHours(
-            [
-                new OpeningHour(['monday'], '09:00', '16:00', new Childcare('08:00', '17:00')),
-            ]
-        );
-
-        $this->assertStringContainsString(
-            '<li class="cf-childcare">Chaque jour garderie de 8:00 à 17:00</li>',
-            (new ExtraLargePermanentHTMLFormatter(new Translator('fr_BE')))->format($place)
         );
     }
 
     public function testFormatAnUnavailablePermanent(): void
     {
-        $event = new Offer(
-            OfferType::event(),
-            new Status('Unavailable', []),
-            new BookingAvailability('Available'),
-            null,
-            null,
-            CalendarType::permanent()
-        );
-
         $this->assertEquals(
-            '<p class="cf-status">Geannuleerd</p>',
-            $this->formatter->format($event)
+            'Geannuleerd',
+            $this->formatter->format($this->unavailableEvent())
         );
     }
 
@@ -232,24 +243,7 @@ final class ExtraLargePermanentHTMLFormatterTest extends TestCase
         );
 
         $this->assertEquals(
-            '<p class="cf-status">Uitgesteld</p>',
-            $this->formatter->format($event)
-        );
-    }
-
-    public function testItRendersReasonAsTitleAttribute(): void
-    {
-        $event = new Offer(
-            OfferType::event(),
-            new Status('Unavailable', ['nl' => 'Covid-19']),
-            new BookingAvailability('Available'),
-            null,
-            null,
-            CalendarType::permanent()
-        );
-
-        $this->assertEquals(
-            '<p title="Covid-19" class="cf-status">Geannuleerd</p>',
+            'Uitgesteld',
             $this->formatter->format($event)
         );
     }
@@ -257,7 +251,7 @@ final class ExtraLargePermanentHTMLFormatterTest extends TestCase
     public function testFormatPermanentWithoutOpeningHours(): void
     {
         $this->assertEquals(
-            '<p class="cf-openinghours">Alle dagen open</p>',
+            'Alle dagen open' . PHP_EOL,
             $this->formatter->format($this->availablePlace())
         );
     }
@@ -269,7 +263,7 @@ final class ExtraLargePermanentHTMLFormatterTest extends TestCase
             ->withAdjustedDays([$this->autumnHoliday()]);
 
         $this->assertEquals(
-            $this->expectedHtml('adjusted-days-after-the-week-scheme'),
+            $this->expectedText('adjusted-days-after-the-week-scheme') . PHP_EOL,
             $this->formatter->format($place)
         );
     }
@@ -279,7 +273,7 @@ final class ExtraLargePermanentHTMLFormatterTest extends TestCase
         $place = $this->availablePlace()->withAdjustedDays([$this->autumnHoliday()]);
 
         $this->assertEquals(
-            $this->expectedHtml('adjusted-days-for-a-single-period'),
+            $this->expectedText('adjusted-days-for-a-single-period') . PHP_EOL,
             $this->formatter->format($place)
         );
     }
@@ -289,8 +283,8 @@ final class ExtraLargePermanentHTMLFormatterTest extends TestCase
         $place = $this->availablePlace()->withAdjustedDays([$this->autumnHoliday()]);
 
         $this->assertEquals(
-            $this->expectedHtml('adjusted-days-for-a-single-period-in-french'),
-            (new ExtraLargePermanentHTMLFormatter(new Translator('fr_BE')))->format($place)
+            $this->expectedText('adjusted-days-for-a-single-period-in-french') . PHP_EOL,
+            (new ExtraLargePermanentPlainTextFormatter(new Translator('fr_BE')))->format($place)
         );
     }
 
@@ -308,7 +302,7 @@ final class ExtraLargePermanentHTMLFormatterTest extends TestCase
         );
 
         $this->assertEquals(
-            $this->expectedHtml('adjusted-days-for-a-single-day'),
+            $this->expectedText('adjusted-days-for-a-single-day') . PHP_EOL,
             $this->formatter->format($place)
         );
     }
@@ -330,7 +324,7 @@ final class ExtraLargePermanentHTMLFormatterTest extends TestCase
         );
 
         $this->assertEquals(
-            $this->expectedHtml('adjusted-days-with-multiple-opening-hours'),
+            $this->expectedText('adjusted-days-with-multiple-opening-hours') . PHP_EOL,
             $this->formatter->format($place)
         );
     }
@@ -348,7 +342,7 @@ final class ExtraLargePermanentHTMLFormatterTest extends TestCase
         );
 
         $this->assertEquals(
-            $this->expectedHtml('adjusted-days-with-non-consecutive-days'),
+            $this->expectedText('adjusted-days-with-non-consecutive-days') . PHP_EOL,
             $this->formatter->format($place)
         );
     }
@@ -367,7 +361,7 @@ final class ExtraLargePermanentHTMLFormatterTest extends TestCase
         );
 
         $this->assertEquals(
-            $this->expectedHtml('adjusted-days-without-opening-hours'),
+            $this->expectedText('adjusted-days-without-opening-hours') . PHP_EOL,
             $this->formatter->format($place)
         );
     }
@@ -386,7 +380,7 @@ final class ExtraLargePermanentHTMLFormatterTest extends TestCase
         );
 
         $this->assertEquals(
-            $this->expectedHtml('it-does-not-render-the-description-when-translation-is-unavailable'),
+            $this->expectedText('it-does-not-render-the-description-when-translation-is-unavailable') . PHP_EOL,
             $this->formatter->format($place)
         );
     }
@@ -411,7 +405,7 @@ final class ExtraLargePermanentHTMLFormatterTest extends TestCase
         );
 
         $this->assertEquals(
-            $this->expectedHtml('it-renders-multiple-adjusted-days'),
+            $this->expectedText('it-renders-multiple-adjusted-days') . PHP_EOL,
             $this->formatter->format($place)
         );
     }
@@ -430,7 +424,7 @@ final class ExtraLargePermanentHTMLFormatterTest extends TestCase
         );
 
         $this->assertEquals(
-            '<p class="cf-openinghours">Alle dagen open</p>',
+            'Alle dagen open' . PHP_EOL,
             $this->formatter->format($place)
         );
     }
@@ -449,7 +443,7 @@ final class ExtraLargePermanentHTMLFormatterTest extends TestCase
         );
 
         $this->assertEquals(
-            $this->expectedHtml('it-renders-adjusted-days-that-end-today'),
+            $this->expectedText('it-renders-adjusted-days-that-end-today') . PHP_EOL,
             $this->formatter->format($place)
         );
     }
@@ -459,7 +453,7 @@ final class ExtraLargePermanentHTMLFormatterTest extends TestCase
         $place = $this->availablePlace()->withClosedDays([$this->christmasHoliday()]);
 
         $this->assertEquals(
-            $this->expectedHtml('closed-days'),
+            $this->expectedText('closed-days') . PHP_EOL,
             $this->formatter->format($place)
         );
     }
@@ -469,8 +463,8 @@ final class ExtraLargePermanentHTMLFormatterTest extends TestCase
         $place = $this->availablePlace()->withClosedDays([$this->christmasHoliday()]);
 
         $this->assertEquals(
-            $this->expectedHtml('closed-days-in-french'),
-            (new ExtraLargePermanentHTMLFormatter(new Translator('fr_BE')))->format($place)
+            $this->expectedText('closed-days-in-french') . PHP_EOL,
+            (new ExtraLargePermanentPlainTextFormatter(new Translator('fr_BE')))->format($place)
         );
     }
 
@@ -487,7 +481,7 @@ final class ExtraLargePermanentHTMLFormatterTest extends TestCase
         );
 
         $this->assertEquals(
-            $this->expectedHtml('closed-days-for-a-single-day'),
+            $this->expectedText('closed-days-for-a-single-day') . PHP_EOL,
             $this->formatter->format($place)
         );
     }
@@ -506,7 +500,7 @@ final class ExtraLargePermanentHTMLFormatterTest extends TestCase
         );
 
         $this->assertEquals(
-            $this->expectedHtml('it-renders-multiple-closed-days'),
+            $this->expectedText('it-renders-multiple-closed-days') . PHP_EOL,
             $this->formatter->format($place)
         );
     }
@@ -524,7 +518,7 @@ final class ExtraLargePermanentHTMLFormatterTest extends TestCase
         );
 
         $this->assertEquals(
-            '<p class="cf-openinghours">Alle dagen open</p>',
+            'Alle dagen open' . PHP_EOL,
             $this->formatter->format($place)
         );
     }
@@ -536,41 +530,27 @@ final class ExtraLargePermanentHTMLFormatterTest extends TestCase
             ->withClosedDays([$this->christmasHoliday()]);
 
         $this->assertEquals(
-            $this->expectedHtml('it-renders-the-closed-days-after-the-adjusted-days'),
+            $this->expectedText('it-renders-the-closed-days-after-the-adjusted-days') . PHP_EOL,
             $this->formatter->format($place)
         );
     }
 
     public function testItDoesNotRenderClosedDaysForAnUnavailablePermanent(): void
     {
-        $event = (new Offer(
-            OfferType::event(),
-            new Status('Unavailable', []),
-            new BookingAvailability('Available'),
-            null,
-            null,
-            CalendarType::permanent()
-        ))->withClosedDays([$this->christmasHoliday()]);
+        $event = $this->unavailableEvent()->withClosedDays([$this->christmasHoliday()]);
 
         $this->assertEquals(
-            '<p class="cf-status">Geannuleerd</p>',
+            'Geannuleerd',
             $this->formatter->format($event)
         );
     }
 
     public function testItDoesNotRenderAdjustedDaysForAnUnavailablePermanent(): void
     {
-        $event = (new Offer(
-            OfferType::event(),
-            new Status('Unavailable', []),
-            new BookingAvailability('Available'),
-            null,
-            null,
-            CalendarType::permanent()
-        ))->withAdjustedDays([$this->autumnHoliday()]);
+        $event = $this->unavailableEvent()->withAdjustedDays([$this->autumnHoliday()]);
 
         $this->assertEquals(
-            '<p class="cf-status">Geannuleerd</p>',
+            'Geannuleerd',
             $this->formatter->format($event)
         );
     }
@@ -580,6 +560,18 @@ final class ExtraLargePermanentHTMLFormatterTest extends TestCase
         return new Offer(
             OfferType::place(),
             new Status('Available', []),
+            new BookingAvailability('Available'),
+            null,
+            null,
+            CalendarType::permanent()
+        );
+    }
+
+    private function unavailableEvent(): Offer
+    {
+        return new Offer(
+            OfferType::event(),
+            new Status('Unavailable', []),
             new BookingAvailability('Available'),
             null,
             null,

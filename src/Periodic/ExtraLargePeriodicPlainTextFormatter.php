@@ -5,27 +5,25 @@ declare(strict_types=1);
 namespace CultuurNet\CalendarSummaryV3\Periodic;
 
 use CultuurNet\CalendarSummaryV3\DateFormatter;
+use CultuurNet\CalendarSummaryV3\Offer\Offer;
+use CultuurNet\CalendarSummaryV3\PlainTextDeviatingDaysFormatter;
 use CultuurNet\CalendarSummaryV3\PlainTextSummaryBuilder;
 use CultuurNet\CalendarSummaryV3\PlainTextWeekSchemeFormatter;
 use CultuurNet\CalendarSummaryV3\Translator;
-use CultuurNet\CalendarSummaryV3\Offer\Offer;
 
-final class LargePeriodicPlainTextFormatter implements PeriodicFormatterInterface
+final class ExtraLargePeriodicPlainTextFormatter implements PeriodicFormatterInterface
 {
-    /**
-     * @var DateFormatter
-     */
-    private $formatter;
+    private DateFormatter $formatter;
 
-    /**
-     * @var Translator
-     */
-    private $translator;
+    private Translator $translator;
+
+    private PlainTextDeviatingDaysFormatter $deviatingDaysFormatter;
 
     public function __construct(Translator $translator)
     {
         $this->formatter = new DateFormatter($translator->getLocale());
         $this->translator = $translator;
+        $this->deviatingDaysFormatter = new PlainTextDeviatingDaysFormatter($translator);
     }
 
     public function format(Offer $offer): string
@@ -33,14 +31,15 @@ final class LargePeriodicPlainTextFormatter implements PeriodicFormatterInterfac
         $startDate = $offer->getStartDate();
         $endDate = $offer->getEndDate();
 
-        $formattedStartDate = $this->formatter->formatAsFullDate($startDate);
-        $formattedStartDayName = $this->formatter->formatAsDayOfWeek($startDate);
-        $formattedEndDate = $this->formatter->formatAsFullDate($endDate);
-        $formattedEndDayName = $this->formatter->formatAsDayOfWeek($endDate);
-
         $summary = PlainTextSummaryBuilder::start($this->translator)
-            ->from($formattedStartDayName, $formattedStartDate)
-            ->to($formattedEndDayName, $formattedEndDate);
+            ->from(
+                $this->formatter->formatAsDayOfWeek($startDate),
+                $this->formatter->formatAsFullDate($startDate)
+            )
+            ->to(
+                $this->formatter->formatAsDayOfWeek($endDate),
+                $this->formatter->formatAsFullDate($endDate)
+            );
 
         if (!$offer->getOpeningHours()->isEmpty()) {
             $summary = $summary
@@ -48,10 +47,13 @@ final class LargePeriodicPlainTextFormatter implements PeriodicFormatterInterfac
                 ->append(
                     PlainTextWeekSchemeFormatter::forOpeningHours($offer->getOpeningHours(), $this->translator)
                         ->asSingleLine()
+                        ->withChildcare()
                         ->toString()
                 );
         }
 
-        return $summary->appendAvailability($offer->getStatus(), $offer->getBookingAvailability())->toString();
+        $summary = $summary->appendAvailability($offer->getStatus(), $offer->getBookingAvailability());
+
+        return $summary->toString() . $this->deviatingDaysFormatter->format($offer);
     }
 }

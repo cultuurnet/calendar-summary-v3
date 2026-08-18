@@ -9,12 +9,14 @@ use CultuurNet\CalendarSummaryV3\Middleware\NonAvailablePlacePlainTextFormatter;
 use CultuurNet\CalendarSummaryV3\Multiple\ExtraSmallMultiplePlainTextFormatter;
 use CultuurNet\CalendarSummaryV3\Multiple\SmallMultiplePlainTextFormatter;
 use CultuurNet\CalendarSummaryV3\Offer\CalendarType;
+use CultuurNet\CalendarSummaryV3\Permanent\ExtraLargePermanentPlainTextFormatter;
 use CultuurNet\CalendarSummaryV3\Permanent\MediumPermanentPlainTextFormatter;
 use CultuurNet\CalendarSummaryV3\Single\ExtraSmallSinglePlainTextFormatter;
 use CultuurNet\CalendarSummaryV3\Single\LargeSinglePlainTextFormatter;
 use CultuurNet\CalendarSummaryV3\Single\MediumSinglePlainTextFormatter;
 use CultuurNet\CalendarSummaryV3\Single\SmallSinglePlainTextFormatter;
 use CultuurNet\CalendarSummaryV3\Offer\Offer;
+use CultuurNet\CalendarSummaryV3\Periodic\ExtraLargePeriodicPlainTextFormatter;
 use CultuurNet\CalendarSummaryV3\Periodic\ExtraSmallPeriodicPlainTextFormatter;
 use CultuurNet\CalendarSummaryV3\Periodic\LargePeriodicPlainTextFormatter;
 use CultuurNet\CalendarSummaryV3\Periodic\MediumPeriodicPlainTextFormatter;
@@ -47,6 +49,7 @@ final class CalendarPlainTextFormatter implements CalendarFormatterInterface
         $this->mapping = [
             CalendarType::single()->toString() =>
                 [
+                    'xl' => new LargeSinglePlainTextFormatter($translator),
                     'lg' => new LargeSinglePlainTextFormatter($translator),
                     'md' => new MediumSinglePlainTextFormatter($translator),
                     'sm' => new SmallSinglePlainTextFormatter($translator),
@@ -54,6 +57,7 @@ final class CalendarPlainTextFormatter implements CalendarFormatterInterface
                 ],
             CalendarType::multiple()->toString() =>
                 [
+                    'xl' => new LargeMultiplePlainTextFormatter($translator, $hidePastDates),
                     'lg' => new LargeMultiplePlainTextFormatter($translator, $hidePastDates),
                     'md' => new MediumMultiplePlainTextFormatter($translator, $hidePastDates),
                     'sm' => new SmallMultiplePlainTextFormatter($translator),
@@ -61,6 +65,7 @@ final class CalendarPlainTextFormatter implements CalendarFormatterInterface
                 ],
             CalendarType::periodic()->toString() =>
                 [
+                    'xl' => new ExtraLargePeriodicPlainTextFormatter($translator),
                     'lg' => new LargePeriodicPlainTextFormatter($translator),
                     'md' => new MediumPeriodicPlainTextFormatter($translator),
                     'sm' => new SmallPeriodicPlainTextFormatter($translator),
@@ -68,6 +73,7 @@ final class CalendarPlainTextFormatter implements CalendarFormatterInterface
                 ],
             CalendarType::permanent()->toString() =>
                 [
+                    'xl' => new ExtraLargePermanentPlainTextFormatter($translator),
                     'lg' => new LargePermanentPlainTextFormatter($translator),
                     'md' => new MediumPermanentPlainTextFormatter($translator),
                     'sm' => new MediumPermanentPlainTextFormatter($translator),

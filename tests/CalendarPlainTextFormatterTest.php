@@ -4,16 +4,21 @@ declare(strict_types=1);
 
 namespace CultuurNet\CalendarSummaryV3;
 
+use CultuurNet\CalendarSummaryV3\Offer\AdjustedDay;
 use CultuurNet\CalendarSummaryV3\Offer\BookingAvailability;
 use CultuurNet\CalendarSummaryV3\Offer\CalendarType;
+use CultuurNet\CalendarSummaryV3\Offer\ClosedDay;
 use CultuurNet\CalendarSummaryV3\Offer\Offer;
 use CultuurNet\CalendarSummaryV3\Offer\OfferType;
+use CultuurNet\CalendarSummaryV3\Offer\OpeningHours;
 use CultuurNet\CalendarSummaryV3\Offer\Status;
 use DateTimeImmutable;
 use PHPUnit\Framework\TestCase;
 
 final class CalendarPlainTextFormatterTest extends TestCase
 {
+    use PlainTextFixture;
+
     /**
      * @var CalendarPlainTextFormatter
      */
@@ -36,6 +41,129 @@ final class CalendarPlainTextFormatterTest extends TestCase
         );
 
         $this->assertSame('25 jan 2018', $this->formatter->format($offer, 'xs'));
+    }
+
+    public function testExtraLargeFormatRendersTheAdjustedAndClosedDays(): void
+    {
+        $place = (new Offer(
+            OfferType::place(),
+            new Status('Available', []),
+            new BookingAvailability('Available'),
+            null,
+            null,
+            CalendarType::permanent()
+        ))->withAdjustedDays(
+            [
+                new AdjustedDay(
+                    new DateTimeImmutable('2030-11-02'),
+                    new DateTimeImmutable('2030-11-02'),
+                    new OpeningHours(),
+                    ['nl' => 'Herfstvakantie']
+                ),
+            ]
+        )->withClosedDays(
+            [
+                new ClosedDay(
+                    new DateTimeImmutable('2030-12-25'),
+                    new DateTimeImmutable('2030-12-25'),
+                    ['nl' => 'Kerstmis']
+                ),
+            ]
+        );
+
+        $this->assertSame(
+            $this->expectedText('extra-large-format-renders-the-adjusted-and-closed-days') . PHP_EOL,
+            $this->formatter->format($place, 'xl')
+        );
+
+        // The large format does not know about adjusted or closed days.
+        $this->assertSame(
+            'Alle dagen open' . PHP_EOL,
+            $this->formatter->format($place, 'lg')
+        );
+    }
+
+    /**
+     * Single and multiple have no extra large output of their own, so 'xl' has to
+     * be accepted and fall back to the large format.
+     */
+    public function testExtraLargeFormatEqualsTheLargeFormatForSingle(): void
+    {
+        $event = new Offer(
+            OfferType::event(),
+            new Status('Available', []),
+            new BookingAvailability('Available'),
+            new DateTimeImmutable('2018-01-25T20:00:00+01:00'),
+            new DateTimeImmutable('2018-01-25T21:30:00+01:00'),
+            CalendarType::single()
+        );
+
+        $this->assertSame(
+            $this->formatter->format($event, 'lg'),
+            $this->formatter->format($event, 'xl')
+        );
+    }
+
+    public function testExtraLargeFormatEqualsTheLargeFormatForMultiple(): void
+    {
+        $event = (new Offer(
+            OfferType::event(),
+            new Status('Available', []),
+            new BookingAvailability('Available'),
+            null,
+            null,
+            CalendarType::multiple()
+        ))->withSubEvents(
+            [
+                new Offer(
+                    OfferType::event(),
+                    new Status('Available', []),
+                    new BookingAvailability('Available'),
+                    new DateTimeImmutable('2018-01-25T20:00:00+01:00'),
+                    new DateTimeImmutable('2018-01-25T21:30:00+01:00')
+                ),
+                new Offer(
+                    OfferType::event(),
+                    new Status('Available', []),
+                    new BookingAvailability('Available'),
+                    new DateTimeImmutable('2018-02-01T20:00:00+01:00'),
+                    new DateTimeImmutable('2018-02-01T21:30:00+01:00')
+                ),
+            ]
+        );
+
+        $this->assertSame(
+            $this->formatter->format($event, 'lg'),
+            $this->formatter->format($event, 'xl')
+        );
+    }
+
+    /**
+     * Periodic does have an extra large output of its own, so unlike single and
+     * multiple 'xl' has to route to a different formatter than 'lg'.
+     */
+    public function testExtraLargeFormatRendersTheAdjustedDaysForPeriodic(): void
+    {
+        $place = (new Offer(
+            OfferType::place(),
+            new Status('Available', []),
+            new BookingAvailability('Available'),
+            new DateTimeImmutable('2030-01-01'),
+            new DateTimeImmutable('2030-12-31'),
+            CalendarType::periodic()
+        ))->withAdjustedDays(
+            [
+                new AdjustedDay(
+                    new DateTimeImmutable('2030-11-02'),
+                    new DateTimeImmutable('2030-11-02'),
+                    new OpeningHours(),
+                    ['nl' => 'Herfstvakantie']
+                ),
+            ]
+        );
+
+        $this->assertStringContainsString('Herfstvakantie', $this->formatter->format($place, 'xl'));
+        $this->assertStringNotContainsString('Herfstvakantie', $this->formatter->format($place, 'lg'));
     }
 
     public function testGeneralFormatMethodAndCatchException(): void

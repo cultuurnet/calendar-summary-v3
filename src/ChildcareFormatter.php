@@ -12,7 +12,7 @@ final class ChildcareFormatter
 
     private Childcare $childcare;
 
-    private bool $forEveryDay = false;
+    private string $prefix = '';
 
     private bool $withBraces = false;
 
@@ -35,8 +35,16 @@ final class ChildcareFormatter
      */
     public function forEveryDay(): self
     {
+        return $this->precededBy($this->translator->translate('every_day'));
+    }
+
+    /**
+     * Introduces the childcare with the day(s) it applies to.
+     */
+    public function precededBy(string $text): self
+    {
         $c = clone $this;
-        $c->forEveryDay = true;
+        $c->prefix = $text;
         return $c;
     }
 
@@ -65,8 +73,8 @@ final class ChildcareFormatter
     {
         $childcareText = $this->getChildcareText();
 
-        if ($this->forEveryDay) {
-            $childcareText = $this->translator->translate('every_day') . ' ' . $childcareText;
+        if ($this->prefix !== '') {
+            $childcareText = $this->prefix . ' ' . $childcareText;
         }
 
         if ($this->capitalize) {
