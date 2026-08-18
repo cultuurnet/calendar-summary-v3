@@ -6,7 +6,7 @@ namespace CultuurNet\CalendarSummaryV3\Periodic;
 
 use CultuurNet\CalendarSummaryV3\DateFormatter;
 use CultuurNet\CalendarSummaryV3\Offer\Offer;
-use CultuurNet\CalendarSummaryV3\PlainTextPeriodsFormatter;
+use CultuurNet\CalendarSummaryV3\PlainTextDeviatingDaysFormatter;
 use CultuurNet\CalendarSummaryV3\PlainTextSummaryBuilder;
 use CultuurNet\CalendarSummaryV3\PlainTextWeekSchemeFormatter;
 use CultuurNet\CalendarSummaryV3\Translator;
@@ -17,13 +17,13 @@ final class ExtraLargePeriodicPlainTextFormatter implements PeriodicFormatterInt
 
     private Translator $translator;
 
-    private PlainTextPeriodsFormatter $periodsFormatter;
+    private PlainTextDeviatingDaysFormatter $deviatingDaysFormatter;
 
     public function __construct(Translator $translator)
     {
         $this->formatter = new DateFormatter($translator->getLocale());
         $this->translator = $translator;
-        $this->periodsFormatter = new PlainTextPeriodsFormatter($translator);
+        $this->deviatingDaysFormatter = new PlainTextDeviatingDaysFormatter($translator);
     }
 
     public function format(Offer $offer): string
@@ -54,6 +54,6 @@ final class ExtraLargePeriodicPlainTextFormatter implements PeriodicFormatterInt
 
         $summary = $summary->appendAvailability($offer->getStatus(), $offer->getBookingAvailability());
 
-        return $summary->toString() . $this->periodsFormatter->format($offer);
+        return $summary->toString() . $this->deviatingDaysFormatter->format($offer);
     }
 }
