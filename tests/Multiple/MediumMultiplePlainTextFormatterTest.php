@@ -30,7 +30,7 @@ final class MediumMultiplePlainTextFormatterTest extends TestCase
 
     public function testFormatPlainTextMultipleDateMediumOneDay(): void
     {
-        $subEvents = json_decode(file_get_contents(__DIR__ . '/data/subEvents.json'), true);
+        $subEvents = json_decode(file_get_contents(__DIR__ . '/data/sub-events.json'), true);
         $event = new Offer(
             OfferType::event(),
             new Status('Available', []),
@@ -61,7 +61,7 @@ final class MediumMultiplePlainTextFormatterTest extends TestCase
 
     public function testFormatPlainTextMultipleOnSameDay(): void
     {
-        $subEvents = json_decode(file_get_contents(__DIR__ . '/data/subEventsSameDay.json'), true);
+        $subEvents = json_decode(file_get_contents(__DIR__ . '/data/sub-events-same-day.json'), true);
         $event = new Offer(
             OfferType::event(),
             new Status('Available', []),
@@ -94,7 +94,7 @@ final class MediumMultiplePlainTextFormatterTest extends TestCase
 
     public function testFormatPlainTextMultipleDateMediumMoreDays(): void
     {
-        $subEvents = json_decode(file_get_contents(__DIR__ . '/data/subEventsMoreDays.json'), true);
+        $subEvents = json_decode(file_get_contents(__DIR__ . '/data/sub-events-more-days.json'), true);
         $event = new Offer(
             OfferType::event(),
             new Status('Available', []),
@@ -125,7 +125,7 @@ final class MediumMultiplePlainTextFormatterTest extends TestCase
 
     public function testFormatPlainTextMultipleDateMediumOneDayWithUnavailableStatus(): void
     {
-        $subEvents = json_decode(file_get_contents(__DIR__ . '/data/subEvents.json'), true);
+        $subEvents = json_decode(file_get_contents(__DIR__ . '/data/sub-events.json'), true);
         $event = new Offer(
             OfferType::event(),
             new Status('Unavailable', []),
@@ -156,7 +156,7 @@ final class MediumMultiplePlainTextFormatterTest extends TestCase
 
     public function testFormatPlainTextMultipleDateMediumOneDayWithUnavailableStatusForSingleSubEvent(): void
     {
-        $subEvents = json_decode(file_get_contents(__DIR__ . '/data/subEvents.json'), true);
+        $subEvents = json_decode(file_get_contents(__DIR__ . '/data/sub-events.json'), true);
         $event = new Offer(
             OfferType::event(),
             new Status('Available', []),
@@ -198,7 +198,7 @@ final class MediumMultiplePlainTextFormatterTest extends TestCase
     {
         $formatter = new MediumMultiplePlainTextFormatter(new Translator('nl_NL'), true);
 
-        $subEvents = json_decode(file_get_contents(__DIR__ . '/data/subEvents.json'), true);
+        $subEvents = json_decode(file_get_contents(__DIR__ . '/data/sub-events.json'), true);
         $event = new Offer(
             OfferType::event(),
             new Status('Available', []),
