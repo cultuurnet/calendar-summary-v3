@@ -8,7 +8,7 @@ use CultuurNet\CalendarSummaryV3\Offer\Childcare;
 use CultuurNet\CalendarSummaryV3\Offer\Offer;
 
 /**
- * Renders the childcare and the overnight stay of a (sub)event between braces.
+ * Renders the childcare and the overnight stay of a (sub)event.
  */
 final class HtmlChildcareFormatter
 {
@@ -60,18 +60,30 @@ final class HtmlChildcareFormatter
         return '<span class="cf-childcare">' . $childcareText . '</span>';
     }
 
+    /**
+     * A nested list is a block of its own and therefore starts a sentence of its own, between
+     * braces. Inline it continues the sentence of the date it follows and needs neither.
+     */
     private function getChildcareText(): string
     {
         if ($this->childcare === null) {
-            // Only the first word is capitalized, so an overnight stay without childcare
-            // is the only case where the overnight itself starts the sentence on its own.
-            return $this->overnight ? '(' . ucfirst($this->translator->translate('overnight')) . ')' : '';
+            if (!$this->overnight) {
+                return '';
+            }
+
+            $overnight = $this->translator->translate('overnight');
+
+            return $this->asNestedList ? '(' . ucfirst($overnight) . ')' : $overnight;
         }
 
         $formatter = ChildcareFormatter::forChildcare($this->childcare, $this->translator);
 
         if ($this->overnight) {
             $formatter = $formatter->precededBy($this->translator->translate('overnight') . ',');
+        }
+
+        if (!$this->asNestedList) {
+            return $formatter->toString();
         }
 
         return $formatter->capitalize()->withBraces()->toString();
