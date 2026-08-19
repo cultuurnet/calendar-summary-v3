@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace CultuurNet\CalendarSummaryV3\Single;
 
+use CultuurNet\CalendarSummaryV3\ChildcareFormatter;
 use CultuurNet\CalendarSummaryV3\DateComparison;
 use CultuurNet\CalendarSummaryV3\DateFormatter;
 use CultuurNet\CalendarSummaryV3\PlainTextSummaryBuilder;
@@ -23,10 +24,21 @@ final class LargeSinglePlainTextFormatter implements SingleFormatterInterface
      */
     private $translator;
 
-    public function __construct(Translator $translator)
+    /**
+     * @var bool
+     */
+    private $childcareOnItsOwnLine;
+
+    /**
+     * @param bool $childcareOnItsOwnLine gives the childcare a line of its own instead of
+     *                                    letting it follow the date, for the sub-events of
+     *                                    a multiple calendar that already are a list
+     */
+    public function __construct(Translator $translator, bool $childcareOnItsOwnLine = false)
     {
         $this->formatter = new DateFormatter($translator->getLocale());
         $this->translator = $translator;
+        $this->childcareOnItsOwnLine = $childcareOnItsOwnLine;
     }
 
     public function format(Offer $offer): string
@@ -40,10 +52,25 @@ final class LargeSinglePlainTextFormatter implements SingleFormatterInterface
             $output = $this->formatMoreDays($startDate, $endDate);
         }
 
-        return PlainTextSummaryBuilder::start($this->translator)
-            ->append($output)
-            ->appendAvailability($offer->getStatus(), $offer->getBookingAvailability())
-            ->toString();
+        $childcare = ChildcareFormatter::forOffer($offer, $this->translator)->withBraces()->toString();
+
+        $summary = PlainTextSummaryBuilder::start($this->translator)->append($output);
+
+        // The availability keeps closing the date, so a childcare that gets a line of its
+        // own follows it instead of splitting the two apart.
+        if ($childcare !== '' && !$this->childcareOnItsOwnLine) {
+            $summary = $summary->append($childcare);
+        }
+
+        $summary = $summary->appendAvailability($offer->getStatus(), $offer->getBookingAvailability());
+
+        if ($childcare !== '' && $this->childcareOnItsOwnLine) {
+            // Childcare on a line of its own is indented with a single space, like the
+            // childcare of a week scheme.
+            $summary = $summary->startNewLine()->append(' ' . $childcare);
+        }
+
+        return $summary->toString();
     }
 
     private function formatSameDay(DateTimeInterface $startDate, DateTimeInterface $endDate): string

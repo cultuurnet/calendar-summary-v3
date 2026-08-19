@@ -11,6 +11,8 @@ use PHPUnit\Framework\TestCase;
 
 final class HtmlWeekSchemeFormatterTest extends TestCase
 {
+    use HtmlFixture;
+
     private Translator $translator;
 
     protected function setUp(): void
@@ -40,8 +42,9 @@ final class HtmlWeekSchemeFormatterTest extends TestCase
     }
 
     /**
-     * Every size that does not ask for the childcare gets a week scheme without it, whether
-     * the days share one or not. Both cases reach the childcare through their own branch.
+     * A childcare that every day shares is summarized in a list item of its own, one that
+     * differs per day follows the day it belongs to. Without withChildcare() neither shows
+     * up, so both of these render the very same week scheme.
      */
     public function testItRendersNoChildcareUnlessAsked(): void
     {
@@ -56,8 +59,8 @@ final class HtmlWeekSchemeFormatterTest extends TestCase
         ]);
 
         foreach ([$shared, $differing] as $openingHours) {
-            $this->assertStringNotContainsString(
-                'cf-childcare',
+            $this->assertEquals(
+                $this->expectedHtml('week-scheme-without-childcare'),
                 HtmlWeekSchemeFormatter::forOpeningHours($openingHours, $this->translator)->toString()
             );
         }

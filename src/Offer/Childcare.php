@@ -28,7 +28,7 @@ final class Childcare
 
     public static function fromArray(array $data): self
     {
-        return new self($data['start'] ?? null, $data['end'] ?? null);
+        return new self(self::hourOrNull($data, 'start'), self::hourOrNull($data, 'end'));
     }
 
     /**
@@ -36,11 +36,22 @@ final class Childcare
      */
     public static function fromArrayOrNull(?array $data): ?self
     {
-        if (!isset($data['start']) && !isset($data['end'])) {
+        if (self::hourOrNull($data ?? [], 'start') === null && self::hourOrNull($data ?? [], 'end') === null) {
             return null;
         }
 
-        return self::fromArray($data);
+        return self::fromArray($data ?? []);
+    }
+
+    /**
+     * An hour that is there but empty says as little as one that is missing, so both count
+     * as no hour at all instead of ending up in the summary as 'opvang van  tot '.
+     */
+    private static function hourOrNull(array $data, string $key): ?string
+    {
+        $hour = $data[$key] ?? null;
+
+        return is_string($hour) && $hour !== '' ? $hour : null;
     }
 
     public function getStart(): ?string

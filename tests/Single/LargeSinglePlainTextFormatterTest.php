@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace CultuurNet\CalendarSummaryV3\Single;
 
 use CultuurNet\CalendarSummaryV3\Offer\BookingAvailability;
+use CultuurNet\CalendarSummaryV3\Offer\Childcare;
 use CultuurNet\CalendarSummaryV3\Offer\Offer;
 use CultuurNet\CalendarSummaryV3\Offer\OfferType;
 use CultuurNet\CalendarSummaryV3\Offer\Status;
@@ -221,5 +222,86 @@ final class LargeSinglePlainTextFormatterTest extends TestCase
             $expectedOutput,
             $this->formatter->format($event)
         );
+    }
+
+    public function testItShowsTheChildcare(): void
+    {
+        $this->assertEquals(
+            'Donderdag 13 augustus 2026 van 08:00 tot 17:00 (opvang van 7:00 tot 18:00)',
+            $this->formatter->format($this->camp()->withChildcare(new Childcare('07:00', '18:00')))
+        );
+    }
+
+    public function testItShowsChildcareThatOnlyHappensBeforeTheOpeningHours(): void
+    {
+        $this->assertEquals(
+            'Donderdag 13 augustus 2026 van 08:00 tot 17:00 (vooropvang vanaf 7:00)',
+            $this->formatter->format($this->camp()->withChildcare(new Childcare('07:00', null)))
+        );
+    }
+
+    public function testItShowsChildcareThatOnlyHappensAfterTheOpeningHours(): void
+    {
+        $this->assertEquals(
+            'Donderdag 13 augustus 2026 van 08:00 tot 17:00 (naopvang tot 18:00)',
+            $this->formatter->format($this->camp()->withChildcare(new Childcare(null, '18:00')))
+        );
+    }
+
+    public function testItShowsTheOvernightStayWithoutChildcare(): void
+    {
+        $this->assertEquals(
+            'Donderdag 13 augustus 2026 van 08:00 tot 17:00 (met overnachting)',
+            $this->formatter->format($this->camp()->withOvernight(true))
+        );
+    }
+
+    public function testItCombinesTheOvernightStayAndTheChildcare(): void
+    {
+        $this->assertEquals(
+            'Donderdag 13 augustus 2026 van 08:00 tot 17:00 (met overnachting, opvang van 7:00 tot 18:00)',
+            $this->formatter->format($this->campWithChildcareAndOvernight())
+        );
+    }
+
+    /**
+     * The availability keeps closing the summary, so it stays the last thing that is read.
+     */
+    public function testItShowsTheChildcareBeforeTheAvailability(): void
+    {
+        $event = $this->campWithChildcareAndOvernight()
+            ->withAvailability(new Status('Unavailable', []), new BookingAvailability('Available'));
+
+        $this->assertEquals(
+            'Donderdag 13 augustus 2026 van 08:00 tot 17:00 '
+            . '(met overnachting, opvang van 7:00 tot 18:00) (geannuleerd)',
+            $this->formatter->format($event)
+        );
+    }
+
+    public function testItTranslatesTheChildcareAndTheOvernightStay(): void
+    {
+        $this->assertEquals(
+            'Jeudi 13 août 2026 de 08:00 à 17:00 (avec nuitée, garderie de 7:00 à 18:00)',
+            (new LargeSinglePlainTextFormatter(new Translator('fr')))->format($this->campWithChildcareAndOvernight())
+        );
+    }
+
+    private function camp(): Offer
+    {
+        return new Offer(
+            OfferType::event(),
+            new Status('Available', []),
+            new BookingAvailability('Available'),
+            new DateTimeImmutable('2026-08-13T08:00:00+02:00'),
+            new DateTimeImmutable('2026-08-13T17:00:00+02:00')
+        );
+    }
+
+    private function campWithChildcareAndOvernight(): Offer
+    {
+        return $this->camp()
+            ->withChildcare(new Childcare('07:00', '18:00'))
+            ->withOvernight(true);
     }
 }

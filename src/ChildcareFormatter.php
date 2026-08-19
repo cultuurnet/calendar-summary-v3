@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace CultuurNet\CalendarSummaryV3;
 
 use CultuurNet\CalendarSummaryV3\Offer\Childcare;
+use CultuurNet\CalendarSummaryV3\Offer\Offer;
 
 final class ChildcareFormatter
 {
@@ -13,7 +14,9 @@ final class ChildcareFormatter
     /**
      * @var Childcare[]
      */
-    private array $childcares;
+    private array $childcares = [];
+
+    private bool $overnight = false;
 
     private string $prefix = '';
 
@@ -46,6 +49,26 @@ final class ChildcareFormatter
     }
 
     /**
+     * Combines the childcare of a (sub)event with its overnight stay. Renders nothing
+     * when it has neither of them.
+     */
+    public static function forOffer(Offer $offer, Translator $translator): self
+    {
+        $childcare = $offer->getChildcare();
+
+        $formatter = $childcare === null ? new self($translator) : self::forChildcare($childcare, $translator);
+        $formatter->overnight = $offer->hasOvernight();
+
+        // Only the overnight stay starts the sentence, so the childcare that follows it
+        // keeps its lowercase.
+        if ($formatter->overnight && $formatter->childcares !== []) {
+            return $formatter->precededBy($translator->translate('overnight') . ',');
+        }
+
+        return $formatter;
+    }
+
+    /**
      * Prefixes the childcare with 'elke dag', used when every day has the same childcare.
      */
     public function forEveryDay(): self
@@ -54,7 +77,8 @@ final class ChildcareFormatter
     }
 
     /**
-     * Introduces the childcare with the day(s) it applies to.
+     * Introduces the childcare with the text it belongs to, like the day(s) it applies to or
+     * the overnight stay it shares its sentence with.
      */
     public function precededBy(string $text): self
     {
@@ -88,6 +112,10 @@ final class ChildcareFormatter
     {
         $childcareText = $this->getChildcareText();
 
+        if ($childcareText === '') {
+            return '';
+        }
+
         if ($this->prefix !== '') {
             $childcareText = $this->prefix . ' ' . $childcareText;
         }
@@ -105,6 +133,11 @@ final class ChildcareFormatter
 
     private function getChildcareText(): string
     {
+        // An overnight stay is the only thing left to report when there is no childcare.
+        if ($this->childcares === []) {
+            return $this->overnight ? $this->translator->translate('overnight') : '';
+        }
+
         $and = $this->translator->translate('and');
         $text = '';
         $previousKind = '';

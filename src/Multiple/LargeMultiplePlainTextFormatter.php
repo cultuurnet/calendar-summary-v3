@@ -29,15 +29,19 @@ final class LargeMultiplePlainTextFormatter implements MultipleFormatterInterfac
 
     public function format(Offer $offer): string
     {
-        $subEvents = $offer->getSubEvents();
-        $subEventSummaries = [];
-
-        foreach ($subEvents as $key => $subEvent) {
-            $formatter = new LargeSinglePlainTextFormatter($this->translator);
-
+        $subEvents = [];
+        foreach ($offer->getSubEvents() as $subEvent) {
             if (!$this->hidePast || DateComparison::isInTheFuture($subEvent->getEndDate())) {
-                $subEventSummaries[] = $formatter->format($subEvent);
+                $subEvents[] = $subEvent;
             }
+        }
+
+        // Every sub-event already is a line of its own, so its childcare gets one too.
+        $formatter = new LargeSinglePlainTextFormatter($this->translator, true);
+
+        $subEventSummaries = [];
+        foreach ($subEvents as $subEvent) {
+            $subEventSummaries[] = $formatter->format($subEvent);
         }
 
         if (empty($subEventSummaries)) {

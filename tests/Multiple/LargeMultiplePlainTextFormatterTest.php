@@ -6,6 +6,7 @@ namespace CultuurNet\CalendarSummaryV3\Multiple;
 
 use CultuurNet\CalendarSummaryV3\Offer\BookingAvailability;
 use CultuurNet\CalendarSummaryV3\Offer\CalendarType;
+use CultuurNet\CalendarSummaryV3\Offer\Childcare;
 use CultuurNet\CalendarSummaryV3\Offer\Offer;
 use CultuurNet\CalendarSummaryV3\Offer\OfferType;
 use CultuurNet\CalendarSummaryV3\Offer\Status;
@@ -183,6 +184,85 @@ final class LargeMultiplePlainTextFormatterTest extends TestCase
         $this->assertEquals(
             $expectedOutput,
             $formatter->format($event)
+        );
+    }
+
+    /**
+     * Every sub-event already is a line of its own, so its childcare gets one too instead
+     * of trailing the date it belongs to.
+     */
+    public function testItGivesTheChildcareOfASubEventALineOfItsOwn(): void
+    {
+        $subEvents = json_decode(file_get_contents(__DIR__ . '/data/sub-events-with-childcare.json'), true);
+        $event = new Offer(
+            OfferType::event(),
+            new Status('Available', []),
+            new BookingAvailability('Available'),
+            null,
+            null,
+            CalendarType::multiple()
+        );
+
+        $newEvents = [];
+        foreach ($subEvents as $subEvent) {
+            $newEvents[] = (new Offer(
+                OfferType::event(),
+                new Status('Available', []),
+                new BookingAvailability('Available'),
+                new DateTimeImmutable($subEvent['startDate']),
+                new DateTimeImmutable($subEvent['endDate'])
+            ))
+                ->withChildcare(Childcare::fromArrayOrNull($subEvent['childcare'] ?? null))
+                ->withOvernight($subEvent['overnight'] ?? false);
+        }
+
+        $event = $event->withSubEvents($newEvents);
+
+        $this->assertEquals(
+            $this->expectedText('multiple-dates-with-childcare-and-overnight'),
+            $this->formatter->format($event)
+        );
+    }
+
+    /**
+     * The availability keeps closing the date it belongs to, so the childcare of that date
+     * follows it on a line of its own instead of splitting the two apart.
+     */
+    public function testItKeepsTheAvailabilityBetweenTheDateAndItsChildcare(): void
+    {
+        $childcare = new Childcare('07:00', '18:00');
+
+        $event = (new Offer(
+            OfferType::event(),
+            new Status('Available', []),
+            new BookingAvailability('Available'),
+            null,
+            null,
+            CalendarType::multiple()
+        ))->withSubEvents(
+            [
+                (new Offer(
+                    OfferType::event(),
+                    new Status('Available', []),
+                    new BookingAvailability('Available'),
+                    new DateTimeImmutable('2026-08-13T08:00:00+02:00'),
+                    new DateTimeImmutable('2026-08-13T17:00:00+02:00')
+                ))->withChildcare($childcare),
+                (new Offer(
+                    OfferType::event(),
+                    new Status('Available', []),
+                    new BookingAvailability('Available'),
+                    new DateTimeImmutable('2026-09-09T08:00:00+02:00'),
+                    new DateTimeImmutable('2026-09-09T17:00:00+02:00')
+                ))
+                    ->withChildcare($childcare)
+                    ->withAvailability(new Status('Unavailable', []), new BookingAvailability('Available')),
+            ]
+        );
+
+        $this->assertEquals(
+            $this->expectedText('multiple-dates-with-childcare-and-an-unavailable-status'),
+            $this->formatter->format($event)
         );
     }
 }
