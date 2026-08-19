@@ -37,11 +37,7 @@ final class LargeMultiplePlainTextFormatter implements MultipleFormatterInterfac
         }
 
         // Every sub-event already is a line of its own, so its childcare gets one too.
-        $formatter = new LargeSinglePlainTextFormatter(
-            $this->translator,
-            true,
-            $this->anyHasChildcare($subEvents)
-        );
+        $formatter = new LargeSinglePlainTextFormatter($this->translator, true);
 
         $subEventSummaries = [];
         foreach ($subEvents as $subEvent) {
@@ -53,19 +49,5 @@ final class LargeMultiplePlainTextFormatter implements MultipleFormatterInterfac
         }
 
         return implode(PHP_EOL, $subEventSummaries);
-    }
-
-    /**
-     * @param Offer[] $subEvents
-     */
-    private function anyHasChildcare(array $subEvents): bool
-    {
-        foreach ($subEvents as $subEvent) {
-            if ($subEvent->getChildcare() !== null) {
-                return true;
-            }
-        }
-
-        return false;
     }
 }

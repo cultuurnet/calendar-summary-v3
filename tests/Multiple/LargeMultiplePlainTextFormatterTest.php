@@ -225,45 +225,6 @@ final class LargeMultiplePlainTextFormatterTest extends TestCase
     }
 
     /**
-     * A date without childcare reports that only because another date does have one. The
-     * dates of an offer that never has any childcare keep quiet about it, which the other
-     * fixtures without childcare already show.
-     */
-    public function testItReportsTheDatesWithoutChildcare(): void
-    {
-        $event = (new Offer(
-            OfferType::event(),
-            new Status('Available', []),
-            new BookingAvailability('Available'),
-            null,
-            null,
-            CalendarType::multiple()
-        ))->withSubEvents(
-            [
-                (new Offer(
-                    OfferType::event(),
-                    new Status('Available', []),
-                    new BookingAvailability('Available'),
-                    new DateTimeImmutable('2026-07-13T00:30:00+02:00'),
-                    new DateTimeImmutable('2026-07-13T01:15:00+02:00')
-                ))->withChildcare(new Childcare('10:00', '16:00'))->withOvernight(true),
-                new Offer(
-                    OfferType::event(),
-                    new Status('Available', []),
-                    new BookingAvailability('Available'),
-                    new DateTimeImmutable('2026-07-22T01:00:00+02:00'),
-                    new DateTimeImmutable('2026-07-22T01:30:00+02:00')
-                ),
-            ]
-        );
-
-        $this->assertEquals(
-            $this->expectedText('multiple-dates-with-one-date-without-childcare'),
-            $this->formatter->format($event)
-        );
-    }
-
-    /**
      * The availability keeps closing the date it belongs to, so the childcare of that date
      * follows it on a line of its own instead of splitting the two apart.
      */

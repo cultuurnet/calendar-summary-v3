@@ -30,25 +30,15 @@ final class LargeSinglePlainTextFormatter implements SingleFormatterInterface
     private $childcareOnItsOwnLine;
 
     /**
-     * @var bool
-     */
-    private $mentionAbsentChildcare;
-
-    /**
      * @param bool $childcareOnItsOwnLine gives the childcare a line of its own instead of
      *                                    letting it follow the date, for the sub-events of
      *                                    a multiple calendar that already are a list
-     * @param bool $mentionAbsentChildcare reports that this date has no childcare
      */
-    public function __construct(
-        Translator $translator,
-        bool $childcareOnItsOwnLine = false,
-        bool $mentionAbsentChildcare = false
-    ) {
+    public function __construct(Translator $translator, bool $childcareOnItsOwnLine = false)
+    {
         $this->formatter = new DateFormatter($translator->getLocale());
         $this->translator = $translator;
         $this->childcareOnItsOwnLine = $childcareOnItsOwnLine;
-        $this->mentionAbsentChildcare = $mentionAbsentChildcare;
     }
 
     public function format(Offer $offer): string
@@ -62,13 +52,7 @@ final class LargeSinglePlainTextFormatter implements SingleFormatterInterface
             $output = $this->formatMoreDays($startDate, $endDate);
         }
 
-        $childcareFormatter = ChildcareFormatter::forOffer($offer, $this->translator)->withBraces();
-
-        if ($this->mentionAbsentChildcare) {
-            $childcareFormatter = $childcareFormatter->alsoWhenThereIsNone();
-        }
-
-        $childcare = $childcareFormatter->toString();
+        $childcare = ChildcareFormatter::forOffer($offer, $this->translator)->withBraces()->toString();
 
         $summary = PlainTextSummaryBuilder::start($this->translator)->append($output);
 
