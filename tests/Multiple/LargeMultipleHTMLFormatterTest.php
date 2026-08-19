@@ -228,47 +228,41 @@ final class LargeMultipleHTMLFormatterTest extends TestCase
     }
 
     /**
-     * Reporting that a date has no childcare only makes sense next to a date that has one,
-     * so an offer that never has any childcare keeps quiet about it.
+     * A date without childcare reports that only because another date does have one. The
+     * dates of an offer that never has any childcare keep quiet about it, which the other
+     * fixtures without childcare already show.
      */
-    public function testItOnlyReportsAnAbsentChildcareNextToAPresentOne(): void
+    public function testItReportsTheDatesWithoutChildcare(): void
     {
-        $event = new Offer(
+        $event = (new Offer(
             OfferType::event(),
             new Status('Available', []),
             new BookingAvailability('Available'),
             null,
             null,
             CalendarType::multiple()
-        );
-
-        $withoutAnyChildcare = $event->withSubEvents([$this->subEvent(), $this->subEvent()]);
-
-        $withOneChildcare = $event->withSubEvents(
+        ))->withSubEvents(
             [
-                $this->subEvent()->withChildcare(new Childcare('07:00', '18:00')),
-                $this->subEvent(),
+                (new Offer(
+                    OfferType::event(),
+                    new Status('Available', []),
+                    new BookingAvailability('Available'),
+                    new DateTimeImmutable('2026-07-13T00:30:00+02:00'),
+                    new DateTimeImmutable('2026-07-13T01:15:00+02:00')
+                ))->withChildcare(new Childcare('10:00', '16:00'))->withOvernight(true),
+                new Offer(
+                    OfferType::event(),
+                    new Status('Available', []),
+                    new BookingAvailability('Available'),
+                    new DateTimeImmutable('2026-07-22T01:00:00+02:00'),
+                    new DateTimeImmutable('2026-07-22T01:30:00+02:00')
+                ),
             ]
         );
 
-        $this->assertStringNotContainsString(
-            'Geen opvang',
-            $this->formatter->format($withoutAnyChildcare)
-        );
-        $this->assertStringContainsString(
-            '<li class="cf-childcare">(Geen opvang)</li>',
-            $this->formatter->format($withOneChildcare)
-        );
-    }
-
-    private function subEvent(): Offer
-    {
-        return new Offer(
-            OfferType::event(),
-            new Status('Available', []),
-            new BookingAvailability('Available'),
-            new DateTimeImmutable('2026-08-13T08:00:00+02:00'),
-            new DateTimeImmutable('2026-08-13T17:00:00+02:00')
+        $this->assertEquals(
+            $this->expectedHtml('multiple-dates-with-one-date-without-childcare'),
+            $this->formatter->format($event)
         );
     }
 }

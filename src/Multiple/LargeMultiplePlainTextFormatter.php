@@ -29,16 +29,23 @@ final class LargeMultiplePlainTextFormatter implements MultipleFormatterInterfac
 
     public function format(Offer $offer): string
     {
-        $subEvents = $offer->getSubEvents();
-        $subEventSummaries = [];
+        $subEvents = [];
+        foreach ($offer->getSubEvents() as $subEvent) {
+            if (!$this->hidePast || DateComparison::isInTheFuture($subEvent->getEndDate())) {
+                $subEvents[] = $subEvent;
+            }
+        }
 
         // Every sub-event already is a line of its own, so its childcare gets one too.
-        $formatter = new LargeSinglePlainTextFormatter($this->translator, true);
+        $formatter = new LargeSinglePlainTextFormatter(
+            $this->translator,
+            true,
+            $this->anyHasChildcare($subEvents)
+        );
 
+        $subEventSummaries = [];
         foreach ($subEvents as $subEvent) {
-            if (!$this->hidePast || DateComparison::isInTheFuture($subEvent->getEndDate())) {
-                $subEventSummaries[] = $formatter->format($subEvent);
-            }
+            $subEventSummaries[] = $formatter->format($subEvent);
         }
 
         if (empty($subEventSummaries)) {
@@ -46,5 +53,19 @@ final class LargeMultiplePlainTextFormatter implements MultipleFormatterInterfac
         }
 
         return implode(PHP_EOL, $subEventSummaries);
+    }
+
+    /**
+     * @param Offer[] $subEvents
+     */
+    private function anyHasChildcare(array $subEvents): bool
+    {
+        foreach ($subEvents as $subEvent) {
+            if ($subEvent->getChildcare() !== null) {
+                return true;
+            }
+        }
+
+        return false;
     }
 }
