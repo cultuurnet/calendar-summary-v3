@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace CultuurNet\CalendarSummaryV3;
 
 use CultuurNet\CalendarSummaryV3\Offer\AdjustedDay;
+use CultuurNet\CalendarSummaryV3\Offer\Childcare;
 use CultuurNet\CalendarSummaryV3\Offer\OpeningHour;
 use CultuurNet\CalendarSummaryV3\Offer\OpeningHours;
 use CultuurNet\CalendarSummaryV3\Offer\Period;
@@ -55,8 +56,8 @@ final class HtmlAdjustedDaysFormatter
         $sharedChildcare = $openingHours->sharedChildcare();
 
         $output = '';
-        foreach ($openingHours as $openingHour) {
-            $output .= '<li>' . $this->generateOpeningHours($openingHour, $sharedChildcare === null) . '</li>';
+        foreach ($openingHours->groupedByIdenticalTimespans() as $group) {
+            $output .= '<li>' . $this->generateOpeningHours($group, $sharedChildcare === null) . '</li>';
         }
 
         if ($output !== '') {
@@ -76,21 +77,40 @@ final class HtmlAdjustedDaysFormatter
         return $output;
     }
 
-    private function generateOpeningHours(OpeningHour $openingHour, bool $withChildcare): string
+    /**
+     * Renders the days of a group once, followed by every timespan they are open and the
+     * childcare of those timespans.
+     */
+    private function generateOpeningHours(OpeningHours $group, bool $withChildcare): string
     {
-        $opens = OpeningHourFormatter::format($openingHour->getOpens());
-        $closes = OpeningHourFormatter::format($openingHour->getCloses());
-        $childcare = $openingHour->getChildcare();
+        $timespans = $group->toArray();
 
-        $output = '<span class="cf-days">' . $this->generateDaysOfWeek($openingHour->getDaysOfWeek()) . '</span>'
-            . '<span class="cf-from cf-meta">' . $this->translator->translate('from_hour') . '</span>'
-            . '<span class="cf-time">' . $opens . '</span>'
-            . '<span class="cf-to cf-meta">' . $this->translator->translate('till_hour') . '</span>'
-            . '<span class="cf-time">' . $closes . '</span>';
+        // The days of a group are the same on all of its timespans.
+        $output = '<span class="cf-days">'
+            . $this->generateDaysOfWeek($timespans[0]->getDaysOfWeek())
+            . '</span>';
 
-        if ($withChildcare && $childcare !== null) {
+        $childcares = [];
+        foreach ($timespans as $index => $openingHour) {
+            $and = $index > 0 ? $this->translator->translate('and') . ' ' : '';
+            $childcare = $openingHour->getChildcare();
+
+            $output .= '<span class="cf-from cf-meta">' . $and
+                . $this->translator->translate('from_hour') . '</span>'
+                . '<span class="cf-time">' . OpeningHourFormatter::format($openingHour->getOpens()) . '</span>'
+                . '<span class="cf-to cf-meta">' . $this->translator->translate('till_hour') . '</span>'
+                . '<span class="cf-time">' . OpeningHourFormatter::format($openingHour->getCloses()) . '</span>';
+
+            if ($childcare !== null) {
+                $childcares[] = $childcare;
+            }
+        }
+
+        // The childcare follows the last timespan, so the timespans of a day that opens more
+        // than once stay together.
+        if ($withChildcare && $childcares !== []) {
             $output .= '<span class="cf-childcare">'
-                . ChildcareFormatter::forChildcare($childcare, $this->translator)
+                . ChildcareFormatter::forChildcares($this->withoutRepetition($childcares), $this->translator)
                     ->withBraces()
                     ->capitalize()
                     ->toString()
@@ -98,6 +118,23 @@ final class HtmlAdjustedDaysFormatter
         }
 
         return $output;
+    }
+
+    /**
+     * Keeps a childcare that every timespan shares from being mentioned once per timespan.
+     *
+     * @param Childcare[] $childcares
+     * @return Childcare[]
+     */
+    private function withoutRepetition(array $childcares): array
+    {
+        foreach ($childcares as $childcare) {
+            if (!$childcare->equals($childcares[0])) {
+                return $childcares;
+            }
+        }
+
+        return [$childcares[0]];
     }
 
     /**

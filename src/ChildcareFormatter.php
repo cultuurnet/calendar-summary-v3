@@ -10,7 +10,10 @@ final class ChildcareFormatter
 {
     private Translator $translator;
 
-    private Childcare $childcare;
+    /**
+     * @var Childcare[]
+     */
+    private array $childcares;
 
     private string $prefix = '';
 
@@ -25,8 +28,20 @@ final class ChildcareFormatter
 
     public static function forChildcare(Childcare $childcare, Translator $translator): self
     {
+        return self::forChildcares([$childcare], $translator);
+    }
+
+    /**
+     * Renders the childcare of a single day, which has one per timespan that it is open.
+     * Consecutive childcares of the same kind share its wording, so a day that is open
+     * twice reads as 'opvang van 7:00 tot 13:00 en van 16:00 tot 20:00'.
+     *
+     * @param Childcare[] $childcares
+     */
+    public static function forChildcares(array $childcares, Translator $translator): self
+    {
         $formatter = new self($translator);
-        $formatter->childcare = $childcare;
+        $formatter->childcares = array_values($childcares);
         return $formatter;
     }
 
@@ -90,25 +105,61 @@ final class ChildcareFormatter
 
     private function getChildcareText(): string
     {
-        $start = $this->childcare->getStart();
-        $end = $this->childcare->getEnd();
+        $and = $this->translator->translate('and');
+        $text = '';
+        $previousKind = '';
 
-        // Childcare that only happens before the opening hours has no end.
+        foreach ($this->childcares as $childcare) {
+            $kind = $this->kindOf($childcare);
+
+            if ($text === '') {
+                $text = $kind . ' ' . $this->hoursOf($childcare);
+            } elseif ($kind === $previousKind) {
+                // The same kind of childcare only needs its hours, not its wording again.
+                $text .= ' ' . $and . ' ' . $this->hoursOf($childcare);
+            } else {
+                $text .= ' ' . $and . ' ' . $kind . ' ' . $this->hoursOf($childcare);
+            }
+
+            $previousKind = $kind;
+        }
+
+        return $text;
+    }
+
+    /**
+     * Childcare that only happens before the opening hours has no end, childcare that only
+     * happens after them has no start.
+     */
+    private function kindOf(Childcare $childcare): string
+    {
+        if ($childcare->getEnd() === null) {
+            return $this->translator->translate('childcare_before');
+        }
+
+        if ($childcare->getStart() === null) {
+            return $this->translator->translate('childcare_after');
+        }
+
+        return $this->translator->translate('childcare');
+    }
+
+    private function hoursOf(Childcare $childcare): string
+    {
+        $start = $childcare->getStart();
+        $end = $childcare->getEnd();
+
         if ($end === null) {
-            return $this->translator->translate('childcare_before')
-                . ' ' . $this->translator->translate('childcare_from')
+            return $this->translator->translate('childcare_from')
                 . ' ' . OpeningHourFormatter::format($start);
         }
 
-        // Childcare that only happens after the opening hours has no start.
         if ($start === null) {
-            return $this->translator->translate('childcare_after')
-                . ' ' . $this->translator->translate('childcare_till')
+            return $this->translator->translate('childcare_till')
                 . ' ' . OpeningHourFormatter::format($end);
         }
 
-        return $this->translator->translate('childcare')
-            . ' ' . $this->translator->translate('from_hour')
+        return $this->translator->translate('from_hour')
             . ' ' . OpeningHourFormatter::format($start)
             . ' ' . $this->translator->translate('till_hour')
             . ' ' . OpeningHourFormatter::format($end);

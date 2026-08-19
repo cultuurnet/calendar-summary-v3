@@ -218,7 +218,7 @@ final class ExtraLargePeriodicHTMLFormatterTest extends TestCase
         );
     }
 
-    public function testFormatTheChildcareOfEveryTimespanWhenItDiffersOnTheSameDay(): void
+    public function testFormatADayWithADifferentChildcarePerTimespan(): void
     {
         $place = $this->availablePlace()->withOpeningHours(
             [
@@ -228,7 +228,7 @@ final class ExtraLargePeriodicHTMLFormatterTest extends TestCase
         );
 
         $this->assertEquals(
-            $this->expectedHtml('childcare-of-every-timespan-when-it-differs-on-the-same-day'),
+            $this->expectedHtml('a-day-with-a-different-childcare-per-timespan'),
             $this->formatter->format($place)
         );
     }

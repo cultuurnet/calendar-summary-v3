@@ -108,15 +108,6 @@ final class HtmlWeekSchemeFormatter
         // instead of being repeated on every day.
         $sharedChildcare = $this->withChildcare ? $this->openingHours->sharedChildcare() : null;
 
-        // The childcare of a day is mentioned once after its last timespan, so it is
-        // collected while the timespans are rendered.
-        $childcarePerDay = [];
-
-        // A nested list is a block of its own and would push the timespans that follow it
-        // onto a line of their own, so the childcare of every timespan is collected and
-        // listed together after the last one instead.
-        $timespanChildcarePerDay = [];
-
         $formattedDays = [];
         foreach ($this->openingHours as $openingHour) {
             $daysOfWeek = $openingHour->getDaysOfWeek();
@@ -124,35 +115,21 @@ final class HtmlWeekSchemeFormatter
             $closes = OpeningHourFormatter::format($openingHour->getCloses());
 
             foreach ($daysOfWeek as $dayOfWeek) {
-                $childcarePerDay[$dayOfWeek] = $this->childcareOfDay($dayOfWeek, $sharedChildcare);
-
-                // Only when the timespans of this day have a different childcare it is
-                // repeated for every single one of them.
-                $timespanChildcare = $sharedChildcare === null && $childcarePerDay[$dayOfWeek] === null
-                    ? $openingHour->getChildcare()
-                    : null;
-
-                if ($this->childcareInNestedList && $timespanChildcare !== null) {
-                    $timespanChildcarePerDay[$dayOfWeek][] = $timespanChildcare;
-                    $timespanChildcare = null;
-                }
-
-                $childcare = $this->generateChildcare($timespanChildcare === null ? [] : [$timespanChildcare]);
-
                 if (!isset($formattedDays[$dayOfWeek])) {
                     $formattedDays[$dayOfWeek] = $this->openDay($dayOfWeek, $daysOfWeek)
-                        . $this->generateTimespan($opens, $closes)
-                        . $childcare;
+                        . $this->generateTimespan($opens, $closes);
                 } else {
-                    $formattedDays[$dayOfWeek] .= $this->generateTimespan($opens, $closes, true) . $childcare;
+                    $formattedDays[$dayOfWeek] .= $this->generateTimespan($opens, $closes, true);
                 }
             }
         }
 
-        foreach ($childcarePerDay as $dayOfWeek => $childcareOfDay) {
-            $formattedDays[$dayOfWeek] .= $this->generateChildcare(
-                $childcareOfDay !== null ? [$childcareOfDay] : ($timespanChildcarePerDay[$dayOfWeek] ?? [])
-            );
+        // The childcare of a day follows its last timespan, so the timespans of a day that
+        // opens more than once stay together on one line.
+        if ($sharedChildcare === null) {
+            foreach ($formattedDays as $dayOfWeek => $formattedDay) {
+                $formattedDays[$dayOfWeek] .= $this->generateChildcare($this->childcareOfDay($dayOfWeek));
+            }
         }
 
         $output = $this->withHeading
@@ -182,13 +159,34 @@ final class HtmlWeekSchemeFormatter
         return $output . '</ul>';
     }
 
-    private function childcareOfDay(string $dayOfWeek, ?Childcare $sharedChildcare): ?Childcare
+    /**
+     * The childcare of every timespan of a day, or the single one they have in common.
+     *
+     * @return Childcare[]
+     */
+    private function childcareOfDay(string $dayOfWeek): array
     {
-        if (!$this->withChildcare || $sharedChildcare !== null) {
-            return null;
+        if (!$this->withChildcare) {
+            return [];
         }
 
-        return $this->openingHours->onDayOfWeek($dayOfWeek)->sharedChildcare();
+        $openingHours = $this->openingHours->onDayOfWeek($dayOfWeek);
+        $shared = $openingHours->sharedChildcare();
+
+        if ($shared !== null) {
+            return [$shared];
+        }
+
+        $childcares = [];
+        foreach ($openingHours as $openingHour) {
+            $childcare = $openingHour->getChildcare();
+
+            if ($childcare !== null) {
+                $childcares[] = $childcare;
+            }
+        }
+
+        return $childcares;
     }
 
     /**
@@ -232,33 +230,22 @@ final class HtmlWeekSchemeFormatter
             return '';
         }
 
-        $childcareTexts = [];
-        foreach ($childcares as $childcare) {
-            $childcareTexts[] = ChildcareFormatter::forChildcare($childcare, $this->translator)
-                ->withBraces()
-                ->capitalize()
-                ->toString();
-        }
-
-        if ($childcareTexts === []) {
+        if ($childcares === []) {
             return '';
         }
 
-        $output = '';
+        $childcareText = ChildcareFormatter::forChildcares($childcares, $this->translator)
+            ->withBraces()
+            ->capitalize()
+            ->toString();
 
         if ($this->childcareInNestedList) {
-            foreach ($childcareTexts as $childcareText) {
-                $output .= '<li class="cf-childcare">' . $childcareText . '</li>';
-            }
-
-            return ' <ul class="list-unstyled">' . $output . '</ul>';
+            return ' <ul class="list-unstyled">'
+                . '<li class="cf-childcare">' . $childcareText . '</li>'
+                . '</ul>';
         }
 
-        foreach ($childcareTexts as $childcareText) {
-            $output .= ' <span class="cf-childcare">' . $childcareText . '</span>';
-        }
-
-        return $output;
+        return ' <span class="cf-childcare">' . $childcareText . '</span>';
     }
 
     /**

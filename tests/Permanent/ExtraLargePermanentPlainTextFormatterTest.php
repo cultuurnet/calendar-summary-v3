@@ -136,7 +136,7 @@ final class ExtraLargePermanentPlainTextFormatterTest extends TestCase
         );
     }
 
-    public function testFormatTheChildcareOfEveryTimespanWhenItDiffersOnTheSameDay(): void
+    public function testFormatADayWithADifferentChildcarePerTimespan(): void
     {
         $place = $this->availablePlace()->withOpeningHours(
             [
@@ -146,7 +146,7 @@ final class ExtraLargePermanentPlainTextFormatterTest extends TestCase
         );
 
         $this->assertEquals(
-            $this->expectedText('childcare-of-every-timespan-when-it-differs-on-the-same-day') . PHP_EOL,
+            $this->expectedText('a-day-with-a-different-childcare-per-timespan') . PHP_EOL,
             $this->formatter->format($place)
         );
     }
@@ -595,6 +595,31 @@ final class ExtraLargePermanentPlainTextFormatterTest extends TestCase
             new DateTimeImmutable('2026-12-24'),
             new DateTimeImmutable('2027-01-03'),
             ['nl' => 'Kerstvakantie']
+        );
+    }
+    /**
+     * A day that opens more than once keeps its timespans on one line, and mentions the
+     * childcare of all of them together after the last one.
+     */
+    public function testFormatAnAdjustedDayThatOpensTwiceOnTheSameDay(): void
+    {
+        $place = $this->availablePlace()->withAdjustedDays(
+            [
+                new AdjustedDay(
+                    new DateTimeImmutable('2026-11-20'),
+                    new DateTimeImmutable('2026-11-21'),
+                    new OpeningHours([
+                        new OpeningHour(['friday'], '08:00', '12:00', new Childcare('07:00', '13:00')),
+                        new OpeningHour(['friday'], '17:00', '19:00', new Childcare('16:00', '20:00')),
+                        new OpeningHour(['saturday'], '10:00', '18:00', new Childcare(null, '19:00')),
+                    ])
+                ),
+            ]
+        );
+
+        $this->assertEquals(
+            $this->expectedText('adjusted-days-with-a-day-that-opens-twice') . PHP_EOL,
+            $this->formatter->format($place)
         );
     }
 }
