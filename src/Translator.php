@@ -107,7 +107,7 @@ final class Translator
                 'today' => 'Aujourd\'hui',
                 'tonight' => 'Ce soir',
                 'tomorrow' => 'Demain',
-                'to' => 'à',
+                'to' => 'au',
                 'open_every' => 'Ouvert chaque',
                 'open_every_end' => '',
                 'except_during' => 'sauf pendant',
@@ -180,5 +180,14 @@ final class Translator
     public function getLanguageCode(): string
     {
         return substr($this->locale, 0, 2);
+    }
+
+    /**
+     * German and English write their days of the week with a capital wherever they appear,
+     * Dutch and French only at the start of a sentence.
+     */
+    public function capitalizesDaysOfWeek(): bool
+    {
+        return in_array($this->getLanguageCode(), ['de', 'en'], true);
     }
 }
