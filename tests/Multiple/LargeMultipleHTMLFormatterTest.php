@@ -265,4 +265,46 @@ final class LargeMultipleHTMLFormatterTest extends TestCase
             $this->formatter->format($event)
         );
     }
+
+    /**
+     * The availability stays the last inline element of the date it belongs to, so the
+     * nested list of the childcare follows it instead of splitting the two apart.
+     */
+    public function testItKeepsTheAvailabilityBetweenTheDateAndItsChildcare(): void
+    {
+        $childcare = new Childcare('07:00', '18:00');
+
+        $event = (new Offer(
+            OfferType::event(),
+            new Status('Available', []),
+            new BookingAvailability('Available'),
+            null,
+            null,
+            CalendarType::multiple()
+        ))->withSubEvents(
+            [
+                (new Offer(
+                    OfferType::event(),
+                    new Status('Available', []),
+                    new BookingAvailability('Available'),
+                    new DateTimeImmutable('2026-08-13T08:00:00+02:00'),
+                    new DateTimeImmutable('2026-08-13T17:00:00+02:00')
+                ))->withChildcare($childcare),
+                (new Offer(
+                    OfferType::event(),
+                    new Status('Available', []),
+                    new BookingAvailability('Available'),
+                    new DateTimeImmutable('2026-09-09T08:00:00+02:00'),
+                    new DateTimeImmutable('2026-09-09T17:00:00+02:00')
+                ))
+                    ->withChildcare($childcare)
+                    ->withAvailability(new Status('Unavailable', []), new BookingAvailability('Available')),
+            ]
+        );
+
+        $this->assertEquals(
+            $this->expectedHtml('multiple-dates-with-childcare-and-an-unavailable-status'),
+            $this->formatter->format($event)
+        );
+    }
 }
