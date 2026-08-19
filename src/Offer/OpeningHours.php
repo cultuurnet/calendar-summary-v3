@@ -63,6 +63,68 @@ final class OpeningHours implements IteratorAggregate, Countable
     }
 
     /**
+     * Regroups the opening hours so that every day of the week is listed at most once: the
+     * timespans of a day end up in the same group, and days with exactly the same timespans
+     * share one. Every opening hour of a group carries the days of that group, so a caller
+     * can read them off any of them.
+     *
+     * @return self[] in the order of the week
+     */
+    public function groupedByIdenticalTimespans(): array
+    {
+        $timespansPerDay = [];
+        foreach ($this->splitPerDay()->sortedByDayAndOpeningTime() as $openingHour) {
+            $timespansPerDay[$openingHour->getDaysOfWeek()[0]][] = $openingHour;
+        }
+
+        $daysPerTimespans = [];
+        foreach ($timespansPerDay as $dayOfWeek => $timespans) {
+            $daysPerTimespans[self::signatureOf($timespans)][] = (string) $dayOfWeek;
+        }
+
+        $groups = [];
+        foreach ($daysPerTimespans as $daysOfWeek) {
+            $groups[] = new self(
+                array_map(
+                    static function (OpeningHour $timespan) use ($daysOfWeek): OpeningHour {
+                        return new OpeningHour(
+                            $daysOfWeek,
+                            $timespan->getOpens(),
+                            $timespan->getCloses(),
+                            $timespan->getChildcare()
+                        );
+                    },
+                    $timespansPerDay[$daysOfWeek[0]]
+                )
+            );
+        }
+
+        return $groups;
+    }
+
+    /**
+     * Identifies the timespans of a day, so two days that open and close at the same hours
+     * and have the same childcare can be listed together.
+     *
+     * @param OpeningHour[] $timespans
+     */
+    private static function signatureOf(array $timespans): string
+    {
+        return implode(
+            '|',
+            array_map(
+                static function (OpeningHour $timespan): string {
+                    $childcare = $timespan->getChildcare();
+
+                    return $timespan->getOpens() . '-' . $timespan->getCloses() . '-'
+                        . ($childcare === null ? '' : $childcare->getStart() . '-' . $childcare->getEnd());
+                },
+                $timespans
+            )
+        );
+    }
+
+    /**
      * Returns the opening hours that apply on the given day of the week.
      */
     public function onDayOfWeek(string $dayOfWeek): self

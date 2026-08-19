@@ -174,30 +174,37 @@ final class PlainTextWeekSchemeFormatter
             return [];
         }
 
-        // Only when the timespans of this day have a different childcare it is
-        // repeated after every single one of them.
+        // The timespans of a day share a single line, so a childcare that differs between
+        // them is joined into one too instead of getting a line per timespan.
         $childcareOfDay = $this->openingHours->onDayOfWeek($dayOfWeek)->sharedChildcare();
         if ($childcareOfDay !== null) {
-            return [$this->childcareLine($childcareOfDay, $withDayOfWeek ? $dayOfWeek : '')];
+            return [$this->childcareLine([$childcareOfDay], $withDayOfWeek ? $dayOfWeek : '')];
         }
 
-        $lines = [];
+        $childcares = [];
         foreach ($timespans as $timespan) {
             $childcare = $timespan->getChildcare();
             if ($childcare !== null) {
-                $lines[] = $this->childcareLine($childcare, $withDayOfWeek ? $dayOfWeek : '');
+                $childcares[] = $childcare;
             }
         }
 
-        return $lines;
+        if ($childcares === []) {
+            return [];
+        }
+
+        return [$this->childcareLine($childcares, $withDayOfWeek ? $dayOfWeek : '')];
     }
 
     /**
      * Childcare gets a line of its own, indented with a single space and between braces.
      */
-    private function childcareLine(Childcare $childcare, string $dayOfWeek): string
+    /**
+     * @param Childcare[] $childcares
+     */
+    private function childcareLine(array $childcares, string $dayOfWeek): string
     {
-        $childcareFormatter = ChildcareFormatter::forChildcare($childcare, $this->translator)->withBraces();
+        $childcareFormatter = ChildcareFormatter::forChildcares($childcares, $this->translator)->withBraces();
 
         if ($dayOfWeek !== '') {
             $childcareFormatter = $childcareFormatter->precededBy($this->translateDayOfWeek($dayOfWeek));

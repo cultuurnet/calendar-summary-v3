@@ -260,11 +260,10 @@ final class LargePeriodicHTMLFormatterTest extends TestCase
     }
 
     /**
-     * A nested list is a block of its own and would push the timespans that follow it onto
-     * a line of their own, so the childcare of a day is listed after its last timespan even
-     * when it differs per timespan.
+     * The timespans of a day share one line, so the childcare of all of them is joined into
+     * a single mention after the last one.
      */
-    public function testItListsTheChildcareOfEveryTimespanAfterTheLastOne(): void
+    public function testItJoinsTheChildcareOfEveryTimespanOfADay(): void
     {
         $place = $this->availablePlace()->withOpeningHours(
             [

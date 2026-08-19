@@ -55,41 +55,84 @@ final class PlainTextAdjustedDaysFormatter
         $sharedChildcare = $openingHours->sharedChildcare();
 
         $lines = [];
-        foreach ($openingHours as $openingHour) {
-            $lines[] = $this->generateOpeningHours($openingHour, $sharedChildcare === null);
+        foreach ($openingHours->groupedByIdenticalTimespans() as $group) {
+            $lines[] = $this->generateOpeningHours($group, $sharedChildcare === null);
         }
 
         if ($sharedChildcare !== null) {
-            $lines[] = $this->generateChildcare($sharedChildcare, true);
-        }
-
-        return implode(PHP_EOL, $lines);
-    }
-
-    private function generateOpeningHours(OpeningHour $openingHour, bool $withChildcare): string
-    {
-        $lines = [
-            PlainTextSummaryBuilder::start($this->translator)
-                ->append($this->generateDaysOfWeek($openingHour->getDaysOfWeek()))
-                ->fromHour(OpeningHourFormatter::format($openingHour->getOpens()))
-                ->tillHour(OpeningHourFormatter::format($openingHour->getCloses()))
-                ->toString(),
-        ];
-
-        $childcare = $openingHour->getChildcare();
-        if ($withChildcare && $childcare !== null) {
-            $lines[] = $this->generateChildcare($childcare);
+            $lines[] = $this->generateChildcare([$sharedChildcare], true);
         }
 
         return implode(PHP_EOL, $lines);
     }
 
     /**
+     * Renders the days of a group once, followed by every timespan they are open and the
+     * childcare of those timespans.
+     */
+    private function generateOpeningHours(OpeningHours $group, bool $withChildcare): string
+    {
+        $timespans = $group->toArray();
+
+        // The days of a group are the same on all of its timespans.
+        $day = PlainTextSummaryBuilder::start($this->translator)
+            ->append($this->generateDaysOfWeek($timespans[0]->getDaysOfWeek()));
+
+        $childcares = [];
+        foreach ($timespans as $index => $openingHour) {
+            // fromHour() only inserts the 'and' by itself when 'from' and 'from_hour'
+            // translate to the same word, which is not the case in French.
+            if ($index > 0) {
+                $day = $day->and();
+            }
+
+            $day = $day
+                ->fromHour(OpeningHourFormatter::format($openingHour->getOpens()))
+                ->tillHour(OpeningHourFormatter::format($openingHour->getCloses()));
+
+            $childcare = $openingHour->getChildcare();
+            if ($childcare !== null) {
+                $childcares[] = $childcare;
+            }
+        }
+
+        $lines = [$day->toString()];
+
+        // The childcare follows the last timespan, so the timespans of a day that opens more
+        // than once stay together on one line.
+        if ($withChildcare && $childcares !== []) {
+            $lines[] = $this->generateChildcare($this->withoutRepetition($childcares));
+        }
+
+        return implode(PHP_EOL, $lines);
+    }
+
+    /**
+     * Keeps a childcare that every timespan shares from being mentioned once per timespan.
+     *
+     * @param Childcare[] $childcares
+     * @return Childcare[]
+     */
+    private function withoutRepetition(array $childcares): array
+    {
+        foreach ($childcares as $childcare) {
+            if (!$childcare->equals($childcares[0])) {
+                return $childcares;
+            }
+        }
+
+        return [$childcares[0]];
+    }
+
+    /**
      * Childcare gets a line of its own, indented with a single space and between braces.
      */
-    private function generateChildcare(Childcare $childcare, bool $forEveryDay = false): string
+    /**
+     * @param Childcare[] $childcares
+     */
+    private function generateChildcare(array $childcares, bool $forEveryDay = false): string
     {
-        $childcareFormatter = ChildcareFormatter::forChildcare($childcare, $this->translator)->withBraces();
+        $childcareFormatter = ChildcareFormatter::forChildcares($childcares, $this->translator)->withBraces();
 
         if ($forEveryDay) {
             $childcareFormatter = $childcareFormatter->forEveryDay();
