@@ -63,4 +63,24 @@ final class ChildcareTest extends TestCase
 
         $this->assertEquals(new Childcare('08:00', null), $openingHour->getChildcare());
     }
+
+    /**
+     * An hour that is there but empty says as little as one that is missing, so it counts
+     * as no hour at all instead of reaching the summary as 'opvang van  tot '.
+     */
+    public function testIsAbsentWhenItsHoursAreEmpty(): void
+    {
+        $this->assertNull(Childcare::fromArrayOrNull(['start' => '', 'end' => '']));
+        $this->assertNull(Childcare::fromArrayOrNull(['start' => '']));
+        $this->assertNull(Childcare::fromArrayOrNull([]));
+        $this->assertNull(Childcare::fromArrayOrNull(null));
+    }
+
+    public function testKeepsTheHourThatIsNotEmpty(): void
+    {
+        $this->assertEquals(
+            new Childcare(null, '18:00'),
+            Childcare::fromArrayOrNull(['start' => '', 'end' => '18:00'])
+        );
+    }
 }

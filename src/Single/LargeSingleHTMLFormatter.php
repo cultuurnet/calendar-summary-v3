@@ -30,24 +30,14 @@ final class LargeSingleHTMLFormatter implements SingleFormatterInterface
     private $childcareInNestedList;
 
     /**
-     * @var bool
-     */
-    private $mentionAbsentChildcare;
-
-    /**
      * @param bool $childcareInNestedList renders the childcare as a nested list instead of
      *                                    inline, for the sub-events of a multiple calendar
-     * @param bool $mentionAbsentChildcare reports that this date has no childcare
      */
-    public function __construct(
-        Translator $translator,
-        bool $childcareInNestedList = false,
-        bool $mentionAbsentChildcare = false
-    ) {
+    public function __construct(Translator $translator, bool $childcareInNestedList = false)
+    {
         $this->formatter = new DateFormatter($translator->getLocale());
         $this->translator = $translator;
         $this->childcareInNestedList = $childcareInNestedList;
-        $this->mentionAbsentChildcare = $mentionAbsentChildcare;
     }
 
     public function format(Offer $offer): string
@@ -82,10 +72,6 @@ final class LargeSingleHTMLFormatter implements SingleFormatterInterface
 
         if ($this->childcareInNestedList) {
             $formatter = $formatter->asNestedList();
-        }
-
-        if ($this->mentionAbsentChildcare) {
-            $formatter = $formatter->alsoWhenThereIsNone();
         }
 
         return $formatter->toString();

@@ -21,8 +21,6 @@ final class ChildcareFormatter
 
     private bool $capitalize = false;
 
-    private bool $alsoWhenThereIsNone = false;
-
     private function __construct(Translator $translator)
     {
         $this->translator = $translator;
@@ -94,17 +92,6 @@ final class ChildcareFormatter
         return $c;
     }
 
-    /**
-     * Reports that there is no childcare instead of rendering nothing, for when other dates
-     * of the same offer do have one and its absence here is worth mentioning.
-     */
-    public function alsoWhenThereIsNone(): self
-    {
-        $c = clone $this;
-        $c->alsoWhenThereIsNone = true;
-        return $c;
-    }
-
     public function toString(): string
     {
         $childcareText = $this->getChildcareText();
@@ -131,17 +118,7 @@ final class ChildcareFormatter
     private function getChildcareText(): string
     {
         if ($this->childcare === null) {
-            $parts = [];
-
-            if ($this->overnight) {
-                $parts[] = $this->translator->translate('overnight');
-            }
-
-            if ($this->alsoWhenThereIsNone) {
-                $parts[] = $this->translator->translate('no_childcare');
-            }
-
-            return implode(', ', $parts);
+            return $this->overnight ? $this->translator->translate('overnight') : '';
         }
 
         $start = $this->childcare->getStart();

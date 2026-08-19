@@ -37,11 +37,7 @@ final class LargeMultipleHTMLFormatter implements MultipleFormatterInterface
         }
 
         // Every sub-event gets its own list item, so its childcare is nested inside of it.
-        $formatter = new LargeSingleHTMLFormatter(
-            $this->translator,
-            true,
-            $this->anyHasChildcare($subEvents)
-        );
+        $formatter = new LargeSingleHTMLFormatter($this->translator, true);
 
         $subEventSummaries = [];
         foreach ($subEvents as $subEvent) {
@@ -59,19 +55,5 @@ final class LargeMultipleHTMLFormatter implements MultipleFormatterInterface
         $output .= '</ul>';
 
         return $output;
-    }
-
-    /**
-     * @param Offer[] $subEvents
-     */
-    private function anyHasChildcare(array $subEvents): bool
-    {
-        foreach ($subEvents as $subEvent) {
-            if ($subEvent->getChildcare() !== null) {
-                return true;
-            }
-        }
-
-        return false;
     }
 }

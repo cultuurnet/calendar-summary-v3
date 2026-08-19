@@ -35,17 +35,6 @@ final class HtmlChildcareFormatter
         return $c;
     }
 
-    /**
-     * Mentions that there is no childcare instead of staying silent about it, for when other
-     * dates of the same offer do have one and its absence here is worth reporting.
-     */
-    public function alsoWhenThereIsNone(): self
-    {
-        $c = clone $this;
-        $c->childcareFormatter = $this->childcareFormatter->alsoWhenThereIsNone();
-        return $c;
-    }
-
     public function toString(): string
     {
         $childcareFormatter = $this->childcareFormatter;
