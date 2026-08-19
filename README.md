@@ -48,8 +48,10 @@ Only the periodic and permanent calendar types have an 'xl' output of their own:
 output it lists the adjusted days and the closed days. For the single and multiple calendar types
 'xl' is the same as 'lg'.
 
-The large output mentions the childcare and the overnight stay for every calendar type. It does not
-list the adjusted days, but it does warn that the hours can differ while they are going on.
+The large output mentions the childcare for every calendar type, and the overnight stay for the
+single and multiple ones, which are the only types that have one. For the periodic and permanent
+types it does not list the adjusted days, but it does warn that the hours can differ while they
+are going on.
 
 ## Example
 ```php

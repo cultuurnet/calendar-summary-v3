@@ -40,7 +40,7 @@ final class LargePermanentPlainTextFormatter implements PermanentFormatterInterf
             // The adjusted days themselves are only listed in the extra large format, so
             // here their existence is only hinted at.
             if (DateComparison::withoutPastPeriods($offer->getAdjustedDays()) !== []) {
-                $weekScheme .= PHP_EOL . $this->translator->translate('adjusted_hours_notice');
+                $weekScheme .= PHP_EOL . ucfirst($this->translator->translate('adjusted_hours_notice'));
             }
 
             return $weekScheme . PHP_EOL;

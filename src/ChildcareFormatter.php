@@ -63,7 +63,8 @@ final class ChildcareFormatter
     }
 
     /**
-     * Introduces the childcare with the day(s) it applies to.
+     * Introduces the childcare with the text it belongs to, like the day(s) it applies to or
+     * the overnight stay it shares its sentence with.
      */
     public function precededBy(string $text): self
     {
