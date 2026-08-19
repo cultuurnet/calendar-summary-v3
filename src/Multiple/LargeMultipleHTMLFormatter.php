@@ -36,9 +36,7 @@ final class LargeMultipleHTMLFormatter implements MultipleFormatterInterface
             }
         }
 
-        // Every sub-event gets its own list item, so its childcare is nested inside of it. A
-        // date without childcare only reports that when a listed one does have it, otherwise
-        // an offer that never has childcare would repeat it on every single date.
+        // Every sub-event gets its own list item, so its childcare is nested inside of it.
         $formatter = new LargeSingleHTMLFormatter(
             $this->translator,
             true,

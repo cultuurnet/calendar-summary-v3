@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace CultuurNet\CalendarSummaryV3;
 
-use CultuurNet\CalendarSummaryV3\Offer\Childcare;
 use CultuurNet\CalendarSummaryV3\Offer\Offer;
 
 /**
@@ -12,27 +11,18 @@ use CultuurNet\CalendarSummaryV3\Offer\Offer;
  */
 final class HtmlChildcareFormatter
 {
-    private Translator $translator;
-
-    private ?Childcare $childcare = null;
-
-    private bool $overnight = false;
+    private ChildcareFormatter $childcareFormatter;
 
     private bool $asNestedList = false;
 
-    private bool $alsoWhenThereIsNone = false;
-
-    private function __construct(Translator $translator)
+    private function __construct(ChildcareFormatter $childcareFormatter)
     {
-        $this->translator = $translator;
+        $this->childcareFormatter = $childcareFormatter;
     }
 
     public static function forOffer(Offer $offer, Translator $translator): self
     {
-        $formatter = new self($translator);
-        $formatter->childcare = $offer->getChildcare();
-        $formatter->overnight = $offer->hasOvernight();
-        return $formatter;
+        return new self(ChildcareFormatter::forOffer($offer, $translator));
     }
 
     /**
@@ -52,13 +42,21 @@ final class HtmlChildcareFormatter
     public function alsoWhenThereIsNone(): self
     {
         $c = clone $this;
-        $c->alsoWhenThereIsNone = true;
+        $c->childcareFormatter = $this->childcareFormatter->alsoWhenThereIsNone();
         return $c;
     }
 
     public function toString(): string
     {
-        $childcareText = $this->getChildcareText();
+        $childcareFormatter = $this->childcareFormatter;
+
+        // A nested list is a block of its own and therefore starts a sentence of its own,
+        // between braces. Inline it continues the sentence of the date it follows.
+        if ($this->asNestedList) {
+            $childcareFormatter = $childcareFormatter->capitalize()->withBraces();
+        }
+
+        $childcareText = $childcareFormatter->toString();
 
         if ($childcareText === '') {
             return '';
@@ -71,44 +69,5 @@ final class HtmlChildcareFormatter
         }
 
         return '<span class="cf-childcare">' . $childcareText . '</span>';
-    }
-
-    /**
-     * A nested list is a block of its own and therefore starts a sentence of its own, between
-     * braces. Inline it continues the sentence of the date it follows and needs neither.
-     */
-    private function getChildcareText(): string
-    {
-        if ($this->childcare === null) {
-            $parts = [];
-
-            if ($this->overnight) {
-                $parts[] = $this->translator->translate('overnight');
-            }
-
-            if ($this->alsoWhenThereIsNone) {
-                $parts[] = $this->translator->translate('no_childcare');
-            }
-
-            if ($parts === []) {
-                return '';
-            }
-
-            $text = implode(', ', $parts);
-
-            return $this->asNestedList ? '(' . ucfirst($text) . ')' : $text;
-        }
-
-        $formatter = ChildcareFormatter::forChildcare($this->childcare, $this->translator);
-
-        if ($this->overnight) {
-            $formatter = $formatter->precededBy($this->translator->translate('overnight') . ',');
-        }
-
-        if (!$this->asNestedList) {
-            return $formatter->toString();
-        }
-
-        return $formatter->capitalize()->withBraces()->toString();
     }
 }

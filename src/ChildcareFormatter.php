@@ -5,18 +5,23 @@ declare(strict_types=1);
 namespace CultuurNet\CalendarSummaryV3;
 
 use CultuurNet\CalendarSummaryV3\Offer\Childcare;
+use CultuurNet\CalendarSummaryV3\Offer\Offer;
 
 final class ChildcareFormatter
 {
     private Translator $translator;
 
-    private Childcare $childcare;
+    private ?Childcare $childcare = null;
+
+    private bool $overnight = false;
 
     private string $prefix = '';
 
     private bool $withBraces = false;
 
     private bool $capitalize = false;
+
+    private bool $alsoWhenThereIsNone = false;
 
     private function __construct(Translator $translator)
     {
@@ -31,6 +36,25 @@ final class ChildcareFormatter
     }
 
     /**
+     * Combines the childcare of a (sub)event with its overnight stay. Renders nothing
+     * when it has neither of them.
+     */
+    public static function forOffer(Offer $offer, Translator $translator): self
+    {
+        $formatter = new self($translator);
+        $formatter->childcare = $offer->getChildcare();
+        $formatter->overnight = $offer->hasOvernight();
+
+        // Only the overnight stay starts the sentence, so the childcare that follows it
+        // keeps its lowercase.
+        if ($formatter->overnight && $formatter->childcare !== null) {
+            return $formatter->precededBy($translator->translate('overnight') . ',');
+        }
+
+        return $formatter;
+    }
+
+    /**
      * Prefixes the childcare with 'elke dag', used when every day has the same childcare.
      */
     public function forEveryDay(): self
@@ -39,7 +63,8 @@ final class ChildcareFormatter
     }
 
     /**
-     * Introduces the childcare with the day(s) it applies to.
+     * Introduces the childcare with the text it belongs to, like the day(s) it applies to or
+     * the overnight stay it shares its sentence with.
      */
     public function precededBy(string $text): self
     {
@@ -69,9 +94,24 @@ final class ChildcareFormatter
         return $c;
     }
 
+    /**
+     * Reports that there is no childcare instead of rendering nothing, for when other dates
+     * of the same offer do have one and its absence here is worth mentioning.
+     */
+    public function alsoWhenThereIsNone(): self
+    {
+        $c = clone $this;
+        $c->alsoWhenThereIsNone = true;
+        return $c;
+    }
+
     public function toString(): string
     {
         $childcareText = $this->getChildcareText();
+
+        if ($childcareText === '') {
+            return '';
+        }
 
         if ($this->prefix !== '') {
             $childcareText = $this->prefix . ' ' . $childcareText;
@@ -90,6 +130,20 @@ final class ChildcareFormatter
 
     private function getChildcareText(): string
     {
+        if ($this->childcare === null) {
+            $parts = [];
+
+            if ($this->overnight) {
+                $parts[] = $this->translator->translate('overnight');
+            }
+
+            if ($this->alsoWhenThereIsNone) {
+                $parts[] = $this->translator->translate('no_childcare');
+            }
+
+            return implode(', ', $parts);
+        }
+
         $start = $this->childcare->getStart();
         $end = $this->childcare->getEnd();
 

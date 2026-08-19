@@ -35,10 +35,9 @@ final class LargeSingleHTMLFormatter implements SingleFormatterInterface
     private $mentionAbsentChildcare;
 
     /**
-     * @param bool $childcareInNestedList  renders the childcare as a nested list instead of
-     *                                     inline, for the sub-events of a multiple calendar
-     * @param bool $mentionAbsentChildcare reports that this date has no childcare, for when
-     *                                     other dates of the same offer do have one
+     * @param bool $childcareInNestedList renders the childcare as a nested list instead of
+     *                                    inline, for the sub-events of a multiple calendar
+     * @param bool $mentionAbsentChildcare reports that this date has no childcare
      */
     public function __construct(
         Translator $translator,
