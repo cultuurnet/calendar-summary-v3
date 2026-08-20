@@ -311,6 +311,7 @@ final class ExtraLargePeriodicHTMLFormatterTest extends TestCase
             ['nl' => 'Herfstvakantie']
         );
     }
+
     /**
      * The most a summary can hold at once: a period, days that open more than once, a
      * childcare that differs per day and per timespan, an adjusted period with a childcare
@@ -318,7 +319,43 @@ final class ExtraLargePeriodicHTMLFormatterTest extends TestCase
      */
     public function testFormatEverythingAtOnce(): void
     {
-        $place = $this->availablePlace()
+        $this->assertEquals(
+            $this->expectedHtml('everything-at-once'),
+            $this->formatter->format($this->placeWithEverything())
+        );
+    }
+
+    /**
+     * The summary that holds every wording at once is the one worth reading in all four
+     * languages: it is where a word that is right in one phrase and wrong in another shows up.
+     *
+     * @dataProvider languages
+     */
+    public function testFormatEverythingAtOncePerLanguage(string $language, string $fixture): void
+    {
+        $this->assertEquals(
+            $this->expectedHtml($fixture),
+            (new ExtraLargePeriodicHTMLFormatter(new Translator($language)))->format(
+                $this->placeWithEverything()
+            )
+        );
+    }
+
+    /**
+     * @return array<string, string[]>
+     */
+    public function languages(): array
+    {
+        return [
+            'french' => ['fr', 'everything-at-once-in-french'],
+            'german' => ['de', 'everything-at-once-in-german'],
+            'english' => ['en', 'everything-at-once-in-english'],
+        ];
+    }
+
+    private function placeWithEverything(): Offer
+    {
+        return $this->availablePlace()
             ->withOpeningHours(
                 [
                     new OpeningHour(['monday'], '09:00', '12:00', new Childcare('08:00', '13:00')),
@@ -335,7 +372,12 @@ final class ExtraLargePeriodicHTMLFormatterTest extends TestCase
                         new OpeningHours(
                             [new OpeningHour(['monday', 'tuesday'], '10:00', '15:00', new Childcare(null, '16:00'))]
                         ),
-                        ['nl' => 'Herfstvakantie']
+                        [
+                            'nl' => 'Herfstvakantie',
+                            'fr' => 'Vacances d\'automne',
+                            'de' => 'Herbstferien',
+                            'en' => 'Autumn holidays',
+                        ]
                     ),
                 ]
             )
@@ -344,14 +386,14 @@ final class ExtraLargePeriodicHTMLFormatterTest extends TestCase
                     new ClosedDay(
                         new DateTimeImmutable('2026-12-24'),
                         new DateTimeImmutable('2027-01-03'),
-                        ['nl' => 'Kerstvakantie']
+                        [
+                            'nl' => 'Kerstvakantie',
+                            'fr' => 'Vacances de Noël',
+                            'de' => 'Weihnachtsferien',
+                            'en' => 'Christmas holidays',
+                        ]
                     ),
                 ]
             );
-
-        $this->assertEquals(
-            $this->expectedHtml('everything-at-once'),
-            $this->formatter->format($place)
-        );
     }
 }
