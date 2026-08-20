@@ -80,6 +80,60 @@ Every combination has at least one example file. Some have one, others have a fo
 the count says how many. A short summary is one line in its file, a large one is a block of lines,
 so the file is always the exact output and nothing else.
 
+## What can combine
+
+The matrix above says which combinations of type, size and format exist. This says how much can end
+up in one summary. Everything here is optional, and every line links to an example of it.
+
+### `single` and `multiple`
+
+| The offer has | The summary shows | Example |
+| --- | --- | --- |
+| a childcare | the hours of the childcare after the date | [single-with-childcare.html](../tests/Single/data/LargeSingleHTMLFormatter/single-with-childcare.html) |
+| a childcare that only starts before, or only ends after | `vooropvang` or `naopvang` instead of `opvang` | [single-with-childcare-before-the-opening-hours.html](../tests/Single/data/LargeSingleHTMLFormatter/single-with-childcare-before-the-opening-hours.html) |
+| an overnight stay | `met overnachting` | [single-with-overnight.html](../tests/Single/data/LargeSingleHTMLFormatter/single-with-overnight.html) |
+| both | one sentence, the overnight stay first | [single-with-childcare-and-overnight.html](../tests/Single/data/LargeSingleHTMLFormatter/single-with-childcare-and-overnight.html) |
+| both, and it is cancelled | the availability closes the date, the childcare follows after it | [single-with-childcare-and-a-cancelled-status.html](../tests/Single/data/LargeSingleHTMLFormatter/single-with-childcare-and-a-cancelled-status.html) |
+| several dates, each with its own childcare | one line per date, each with its own childcare | [multiple-dates-with-childcare-and-overnight.txt](../tests/Multiple/data/LargeMultiplePlainTextFormatter/multiple-dates-with-childcare-and-overnight.txt) |
+| one date with a childcare and one without | nothing about childcare on the date without one | [multiple-dates-with-childcare-and-overnight.html](../tests/Multiple/data/LargeMultipleHTMLFormatter/multiple-dates-with-childcare-and-overnight.html) |
+
+### `periodic` and `permanent`
+
+| The offer has | The summary shows | Example |
+| --- | --- | --- |
+| a day that opens twice | one line for that day, joined with `en van` | [period-with-split-time-blocks.txt](../tests/Periodic/data/LargePeriodicPlainTextFormatter/period-with-split-time-blocks.txt) |
+| the same childcare on every open day | one line for the whole week, starting with `Elke dag` | [shared-childcare-as-a-single-list-item.html](../tests/Periodic/data/ExtraLargePeriodicHTMLFormatter/shared-childcare-as-a-single-list-item.html) |
+| a childcare that differs per day | one mention per day | [differing-childcare-on-the-day-itself.html](../tests/Periodic/data/ExtraLargePeriodicHTMLFormatter/differing-childcare-on-the-day-itself.html) |
+| a day that opens twice, with the same childcare both times | one mention for that day | [childcare-of-a-day-with-multiple-timespans-only-once.html](../tests/Periodic/data/ExtraLargePeriodicHTMLFormatter/childcare-of-a-day-with-multiple-timespans-only-once.html) |
+| a day that opens twice, with a different childcare each time | one mention, the hours joined with `en van` | [a-day-with-a-different-childcare-per-timespan.html](../tests/Periodic/data/ExtraLargePeriodicHTMLFormatter/a-day-with-a-different-childcare-per-timespan.html) |
+| some days with a childcare and some without | nothing about childcare on the days without one | [childcare-on-the-day-itself-when-not-every-day-has-it.html](../tests/Permanent/data/ExtraLargePermanentHTMLFormatter/childcare-on-the-day-itself-when-not-every-day-has-it.html) |
+| adjusted days, at `lg` | one sentence warning the hours can differ | [permanent-with-adjusted-days-notice.txt](../tests/Permanent/data/LargePermanentPlainTextFormatter/permanent-with-adjusted-days-notice.txt) |
+| adjusted days, at `xl` | a `Behalve tijdens` block with their dates and hours | [period-with-adjusted-days.txt](../tests/Periodic/data/ExtraLargePeriodicPlainTextFormatter/period-with-adjusted-days.txt) |
+| adjusted days with a childcare of their own | that childcare inside the block | [shared-childcare-in-an-adjusted-day.html](../tests/Permanent/data/ExtraLargePermanentHTMLFormatter/shared-childcare-in-an-adjusted-day.html) |
+| closed days | a `Gesloten` block | [period-with-closed-days.html](../tests/Periodic/data/ExtraLargePeriodicHTMLFormatter/period-with-closed-days.html) |
+| both, at `xl` | `Behalve tijdens` first, then `Gesloten` | [it-renders-the-closed-days-after-the-adjusted-days.txt](../tests/Permanent/data/ExtraLargePermanentPlainTextFormatter/it-renders-the-closed-days-after-the-adjusted-days.txt) |
+| **all of it at once** | the longest summary the library can produce | [everything-at-once.txt](../tests/Periodic/data/ExtraLargePeriodicPlainTextFormatter/everything-at-once.txt) · [everything-at-once.html](../tests/Periodic/data/ExtraLargePeriodicHTMLFormatter/everything-at-once.html) |
+
+The last row is the one to read when you want to know how far this can go. It is a `periodic` offer
+at `xl` with a period, four opening hours over four days, one day that opens twice, three different
+childcares, an adjusted period that has a childcare of its own, and a closed period:
+
+```
+Van dinsdag 25 november 2025 tot en met zaterdag 30 november 2030
+(maandag van 9:00 tot 12:00 en van 17:00 tot 19:00, dinsdag van 10:00 tot 16:00, woensdag van 10:00 tot 16:00, zaterdag van 10:00 tot 18:00)
+ (maandag opvang van 8:00 tot 13:00 en van 16:00 tot 20:00)
+ (dinsdag vooropvang vanaf 9:00)
+ (woensdag vooropvang vanaf 9:00)
+
+Behalve tijdens
+Maandag 2 november 2026 tot en met zaterdag 7 november 2026 (Herfstvakantie)
+Maandag - dinsdag van 10:00 tot 15:00
+ (elke dag naopvang tot 16:00)
+
+Gesloten
+Donderdag 24 december 2026 tot en met zondag 3 januari 2027 (Kerstvakantie)
+```
+
 ## Examples per subject
 
 | To see | Open |

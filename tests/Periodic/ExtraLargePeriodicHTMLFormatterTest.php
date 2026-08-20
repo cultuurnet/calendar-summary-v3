@@ -311,4 +311,47 @@ final class ExtraLargePeriodicHTMLFormatterTest extends TestCase
             ['nl' => 'Herfstvakantie']
         );
     }
+    /**
+     * The most a summary can hold at once: a period, days that open more than once, a
+     * childcare that differs per day and per timespan, an adjusted period with a childcare
+     * of its own, and a closed period.
+     */
+    public function testFormatEverythingAtOnce(): void
+    {
+        $place = $this->availablePlace()
+            ->withOpeningHours(
+                [
+                    new OpeningHour(['monday'], '09:00', '12:00', new Childcare('08:00', '13:00')),
+                    new OpeningHour(['monday'], '17:00', '19:00', new Childcare('16:00', '20:00')),
+                    new OpeningHour(['tuesday', 'wednesday'], '10:00', '16:00', new Childcare('09:00', null)),
+                    new OpeningHour(['saturday'], '10:00', '18:00'),
+                ]
+            )
+            ->withAdjustedDays(
+                [
+                    new AdjustedDay(
+                        new DateTimeImmutable('2026-11-02'),
+                        new DateTimeImmutable('2026-11-07'),
+                        new OpeningHours(
+                            [new OpeningHour(['monday', 'tuesday'], '10:00', '15:00', new Childcare(null, '16:00'))]
+                        ),
+                        ['nl' => 'Herfstvakantie']
+                    ),
+                ]
+            )
+            ->withClosedDays(
+                [
+                    new ClosedDay(
+                        new DateTimeImmutable('2026-12-24'),
+                        new DateTimeImmutable('2027-01-03'),
+                        ['nl' => 'Kerstvakantie']
+                    ),
+                ]
+            );
+
+        $this->assertEquals(
+            $this->expectedHtml('everything-at-once'),
+            $this->formatter->format($place)
+        );
+    }
 }
