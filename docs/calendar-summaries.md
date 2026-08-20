@@ -53,52 +53,50 @@ an offer without childcare says nothing about childcare.
 
 ## The matrix
 
-Which class renders which combination, and how many example files back it. `xl` and `lg` share a
-class wherever they are the same summary.
+Every combination, with a link straight to an example of it. **Example** opens one file,
+**all** opens the folder with every example of that combination. `xl` and `lg` share a row wherever
+they are the same summary.
 
-| Type | Size | HTML | Examples | Plain text | Examples |
-| --- | --- | --- | --- | --- | --- |
-| `single` | `xs` | `SmallSingleHTMLFormatter` | 3 | `ExtraSmallSinglePlainTextFormatter` | – |
-| `single` | `sm` | `SmallSingleHTMLFormatter` | 3 | `SmallSinglePlainTextFormatter` | – |
-| `single` | `md` | `MediumSingleHTMLFormatter` | 2 | `MediumSinglePlainTextFormatter` | – |
-| `single` | `lg` `xl` | `LargeSingleHTMLFormatter` | 18 | `LargeSinglePlainTextFormatter` | – |
-| `multiple` | `xs` | `ExtraSmallMultipleHTMLFormatter` | 6 | `ExtraSmallMultiplePlainTextFormatter` | – |
-| `multiple` | `sm` | `SmallMultipleHTMLFormatter` | 8 | `SmallMultiplePlainTextFormatter` | – |
-| `multiple` | `md` | `MediumMultipleHTMLFormatter` | 4 | `MediumMultiplePlainTextFormatter` | 4 |
-| `multiple` | `lg` `xl` | `LargeMultipleHTMLFormatter` | 6 | `LargeMultiplePlainTextFormatter` | 6 |
-| `periodic` | `xs` | `ExtraSmallPeriodicHTMLFormatter` | 8 | `ExtraSmallPeriodicPlainTextFormatter` | – |
-| `periodic` | `sm` | `SmallPeriodicHTMLFormatter` | 9 | `SmallPeriodicPlainTextFormatter` | – |
-| `periodic` | `md` | `MediumPeriodicHTMLFormatter` | 5 | `MediumPeriodicPlainTextFormatter` | – |
-| `periodic` | `lg` | `LargePeriodicHTMLFormatter` | 11 | `LargePeriodicPlainTextFormatter` | 13 |
-| `periodic` | `xl` | `ExtraLargePeriodicHTMLFormatter` | 13 | `ExtraLargePeriodicPlainTextFormatter` | 16 |
-| `permanent` | `xs` `sm` `md` | `MediumPermanentHTMLFormatter` | 8 | `MediumPermanentPlainTextFormatter` | – |
-| `permanent` | `lg` | `LargePermanentHTMLFormatter` | 6 | `LargePermanentPlainTextFormatter` | 6 |
-| `permanent` | `xl` | `ExtraLargePermanentHTMLFormatter` | 25 | `ExtraLargePermanentPlainTextFormatter` | 26 |
+| Type | Size | HTML | Plain text |
+| --- | --- | --- | --- |
+| `single` | `xs` | [example](../tests/Single/data/SmallSingleHTMLFormatter/single-date-xs-more-days.html) · [all 3](../tests/Single/data/SmallSingleHTMLFormatter) | – |
+| `single` | `sm` | [example](../tests/Single/data/SmallSingleHTMLFormatter/single-date-xs-more-days.html) · [all 3](../tests/Single/data/SmallSingleHTMLFormatter) | – |
+| `single` | `md` | [example](../tests/Single/data/MediumSingleHTMLFormatter/single-date-medium-more-days.html) · [all 2](../tests/Single/data/MediumSingleHTMLFormatter) | – |
+| `single` | `lg` `xl` | [example](../tests/Single/data/LargeSingleHTMLFormatter/single-with-childcare-and-overnight.html) · [all 18](../tests/Single/data/LargeSingleHTMLFormatter) | – |
+| `multiple` | `xs` | [example](../tests/Multiple/data/ExtraSmallMultipleHTMLFormatter/multiple-with-leading-zeroes.html) · [all 6](../tests/Multiple/data/ExtraSmallMultipleHTMLFormatter) | – |
+| `multiple` | `sm` | [example](../tests/Multiple/data/SmallMultipleHTMLFormatter/multiple-current-year.html) · [all 8](../tests/Multiple/data/SmallMultipleHTMLFormatter) | – |
+| `multiple` | `md` | [example](../tests/Multiple/data/MediumMultipleHTMLFormatter/multiple-date-medium-more-days.html) · [all 4](../tests/Multiple/data/MediumMultipleHTMLFormatter) | [example](../tests/Multiple/data/MediumMultiplePlainTextFormatter/multiple-date-medium-more-days.txt) · [all 4](../tests/Multiple/data/MediumMultiplePlainTextFormatter) |
+| `multiple` | `lg` `xl` | [example](../tests/Multiple/data/LargeMultipleHTMLFormatter/multiple-dates-with-childcare-and-overnight.html) · [all 6](../tests/Multiple/data/LargeMultipleHTMLFormatter) | [example](../tests/Multiple/data/LargeMultiplePlainTextFormatter/multiple-dates-with-childcare-and-overnight.txt) · [all 6](../tests/Multiple/data/LargeMultiplePlainTextFormatter) |
+| `periodic` | `xs` | [example](../tests/Periodic/data/ExtraSmallPeriodicHTMLFormatter/period-ends-current-year.html) · [all 8](../tests/Periodic/data/ExtraSmallPeriodicHTMLFormatter) | – |
+| `periodic` | `sm` | [example](../tests/Periodic/data/SmallPeriodicHTMLFormatter/period-current-year.html) · [all 9](../tests/Periodic/data/SmallPeriodicHTMLFormatter) | – |
+| `periodic` | `md` | [example](../tests/Periodic/data/MediumPeriodicHTMLFormatter/period-with-leading-zeroes.html) · [all 5](../tests/Periodic/data/MediumPeriodicHTMLFormatter) | – |
+| `periodic` | `lg` | [example](../tests/Periodic/data/LargePeriodicHTMLFormatter/period-with-childcare.html) · [all 11](../tests/Periodic/data/LargePeriodicHTMLFormatter) | [example](../tests/Periodic/data/LargePeriodicPlainTextFormatter/period-with-childcare.txt) · [all 13](../tests/Periodic/data/LargePeriodicPlainTextFormatter) |
+| `periodic` | `xl` | [example](../tests/Periodic/data/ExtraLargePeriodicHTMLFormatter/period-with-adjusted-days.html) · [all 13](../tests/Periodic/data/ExtraLargePeriodicHTMLFormatter) | [example](../tests/Periodic/data/ExtraLargePeriodicPlainTextFormatter/period-with-adjusted-days.txt) · [all 16](../tests/Periodic/data/ExtraLargePeriodicPlainTextFormatter) |
+| `permanent` | `xs` `sm` `md` | [example](../tests/Permanent/data/MediumPermanentHTMLFormatter/mixed-permanent.html) · [all 8](../tests/Permanent/data/MediumPermanentHTMLFormatter) | – |
+| `permanent` | `lg` | [example](../tests/Permanent/data/LargePermanentHTMLFormatter/permanent-with-childcare.html) · [all 6](../tests/Permanent/data/LargePermanentHTMLFormatter) | [example](../tests/Permanent/data/LargePermanentPlainTextFormatter/permanent-with-childcare.txt) · [all 6](../tests/Permanent/data/LargePermanentPlainTextFormatter) |
+| `permanent` | `xl` | [example](../tests/Permanent/data/ExtraLargePermanentHTMLFormatter/shared-childcare-in-an-adjusted-day.html) · [all 25](../tests/Permanent/data/ExtraLargePermanentHTMLFormatter) | [example](../tests/Permanent/data/ExtraLargePermanentPlainTextFormatter/shared-childcare-in-an-adjusted-day.txt) · [all 26](../tests/Permanent/data/ExtraLargePermanentPlainTextFormatter) |
 
 A `–` means that combination has tests, but they compare against strings written inside the test
-instead of against an example file. See [Where the examples live](#where-the-examples-live).
+instead of against an example file, so there is nothing to link to. Thirteen of the forty
+combinations are in that state, all of them plain text.
 
-## Where the examples live
-
-Every example file is the exact output of one combination, so it doubles as documentation:
-
-```
-tests/<Type>/data/<Formatter>/<what-it-shows>.html
-tests/<Type>/data/<Formatter>/<what-it-shows>.txt
-```
-
-To see what `permanent` `xl` looks like in HTML, open
-`tests/Permanent/data/ExtraLargePermanentHTMLFormatter/`. The file names say what they show, for
-example `shared-childcare-as-a-single-list-item.html` or `closed-days-for-a-single-day.html`.
-
-Some useful starting points:
+## Examples per subject
 
 | To see | Open |
 | --- | --- |
-| the childcare of a day that opens twice | `tests/Permanent/data/ExtraLargePermanentHTMLFormatter/a-day-with-a-different-childcare-per-timespan.html` |
-| the adjusted days and the closed days | `tests/Permanent/data/ExtraLargePermanentPlainTextFormatter/it-renders-the-closed-days-after-the-adjusted-days.txt` |
-| a childcare that only happens before or after | `tests/Permanent/data/ExtraLargePermanentHTMLFormatter/childcare-without-an-end-or-without-a-start.html` |
-| the warning of the `lg` size | `tests/Permanent/data/LargePermanentPlainTextFormatter/permanent-with-adjusted-days-notice.txt` |
-| the same period in four languages | `tests/Periodic/data/LargePeriodicPlainTextFormatter/period-with-single-time-blocks-in-*.txt` |
+| the childcare of a day that opens twice | [a-day-with-a-different-childcare-per-timespan.html](../tests/Permanent/data/ExtraLargePermanentHTMLFormatter/a-day-with-a-different-childcare-per-timespan.html) |
+| a childcare that every day shares | [shared-childcare-as-a-single-list-item.html](../tests/Permanent/data/ExtraLargePermanentHTMLFormatter/shared-childcare-as-a-single-list-item.html) |
+| a childcare that only happens before or after the opening hours | [childcare-without-an-end-or-without-a-start.html](../tests/Permanent/data/ExtraLargePermanentHTMLFormatter/childcare-without-an-end-or-without-a-start.html) |
+| a childcare with an overnight stay | [single-with-childcare-and-overnight.html](../tests/Single/data/LargeSingleHTMLFormatter/single-with-childcare-and-overnight.html) |
+| the adjusted days followed by the closed days | [it-renders-the-closed-days-after-the-adjusted-days.txt](../tests/Permanent/data/ExtraLargePermanentPlainTextFormatter/it-renders-the-closed-days-after-the-adjusted-days.txt) |
+| the warning that `lg` shows instead of listing the adjusted days | [permanent-with-adjusted-days-notice.txt](../tests/Permanent/data/LargePermanentPlainTextFormatter/permanent-with-adjusted-days-notice.txt) |
+| a cancelled date next to a childcare | [multiple-dates-with-childcare-and-an-unavailable-status.html](../tests/Multiple/data/LargeMultipleHTMLFormatter/multiple-dates-with-childcare-and-an-unavailable-status.html) |
+| the same period in French | [period-with-single-time-blocks-in-french.txt](../tests/Periodic/data/LargePeriodicPlainTextFormatter/period-with-single-time-blocks-in-french.txt) |
+| the same period in German | [period-with-single-time-blocks-in-german.txt](../tests/Periodic/data/LargePeriodicPlainTextFormatter/period-with-single-time-blocks-in-german.txt) |
+| the same period in English | [period-with-single-time-blocks-in-english.txt](../tests/Periodic/data/LargePeriodicPlainTextFormatter/period-with-single-time-blocks-in-english.txt) |
+
+Every file in those folders is the exact output of one combination, so it doubles as documentation.
+The file name says what it shows. The path is always
+`tests/<Type>/data/<Formatter>/<what-it-shows>.html` or `.txt`.
 
 The rules these examples follow are in [formatting-rules.md](./formatting-rules.md).
