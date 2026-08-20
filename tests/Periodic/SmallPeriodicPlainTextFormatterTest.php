@@ -10,12 +10,15 @@ use CultuurNet\CalendarSummaryV3\Offer\CalendarType;
 use CultuurNet\CalendarSummaryV3\Offer\Offer;
 use CultuurNet\CalendarSummaryV3\Offer\OfferType;
 use CultuurNet\CalendarSummaryV3\Offer\Status;
+use CultuurNet\CalendarSummaryV3\PlainTextFixture;
 use CultuurNet\CalendarSummaryV3\Translator;
 use DateTimeImmutable;
 use PHPUnit\Framework\TestCase;
 
 final class SmallPeriodicPlainTextFormatterTest extends TestCase
 {
+    use PlainTextFixture;
+
     /**
      * @var SmallPeriodicPlainTextFormatter
      */
@@ -39,7 +42,7 @@ final class SmallPeriodicPlainTextFormatterTest extends TestCase
         );
 
         $this->assertEquals(
-            'Vanaf do 25 nov',
+            $this->expectedText('period-starts-current-year'),
             $this->formatter->format($offer)
         );
     }

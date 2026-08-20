@@ -10,12 +10,15 @@ use CultuurNet\CalendarSummaryV3\Offer\BookingAvailability;
 use CultuurNet\CalendarSummaryV3\Offer\Offer;
 use CultuurNet\CalendarSummaryV3\Offer\OfferType;
 use CultuurNet\CalendarSummaryV3\Offer\Status;
+use CultuurNet\CalendarSummaryV3\PlainTextFixture;
 use CultuurNet\CalendarSummaryV3\Translator;
 use DateTimeImmutable;
 use PHPUnit\Framework\TestCase;
 
 final class ExtraSmallSinglePlainTextFormatterTest extends TestCase
 {
+    use PlainTextFixture;
+
     /**
      * @var SmallSinglePlainTextFormatter
      */
@@ -38,7 +41,7 @@ final class ExtraSmallSinglePlainTextFormatterTest extends TestCase
         );
 
         $this->assertEquals(
-            '25 jan 2018',
+            $this->expectedText('single-date-xs-one-day'),
             $this->formatter->format($event)
         );
     }

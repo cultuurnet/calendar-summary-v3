@@ -11,12 +11,15 @@ use CultuurNet\CalendarSummaryV3\Offer\CalendarType;
 use CultuurNet\CalendarSummaryV3\Offer\Offer;
 use CultuurNet\CalendarSummaryV3\Offer\OfferType;
 use CultuurNet\CalendarSummaryV3\Offer\Status;
+use CultuurNet\CalendarSummaryV3\PlainTextFixture;
 use CultuurNet\CalendarSummaryV3\Translator;
 use DateTimeImmutable;
 use PHPUnit\Framework\TestCase;
 
 final class ExtraSmallMultiplePlainTextFormatterTest extends TestCase
 {
+    use PlainTextFixture;
+
     /**
      * @var ExtraSmallMultiplePlainTextFormatter
      */
@@ -40,7 +43,7 @@ final class ExtraSmallMultiplePlainTextFormatterTest extends TestCase
         );
 
         $this->assertEquals(
-            '25 nov 2025 - 30 nov 2030',
+            $this->expectedText('multiple-without-leading-zeroes'),
             $this->formatter->format($offer)
         );
     }
