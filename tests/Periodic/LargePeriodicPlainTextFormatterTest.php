@@ -73,35 +73,49 @@ final class LargePeriodicPlainTextFormatterTest extends TestCase
         );
     }
 
-    public function testFormatAPeriodWithSingleTimeBlocksInFrench(): void
+    /**
+     * Every language has its own wording for the period and its own way of writing the days
+     * of the week: German and English keep their capital inside the single line that lists
+     * the opening hours, French and Dutch lose it there.
+     *
+     * @dataProvider languages
+     */
+    public function testFormatAPeriodWithSingleTimeBlocksPerLanguage(string $language, string $fixture): void
     {
-        $place = new Offer(
+        $this->assertEquals(
+            $this->expectedText($fixture),
+            (new LargePeriodicPlainTextFormatter(new Translator($language)))->format(
+                $this->periodicPlaceOpenOnMondayAndFriday()
+            )
+        );
+    }
+
+    /**
+     * @return array<string, string[]>
+     */
+    public function languages(): array
+    {
+        return [
+            'french' => ['fr', 'period-with-single-time-blocks-in-french'],
+            'german' => ['de', 'period-with-single-time-blocks-in-german'],
+            'english' => ['en', 'period-with-single-time-blocks-in-english'],
+        ];
+    }
+
+    private function periodicPlaceOpenOnMondayAndFriday(): Offer
+    {
+        return (new Offer(
             OfferType::place(),
             new Status('Available', []),
             new BookingAvailability('Available'),
             new DateTimeImmutable('25-11-2025'),
             new DateTimeImmutable('30-11-2030'),
             CalendarType::periodic()
-        );
-
-        $place = $place->withOpeningHours(
+        ))->withOpeningHours(
             [
-                new OpeningHour(
-                    ['monday'],
-                    '00:01',
-                    '17:00'
-                ),
-                new OpeningHour(
-                    ['friday'],
-                    '10:00',
-                    '18:00'
-                ),
+                new OpeningHour(['monday'], '00:01', '17:00'),
+                new OpeningHour(['friday'], '10:00', '18:00'),
             ]
-        );
-
-        $this->assertEquals(
-            $this->expectedText('period-with-single-time-blocks-in-french'),
-            (new LargePeriodicPlainTextFormatter(new Translator('fr')))->format($place)
         );
     }
 

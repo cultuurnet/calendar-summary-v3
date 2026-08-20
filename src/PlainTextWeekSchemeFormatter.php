@@ -96,9 +96,15 @@ final class PlainTextWeekSchemeFormatter
     {
         $formattedDays = [];
         foreach ($timespansPerDay as $dayOfWeek => $timespans) {
-            $formattedDays[] = $this->formatDay($dayOfWeek, $timespans)
-                ->lowercaseNextFirstCharacter()
-                ->toString();
+            $day = $this->formatDay($dayOfWeek, $timespans);
+
+            // The days follow the opening brace instead of starting a sentence, so they lose
+            // their capital in the languages that only capitalize them at the start of one.
+            if (!$this->translator->capitalizesDaysOfWeek()) {
+                $day = $day->lowercaseNextFirstCharacter();
+            }
+
+            $formattedDays[] = $day->toString();
         }
 
         $lines = ['(' . implode(', ', $formattedDays) . ')'];
