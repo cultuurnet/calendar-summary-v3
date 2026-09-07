@@ -1,5 +1,8 @@
 # calendar-summary-v3
 
+Turns the calendar of an event or place from Uitdatabank into one human-readable line or block,
+as HTML or plain text, in Dutch, French, German and English.
+
 ## Installation
 
 ```bash
@@ -7,64 +10,109 @@ composer require cultuurnet/calendar-summary-v3
 ```
 
 ## How it works
-This library helps with formatting calendar information as HTML or plain text for events or places from Uitdatabank.
-We do this by parsing an `Offer` instance from JSONLD.
 
-### Types
-The `Offer` object has a `calendarType` property which can have one of the four following options:
-* single
-* multiple
-* periodic
-* permanent
+You parse an `Offer` instance from JSONLD and ask a formatter for a size. Two things decide what
+the summary looks like: the **calendar type** of the offer, and the **size** you ask for.
 
-### Parameters
-There are 3 (optional) parameters which can be used on the initialisation of the formatters. Those are
-* langCode
-* hidePastDates
-* timeZone
+### Calendar types
 
-#### langCode
-(string) Default value: 'nl_BE'.
-You can use this parameter to change the language of the output that the formatter will produce.
-Currently works in nl, fr, de and en. The format here is standard PHP locales. For example 'fr_BE' or 'de_BE'.
+The `calendarType` property follows from the dates and opening hours the organizer entered, so it
+is not chosen directly.
 
-#### hidePastDates
-(boolean) Default value: false.
-This parameter (when true) will only be used on offers with a calendarType 'multiple'. When true, dates in the past won't be in the formatter's output.
+| Type | The offer has | Example |
+| --- | --- | --- |
+| `single` | one date, with a start and an end hour | a concert on 28 November |
+| `multiple` | several dates, each with its own hours | a course of six evenings |
+| `periodic` | opening hours per day of the week, within a start and end date | an exhibition, open Tuesday to Sunday until June |
+| `permanent` | opening hours per day of the week, without an end | a museum |
 
-#### timeZone
-(string) Default value: 'Europe/Brussels'
-You can set a different timezone with this parameter.
+### Sizes
+
+| Size | Shows | Use it for |
+| --- | --- | --- |
+| `xs` | the date, as short as possible | mobile apps, tight lists |
+| `sm` | the date, a little longer | lists |
+| `md` | the date and the hours | search results |
+| `lg` | everything of `md`, plus the opening hours per day, the childcare, the overnight stay, and a warning when the hours differ during some periods | a detail page |
+| `xl` | everything of `lg`, plus the adjusted days and the closed days themselves | a detail page of an offer that has them |
+
+`xl` only differs from `lg` for `periodic` and `permanent`, because only those have opening hours,
+adjusted days and closed days. For `single` and `multiple` an `xl` request returns the `lg` summary.
+
+Using any other format will throw an exception.
+
+### Fields that end up in a summary
+
+| Field | Types that have it | Where it shows |
+| --- | --- | --- |
+| `startDate`, `endDate` | all | every size |
+| `subEvent` | `multiple` | `xs` and up, one line per date |
+| `openingHours` | `periodic`, `permanent` | `md` and up |
+| `openingHours[].childcare` | `periodic`, `permanent` | `lg` and `xl` |
+| `subEvent[].childcare` | `single`, `multiple` | `lg` and `xl` |
+| `subEvent[].overnight` | `single`, `multiple` | `lg` and `xl` |
+| `openingHoursAdjustedDays` | `periodic`, `permanent` | `xl` lists them, `lg` only warns they exist |
+| `openingHoursClosedDays` | `periodic`, `permanent` | `xl` only |
+| `status` | all | every size, as `(geannuleerd)` or `(uitgesteld)` |
+| `bookingAvailability` | all | every size, as `(volzet of uitverkocht)` |
+
+Childcare and the overnight stay only show when the offer really has them: an offer without
+childcare says nothing about childcare.
+
+## Parameters
+
+There are 3 (optional) parameters which can be used on the initialisation of the formatters.
+
+### langCode
+
+(string) Default value: `'nl_BE'`.
+Changes the language of the output. Works in nl, fr, de and en. The format here is standard PHP
+locales, for example `'fr_BE'` or `'de_BE'`.
+
+### hidePastDates
+
+(boolean) Default value: `false`.
+Only used on offers with a calendarType `multiple`. When true, dates in the past won't be in the
+formatter's output.
+
+### timeZone
+
+(string) Default value: `'Europe/Brussels'`.
 Supported timezones can be found in this [list](http://php.net/manual/en/timezones.php).
 
-## Formats
-After initializing the formatter, you call the format method with the following 2 parameters:
-* Instance of the `Offer` object provided by this library
-* The desired output format ('xs', 'sm', 'md', 'lg' or 'xl')
-
-Using an unsupported format will throw an exception.
-
-Only the periodic and permanent calendar types have an 'xl' output of their own: on top of the 'lg'
-output it lists the adjusted days and the closed days. For the single and multiple calendar types
-'xl' is the same as 'lg'.
-
-The large output mentions the childcare for every calendar type, and the overnight stay for the
-single and multiple ones, which are the only types that have one. For the periodic and permanent
-types it does not list the adjusted days, but it does warn that the hours can differ while they
-are going on.
-
 ## Example
+
 ```php
 <?php
 
 // Make sure to either deserialize the Event/Place from JSON, or set the necessary properties through setCalendarType() etc.
 $offer = new \CultuurNet\CalendarSummaryV3\Offer\Offer::fromJsonLd('JSONLD_STRING');
-    
-// This will format the calendar info of `$offer` in a medium HTML output 
+
+// This will format the calendar info of `$offer` in a medium HTML output
 $calendarHTML = new \CultuurNet\CalendarSummaryV3\CalendarHTMLFormatter('nl_BE', true, 'Europe/Brussels');
 $calendarHTML->format($offer, 'md');
-    
+
 // This will format the calendar info of `$offer` in a large plain text output
 $calendarPlainText = new \CultuurNet\CalendarSummaryV3\CalendarPlainTextFormatter('fr_BE', true, 'Europe/Paris');
 $calendarPlainText->format($offer, 'lg');
 ```
+
+## Examples of the output
+
+Every combination of type, size and format has at least one example file under
+`tests/<Type>/data/<Formatter>/<what-it-shows>.html` or `.txt`. Each file is the exact output and
+nothing else, and its name says what it shows, so the folders double as documentation. For example:
+
+- [`tests/Single/data/LargeSingleHTMLFormatter/`](tests/Single/data/LargeSingleHTMLFormatter) — a
+  single date at `lg`, with and without childcare and overnight stay
+- [`tests/Periodic/data/ExtraLargePeriodicPlainTextFormatter/everything-at-once.txt`](tests/Periodic/data/ExtraLargePeriodicPlainTextFormatter/everything-at-once.txt)
+  — the longest summary the library can produce, and its
+  [English](tests/Periodic/data/ExtraLargePeriodicPlainTextFormatter/everything-at-once-in-english.txt),
+  [French](tests/Periodic/data/ExtraLargePeriodicPlainTextFormatter/everything-at-once-in-french.txt)
+  and [German](tests/Periodic/data/ExtraLargePeriodicPlainTextFormatter/everything-at-once-in-german.txt)
+  counterparts
+
+## Contributing
+
+The rules every summary follows — braces, capitals, joining, order, the HTML classes, and where a
+new field goes — are in [docs/formatting-rules.md](docs/formatting-rules.md).
