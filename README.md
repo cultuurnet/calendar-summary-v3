@@ -106,11 +106,12 @@ nothing else, and its name says what it shows, so the folders double as document
 - [`tests/Single/data/LargeSingleHTMLFormatter/`](tests/Single/data/LargeSingleHTMLFormatter) — a
   single date at `lg`, with and without childcare and overnight stay
 - [`tests/Periodic/data/ExtraLargePeriodicPlainTextFormatter/everything-at-once.txt`](tests/Periodic/data/ExtraLargePeriodicPlainTextFormatter/everything-at-once.txt)
-  — the longest summary the library can produce, and its
-  [English](tests/Periodic/data/ExtraLargePeriodicPlainTextFormatter/everything-at-once-in-english.txt),
-  [French](tests/Periodic/data/ExtraLargePeriodicPlainTextFormatter/everything-at-once-in-french.txt)
-  and [German](tests/Periodic/data/ExtraLargePeriodicPlainTextFormatter/everything-at-once-in-german.txt)
-  counterparts
+  — the longest summary the library can produce
+
+The same folders also hold `-in-english`, `-in-french` and `-in-german` variants. Those record what
+those languages produce *today*, wrong wording included, so the fixes tracked in
+[III-7462](https://jira.publiq.be/browse/III-7462) show up as a diff. Read the Dutch files for the
+wording as it is meant to be.
 
 ## Contributing
 
