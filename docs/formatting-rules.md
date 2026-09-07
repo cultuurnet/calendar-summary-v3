@@ -4,7 +4,7 @@ The rules every calendar summary follows. They exist so the four languages and t
 recognisable as one product. When a new field needs a place in the summary, it follows these rules
 instead of inventing its own.
 
-See [calendar-summaries.md](./calendar-summaries.md) for the sizes and calendar types themselves.
+See the [README](../README.md) for the sizes and calendar types themselves.
 
 ## Braces
 
@@ -146,4 +146,4 @@ Two things to watch, both of which went wrong before:
 1. Put the wording in `Translator`, in all four languages.
 2. Check whether an existing rule already covers where it goes. It usually does.
 3. Add an example file for every combination it appears in, in both formats.
-4. Add it to the tables above, and to `calendar-summaries.md` if it is a new field.
+4. Add it to the tables above, and to the README if it is a new field or size.
