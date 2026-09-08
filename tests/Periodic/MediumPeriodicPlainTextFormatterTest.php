@@ -9,12 +9,15 @@ use CultuurNet\CalendarSummaryV3\Offer\CalendarType;
 use CultuurNet\CalendarSummaryV3\Offer\Offer;
 use CultuurNet\CalendarSummaryV3\Offer\OfferType;
 use CultuurNet\CalendarSummaryV3\Offer\Status;
+use CultuurNet\CalendarSummaryV3\PlainTextFixture;
 use CultuurNet\CalendarSummaryV3\Translator;
 use DateTimeImmutable;
 use PHPUnit\Framework\TestCase;
 
 final class MediumPeriodicPlainTextFormatterTest extends TestCase
 {
+    use PlainTextFixture;
+
     /**
      * @var MediumPeriodicPlainTextFormatter
      */
@@ -37,7 +40,7 @@ final class MediumPeriodicPlainTextFormatterTest extends TestCase
         );
 
         $this->assertEquals(
-            'Van di 25 november 2025 tot za 30 november 2030',
+            $this->expectedText('period-without-leading-zeroes'),
             $this->formatter->format($offer)
         );
     }

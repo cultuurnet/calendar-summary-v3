@@ -10,12 +10,15 @@ use CultuurNet\CalendarSummaryV3\Offer\Offer;
 use CultuurNet\CalendarSummaryV3\Offer\OfferType;
 use CultuurNet\CalendarSummaryV3\Offer\OpeningHour;
 use CultuurNet\CalendarSummaryV3\Offer\Status;
+use CultuurNet\CalendarSummaryV3\PlainTextFixture;
 use CultuurNet\CalendarSummaryV3\Translator;
 use DateTimeImmutable;
 use PHPUnit\Framework\TestCase;
 
 final class MediumPermanentPlainTextFormatterTest extends TestCase
 {
+    use PlainTextFixture;
+
     /**
      * @var MediumPermanentPlainTextFormatter
      */
@@ -63,7 +66,7 @@ final class MediumPermanentPlainTextFormatterTest extends TestCase
         );
 
         $this->assertEquals(
-            'Open van ma - wo & vr - zo',
+            $this->expectedText('simple-permanent'),
             $this->formatter->format($place)
         );
     }

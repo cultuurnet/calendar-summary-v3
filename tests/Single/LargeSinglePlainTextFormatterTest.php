@@ -9,12 +9,15 @@ use CultuurNet\CalendarSummaryV3\Offer\Childcare;
 use CultuurNet\CalendarSummaryV3\Offer\Offer;
 use CultuurNet\CalendarSummaryV3\Offer\OfferType;
 use CultuurNet\CalendarSummaryV3\Offer\Status;
+use CultuurNet\CalendarSummaryV3\PlainTextFixture;
 use CultuurNet\CalendarSummaryV3\Translator;
 use DateTimeImmutable;
 use PHPUnit\Framework\TestCase;
 
 final class LargeSinglePlainTextFormatterTest extends TestCase
 {
+    use PlainTextFixture;
+
     /**
      * @var LargeSinglePlainTextFormatter
      */
@@ -36,10 +39,8 @@ final class LargeSinglePlainTextFormatterTest extends TestCase
             new DateTimeImmutable('2018-01-25T21:30:00+01:00')
         );
 
-        $expectedOutput = 'Donderdag 25 januari 2018 van 20:00 tot 21:30';
-
         $this->assertEquals(
-            $expectedOutput,
+            $this->expectedText('single-date-large-one-day'),
             $this->formatter->format($event)
         );
     }
