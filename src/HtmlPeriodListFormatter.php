@@ -25,20 +25,22 @@ final class HtmlPeriodListFormatter
      * @param Period[] $periods
      * @param callable(Period): string|null $formatContent
      *   Renders the markup that follows the dates and the description of a period.
+     * @param string[] $leadingItems rendered list items that precede the periods
      */
     public function format(
         array $periods,
         string $cssClass,
         string $summaryTranslationKey,
-        ?callable $formatContent = null
+        ?callable $formatContent = null,
+        array $leadingItems = []
     ): string {
         $upcomingPeriods = DateComparison::withoutPastPeriods($periods);
 
-        if (!$upcomingPeriods) {
+        if (!$upcomingPeriods && !$leadingItems) {
             return '';
         }
 
-        $output = $this->openDetails($cssClass, $summaryTranslationKey);
+        $output = $this->openDetails($cssClass, $summaryTranslationKey) . implode('', $leadingItems);
 
         foreach ($upcomingPeriods as $period) {
             $output .= $this->generatePeriod($period, $formatContent);

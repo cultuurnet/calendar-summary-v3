@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace CultuurNet\CalendarSummaryV3;
 
 use CultuurNet\CalendarSummaryV3\Offer\ClosedDay;
+use DateTimeImmutable;
 
 /**
  * Renders the periods during which there is no opening at all as a collapsible list.
@@ -13,16 +14,37 @@ final class HtmlClosedDaysFormatter
 {
     private HtmlPeriodListFormatter $periodListFormatter;
 
+    private DateFormatter $formatter;
+
+    private Translator $translator;
+
     public function __construct(Translator $translator)
     {
         $this->periodListFormatter = new HtmlPeriodListFormatter($translator);
+        $this->formatter = new DateFormatter($translator->getLocale());
+        $this->translator = $translator;
     }
 
     /**
      * @param ClosedDay[] $closedDays
+     * @param string[] $closedDaysOfWeek the days of the week that are closed every week,
+     *   listed before the periods
      */
-    public function format(array $closedDays): string
+    public function format(array $closedDays, array $closedDaysOfWeek = []): string
     {
-        return $this->periodListFormatter->format($closedDays, 'cf-closed-days', 'closed');
+        $weeklyItems = array_map([$this, 'generateClosedDayOfWeek'], $closedDaysOfWeek);
+
+        return $this->periodListFormatter->format($closedDays, 'cf-closed-days', 'closed', null, $weeklyItems);
+    }
+
+    private function generateClosedDayOfWeek(string $dayOfWeek): string
+    {
+        $every = $this->translator->translate('every') . ' '
+            . $this->formatter->formatAsDayOfWeek(new DateTimeImmutable($dayOfWeek));
+
+        return '<li>'
+            . '<span class="cf-days">' . ucfirst($every) . '</span>'
+            . '<span class="cf-closed cf-meta">' . $this->translator->translate('closed') . '</span>'
+            . '</li>';
     }
 }

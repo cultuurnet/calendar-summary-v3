@@ -28,6 +28,8 @@ final class HtmlWeekSchemeFormatter
 
     private bool $withEveryDayOfTheWeek = false;
 
+    private bool $inWeekOrder = false;
+
     private bool $withHeading = false;
 
     private function __construct(Translator $translator)
@@ -82,6 +84,17 @@ final class HtmlWeekSchemeFormatter
     {
         $c = clone $this;
         $c->withEveryDayOfTheWeek = true;
+        $c->inWeekOrder = true;
+        return $c;
+    }
+
+    /**
+     * Lists the days with opening hours in the order of the week, leaving out the days without.
+     */
+    public function inWeekOrder(): self
+    {
+        $c = clone $this;
+        $c->inWeekOrder = true;
         return $c;
     }
 
@@ -254,13 +267,17 @@ final class HtmlWeekSchemeFormatter
      */
     private function sortedDays(array $formattedDays): array
     {
-        if (!$this->withEveryDayOfTheWeek) {
+        if (!$this->inWeekOrder) {
             return $formattedDays;
         }
 
         $sortedDays = [];
         foreach (OpeningHour::ALLOWED_DAYS as $dayOfWeek) {
-            $sortedDays[$dayOfWeek] = $formattedDays[$dayOfWeek] ?? $this->closedDay($dayOfWeek);
+            if (isset($formattedDays[$dayOfWeek])) {
+                $sortedDays[$dayOfWeek] = $formattedDays[$dayOfWeek];
+            } elseif ($this->withEveryDayOfTheWeek) {
+                $sortedDays[$dayOfWeek] = $this->closedDay($dayOfWeek);
+            }
         }
 
         return $sortedDays;
