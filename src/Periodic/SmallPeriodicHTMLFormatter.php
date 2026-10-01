@@ -32,7 +32,7 @@ final class SmallPeriodicHTMLFormatter implements PeriodicFormatterInterface
     public function format(Offer $offer): string
     {
         $startDate = $offer->getStartDate();
-        $startDate->setTime(0, 0, 1);
+        $startDate = $startDate->setTime(0, 0, 1);
 
         if (DateComparison::isInTheFuture($startDate)) {
             $output = $this->formatNotStarted($startDate);

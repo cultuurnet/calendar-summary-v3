@@ -32,7 +32,7 @@ final class SmallPeriodicPlainTextFormatter implements PeriodicFormatterInterfac
     public function format(Offer $offer): string
     {
         $startDate = $offer->getStartDate();
-        $startDate->setTime(0, 0, 1);
+        $startDate = $startDate->setTime(0, 0, 1);
 
         if (DateComparison::isInTheFuture($startDate)) {
             return PlainTextSummaryBuilder::start($this->translator)
