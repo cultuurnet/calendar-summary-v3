@@ -35,6 +35,7 @@ final class ExtraLargePermanentPlainTextFormatter implements PermanentFormatterI
         if (!$offer->getOpeningHours()->isEmpty()) {
             $output = PlainTextWeekSchemeFormatter::forOpeningHours($offer->getOpeningHours(), $this->translator)
                 ->withChildcare()
+                ->withoutClosedDays()
                 ->toString();
         } else {
             $output = PlainTextSummaryBuilder::start($this->translator)
@@ -42,6 +43,13 @@ final class ExtraLargePermanentPlainTextFormatter implements PermanentFormatterI
                 ->toString();
         }
 
-        return $output . $this->deviatingDaysFormatter->format($offer) . PHP_EOL;
+        // The days without opening hours are listed among the closed days instead of in
+        // the week scheme.
+        $deviatingDays = $this->deviatingDaysFormatter->format(
+            $offer,
+            $offer->getOpeningHours()->closedDaysOfWeek()
+        );
+
+        return $output . $deviatingDays . PHP_EOL;
     }
 }
