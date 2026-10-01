@@ -464,17 +464,76 @@ final class ExtraLargePermanentHTMLFormatterTest extends TestCase
         );
     }
 
-    public function testFormatClosedDaysWithClosedInTheWeekend(): void
+    public function testItListsTheDaysWithoutOpeningHoursAsClosedEveryWeek(): void
+    {
+        $place = $this->availablePlace()
+            ->withOpeningHours(
+                [
+                    new OpeningHour(
+                        ['monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday'],
+                        '13:00',
+                        '17:00',
+                        new Childcare('13:00', '17:30')
+                    ),
+                ]
+            )
+            ->withClosedDays([$this->christmasHoliday()]);
+
+        $this->assertEquals(
+            $this->expectedHtml('days-without-opening-hours-closed-every-week'),
+            $this->formatter->format($place)
+        );
+    }
+
+    public function testItListsTheDaysWithoutOpeningHoursAsClosedEveryWeekWithoutClosedPeriods(): void
     {
         $place = $this->availablePlace()->withOpeningHours(
             [
-                new OpeningHour(['monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday'], '13:00', '17:00', new Childcare('13:00', '17:30')),
+                new OpeningHour(['monday', 'tuesday', 'wednesday', 'thursday', 'friday'], '09:00', '17:00'),
             ]
-        )->withClosedDays([$this->christmasHoliday()]);
+        );
 
         $this->assertEquals(
-            $this->expectedHtml('closed-days-in-weekend'),
+            $this->expectedHtml('days-without-opening-hours-closed-every-week-without-closed-periods'),
             $this->formatter->format($place)
+        );
+    }
+
+    public function testItListsTheDaysWithoutOpeningHoursAsClosedEveryWeekWhenTheClosedPeriodsHavePassed(): void
+    {
+        $place = $this->availablePlace()
+            ->withOpeningHours(
+                [
+                    new OpeningHour(['monday', 'tuesday', 'wednesday', 'thursday', 'friday'], '09:00', '17:00'),
+                ]
+            )
+            ->withClosedDays(
+                [
+                    new ClosedDay(
+                        new DateTimeImmutable('2026-08-03'),
+                        new DateTimeImmutable('2026-08-09'),
+                        ['nl' => 'Voorbij']
+                    ),
+                ]
+            );
+
+        $this->assertEquals(
+            $this->expectedHtml('days-without-opening-hours-closed-every-week-without-closed-periods'),
+            $this->formatter->format($place)
+        );
+    }
+
+    public function testItListsTheDaysWithoutOpeningHoursAsClosedEveryWeekInFrench(): void
+    {
+        $place = $this->availablePlace()->withOpeningHours(
+            [
+                new OpeningHour(['monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday'], '13:00', '17:00'),
+            ]
+        );
+
+        $this->assertEquals(
+            $this->expectedHtml('days-without-opening-hours-closed-every-week-in-french'),
+            (new ExtraLargePermanentHTMLFormatter(new Translator('fr_BE')))->format($place)
         );
     }
 
