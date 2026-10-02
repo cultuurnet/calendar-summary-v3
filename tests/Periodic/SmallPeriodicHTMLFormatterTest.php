@@ -182,4 +182,23 @@ final class SmallPeriodicHTMLFormatterTest extends TestCase
             $this->formatter->format($offer)
         );
     }
+
+    public function testFormatAPeriodThatStartsLaterToday(): void
+    {
+        CalendarSummaryTester::setTestNow(2021, 5, 3, 10, 0);
+
+        $offer = new Offer(
+            OfferType::event(),
+            new Status('Available', []),
+            new BookingAvailability('Available'),
+            new DateTimeImmutable('03-05-2021 20:00'),
+            new DateTimeImmutable('18-03-2030'),
+            CalendarType::periodic()
+        );
+
+        $this->assertEquals(
+            $this->expectedHtml('period-that-has-already-started'),
+            $this->formatter->format($offer)
+        );
+    }
 }
