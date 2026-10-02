@@ -140,6 +140,28 @@ final class OpeningHours implements IteratorAggregate, Countable
     }
 
     /**
+     * Returns the days of the week without any opening hour, in the order of the week.
+     * Without opening hours at all there are none, as that means open every day.
+     *
+     * @return string[]
+     */
+    public function closedDaysOfWeek(): array
+    {
+        if ($this->isEmpty()) {
+            return [];
+        }
+
+        $closedDaysOfWeek = [];
+        foreach (OpeningHour::ALLOWED_DAYS as $dayOfWeek) {
+            if ($this->onDayOfWeek($dayOfWeek)->isEmpty()) {
+                $closedDaysOfWeek[] = $dayOfWeek;
+            }
+        }
+
+        return $closedDaysOfWeek;
+    }
+
+    /**
      * Returns the childcare that every opening hour has in common, or null when they
      * differ or when at least one opening hour has no childcare at all.
      */

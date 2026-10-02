@@ -35,7 +35,7 @@ final class ExtraLargePermanentHTMLFormatter implements PermanentFormatterInterf
 
         if (!$offer->getOpeningHours()->isEmpty()) {
             $output = HtmlWeekSchemeFormatter::forOpeningHours($offer->getOpeningHours(), $this->translator)
-                ->withEveryDayOfTheWeek()
+                ->inWeekOrder()
                 ->withChildcare()
                 ->toString();
         } else {
@@ -44,7 +44,12 @@ final class ExtraLargePermanentHTMLFormatter implements PermanentFormatterInterf
                 . '</p>';
         }
 
-        $output .= $this->deviatingDaysFormatter->format($offer);
+        // The days without opening hours are listed among the closed days instead of in
+        // the week scheme.
+        $output .= $this->deviatingDaysFormatter->format(
+            $offer,
+            $offer->getOpeningHours()->closedDaysOfWeek()
+        );
 
         return HtmlSummaryFormatter::format($output);
     }

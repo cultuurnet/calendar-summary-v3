@@ -25,10 +25,13 @@ final class HtmlDeviatingDaysFormatter
      * Both formatters render a block of their own, so unlike the plain text
      * variant they need no separator in between. Empty when there is nothing
      * to show.
+     *
+     * @param string[] $closedDaysOfWeek the days of the week that are closed every week,
+     *   listed among the closed days
      */
-    public function format(Offer $offer): string
+    public function format(Offer $offer, array $closedDaysOfWeek = []): string
     {
         return $this->adjustedDaysFormatter->format($offer->getAdjustedDays())
-            . $this->closedDaysFormatter->format($offer->getClosedDays());
+            . $this->closedDaysFormatter->format($offer->getClosedDays(), $closedDaysOfWeek);
     }
 }

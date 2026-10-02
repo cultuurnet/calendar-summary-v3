@@ -63,7 +63,8 @@ Within a summary:
 2. the opening hours per day
 3. a childcare that every day shares
 4. the adjusted days (`xl`) or the warning that they exist (`lg`)
-5. the closed days (`xl`)
+5. the closed days (`xl`): first the days of the week without opening hours (`Elke zondag gesloten`),
+   then the closed periods. In `xl` permanent those days are left out of the week scheme.
 
 ## Empty is empty
 
@@ -123,6 +124,7 @@ string in a formatter.
 | childcare after | naopvang | garderie du soir | Spätbetreuung | late childcare |
 | overnight stay | met overnachting | avec nuitée | mit Übernachtung | with overnight stay |
 | every day | elke dag | chaque jour | jeden Tag | every day |
+| every (day of the week) | elke | chaque | jeden | every |
 | and | en | et | und | and |
 | to (a period) | tot en met | au | bis | to |
 
