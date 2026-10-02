@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace CultuurNet\CalendarSummaryV3;
 
+use DateTimeImmutable;
 use DateTimeInterface;
 use IntlDateFormatter;
 
@@ -61,6 +62,14 @@ final class DateFormatter
     public function formatAsDayOfWeek(DateTimeInterface $dateTime): string
     {
         return $this->format($dateTime, self::PATTERN_DAY_OF_WEEK);
+    }
+
+    /**
+     * Used to translate a day of the week as stored in the opening hours ('monday', 'tuesday', ...)
+     */
+    public function formatDayOfWeekName(string $dayOfWeek): string
+    {
+        return $this->formatAsDayOfWeek(new DateTimeImmutable($dayOfWeek));
     }
 
     /**

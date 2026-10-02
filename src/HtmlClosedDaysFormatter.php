@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace CultuurNet\CalendarSummaryV3;
 
 use CultuurNet\CalendarSummaryV3\Offer\ClosedDay;
-use DateTimeImmutable;
 
 /**
  * Renders the periods during which there is no opening at all as a collapsible list.
@@ -39,11 +38,11 @@ final class HtmlClosedDaysFormatter
 
     private function generateClosedDayOfWeek(string $dayOfWeek): string
     {
-        $every = $this->translator->translate('every') . ' '
-            . $this->formatter->formatAsDayOfWeek(new DateTimeImmutable($dayOfWeek));
+        $label = $this->translator->translate('every') . ' '
+            . $this->formatter->formatDayOfWeekName($dayOfWeek);
 
         return '<li>'
-            . '<span class="cf-days">' . ucfirst($every) . '</span>'
+            . '<span class="cf-days">' . ucfirst($label) . '</span>'
             . '<span class="cf-closed cf-meta">' . $this->translator->translate('closed') . '</span>'
             . '</li>';
     }

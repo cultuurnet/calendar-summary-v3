@@ -7,7 +7,6 @@ namespace CultuurNet\CalendarSummaryV3;
 use CultuurNet\CalendarSummaryV3\Offer\Childcare;
 use CultuurNet\CalendarSummaryV3\Offer\OpeningHour;
 use CultuurNet\CalendarSummaryV3\Offer\OpeningHours;
-use DateTimeImmutable;
 
 /**
  * Renders the opening hours of a week as plain text.
@@ -254,6 +253,6 @@ final class PlainTextWeekSchemeFormatter
 
     private function translateDayOfWeek(string $dayOfWeek): string
     {
-        return $this->formatter->formatAsDayOfWeek(new DateTimeImmutable($dayOfWeek));
+        return $this->formatter->formatDayOfWeekName($dayOfWeek);
     }
 }

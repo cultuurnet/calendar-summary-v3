@@ -28,7 +28,7 @@ final class HtmlWeekSchemeFormatter
 
     private bool $withEveryDayOfTheWeek = false;
 
-    private bool $inWeekOrder = false;
+    private bool $sortInWeekOrder = false;
 
     private bool $withHeading = false;
 
@@ -78,13 +78,13 @@ final class HtmlWeekSchemeFormatter
     }
 
     /**
-     * Lists every day of the week, marking the days without opening hours as closed.
+     * Lists every day of the week in week order, marking the days without opening hours as closed.
      */
     public function withEveryDayOfTheWeek(): self
     {
         $c = clone $this;
         $c->withEveryDayOfTheWeek = true;
-        $c->inWeekOrder = true;
+        $c->sortInWeekOrder = true;
         return $c;
     }
 
@@ -94,7 +94,7 @@ final class HtmlWeekSchemeFormatter
     public function inWeekOrder(): self
     {
         $c = clone $this;
-        $c->inWeekOrder = true;
+        $c->sortInWeekOrder = true;
         return $c;
     }
 
@@ -267,7 +267,7 @@ final class HtmlWeekSchemeFormatter
      */
     private function sortedDays(array $formattedDays): array
     {
-        if (!$this->inWeekOrder) {
+        if (!$this->sortInWeekOrder) {
             return $formattedDays;
         }
 
@@ -297,6 +297,6 @@ final class HtmlWeekSchemeFormatter
 
     private function translateDayOfWeek(string $dayOfWeek): string
     {
-        return ucfirst($this->formatter->formatAsDayOfWeek(new DateTimeImmutable($dayOfWeek)));
+        return ucfirst($this->formatter->formatDayOfWeekName($dayOfWeek));
     }
 }
