@@ -297,6 +297,6 @@ final class HtmlWeekSchemeFormatter
 
     private function translateDayOfWeek(string $dayOfWeek): string
     {
-        return ucfirst($this->formatter->formatAsDayOfWeek(new DateTimeImmutable($dayOfWeek)));
+        return ucfirst($this->formatter->formatDayOfWeekName($dayOfWeek));
     }
 }
