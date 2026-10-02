@@ -25,19 +25,21 @@ final class PlainTextPeriodListFormatter
      * @param Period[] $periods
      * @param callable(Period): string|null $formatContent
      *   Renders the lines between the dates and the description of a period.
+     * @param string[] $leadingLines lines that precede the periods, right below the heading
      */
     public function format(
         array $periods,
         string $headingTranslationKey,
-        ?callable $formatContent = null
+        ?callable $formatContent = null,
+        array $leadingLines = []
     ): string {
         $upcomingPeriods = $this->withoutPastPeriods($periods);
 
-        if (!$upcomingPeriods) {
+        if (!$upcomingPeriods && !$leadingLines) {
             return '';
         }
 
-        $lines = [ucfirst($this->translator->translate($headingTranslationKey))];
+        $lines = array_merge([ucfirst($this->translator->translate($headingTranslationKey))], $leadingLines);
 
         foreach ($upcomingPeriods as $period) {
             $lines[] = $this->generatePeriod($period, $formatContent);
