@@ -49,4 +49,20 @@ final class PlainTextWeekSchemeFormatterTest extends TestCase
         $this->assertStringContainsString('Maandag van 10:00 tot 18:00', $weekScheme);
         $this->assertStringContainsString('Dinsdag gesloten', $weekScheme);
     }
+
+    public function testItLeavesOutTheDaysWithoutOpeningHoursWhenAsked(): void
+    {
+        $weekScheme = PlainTextWeekSchemeFormatter::forOpeningHours(
+            new OpeningHours([
+                new OpeningHour(['wednesday'], '10:00', '18:00'),
+                new OpeningHour(['monday'], '10:00', '18:00'),
+            ]),
+            $this->translator
+        )->withoutClosedDays()->toString();
+
+        $this->assertSame(
+            'Maandag van 10:00 tot 18:00' . PHP_EOL . 'Woensdag van 10:00 tot 18:00',
+            $weekScheme
+        );
+    }
 }

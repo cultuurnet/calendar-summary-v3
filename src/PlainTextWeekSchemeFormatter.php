@@ -23,6 +23,8 @@ final class PlainTextWeekSchemeFormatter
 
     private bool $withChildcare = false;
 
+    private bool $withoutClosedDays = false;
+
     private function __construct(Translator $translator)
     {
         $this->formatter = new DateFormatter($translator->getLocale());
@@ -55,6 +57,17 @@ final class PlainTextWeekSchemeFormatter
     {
         $c = clone $this;
         $c->withChildcare = true;
+        return $c;
+    }
+
+    /**
+     * Leaves the days without opening hours out of the line per day, instead of marking
+     * them as closed.
+     */
+    public function withoutClosedDays(): self
+    {
+        $c = clone $this;
+        $c->withoutClosedDays = true;
         return $c;
     }
 
@@ -129,6 +142,10 @@ final class PlainTextWeekSchemeFormatter
 
         foreach (OpeningHour::ALLOWED_DAYS as $dayOfWeek) {
             $timespans = $timespansPerDay[$dayOfWeek] ?? [];
+
+            if (!$timespans && $this->withoutClosedDays) {
+                continue;
+            }
 
             $lines[] = $this->formatDay($dayOfWeek, $timespans)->toString();
 
