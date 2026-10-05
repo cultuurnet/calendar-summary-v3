@@ -64,9 +64,6 @@ final class DateFormatter
         return $this->format($dateTime, self::PATTERN_DAY_OF_WEEK);
     }
 
-    /**
-     * Used to translate a day of the week as stored in the opening hours ('monday', 'tuesday', ...)
-     */
     public function formatDayOfWeekName(string $dayOfWeek): string
     {
         return $this->formatAsDayOfWeek(new DateTimeImmutable($dayOfWeek));
