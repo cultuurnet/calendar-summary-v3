@@ -78,4 +78,19 @@ final class HtmlWeekSchemeFormatterTest extends TestCase
         $this->assertStringContainsString('Maandag', $weekScheme);
         $this->assertStringContainsString('cf-closed', $weekScheme);
     }
+
+    public function testItListsOnlyTheOpenDaysInWeekOrder(): void
+    {
+        $weekScheme = HtmlWeekSchemeFormatter::forOpeningHours(
+            new OpeningHours([
+                new OpeningHour(['wednesday'], '10:00', '18:00'),
+                new OpeningHour(['monday'], '10:00', '18:00'),
+            ]),
+            $this->translator
+        )->inWeekOrder()->toString();
+
+        $this->assertLessThan(strpos($weekScheme, 'Woensdag'), strpos($weekScheme, 'Maandag'));
+        $this->assertStringNotContainsString('Dinsdag', $weekScheme);
+        $this->assertStringNotContainsString('cf-closed', $weekScheme);
+    }
 }

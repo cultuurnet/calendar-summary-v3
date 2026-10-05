@@ -28,6 +28,8 @@ final class HtmlWeekSchemeFormatter
 
     private bool $withEveryDayOfTheWeek = false;
 
+    private bool $sortInWeekOrder = false;
+
     private bool $withHeading = false;
 
     private function __construct(Translator $translator)
@@ -76,12 +78,23 @@ final class HtmlWeekSchemeFormatter
     }
 
     /**
-     * Lists every day of the week, marking the days without opening hours as closed.
+     * Lists every day of the week in week order, marking the days without opening hours as closed.
      */
     public function withEveryDayOfTheWeek(): self
     {
         $c = clone $this;
         $c->withEveryDayOfTheWeek = true;
+        $c->sortInWeekOrder = true;
+        return $c;
+    }
+
+    /**
+     * Lists the days with opening hours in the order of the week, leaving out the days without.
+     */
+    public function inWeekOrder(): self
+    {
+        $c = clone $this;
+        $c->sortInWeekOrder = true;
         return $c;
     }
 
@@ -254,13 +267,17 @@ final class HtmlWeekSchemeFormatter
      */
     private function sortedDays(array $formattedDays): array
     {
-        if (!$this->withEveryDayOfTheWeek) {
+        if (!$this->sortInWeekOrder) {
             return $formattedDays;
         }
 
         $sortedDays = [];
         foreach (OpeningHour::ALLOWED_DAYS as $dayOfWeek) {
-            $sortedDays[$dayOfWeek] = $formattedDays[$dayOfWeek] ?? $this->closedDay($dayOfWeek);
+            if (isset($formattedDays[$dayOfWeek])) {
+                $sortedDays[$dayOfWeek] = $formattedDays[$dayOfWeek];
+            } elseif ($this->withEveryDayOfTheWeek) {
+                $sortedDays[$dayOfWeek] = $this->closedDay($dayOfWeek);
+            }
         }
 
         return $sortedDays;
@@ -280,6 +297,6 @@ final class HtmlWeekSchemeFormatter
 
     private function translateDayOfWeek(string $dayOfWeek): string
     {
-        return ucfirst($this->formatter->formatAsDayOfWeek(new DateTimeImmutable($dayOfWeek)));
+        return ucfirst($this->formatter->formatDayOfWeekName($dayOfWeek));
     }
 }

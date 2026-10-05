@@ -49,6 +49,23 @@ final class OpeningHoursTest extends TestCase
         $this->assertNull((new OpeningHours())->sharedChildcare());
     }
 
+    public function testClosedDaysOfWeekReturnsTheDaysWithoutOpeningHoursInWeekOrder(): void
+    {
+        $openingHours = new OpeningHours(
+            [
+                new OpeningHour(['saturday', 'monday'], '09:00', '16:00'),
+                new OpeningHour(['tuesday', 'wednesday', 'thursday'], '09:00', '12:00'),
+            ]
+        );
+
+        $this->assertSame(['friday', 'sunday'], $openingHours->closedDaysOfWeek());
+    }
+
+    public function testClosedDaysOfWeekReturnsNothingWithoutOpeningHours(): void
+    {
+        $this->assertSame([], (new OpeningHours())->closedDaysOfWeek());
+    }
+
     public function testEarliestAndLatestTimeCombineTheTimespansOfTheSameDays(): void
     {
         $openingHours = new OpeningHours(

@@ -31,7 +31,7 @@ final class ExtraSmallPeriodicPlainTextFormatter implements PeriodicFormatterInt
     public function format(Offer $offer): string
     {
         $startDate = $offer->getStartDate();
-        $startDate->setTime(0, 0, 1);
+        $startDate = $startDate->setTime(0, 0, 1);
 
         if (DateComparison::isInTheFuture($startDate)) {
             $plainTextSummaryBuilder = PlainTextSummaryBuilder::start($this->translator)

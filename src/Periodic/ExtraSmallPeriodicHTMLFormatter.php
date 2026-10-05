@@ -31,8 +31,11 @@ final class ExtraSmallPeriodicHTMLFormatter implements PeriodicFormatterInterfac
 
     public function format(Offer $offer): string
     {
+        // Compare on the start day only, ignoring the time: a period that starts later today counts
+        // as already started, so we show "Till <end date>" rather than "From <today>".
+        // setTime() returns a new instance because the date is a DateTimeImmutable.
         $startDate = $offer->getStartDate();
-        $startDate->setTime(0, 0, 1);
+        $startDate = $startDate->setTime(0, 0, 1);
 
         if (DateComparison::isInTheFuture($startDate)) {
             $output = $this->formatNotStarted($startDate);
