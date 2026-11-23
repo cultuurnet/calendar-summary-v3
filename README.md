@@ -1,5 +1,10 @@
 # calendar-summary-v3
 
+> [!WARNING]
+> **This project is archived and no longer maintained.**
+> Its functionality has been incorporated into
+> [udb3-search-service](https://github.com/cultuurnet/udb3-search-service).
+
 Turns the calendar of an event or place from Uitdatabank into one human-readable line or block,
 as HTML or plain text, in Dutch, French, German and English.
 
